@@ -7,7 +7,7 @@
 
 ## ~~0.7.0.11 (forked)~~
 
-_This version number is skipped, just to be in sync with the [Funnel version repo](https://github.com/lmagyar/homeassistant-addon-tailscale-funnel).
+_This version number is skipped, just to be in sync with the [Funnel version repo](https://github.com/lmagyar/homeassistant-addon-tailscale-funnel)._
 
 ## 0.7.0.10 (forked)
 
