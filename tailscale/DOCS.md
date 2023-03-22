@@ -72,7 +72,10 @@ information)
 1. Find the "Tailscale" add-on and click it. If it doesn't show up, wait until
    HA refreshes the information about the add-on, or click **Reload** in the
    **...** menu at the top right corner.
-1. Click the "Install" button to install the add-on.
+1. Click the "INSTALL" button to install the add-on.
+
+## How to use
+
 1. Start the "Tailscale" add-on.
 1. Check the logs of the "Tailscale" add-on to see if everything went well.
 1. Open the **Web UI** of the "Tailscale" add-on to complete authentication and
@@ -81,7 +84,8 @@ information)
    **Note:** _Some browsers don't work with this step. It is recommended to
    complete this step on a desktop or laptop computer using the Chrome browser._
 
-1. Done!
+1. Check the logs of the "Tailscale" add-on again to see if everything went
+   well.
 
 ## Configuration
 
