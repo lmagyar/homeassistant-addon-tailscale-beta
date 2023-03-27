@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge changes from original add-on
+  - Migrate old-style S6 scripts to s6-rc.d 
+
 ## 0.7.0.13 (forked)
 
 - Bump Tailscale to 1.38.2
