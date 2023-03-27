@@ -3,7 +3,8 @@
 ## vNext (forked)
 
 - Merge changes from original add-on
-  - Migrate old-style S6 scripts to s6-rc.d 
+  - Migrate old-style S6 scripts to s6-rc.d
+  - Bump base image to 13.1.4
 
 ## 0.7.0.13 (forked)
 
