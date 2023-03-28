@@ -10,6 +10,7 @@ bashio::log.info 'Starting Tailscale...'
 
 options+=(--state=/data/tailscaled.state)
 options+=(--statedir=/data)
+# Opt out of client log upload
 options+=(--no-logs-no-support)
 options+=(--tun=userspace-networking)
 
