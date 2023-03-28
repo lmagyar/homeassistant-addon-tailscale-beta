@@ -2,13 +2,11 @@
 
 ![Warning][warning_stripe]
 
-> This is a **fork** of the abandoned [community add-on][community_addon]!
+> This is a **fork** of the [community add-on][community_addon]!
 >
 > This fork:
 >   - Enables Tailscale's https Proxy feature
 >   - Advertises all supported interfaces as Subnets
->   - Bumps Tailscale to 1.38.2
->   - Bumps base image to 13.1.3
 
 ![Warning][warning_stripe]
 
@@ -22,7 +20,14 @@ the following URL:
 
 <https://login.tailscale.com/start>
 
-### Home Assistant configuration
+<details>
+<summary>
+<i>Additional prerequisites if you want to access your Home Assistant device
+with a Tailscale provided certificate, ie. through the Tailscale Proxy feature
+<b>(click to open)</b></i>
+</summary>
+
+### Home Assistant configuration for Tailscale Proxy feature
 
 You must configure Home Assistant to **not** use SSL certificates, to be
 accessible through plain http connection. The Tailscale https Proxy will access
@@ -57,11 +62,13 @@ http:
 **Note**: _There is no need to adapt anything in these lines since the addon
 runs on your host network._
 
-### Tailscale configuration
+### Tailscale configuration for Tailscale Proxy feature
 
 [DNS page][tailscale_dns]: Choose a **Tailnet name** and click **Enable HTTPS**
 under HTTPS Certificates (see [Enabling HTTPS][tailscale_info_https] for more
 information)
+
+</details>
 
 ## Installation
 
@@ -100,14 +107,14 @@ network right from their interface.
 ## Tailscale configuration
 
 1. Find your Home Assistant instance in the [Machines tab][tailscale_machines]
-1. Click on the **&hellip;** icon at the far right and select the **Edit route
+1. Click on the **&hellip;** icon at the right side and select the **Edit route
    settings...** option
    - The add-on exposes **Exit Node** capabilities that you can enable from your
      Tailscale account
    - Additionally, if the Supervisor managed your network (which is the
      default), the add-on will also advertise routes to your **Subnets** on all
      supported interfaces, that you can enable from your Tailscale account
-1. Click on the **&hellip;** icon at the far right and select the **Disable key
+1. Click on the **&hellip;** icon at the right side and select the **Disable key
    expiry** option
 
 ## Add-on configuration
