@@ -107,14 +107,14 @@ network right from their interface.
 ## Tailscale configuration
 
 1. Find your Home Assistant instance in the [Machines tab][tailscale_machines]
-1. Click on the **&hellip;** icon at the far right and select the **Edit route
+1. Click on the **&hellip;** icon at the right side and select the **Edit route
    settings...** option
    - The add-on exposes **Exit Node** capabilities that you can enable from your
      Tailscale account
    - Additionally, if the Supervisor managed your network (which is the
      default), the add-on will also advertise routes to your **Subnets** on all
      supported interfaces, that you can enable from your Tailscale account
-1. Click on the **&hellip;** icon at the far right and select the **Disable key
+1. Click on the **&hellip;** icon at the right side and select the **Disable key
    expiry** option
 
 ## Add-on configuration
