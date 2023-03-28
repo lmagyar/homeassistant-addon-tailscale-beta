@@ -20,7 +20,14 @@ the following URL:
 
 <https://login.tailscale.com/start>
 
-### Home Assistant configuration
+<details>
+<summary>
+<i>Additional prerequisites if you want to access your Home Assistant device
+with a Tailscale provided certificate, ie. through the Tailscale Proxy feature
+<b>(click to open)</b></i>
+</summary>
+
+### Home Assistant configuration for Tailscale Proxy feature
 
 You must configure Home Assistant to **not** use SSL certificates, to be
 accessible through plain http connection. The Tailscale https Proxy will access
@@ -55,11 +62,13 @@ http:
 **Note**: _There is no need to adapt anything in these lines since the addon
 runs on your host network._
 
-### Tailscale configuration
+### Tailscale configuration for Tailscale Proxy feature
 
 [DNS page][tailscale_dns]: Choose a **Tailnet name** and click **Enable HTTPS**
 under HTTPS Certificates (see [Enabling HTTPS][tailscale_info_https] for more
 information)
+
+</details>
 
 ## Installation
 
