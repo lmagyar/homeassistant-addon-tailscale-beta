@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.8.0.1 (forked)
 
 - Merge PR modifications
 - Merge changes from original add-on
