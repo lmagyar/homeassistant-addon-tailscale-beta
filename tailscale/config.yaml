@@ -1,6 +1,6 @@
 ---
 name: "[BETA] Tailscale with Funnel"
-version: 0.8.0.2-rc01
+version: 0.8.0.2-rc19
 slug: tailscale-beta
 description: "[BETA] Zero config VPN for building secure networks"
 url: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel-beta
