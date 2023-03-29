@@ -19,5 +19,6 @@ options+=(--tun=userspace-networking)
 if bashio::debug ; then
     exec /opt/tailscaled "${options[@]}"
 else
-    exec /opt/tailscaled "${options[@]}" &> /dev/null
+    set -o pipefail
+    /opt/tailscaled "${options[@]}" 2>&1 | sed "1,200p;201s/.*/[further tailscaled logs suppressed, set add-on's configuration option 'log_level' to 'debug' to see further tailscaled logs]/p;d"
 fi

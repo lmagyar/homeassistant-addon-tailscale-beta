@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.8.0.2 (forked)
+
+- Suppress logs only after 200 lines
+- Bump base image to 13.1.5
+
 ## 0.8.0.1 (forked)
 
 - Merge PR modifications
