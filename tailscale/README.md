@@ -1,3 +1,7 @@
+
+| <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-funnel-beta/raw/main/images/stop_sign.png" title="Stop"> | This is a beta repository! Please use the non-beta https://github.com/lmagyar/homeassistant-addon-tailscale-funnel repository! This beta repository is for myself to experiment and test. After it works I delete even the images from docker. | <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-funnel-beta/raw/main/images/stop_sign.png" title="Stop"> |
+| --- | --- | --- |
+
 # Home Assistant Custom Add-on: Tailscale with Funnel support
 
 ![Warning][warning_stripe]
