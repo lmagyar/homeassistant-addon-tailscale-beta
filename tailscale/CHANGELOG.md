@@ -3,6 +3,7 @@
 ## 0.8.0.2 (forked)
 
 - Suppress logs only after 200 lines
+- Bump Tailscale to 1.38.3
 - Bump base image to 13.1.5
 
 ## 0.8.0.1 (forked)
