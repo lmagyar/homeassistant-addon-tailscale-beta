@@ -19,6 +19,8 @@ arch:
 init: false
 hassio_api: true
 host_network: true
+map:
+  - share:rw
 ports:
   1080/tcp: 1080
 schema:
