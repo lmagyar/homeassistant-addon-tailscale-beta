@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Move Tailscale Proxy functionality into standalone oneshot S6 service
 - Merge changes from original add-on
   - Add support for Taildrop
   - Advertise all supported interfaces as Tailscale Subnets
