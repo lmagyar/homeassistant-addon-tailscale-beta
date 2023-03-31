@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.9.0.1 (forked)
 
 - Move Tailscale Proxy functionality into standalone oneshot S6 service
 - Merge changes from original add-on
