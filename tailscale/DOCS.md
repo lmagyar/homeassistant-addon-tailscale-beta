@@ -6,7 +6,6 @@
 >
 > This fork:
 >   - Enables Tailscale's https Proxy feature
->   - Advertises all supported interfaces as Subnets
 
 ![Warning][warning_stripe]
 
