@@ -1,10 +1,12 @@
 # Changelog
 
-## 0.8.0.2 (forked)
+## vNext (forked)
 
-- Suppress logs only after 200 lines
-- Bump Tailscale to 1.38.3
-- Bump base image to 13.2.0
+- Merge changes from original add-on
+  - Bump Tailscale to 1.38.3
+  - Bump base image to 13.2.0
+  - Advertise all supported interfaces as Tailscale Subnets
+  - Suppress tailscaled logs after 200 lines
 
 ## 0.8.0.1 (forked)
 
