@@ -5,7 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > This fork:
->   - Enables Tailscale's https Proxy feature
+>   - Enables Tailscale's Proxy feature
 
 ![Warning][warning_stripe]
 
