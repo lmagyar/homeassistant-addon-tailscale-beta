@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0.1 (forked)
+
+- Move Tailscale Proxy functionality into standalone oneshot S6 service
+- Merge changes from original add-on
+  - Advertise all supported interfaces as Tailscale Subnets
+  - Suppress tailscaled logs after 200 lines
+  - Bump Tailscale to 1.38.3
+  - Bump base image to 13.2.0
+
 ## 0.8.0.1 (forked)
 
 - Merge PR modifications
