@@ -5,7 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > This fork:
->   - Enables Tailscale's https Proxy feature
+>   - Enables Tailscale's Proxy feature
 
 ![Warning][warning_stripe]
 
@@ -19,55 +19,8 @@ the following URL:
 
 <https://login.tailscale.com/start>
 
-<details>
-<summary>
-<i>Additional prerequisites if you want to access your Home Assistant device
-with a Tailscale provided certificate, ie. through the Tailscale Proxy feature
-<b>(click to open)</b></i>
-</summary>
-
-### Home Assistant configuration for Tailscale Proxy feature
-
-You must configure Home Assistant to **not** use SSL certificates, to be
-accessible through plain http connection. The Tailscale https Proxy will access
-Home Assistant through `localhost` and will not accept a real certificate,
-connection will be closed with `proxy error: x509: cannot validate certificate
-for 127.0.0.1 because it doesn't contain any IP SANs`
-
-If you still want to use another https connection to access Home Assistant
-through another network, please use the **NGINX Home Assistant SSL proxy**
-add-on.
-
-So these lines have to be removed from your `/config/configuration.yaml`:
-
-```yaml
-http:
-#  ssl_certificate: /ssl/fullchain.pem
-#  ssl_key: /ssl/privkey.pem
-```
-
-Since Home Assistant by default blocks requests from proxies/reverse proxies,
-you need to tell your instance to allow requests from the Tailscale add-on.
-In order to do so, add the following lines to your `/config/configuration.yaml`
-without changing anything:
-
-```yaml
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 127.0.0.1
-```
-
-**Note**: _There is no need to adapt anything in these lines since the addon
-runs on your host network._
-
-### Tailscale configuration for Tailscale Proxy feature
-
-[DNS page][tailscale_dns]: Choose a **Tailnet name** and click **Enable HTTPS**
-under HTTPS Certificates (see [Enabling HTTPS][tailscale_info_https] for more
-information)
-
-</details>
+You can also create an account during the add-on installation processes,
+however, it is nice to know where you need to go later on.
 
 ## Installation
 
@@ -103,18 +56,21 @@ network right from their interface.
 
 <https://login.tailscale.com/>
 
-## Tailscale configuration
+The add-on exposes "Exit Node" capabilities that you can enable from your
+Tailscale account. Additionally, if the Supervisor managed your network (which
+is the default), the add-on will also advertise routes to your subnet to
+Tailscale.
 
-1. Find your Home Assistant instance in the [Machines tab][tailscale_machines]
-1. Click on the **&hellip;** icon at the right side and select the **Edit route
-   settings...** option
-   - The add-on exposes **Exit Node** capabilities that you can enable from your
-     Tailscale account
-   - Additionally, if the Supervisor managed your network (which is the
-     default), the add-on will also advertise routes to your **Subnets** on all
-     supported interfaces, that you can enable from your Tailscale account
-1. Click on the **&hellip;** icon at the right side and select the **Disable key
-   expiry** option
+1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
+   find your Home Assistant instance.
+
+1. Click on the **&hellip;** icon at the right side and select the "Edit route
+   settings..." option. The "Exit node" and "Subnet routes" functions can be
+   enabled here.
+
+1. Click on the **&hellip;** icon at the right side and select the "Disable key
+   expiry" option. See [Key expiry][tailscale_info_key_expiry] for more
+   information.
 
 ## Add-on configuration
 
@@ -130,7 +86,7 @@ log_level: info
 This option allows you to specify specific ACL tags for this Tailscale
 instance. They need to start with `tag:`.
 
-More information: [ACL tags][tailscale_info_acl]
+More information: [ACL tags][tailscale_info_acls]
 
 ### Option: `log_level`
 
@@ -162,6 +118,41 @@ devices.
 
 Received files are stored in the `/share/taildrop` directory.
 
+## Tailscale Proxy
+
+Tailscale can provide a TLS certificate for your Home Assistant device within
+your tailnet domain.
+
+This can prevent browsers to warn that HTTP URLs to your Home Assistant device
+look unencrypted (browsers are not aware of that connections between Tailscale
+nodes are secured with end-to-end encryption). See [Enabling
+HTTPS][tailscale_info_https] for more information.
+
+1. Configure Home Assistant to be accessible through HTTP connection (this is
+   the default). See [HTTP integration documentation][http_integration] for more
+   information. If you still want to use another HTTPS connection to access Home
+   Assistant, please use a reverse proxy add-on.
+
+1. Home Assistant, by default, blocks requests from reverse proxies, like the
+   Tailscale Proxy. In order to enable it, add the following lines to your
+   `configuration.yaml`, without changing anything:
+
+```yaml
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 127.0.0.1
+```
+3. Navigate to the [DNS page][tailscale_dns] of the admin console:
+
+   - Choose a Tailnet name.
+
+   - Enable MagicDNS if not already enabled.
+
+   - Under HTTPS Certificates section, click Enable HTTPS.
+
+1. Restart the add-on.
+
 ## Support
 
 Got questions?
@@ -177,6 +168,7 @@ issue here with the forked add-on][issue_forked] on GitHub.
 
 [discord]: https://discord.gg/c5DvZ4e
 [forum]: https://community.home-assistant.io/
+[http_integration]: https://www.home-assistant.io/integrations/http/
 [issue]: https://github.com/hassio-addons/addon-tailscale/issues
 [issue_forked]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
 [reddit]: https://reddit.com/r/homeassistant
@@ -184,6 +176,7 @@ issue here with the forked add-on][issue_forked] on GitHub.
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
 [tailscale_dns]: https://login.tailscale.com/admin/dns
-[tailscale_info_acl]: https://tailscale.com/kb/1068/acl-tags/
+[tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
+[tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
 [tailscale_machines]: https://login.tailscale.com/admin/machines
