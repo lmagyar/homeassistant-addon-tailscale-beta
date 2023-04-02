@@ -36,9 +36,15 @@ configuration:
       that allows you to share files with other Tailscale nodes.
       When not set, this option is enabled by default.
   proxy:
-    name: Tailscale Proxy and Funnel
+    name: Tailscale Proxy
     description: >-
-      This option allows you to enable Tailscale's Proxy and Funnel features to
-      present your Home Assistant instance on your tailnet or even on the internet
-      with a valid certificate.
+      This option allows you to enable Tailscale's Proxy feature to present your
+      Home Assistant instance on your tailnet with a valid certificate.
+      When not set, this option is enabled by default.
+  funnel:
+    name: Tailscale Funnel
+    description: >-
+      This option allows you to enable Tailscale's Funnel feature to present your
+      Home Assistant instance on the wider internet using your Tailscale domain.
+      This requires Tailscale Proxy to be enabled.
       When not set, this option is enabled by default.

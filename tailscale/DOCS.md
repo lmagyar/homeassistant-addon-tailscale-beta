@@ -95,6 +95,7 @@ tags:
   - tag:homeassistant
 taildrop: true
 proxy: true
+funnel: true
 ```
 
 ### Option: `accept_dns`
@@ -168,13 +169,7 @@ Received files are stored in the `/share/taildrop` directory.
 
 ### Option: `proxy`
 
-With Tailscale Proxy, you can present your Home Assistant instance on your tailnet
-domain with a valid certificate. With Tailscale Funnel, you can even expose
-it to the public internet.
-
 When not set, this option is enabled by default.
-
-***Tailscale Proxy***
 
 Tailscale can provide a TLS certificate for your Home Assistant instance within
 your tailnet domain.
@@ -215,7 +210,11 @@ More information: [Enabling HTTPS][tailscale_info_https]
 previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
 port 443._
 
-***Tailscale Funnel***
+### Option: `funnel`
+
+This requires Tailscale Proxy to be enabled.
+
+When not set, this option is enabled by default.
 
 With the Tailscale Funnel feature you can access your Home Assistant instance
 from the wider internet using your Tailscale domain (like
