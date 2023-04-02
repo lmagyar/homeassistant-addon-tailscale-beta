@@ -5,6 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > This fork:
+>   - Enables Tailscale's Funnel feature
 >   - Enables Tailscale's Proxy feature
 >   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
 
@@ -155,6 +156,69 @@ http:
 
 1. Restart the add-on.
 
+## Tailscale Funnel
+
+With the Tailscale Funnel feature you can access your Home Assistant instance
+from the wider internet using your Tailscale domain (like
+`https://homeassistant.tail1234.ts.net`) even from devices **without installed
+Tailscale VPN client** (eg. general phones, tablets, laptops).
+
+> **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
+  _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP
+  web-server)
+
+Without the Tailscale Funnel feature, you will be able to access your Home
+Assistant instance only when your devices (eg. phones, tablets, laptops) are
+connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
+proxying for HTTPS communication.
+
+See [Tailscale Funnel][tailscale_info_funnel] for more information.
+
+1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
+   and add the below policy entries to the policy file. **Note**: _Replace
+   \<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS\> with your email address!_
+   See [Server role accounts using ACL tags][tailscale_info_acls] for more
+   information.
+
+```json
+{
+  // (other tailnet policy entries here)
+  "tagOwners": {
+    "tag:funnel": ["<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS>"],
+  },
+  "nodeAttrs": [
+    {
+      "target": ["tag:funnel"],
+      "attr":   ["funnel"],
+    },
+  ],
+}
+```
+
+2. Navigate to the [Machines page][tailscale_machines] of the admin console, and
+   find your Home Assistant instance.
+
+1. Click on the **&hellip;** icon at the right side and select the "Edit ACL
+   tags..." option:
+
+   - Add `tag:funnel` to the list.
+
+   - Click "Save" to apply tags.
+
+1. Restart the add-on.
+
+**Note**: _After initial set up it can take up to 10 minutes for the domain to
+be publicly available. You can use the `dig` command (Linux/MacOS) to regularly
+check if an A-record is already present for your domain (`dig
+<machine-name>.<tailnet-name>.ts.net +short` should return an IP address once
+the record is published)._
+
+**Note:** _You should not use any port number that you used previously to access
+Home Assistant._
+
+**Note:** _If you encounter strange browser behaviour or strange error messages,
+try to clear all site related cookies, clear all browser cache, restart browser_
+
 ## Support
 
 Got questions?
@@ -178,6 +242,7 @@ issue here with the forked add-on][issue_forked] on GitHub.
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
 [tailscale_dns]: https://login.tailscale.com/admin/dns
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
+[tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
 [tailscale_machines]: https://login.tailscale.com/admin/machines
