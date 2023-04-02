@@ -9,7 +9,8 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > This fork:
->   - Enables Tailscale's Proxy and Funnel features
+>   - Enables Tailscale's Funnel feature
+>   - Enables Tailscale's Proxy feature
 >   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
 
 ![Warning][warning_stripe]
@@ -32,27 +33,24 @@ however, it is nice to know where you need to go later on.
 1. Navigate in your Home Assistant frontend to **Settings** -> **Add-ons** ->
    **Add-on Store**.
 1. In the **...** menu at the top right corner click **Repositories**, add
-   `https://github.com/lmagyar/homeassistant-addon-tailscale` as
-   repository.
-1. Find the "Tailscale" add-on and click it. If it doesn't
-   show up, wait until HA refreshes the information about the add-on, or click
-   **Reload** in the **...** menu at the top right corner.
+   `https://github.com/lmagyar/homeassistant-addon-tailscale` as repository.
+1. Find the "Tailscale" add-on and click it. If it doesn't show up, wait until
+   HA refreshes the information about the add-on, or click **Reload** in the
+   **...** menu at the top right corner.
 1. Click the "INSTALL" button to install the add-on.
 
 ## How to use
 
 1. Start the "Tailscale" add-on.
-1. Check the logs of the "Tailscale" add-on to see if
-   everything went well.
-1. Open the **Web UI** of the "Tailscale" add-on to complete
-   authentication and couple your Home Assistant instance with your Tailscale
-   account.
+1. Check the logs of the "Tailscale" add-on to see if everything went well.
+1. Open the **Web UI** of the "Tailscale" add-on to complete authentication and
+   couple your Home Assistant instance with your Tailscale account.
 
    **Note:** _Some browsers don't work with this step. It is recommended to
    complete this step on a desktop or laptop computer using the Chrome browser._
 
-1. Check the logs of the "Tailscale" add-on again, to see if
-   everything went well.
+1. Check the logs of the "Tailscale" add-on again to see if everything went
+   well.
 
 ## Configuration
 
@@ -179,7 +177,7 @@ connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
 proxying for HTTPS communication.
 
 See [Tailscale Funnel][tailscale_info_funnel] for more information.
-  
+
 1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
    and add the below policy entries to the policy file. **Note**: _Replace
    \<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS\> with your email address!_
@@ -246,11 +244,9 @@ issue here with the forked add-on][issue_forked] on GitHub.
 [reddit]: https://reddit.com/r/homeassistant
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
-[tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
-[tailscale_feature]: https://login.tailscale.com/admin/settings/features
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
-[tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale/
+[tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
 [tailscale_machines]: https://login.tailscale.com/admin/machines

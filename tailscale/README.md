@@ -9,7 +9,8 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > This fork:
->   - Enables Tailscale's Proxy and Funnel features
+>   - Enables Tailscale's Funnel feature
+>   - Enables Tailscale's Proxy feature
 >   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
 
 ![Warning][warning_stripe]
@@ -50,11 +51,11 @@ manages firewall rules for you, and works from anywhere you are.
 [github-actions-shield]: https://github.com/lmagyar/homeassistant-addon-tailscale/workflows/Publish/badge.svg
 [github-actions]: https://github.com/lmagyar/homeassistant-addon-tailscale/actions
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
-[installations-shield]: https://img.shields.io/badge/dynamic/json?label=reported%20installations&query=$[%2788fc4088_tailscale%27].total&url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json
+[installations-shield]: https://img.shields.io/badge/dynamic/json?label=reported%20installations&query=$[%2709716aab_tailscale%27].total&url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json
 [license-shield]: https://img.shields.io/github/license/lmagyar/homeassistant-addon-tailscale.svg
 [licence]: https://github.com/lmagyar/homeassistant-addon-tailscale/blob/main/LICENSE
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
-[project-stage-shield]: https://img.shields.io/badge/project%20stage-alpha-orange.svg
+[project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-orange.svg
 [releases-shield]: https://img.shields.io/github/tag/lmagyar/homeassistant-addon-tailscale.svg?label=release
 [releases]: https://github.com/lmagyar/homeassistant-addon-tailscale/tags
 [updated-shield]: https://img.shields.io/github/last-commit/lmagyar/homeassistant-addon-tailscale/main?label=updated

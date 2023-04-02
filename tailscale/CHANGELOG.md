@@ -1,5 +1,9 @@
 # Changelog
 
+## ~~0.9.0.3 (forked)~~
+
+_This version number is skipped, just to be in sync with the [non-beta repo](https://github.com/lmagyar/homeassistant-addon-tailscale)._
+
 ## 0.9.0.2 (forked)
 
 - Enable Tailscale's SOCKS5 and HTTP outbound proxy
