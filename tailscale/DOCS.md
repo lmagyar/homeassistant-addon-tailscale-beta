@@ -180,22 +180,21 @@ See [Tailscale Funnel][tailscale_info_funnel] for more information.
    See [Server role accounts using ACL tags][tailscale_info_acls] for more
    information.
 
-```json
-{
-  // (other tailnet policy entries here)
-  "tagOwners": {
-    "tag:funnel": ["<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS>"],
-  },
-  "nodeAttrs": [
-    {
-      "target": ["tag:funnel"],
-      "attr":   ["funnel"],
-    },
-  ],
-}
-```
+   ```json
+   {
+     "tagOwners": {
+       "tag:funnel": ["<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS>"],
+     },
+     "nodeAttrs": [
+       {
+         "target": ["tag:funnel"],
+         "attr":   ["funnel"],
+       },
+     ],
+   }
+   ```
 
-2. Navigate to the [Machines page][tailscale_machines] of the admin console, and
+1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
    find your Home Assistant instance.
 
 1. Click on the **&hellip;** icon at the right side and select the "Edit ACL
