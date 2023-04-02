@@ -143,14 +143,14 @@ HTTPS][tailscale_info_https] for more information.
    Tailscale Proxy. In order to enable it, add the following lines to your
    `configuration.yaml`, without changing anything:
 
-```yaml
-http:
-  use_x_forwarded_for: true
-  trusted_proxies:
-    - 127.0.0.1
-```
+   ```yaml
+   http:
+     use_x_forwarded_for: true
+     trusted_proxies:
+       - 127.0.0.1
+   ```
 
-3. Navigate to the [DNS page][tailscale_dns] of the admin console:
+1. Navigate to the [DNS page][tailscale_dns] of the admin console:
 
    - Choose a Tailnet name.
 
