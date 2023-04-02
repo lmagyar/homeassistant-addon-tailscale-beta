@@ -8,7 +8,7 @@ configuration:
     name: Log level
     description: >-
       Controls the level of log details the add-on provides.
-  socks_port:
-    name: SOCKS5 proxy port
+  proxy_port:
+    name: SOCKS5 and HTTP proxy port
     description: >-
-      Port to listen for connections from SOCKS-speaking applications.
+      Port on localhost to listen on for connections from SOCKS5 and HTTP proxy-speaking applications.
