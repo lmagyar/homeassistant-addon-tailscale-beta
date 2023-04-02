@@ -23,7 +23,9 @@ options+=(--statedir=/data/state)
 # Opt out of client log upload to log.tailscale.io
 options+=(--no-logs-no-support)
 options+=(--tun=userspace-networking)
-options+=(--socks5-server=localhost:1080)
+if bashio::config.has_value "socks_port"; then
+  options+=(--socks5-server=127.0.0.1:"$(bashio::config "socks_port")")
+fi
 
 # Run Tailscale
 if bashio::debug ; then
