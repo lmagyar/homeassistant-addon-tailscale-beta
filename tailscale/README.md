@@ -6,6 +6,7 @@
 >
 > This fork:
 >   - Enables Tailscale's Proxy feature
+>   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
 
 ![Warning][warning_stripe]
 
