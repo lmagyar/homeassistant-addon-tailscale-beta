@@ -1,15 +1,12 @@
 
-| <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-funnel-beta/raw/main/images/stop_sign.png" title="Stop"> | This is a beta repository! Please use the non-beta https://github.com/lmagyar/homeassistant-addon-tailscale-funnel repository! This beta repository is for myself to experiment and test. After it works I delete even the images from docker. | <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-funnel-beta/raw/main/images/stop_sign.png" title="Stop"> |
+| <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-beta/raw/main/images/stop_sign.png" title="Stop"> | This is a beta repository! Please use the non-beta https://github.com/lmagyar/homeassistant-addon-tailscale repository! This beta repository is for myself to experiment and test. After it works I delete even the images from docker. | <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-beta/raw/main/images/stop_sign.png" title="Stop"> |
 | --- | --- | --- |
 
-# Home Assistant Custom Add-on: Tailscale with Funnel support
+# Home Assistant Custom Add-on: Tailscale
 
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
->
-> Use this [invite link](https://login.tailscale.com/admin/feature/rWXbjRuCEc9)
-> to get access to the Funnel feature.
 >
 > This fork:
 >   - Enables Tailscale's Proxy and Funnel features
@@ -48,19 +45,19 @@ manages firewall rules for you, and works from anywhere you are.
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
 [armhf-shield]: https://img.shields.io/badge/armhf-yes-green.svg
 [armv7-shield]: https://img.shields.io/badge/armv7-yes-green.svg
-[commits-shield]: https://img.shields.io/github/commit-activity/y/lmagyar/homeassistant-addon-tailscale-funnel.svg
-[commits]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/commits/main
-[github-actions-shield]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/workflows/Publish/badge.svg
-[github-actions]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/actions
+[commits-shield]: https://img.shields.io/github/commit-activity/y/lmagyar/homeassistant-addon-tailscale.svg
+[commits]: https://github.com/lmagyar/homeassistant-addon-tailscale/commits/main
+[github-actions-shield]: https://github.com/lmagyar/homeassistant-addon-tailscale/workflows/Publish/badge.svg
+[github-actions]: https://github.com/lmagyar/homeassistant-addon-tailscale/actions
 [i386-shield]: https://img.shields.io/badge/i386-yes-green.svg
 [installations-shield]: https://img.shields.io/badge/dynamic/json?label=reported%20installations&query=$[%2788fc4088_tailscale%27].total&url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json
-[license-shield]: https://img.shields.io/github/license/lmagyar/homeassistant-addon-tailscale-funnel.svg
-[licence]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/blob/main/LICENSE
+[license-shield]: https://img.shields.io/github/license/lmagyar/homeassistant-addon-tailscale.svg
+[licence]: https://github.com/lmagyar/homeassistant-addon-tailscale/blob/main/LICENSE
 [maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-alpha-orange.svg
-[releases-shield]: https://img.shields.io/github/tag/lmagyar/homeassistant-addon-tailscale-funnel.svg?label=release
-[releases]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/tags
-[updated-shield]: https://img.shields.io/github/last-commit/lmagyar/homeassistant-addon-tailscale-funnel/main?label=updated
-[updated]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/commits/main
-[warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale-funnel/raw/main/images/warning_stripe_wide.png
+[releases-shield]: https://img.shields.io/github/tag/lmagyar/homeassistant-addon-tailscale.svg?label=release
+[releases]: https://github.com/lmagyar/homeassistant-addon-tailscale/tags
+[updated-shield]: https://img.shields.io/github/last-commit/lmagyar/homeassistant-addon-tailscale/main?label=updated
+[updated]: https://github.com/lmagyar/homeassistant-addon-tailscale/commits/main
+[warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
