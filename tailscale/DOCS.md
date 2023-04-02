@@ -6,6 +6,7 @@
 >
 > This fork:
 >   - Enables Tailscale's Proxy feature
+>   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
 
 ![Warning][warning_stripe]
 
@@ -88,6 +89,14 @@ instance. They need to start with `tag:`.
 
 More information: [ACL tags][tailscale_info_acls]
 
+### Option: `proxy_port`
+
+Optionally select a port on localhost (`127.0.0.1`) to listen on for connections
+from SOCKS5 and HTTP proxy-speaking applications. Enabling this feature allows
+Home Assistant and other add-ons to access your Tailscale network.
+
+The proxy protocol is unauthenticated.
+
 ### Option: `log_level`
 
 Optionally enable tailscaled debug messages in the add-on's log. Turn it on only
@@ -135,6 +144,7 @@ http:
   trusted_proxies:
     - 127.0.0.1
 ```
+
 3. Navigate to the [DNS page][tailscale_dns] of the admin console:
 
    - Choose a Tailnet name.
