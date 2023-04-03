@@ -133,8 +133,9 @@ your tailnet domain.
 
 This can prevent browsers to warn that HTTP URLs to your Home Assistant device
 look unencrypted (browsers are not aware of that connections between Tailscale
-nodes are secured with end-to-end encryption). See [Enabling
-HTTPS][tailscale_info_https] for more information.
+nodes are secured with end-to-end encryption).
+
+More information: [Enabling HTTPS][tailscale_info_https]
 
 1. Configure Home Assistant to be accessible through HTTP connection (this is
    the default). See [HTTP integration documentation][http_integration] for more
@@ -161,6 +162,10 @@ HTTPS][tailscale_info_https] for more information.
    - Under HTTPS Certificates section, click Enable HTTPS.
 
 1. Restart the add-on.
+
+**Note:** _You should not use any port number in the url that you used
+previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
+port 443._
 
 ## Tailscale Funnel
 
