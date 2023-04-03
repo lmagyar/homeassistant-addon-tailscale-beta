@@ -183,7 +183,7 @@ Assistant instance only when your devices (eg. phones, tablets, laptops) are
 connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
 proxying for HTTPS communication.
 
-See [Tailscale Funnel][tailscale_info_funnel] for more information.
+More information: [Tailscale Funnel][tailscale_info_funnel]
 
 1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
    and add the below policy entries to the policy file. **Note**: _Replace
@@ -223,11 +223,12 @@ check if an A-record is already present for your domain (`dig
 <machine-name>.<tailnet-name>.ts.net +short` should return an IP address once
 the record is published)._
 
-**Note:** _You should not use any port number that you used previously to access
-Home Assistant._
+**Note:** _You should not use any port number in the url that you used
+previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
+port 443._
 
 **Note:** _If you encounter strange browser behaviour or strange error messages,
-try to clear all site related cookies, clear all browser cache, restart browser_
+try to clear all site related cookies, clear all browser cache, restart browser._
 
 ## Support
 
