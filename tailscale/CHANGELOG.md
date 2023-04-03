@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0.4 (forked)
+
+- Remove unneeded add-on privileges
+
 ## 0.9.0.3 (forked)
 
 - Enable Tailscale's Funnel feature
