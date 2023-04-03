@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.9.0.4 (forked)
 
 - Remove unneeded add-on privileges
 
