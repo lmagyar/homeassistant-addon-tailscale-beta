@@ -102,6 +102,8 @@ Home Assistant and other add-ons to access your Tailscale network.
 
 The proxy protocol is unauthenticated.
 
+More information: [Userspace networking][tailscale_info_userspace_networking]
+
 ### Option: `log_level`
 
 Optionally enable tailscaled debug messages in the add-on's log. Turn it on only
@@ -249,4 +251,5 @@ issue here with the forked add-on][issue_forked] on GitHub.
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
+[tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking/
 [tailscale_machines]: https://login.tailscale.com/admin/machines
