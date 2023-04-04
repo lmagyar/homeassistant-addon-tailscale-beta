@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0.4 (forked)
+
+- Remove unneeded add-on privileges
+
 ## ~~0.9.0.3 (forked)~~
 
 _This version number is skipped, just to be in sync with the [non-beta repo](https://github.com/lmagyar/homeassistant-addon-tailscale)._
