@@ -63,6 +63,9 @@ Tailscale account. Additionally, if the Supervisor managed your network (which
 is the default), the add-on will also advertise routes to your subnet to
 Tailscale.
 
+Consider disabling key expiry to avoid loosing connection to your Home Assistant
+device. See [Key expiry][tailscale_info_key_expiry] for more information.
+
 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
    find your Home Assistant instance.
 
@@ -71,8 +74,7 @@ Tailscale.
    enabled here.
 
 1. Click on the **&hellip;** icon at the right side and select the "Disable key
-   expiry" option. See [Key expiry][tailscale_info_key_expiry] for more
-   information.
+   expiry" option.
 
 ## Add-on configuration
 
