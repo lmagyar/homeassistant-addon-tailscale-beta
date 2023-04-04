@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0.5 (forked)
+
+- Remove duplicate status checks from dependant S6 services
+
 ## 0.9.0.4 (forked)
 
 - Remove unneeded add-on privileges
