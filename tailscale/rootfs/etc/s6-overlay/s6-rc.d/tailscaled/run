@@ -17,7 +17,6 @@ rm -rf /data/ssh/*
 [[ -d /data/files/ ]] && rmdir /data/files
 [[ -d /data/ssh/ ]] && rmdir /data/ssh
 
-# Configure both state and statedir for tailscale serve command to work properly
 options+=(--state=/data/tailscaled.state)
 options+=(--statedir=/data/state)
 # Opt out of client log upload to log.tailscale.io
