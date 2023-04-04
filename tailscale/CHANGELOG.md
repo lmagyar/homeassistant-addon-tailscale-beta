@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.10.0.1 (forked)
+
+- Add support for Taildrop
+
 ## 0.9.0.6 (forked)
 
 - Use the default add-on network config UI for SOCKS5 and HTTP outbound proxy port configuration
