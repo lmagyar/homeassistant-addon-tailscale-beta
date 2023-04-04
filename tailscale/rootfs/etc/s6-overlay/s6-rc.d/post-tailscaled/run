@@ -37,7 +37,6 @@ for address in "${addresses[@]}"; do
       [[ $(</proc/sys/net/ipv4/ip_forward) -eq 0 ]] && continue
     fi
 
-    # Extract unique routes
     ipinfo="$(/usr/bin/ipcalc --json "${address}")"
     routes+=("$(bashio::jq "${ipinfo}" '.NETWORK + "/" + .PREFIX')")
   fi
