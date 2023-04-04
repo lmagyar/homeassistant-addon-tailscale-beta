@@ -2,7 +2,7 @@
 
 ## 0.9.0.5 (forked)
 
-- Remove duplicate status checks from dependant S6 services
+- Remove duplicate status checks from dependent S6 services
 
 ## 0.9.0.4 (forked)
 
