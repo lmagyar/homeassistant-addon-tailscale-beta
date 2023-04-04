@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.9.0.6 (forked)
+
+- Use the default add-on network config UI for SOCKS5 and HTTP outbound proxy port configuration
+
 ## 0.9.0.5 (forked)
 
 - Remove duplicate status checks from dependent S6 services
