@@ -187,34 +187,19 @@ proxying for HTTPS communication.
 More information: [Tailscale Funnel][tailscale_info_funnel]
 
 1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
-   and add the below policy entries to the policy file. **Note**: _Replace
-   \<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS\> with your email address!_
-   See [Server role accounts using ACL tags][tailscale_info_acls] for more
-   information.
+   and add the below policy entries to the policy file. See [Server role
+   accounts using ACL tags][tailscale_info_acls] for more information.
 
    ```json
    {
-     "tagOwners": {
-       "tag:funnel": ["<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS>"],
-     },
      "nodeAttrs": [
        {
-         "target": ["tag:funnel"],
+         "target": ["autogroup:members"],
          "attr":   ["funnel"],
        },
      ],
    }
    ```
-
-1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
-   find your Home Assistant instance.
-
-1. Click on the **&hellip;** icon at the right side and select the "Edit ACL
-   tags..." option:
-
-   - Add `tag:funnel` to the list.
-
-   - Click "Save" to apply tags.
 
 1. Restart the add-on.
 
