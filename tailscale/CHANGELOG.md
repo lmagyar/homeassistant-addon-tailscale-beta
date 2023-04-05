@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.10.0.1 (forked)
 
 - Add support for Taildrop
 - Remove ACL tagging recommendation from Funnel documentation, finally `autogroup:members` works
