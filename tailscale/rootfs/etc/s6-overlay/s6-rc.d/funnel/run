@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 # ==============================================================================
 # Home Assistant Community Add-on: Tailscale
-# Enables Tailscale Proxy feature
+# Enables Tailscale Funnel feature
 # ==============================================================================
 
 declare domain
@@ -21,7 +21,7 @@ domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertD
 if ! /opt/tailscale status --self=true --peers=false --json \
   | jq -rce '.Self.Capabilities[] | select(startswith("https://tailscale.com/cap/funnel-ports?ports="))' > /dev/null;
 then
-  bashio::log.notice "Tailscale's Funnel support is disabled for this device, therefore add-on's Tailscale Funnel functionality is disabled"
+  bashio::log.notice "Tailscale's Funnel support is disabled, therefore add-on's Tailscale Funnel functionality is disabled"
   bashio::exit.ok
 fi
 

@@ -119,6 +119,14 @@ more severe level, e.g., `debug` also shows `info` messages. By default,
 the `log_level` is set to `info`, which is the recommended setting unless
 you are troubleshooting.
 
+## Taildrop
+
+This add-on support [Tailscale's Taildrop][taildrop] feature, which allows
+you to send files to your Home Assistant instance from other Tailscale
+devices.
+
+Received files are stored in the `/share/taildrop` directory.
+
 ## Tailscale Proxy
 
 Tailscale can provide a TLS certificate for your Home Assistant device within
@@ -179,34 +187,19 @@ proxying for HTTPS communication.
 More information: [Tailscale Funnel][tailscale_info_funnel]
 
 1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
-   and add the below policy entries to the policy file. **Note**: _Replace
-   \<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS\> with your email address!_
-   See [Server role accounts using ACL tags][tailscale_info_acls] for more
-   information.
+   and add the below policy entries to the policy file. See [Server role
+   accounts using ACL tags][tailscale_info_acls] for more information.
 
    ```json
    {
-     "tagOwners": {
-       "tag:funnel": ["<CHANGE-IT-TO-YOUR-TAILSCALE-LOGIN-EMAIL-ADDRESS>"],
-     },
      "nodeAttrs": [
        {
-         "target": ["tag:funnel"],
+         "target": ["autogroup:members"],
          "attr":   ["funnel"],
        },
      ],
    }
    ```
-
-1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
-   find your Home Assistant instance.
-
-1. Click on the **&hellip;** icon at the right side and select the "Edit ACL
-   tags..." option:
-
-   - Add `tag:funnel` to the list.
-
-   - Click "Save" to apply tags.
 
 1. Restart the add-on.
 
@@ -242,6 +235,7 @@ issue here with the forked add-on][issue_forked] on GitHub.
 [issue]: https://github.com/hassio-addons/addon-tailscale/issues
 [issue_forked]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
 [reddit]: https://reddit.com/r/homeassistant
+[taildrop]: https://tailscale.com/taildrop/
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
 [tailscale_acls]: https://login.tailscale.com/admin/acls
