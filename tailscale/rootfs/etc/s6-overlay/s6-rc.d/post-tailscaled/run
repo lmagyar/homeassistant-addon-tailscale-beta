@@ -47,6 +47,9 @@ readarray -t routes < <(printf "%s\n" "${routes[@]}" | sort -u)
 # Get configured tags
 tags=$(bashio::config "tags//[] | join(\",\")" "")
 
+# Get server to login against
+login_server=$(bashio::config 'login_server' 'https://controlplane.tailscale.com')
+
 # Wait for socket to be available
 while ! bashio::fs.socket_exists "/var/run/tailscale/tailscaled.sock";
 do
@@ -67,7 +70,8 @@ if ! /opt/tailscale up \
   --advertise-exit-node \
   --accept-routes \
   --advertise-routes="${routes[*]}" \
-  --advertise-tags="${tags}";
+  --advertise-tags="${tags}" \
+  --login-server="${login_server}"
 then
   bashio::log.error "Unable to start up Tailscale"
   bashio::exit.nok
