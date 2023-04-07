@@ -8,6 +8,7 @@ declare -a addresses=()
 declare -a routes=()
 declare ipinfo
 declare tags
+declare login_server
 
 function appendarray() {
   local -n array=${1}

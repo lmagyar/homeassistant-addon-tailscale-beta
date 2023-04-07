@@ -121,8 +121,9 @@ you are troubleshooting.
 
 ### Option: `login_server`
 
-This option allows you to specify an alternative login server instead of the default `https://controlplane.tailscale.com`.
-You can for example specify a selfhosted [headscale](https://github.com/juanfont/headscale) instance.
+This option allows you to specify an alternative login server instead of the
+default `https://controlplane.tailscale.com`. You can for example specify a
+selfhosted [headscale][headscale] instance.
 
 ## Taildrop
 
@@ -236,6 +237,7 @@ issue here with the forked add-on][issue_forked] on GitHub.
 
 [discord]: https://discord.gg/c5DvZ4e
 [forum]: https://community.home-assistant.io/
+[headscale]: https://github.com/juanfont/headscale
 [http_integration]: https://www.home-assistant.io/integrations/http/
 [issue]: https://github.com/hassio-addons/addon-tailscale/issues
 [issue_forked]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
