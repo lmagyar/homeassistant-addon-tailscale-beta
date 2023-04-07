@@ -22,7 +22,7 @@ host_network: true
 map:
   - share:rw
 ports:
-  1080/tcp: 1080
+  1080/tcp: 1081
 schema:
   tags: ["match(^tag:[a-zA-Z0-9]-?[a-zA-Z0-9]+$)?"]
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
