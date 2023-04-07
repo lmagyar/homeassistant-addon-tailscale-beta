@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.10.1.1 (forked)
 
 - Allow customizing the login server (from PR [#175](https://github.com/hassio-addons/addon-tailscale/pull/175) by [@reey](https://github.com/reey))
 - Merge changes from original add-on
