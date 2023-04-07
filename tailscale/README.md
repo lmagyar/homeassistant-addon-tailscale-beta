@@ -12,6 +12,7 @@
 >   - Enables Tailscale's Funnel feature
 >   - Enables Tailscale's Proxy feature
 >   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
+>   - Allows customizing the login server
 
 ![Warning][warning_stripe]
 

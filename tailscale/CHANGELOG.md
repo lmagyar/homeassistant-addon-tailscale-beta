@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.10.1.3 (forked)
+
+- Put local UI webserver on to different port than original add-on's
+
+## 0.10.1.2 (forked)
+
+- Bugfix for login server config
+
+## 0.10.1.1 (forked)
+
+- Allow customizing the login server (from PR [#175](https://github.com/hassio-addons/addon-tailscale/pull/175) by [@reey](https://github.com/reey))
+- Merge changes from original add-on
+  - Update tailscale/tailscale to v1.38.4
+
 ## 0.10.0.1 (forked)
 
 - Remove ACL tagging recommendation from Funnel documentation, finally `autogroup:members` works
