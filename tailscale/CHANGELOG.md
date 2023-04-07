@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge changes from original add-on
+  - Update tailscale/tailscale to v1.38.4
+
 ## 0.10.0.1 (forked)
 
 - Remove ACL tagging recommendation from Funnel documentation, finally `autogroup:members` works
