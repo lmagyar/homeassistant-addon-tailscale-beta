@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Put local UI webserver on to different port than original add-on's
+
 ## 0.10.1.2 (forked)
 
 - Bugfix for login server config
