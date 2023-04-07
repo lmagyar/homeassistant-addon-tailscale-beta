@@ -8,5 +8,9 @@ configuration:
     name: Log level
     description: >-
       Controls the level of log details the add-on provides.
+  login_server:
+    name: Login server
+    description: >-
+      This option allows you to specify an alternative login server instead of the default `https://controlplane.tailscale.com`.
 network:
   1080/tcp: SOCKS5 and HTTP proxy port for outbound connections into your Tailscale network (make empty to disable).
