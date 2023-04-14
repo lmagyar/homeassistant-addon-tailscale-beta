@@ -89,14 +89,8 @@ tags:
   - tag:example
   - tag:homeassistant
 log_level: info
+login_server: "https://controlplane.tailscale.com"
 ```
-
-### Option: `tags`
-
-This option allows you to specify specific ACL tags for this Tailscale
-instance. They need to start with `tag:`.
-
-More information: [ACL tags][tailscale_info_acls]
 
 ### Option: `log_level`
 
@@ -122,9 +116,17 @@ you are troubleshooting.
 
 ### Option: `login_server`
 
-This option allows you to specify an alternative login server instead of the
-default `https://controlplane.tailscale.com`. You can for example specify a
-selfhosted [headscale][headscale] instance.
+This option lets you specify you to specify a custom control server instead of
+the default (`https://controlplane.tailscale.com`). This is useful if you
+are running your own Tailscale control server, for example, a self-hosted
+[Headscale] instance.
+
+### Option: `tags`
+
+This option allows you to specify specific ACL tags for this Tailscale
+instance. They need to start with `tag:`.
+
+More information: [ACL tags][tailscale_info_acls]
 
 ## Taildrop
 

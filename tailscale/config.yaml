@@ -24,7 +24,7 @@ map:
 ports:
   1080/tcp: 1080
 schema:
-  tags: ["match(^tag:[a-zA-Z0-9]-?[a-zA-Z0-9]+$)?"]
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
-  login_server: str?
+  login_server: url?
+  tags: ["match(^tag:[a-zA-Z0-9]-?[a-zA-Z0-9]+$)?"]
 image: ghcr.io/lmagyar/{arch}-addon-tailscale
