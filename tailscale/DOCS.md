@@ -140,11 +140,13 @@ instance. They need to start with `tag:`.
 
 More information: [ACL tags][tailscale_info_acls]
 
-## Taildrop
+### Option: `taildrop`
 
 This add-on support [Tailscale's Taildrop][taildrop] feature, which allows
 you to send files to your Home Assistant instance from other Tailscale
 devices.
+
+When not set, this option is enabled by default.
 
 Received files are stored in the `/share/taildrop` directory.
 
