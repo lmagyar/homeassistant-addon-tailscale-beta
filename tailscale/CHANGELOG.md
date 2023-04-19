@@ -2,7 +2,9 @@
 
 ## vNext (forked)
 
-- Update Add-on base image to v13.2.1
+- Merge changes from original add-on
+  - Make exit node advertisement configurable (#183)
+  - Update Add-on base image to v13.2.1
 
 ## 0.10.1.3 (forked)
 
