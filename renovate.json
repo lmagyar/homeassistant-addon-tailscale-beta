@@ -52,6 +52,7 @@
       "automerge": true
     },
     {
+      "groupName": "Tailscale",
       "matchDatasources": ["github-releases"],
       "matchDepNames": ["tailscale/tailscale"],
       "matchUpdateTypes": ["minor", "patch"],
