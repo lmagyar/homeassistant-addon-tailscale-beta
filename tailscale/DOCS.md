@@ -1,10 +1,10 @@
-# Home Assistant Custom Add-on: Tailscale
+# Home Assistant Custom Add-on: Tailscale with features
 
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
 >
-> This fork:
+> Changes:
 >   - Enables Tailscale's Funnel feature
 >   - Enables Tailscale's Proxy feature
 >   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
@@ -30,23 +30,25 @@ however, it is nice to know where you need to go later on.
    **Add-on Store**.
 1. In the **...** menu at the top right corner click **Repositories**, add
    `https://github.com/lmagyar/homeassistant-addon-tailscale` as repository.
-1. Find the "Tailscale" add-on and click it. If it doesn't show up, wait until
-   HA refreshes the information about the add-on, or click **Reload** in the
-   **...** menu at the top right corner.
+1. Find the "Tailscale with features" add-on and click it. If it doesn't show
+   up, wait until HA refreshes the information about the add-on, or click
+   **Reload** in the **...** menu at the top right corner.
 1. Click the "INSTALL" button to install the add-on.
 
 ## How to use
 
-1. Start the "Tailscale" add-on.
-1. Check the logs of the "Tailscale" add-on to see if everything went well.
-1. Open the **Web UI** of the "Tailscale" add-on to complete authentication and
-   couple your Home Assistant instance with your Tailscale account.
+1. Start the "Tailscale with features" add-on.
+1. Check the logs of the "Tailscale with features" add-on to see if everything
+   went well.
+1. Open the **Web UI** of the "Tailscale with features" add-on to complete
+   authentication and couple your Home Assistant instance with your Tailscale
+   account.
 
    **Note:** _Some browsers don't work with this step. It is recommended to
    complete this step on a desktop or laptop computer using the Chrome browser._
 
-1. Check the logs of the "Tailscale" add-on again to see if everything went
-   well.
+1. Check the logs of the "Tailscale with features" add-on again to see if
+   everything went well.
 
 ## Configuration
 
@@ -248,15 +250,13 @@ You have several options to get them answered:
 - The Home Assistant [Community Forum][forum].
 - Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
 
-You could also [open an issue here with the original add-on][issue] or [open an
-issue here with the forked add-on][issue_forked] on GitHub.
+You could also [open an issue here][issue] on GitHub.
 
 [discord]: https://discord.gg/c5DvZ4e
 [forum]: https://community.home-assistant.io/
 [headscale]: https://github.com/juanfont/headscale
 [http_integration]: https://www.home-assistant.io/integrations/http/
-[issue]: https://github.com/hassio-addons/addon-tailscale/issues
-[issue_forked]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
+[issue]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
 [reddit]: https://reddit.com/r/homeassistant
 [taildrop]: https://tailscale.com/taildrop/
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
