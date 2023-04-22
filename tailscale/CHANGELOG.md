@@ -5,7 +5,8 @@
 - Merge changes from original add-on
   - Make Taildrop configurable
   - Make exit node advertisement configurable
-  - Update Add-on base image to v13.2.1
+  - Add custom control server support
+  - Update Add-on base image to v13.2.2
 
 ## 0.10.1.3 (forked)
 
