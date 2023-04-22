@@ -2,17 +2,15 @@
 | <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-beta/raw/main/images/stop_sign.png" title="Stop"> | This is a beta repository! Please use the non-beta https://github.com/lmagyar/homeassistant-addon-tailscale repository! This beta repository is for myself to experiment and test. After it works I delete even the images from docker. | <img src="https://github.com/lmagyar/homeassistant-addon-tailscale-beta/raw/main/images/stop_sign.png" title="Stop"> |
 | --- | --- | --- |
 
-# Home Assistant Custom Add-on: Tailscale
+# Home Assistant Custom Add-on: Tailscale with features
 
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
 >
-> This fork:
+> Changes:
 >   - Enables Tailscale's Funnel feature
 >   - Enables Tailscale's Proxy feature
->   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
->   - Allows customizing the login server
 
 ![Warning][warning_stripe]
 

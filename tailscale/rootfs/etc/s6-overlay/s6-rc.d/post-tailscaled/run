@@ -5,15 +5,40 @@
 # Runs after the machine has been logged in into the Tailscale network
 # ==============================================================================
 declare -a addresses=()
+declare -a options
 declare -a routes=()
 declare ipinfo
-declare tags
 declare login_server
+declare tags
 
 function appendarray() {
   local -n array=${1}
   readarray -t -O "${#array[@]}" array
 }
+
+# Default options
+options+=(--accept-routes)
+options+=(--hostname "$(bashio::info.hostname)")
+
+# Advertise as exit node by default when not set, or when explicitly enabled
+if ! bashio::config.has_value "advertise_exit_node" || \
+  bashio::config.true "advertise_exit_node";
+then
+  options+=(--advertise-exit-node)
+else
+  options+=(--advertise-exit-node=false)
+fi
+
+# Get configured control server
+if bashio::config.has_value "login_server";
+then
+  login_server=$(bashio::config "login_server")
+  options+=(--login-server="${login_server}")
+fi
+
+# Get configured tags
+tags=$(bashio::config "tags//[] | join(\",\")" "")
+options+=(--advertise-tags="${tags}")
 
 # Find interfaces and matching addresses from which we can extract routes to be advertised
 for interface in $(bashio::network.interfaces); do
@@ -42,38 +67,24 @@ for address in "${addresses[@]}"; do
     routes+=("$(bashio::jq "${ipinfo}" '.NETWORK + "/" + .PREFIX')")
   fi
 done
+
 # Remove duplicate entries
 readarray -t routes < <(printf "%s\n" "${routes[@]}" | sort -u)
 
-# Get configured tags
-tags=$(bashio::config "tags//[] | join(\",\")" "")
+IFS=","
+options+=(--advertise-routes="${routes[*]}")
+unset IFS
 
-# Get server to login against
-login_server=$(bashio::config 'login_server' 'https://controlplane.tailscale.com')
-
-# Wait for socket to be available
-while ! bashio::fs.socket_exists "/var/run/tailscale/tailscaled.sock";
-do
-  sleep 1
-done
-
-# Wait for the network to be available
-while ! /opt/tailscale status --json --peers=false --self=false \
-  | jq --exit-status '.BackendState == "Running" or .BackendState == "NeedsLogin"' > /dev/null;
+# Wait for the network to be available and logged in
+while ! bashio::fs.socket_exists "/var/run/tailscale/tailscaled.sock" || \
+  ! /opt/tailscale status --json --peers=false --self=false \
+    | jq --exit-status '.BackendState == "Running" or .BackendState == "NeedsLogin"' > /dev/null;
 do
   sleep 2
 done
 
 # Start Tailscale
-IFS=","
-if ! /opt/tailscale up \
-  --hostname "$(bashio::info.hostname)" \
-  --advertise-exit-node \
-  --accept-routes \
-  --advertise-routes="${routes[*]}" \
-  --ssh=false \
-  --advertise-tags="${tags}" \
-  --login-server="${login_server}"
+if ! /opt/tailscale up "${options[@]}"
 then
   bashio::log.error "Unable to start up Tailscale"
   bashio::exit.nok

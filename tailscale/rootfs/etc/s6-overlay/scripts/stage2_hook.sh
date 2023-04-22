@@ -2,15 +2,10 @@
 # shellcheck shell=bash
 # ==============================================================================
 # Home Assistant Community Add-on: Tailscale
-# Runs tailscale web interface
+# S6 Overlay stage2 hook to customize services
 # ==============================================================================
-declare -a options
 
-bashio::log.info 'Starting Tailscale web...'
-
-options+=(web)
-# Get random port
-options+=(--listen 127.0.0.1:25897)
-
-# Run Tailscale
-exec /opt/tailscale "${options[@]}"
+# Disable taildrop service when it is has been explicitly disabled
+if bashio::config.false 'taildrop'; then
+    rm /etc/s6-overlay/s6-rc.d/user/contents.d/taildrop
+fi
