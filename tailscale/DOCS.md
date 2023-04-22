@@ -10,6 +10,13 @@
 
 ![Warning][warning_stripe]
 
+Tailscale is a zero config VPN, which installs on any device in minutes,
+including your Home Assistant instance.
+
+Create a secure network between your servers, computers, and cloud instances.
+Even when separated by firewalls or subnets, Tailscale just works. Tailscale
+manages firewall rules for you, and works from anywhere you are.
+
 ## Prerequisites
 
 In order to use this add-on, you'll need a Tailscale account.
