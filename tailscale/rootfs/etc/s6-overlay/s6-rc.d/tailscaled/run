@@ -5,7 +5,6 @@
 # Runs tailscale
 # ==============================================================================
 declare -a options
-declare outbound_proxy_port
 
 bashio::log.info 'Starting Tailscale...'
 
@@ -24,13 +23,6 @@ options+=(--statedir=/data/state)
 # Opt out of client log upload to log.tailscale.io
 options+=(--no-logs-no-support)
 options+=(--tun=userspace-networking)
-
-# If outbound proxy port is specified, enable outbound proxy
-outbound_proxy_port=$(bashio::addon.port 1080)
-if bashio::var.has_value "${outbound_proxy_port}"; then
-  options+=(--socks5-server=0.0.0.0:${outbound_proxy_port})
-  options+=(--outbound-http-proxy-listen=0.0.0.0:${outbound_proxy_port})
-fi
 
 # Run Tailscale
 if bashio::debug ; then

@@ -7,7 +7,6 @@
 > Changes:
 >   - Enables Tailscale's Funnel feature
 >   - Enables Tailscale's Proxy feature
->   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
 
 ![Warning][warning_stripe]
 
@@ -67,11 +66,6 @@ supported interfaces to Tailscale.
 
 Consider disabling key expiry to avoid losing connection to your Home Assistant
 device. See [Key expiry][tailscale_info_key_expiry] for more information.
-
-To allow Home Assistant and other add-ons to access your Tailscale network the
-add-on also provides a SOCKS5/HTTP proxy. The proxy protocol is unauthenticated.
-See [Userspace networking][tailscale_info_userspace_networking] for more
-information.
 
 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
    find your Home Assistant instance.
@@ -268,5 +262,4 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
-[tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking/
 [tailscale_machines]: https://login.tailscale.com/admin/machines

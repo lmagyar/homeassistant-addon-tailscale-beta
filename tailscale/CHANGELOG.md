@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Remove Tailscale's SOCKS5 and HTTP outbound proxy (not needed when userspace networking is not used)
 - Merge changes from original add-on
   - Make Taildrop configurable
   - Make exit node advertisement configurable
