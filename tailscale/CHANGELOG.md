@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Make Proxy and Funnel configurable
 - Remove Tailscale's SOCKS5 and HTTP outbound proxy (not needed after userspace networking is dropped)
 - Merge changes from original add-on
   - Update tailscale/tailscale to v1.40.0

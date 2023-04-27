@@ -27,4 +27,5 @@ schema:
   login_server: url?
   tags: ["match(^tag:[a-zA-Z0-9]-?[a-zA-Z0-9]+$)?"]
   taildrop: bool?
+  proxy: bool?
 image: ghcr.io/lmagyar/{arch}-addon-tailscale
