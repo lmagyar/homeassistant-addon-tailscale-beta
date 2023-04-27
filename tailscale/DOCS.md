@@ -1,22 +1,27 @@
-# Home Assistant Custom Add-on: Tailscale
+# Home Assistant Custom Add-on: Tailscale with features
 
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
 >
-> This fork:
+> Changes:
 >   - Enables Tailscale's Funnel feature
 >   - Enables Tailscale's Proxy feature
->   - Enables Tailscale's SOCKS5 and HTTP outbound proxy
->   - Allows customizing the login server
 
 ![Warning][warning_stripe]
+
+Tailscale is a zero config VPN, which installs on any device in minutes,
+including your Home Assistant instance.
+
+Create a secure network between your servers, computers, and cloud instances.
+Even when separated by firewalls or subnets, Tailscale just works. Tailscale
+manages firewall rules for you, and works from anywhere you are.
 
 ## Prerequisites
 
 In order to use this add-on, you'll need a Tailscale account.
 
-It is free to use for personal & hobby projects, up to 20 clients/devices on a
+It is free to use for personal & hobby projects, up to 100 clients/devices on a
 single user account. Sign up using your Google, Microsoft or GitHub account at
 the following URL:
 
@@ -31,23 +36,25 @@ however, it is nice to know where you need to go later on.
    **Add-on Store**.
 1. In the **...** menu at the top right corner click **Repositories**, add
    `https://github.com/lmagyar/homeassistant-addon-tailscale` as repository.
-1. Find the "Tailscale" add-on and click it. If it doesn't show up, wait until
-   HA refreshes the information about the add-on, or click **Reload** in the
-   **...** menu at the top right corner.
+1. Find the "Tailscale with features" add-on and click it. If it doesn't show
+   up, wait until HA refreshes the information about the add-on, or click
+   **Reload** in the **...** menu at the top right corner.
 1. Click the "INSTALL" button to install the add-on.
 
 ## How to use
 
-1. Start the "Tailscale" add-on.
-1. Check the logs of the "Tailscale" add-on to see if everything went well.
-1. Open the **Web UI** of the "Tailscale" add-on to complete authentication and
-   couple your Home Assistant instance with your Tailscale account.
+1. Start the "Tailscale with features" add-on.
+1. Check the logs of the "Tailscale with features" add-on to see if everything
+   went well.
+1. Open the **Web UI** of the "Tailscale with features" add-on to complete
+   authentication and couple your Home Assistant instance with your Tailscale
+   account.
 
    **Note:** _Some browsers don't work with this step. It is recommended to
    complete this step on a desktop or laptop computer using the Chrome browser._
 
-1. Check the logs of the "Tailscale" add-on again to see if everything went
-   well.
+1. Check the logs of the "Tailscale with features" add-on again to see if
+   everything went well.
 
 ## Configuration
 
@@ -67,11 +74,6 @@ supported interfaces to Tailscale.
 Consider disabling key expiry to avoid losing connection to your Home Assistant
 device. See [Key expiry][tailscale_info_key_expiry] for more information.
 
-To allow Home Assistant and other add-ons to access your Tailscale network the
-add-on also provides a SOCKS5/HTTP proxy. The proxy protocol is unauthenticated.
-See [Userspace networking][tailscale_info_userspace_networking] for more
-information.
-
 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
    find your Home Assistant instance.
 
@@ -85,18 +87,26 @@ information.
 ## Add-on configuration
 
 ```yaml
+advertise_exit_node: true
+log_level: info
+login_server: "https://controlplane.tailscale.com"
 tags:
   - tag:example
   - tag:homeassistant
-log_level: info
+taildrop: true
+proxy: true
 ```
 
-### Option: `tags`
+### Option: `advertise_exit_node`
 
-This option allows you to specify specific ACL tags for this Tailscale
-instance. They need to start with `tag:`.
+This option allows you to advertise this Tailscale instance as an exit node.
 
-More information: [ACL tags][tailscale_info_acls]
+By setting a device on your network as an exit node, you can use it to
+route all your public internet traffic as needed, like a consumer VPN.
+
+More information: <https://tailscale.com/kb/1103/exit-nodes/>
+
+When not set, this option is enabled by default.
 
 ### Option: `log_level`
 
@@ -122,19 +132,37 @@ you are troubleshooting.
 
 ### Option: `login_server`
 
-This option allows you to specify an alternative login server instead of the
-default `https://controlplane.tailscale.com`. You can for example specify a
-selfhosted [headscale][headscale] instance.
+This option lets you specify you to specify a custom control server instead of
+the default (`https://controlplane.tailscale.com`). This is useful if you
+are running your own Tailscale control server, for example, a self-hosted
+[Headscale] instance.
 
-## Taildrop
+### Option: `tags`
+
+This option allows you to specify specific ACL tags for this Tailscale
+instance. They need to start with `tag:`.
+
+More information: [ACL tags][tailscale_info_acls]
+
+### Option: `taildrop`
 
 This add-on support [Tailscale's Taildrop][taildrop] feature, which allows
 you to send files to your Home Assistant instance from other Tailscale
 devices.
 
+When not set, this option is enabled by default.
+
 Received files are stored in the `/share/taildrop` directory.
 
-## Tailscale Proxy
+### Option: `proxy`
+
+With Tailscale Proxy, you can present your Home Assistant device on your tailnet
+domain with a valid certificate. With Tailscale Funnel, you can even expose
+it to the public internet.
+
+When not set, this option is enabled by default.
+
+***Tailscale Proxy***
 
 Tailscale can provide a TLS certificate for your Home Assistant device within
 your tailnet domain.
@@ -175,7 +203,7 @@ More information: [Enabling HTTPS][tailscale_info_https]
 previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
 port 443._
 
-## Tailscale Funnel
+***Tailscale Funnel***
 
 With the Tailscale Funnel feature you can access your Home Assistant instance
 from the wider internet using your Tailscale domain (like
@@ -233,15 +261,13 @@ You have several options to get them answered:
 - The Home Assistant [Community Forum][forum].
 - Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
 
-You could also [open an issue here with the original add-on][issue] or [open an
-issue here with the forked add-on][issue_forked] on GitHub.
+You could also [open an issue here][issue] on GitHub.
 
 [discord]: https://discord.gg/c5DvZ4e
 [forum]: https://community.home-assistant.io/
 [headscale]: https://github.com/juanfont/headscale
 [http_integration]: https://www.home-assistant.io/integrations/http/
-[issue]: https://github.com/hassio-addons/addon-tailscale/issues
-[issue_forked]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
+[issue]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
 [reddit]: https://reddit.com/r/homeassistant
 [taildrop]: https://tailscale.com/taildrop/
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
@@ -252,5 +278,4 @@ issue here with the forked add-on][issue_forked] on GitHub.
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
-[tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking/
 [tailscale_machines]: https://login.tailscale.com/admin/machines

@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:13.2.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:13.2.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.38.4"
+ARG TAILSCALE_VERSION="v1.40.0"
 RUN \
     apk add --no-cache \
         ip6tables=1.8.8-r2 \
@@ -35,6 +35,9 @@ RUN \
 
 # Copy root filesystem
 COPY rootfs /
+
+# S6 Overlay stage 2 hook
+ENV S6_STAGE2_HOOK=/etc/s6-overlay/scripts/stage2_hook.sh
 
 # Build arguments
 ARG BUILD_ARCH
