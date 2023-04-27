@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.1 (forked)
 
 - Make Proxy and Funnel configurable
 - Remove Tailscale's SOCKS5 and HTTP outbound proxy (not needed after userspace networking is dropped)
