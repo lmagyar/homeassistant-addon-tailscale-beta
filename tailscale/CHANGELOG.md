@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge changes from original add-on
+  - Drop userspace networking
+
 ## 0.11.1.1 (forked)
 
 - Make Proxy and Funnel configurable
