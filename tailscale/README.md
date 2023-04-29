@@ -6,7 +6,6 @@
 >
 > Changes:
 >   - Enables Tailscale's Funnel feature
->   - Enables Tailscale's Proxy feature
 
 ![Warning][warning_stripe]
 
