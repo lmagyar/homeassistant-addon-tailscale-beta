@@ -33,6 +33,6 @@ configuration:
     name: Tailscale Proxy and Funnel
     description: >-
       This option allows you to enable Tailscale's Proxy and Funnel features to
-      present your Home Assistant device on your tailnet or even on the internet
+      present your Home Assistant instance on your tailnet or even on the internet
       with a valid certificate.
       When not set, this option is enabled by default.
