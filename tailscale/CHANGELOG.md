@@ -3,7 +3,9 @@
 ## vNext (forked)
 
 - Merge changes from original add-on
+  - Enable Tailscale's builtin inbound HTTPS proxy
   - Drop userspace networking
+  - Make accepting magicDNS optional
 
 ## 0.11.1.1 (forked)
 
