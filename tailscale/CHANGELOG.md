@@ -4,6 +4,7 @@
 
 - Merge changes from original add-on
   - Drop userspace networking
+  - Make accepting magicDNS optional
 
 ## 0.11.1.1 (forked)
 
