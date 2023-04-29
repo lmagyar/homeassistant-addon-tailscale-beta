@@ -87,6 +87,7 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 ## Add-on configuration
 
 ```yaml
+accept_dns: true
 advertise_exit_node: true
 log_level: info
 login_server: "https://controlplane.tailscale.com"
@@ -96,6 +97,18 @@ tags:
 taildrop: true
 proxy: true
 ```
+
+### Option: `accept_dns`
+
+If you are experiencing trouble with MagicDNS on this device and wish to
+disable, you can do so using this option.
+
+When not set, this option is enabled by default.
+
+MagicDNS may cause issues if you run things like Pi-hole or AdGuard Home
+on the same machine as this add-on. In such cases disabling `accept_dns`
+will help. You can still leverage MagicDNS on other devices on your network,
+by adding `100.100.100.100` as a DNS server in your Pi-hole or AdGuard Home.
 
 ### Option: `advertise_exit_node`
 
