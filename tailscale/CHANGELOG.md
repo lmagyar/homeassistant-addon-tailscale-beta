@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.2 (forked)
 
 - Merge (unreleased) changes from original add-on
   - Enable Tailscale's builtin inbound HTTPS proxy
