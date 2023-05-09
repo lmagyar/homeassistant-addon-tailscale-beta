@@ -1,8 +1,8 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.2 (forked)
 
-- Merge changes from original add-on
+- Merge (unreleased) changes from original add-on
   - Enable Tailscale's builtin inbound HTTPS proxy
   - Drop userspace networking
   - Make accepting magicDNS optional
@@ -11,7 +11,7 @@
 
 - Make Proxy and Funnel configurable
 - Remove Tailscale's SOCKS5 and HTTP outbound proxy (not needed after userspace networking is dropped)
-- Merge changes from original add-on
+- Merge (unreleased) changes from original add-on
   - Update tailscale/tailscale to v1.40.0
   - Make Taildrop configurable
   - Make exit node advertisement configurable
