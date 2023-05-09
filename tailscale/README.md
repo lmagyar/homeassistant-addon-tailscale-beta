@@ -7,7 +7,7 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Enables Tailscale's Funnel feature
+>   - Enable Tailscale's Funnel feature
 
 ![Warning][warning_stripe]
 
