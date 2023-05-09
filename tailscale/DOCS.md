@@ -226,8 +226,8 @@ from the wider internet using your Tailscale domain (like
 Tailscale VPN client** (eg. general phones, tablets, laptops).
 
 > **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
-  _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP
-  web-server)
+> _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP
+> web-server)
 
 Without the Tailscale Funnel feature, you will be able to access your Home
 Assistant instance only when your devices (eg. phones, tablets, laptops) are
@@ -245,9 +245,9 @@ More information: [Tailscale Funnel][tailscale_info_funnel]
      "nodeAttrs": [
        {
          "target": ["autogroup:members"],
-         "attr":   ["funnel"],
-       },
-     ],
+         "attr": ["funnel"]
+       }
+     ]
    }
    ```
 
