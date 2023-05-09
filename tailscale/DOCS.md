@@ -5,8 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Enables Tailscale's Funnel feature
->   - Enables Tailscale's Proxy feature
+>   - Enable Tailscale's Funnel feature
 
 ![Warning][warning_stripe]
 
@@ -87,6 +86,7 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 ## Add-on configuration
 
 ```yaml
+accept_dns: true
 advertise_exit_node: true
 log_level: info
 login_server: "https://controlplane.tailscale.com"
@@ -95,7 +95,20 @@ tags:
   - tag:homeassistant
 taildrop: true
 proxy: true
+funnel: true
 ```
+
+### Option: `accept_dns`
+
+If you are experiencing trouble with MagicDNS on this device and wish to
+disable, you can do so using this option.
+
+When not set, this option is enabled by default.
+
+MagicDNS may cause issues if you run things like Pi-hole or AdGuard Home
+on the same machine as this add-on. In such cases disabling `accept_dns`
+will help. You can still leverage MagicDNS on other devices on your network,
+by adding `100.100.100.100` as a DNS server in your Pi-hole or AdGuard Home.
 
 ### Option: `advertise_exit_node`
 
@@ -156,30 +169,24 @@ Received files are stored in the `/share/taildrop` directory.
 
 ### Option: `proxy`
 
-With Tailscale Proxy, you can present your Home Assistant device on your tailnet
-domain with a valid certificate. With Tailscale Funnel, you can even expose
-it to the public internet.
-
 When not set, this option is enabled by default.
 
-***Tailscale Proxy***
-
-Tailscale can provide a TLS certificate for your Home Assistant device within
+Tailscale can provide a TLS certificate for your Home Assistant instance within
 your tailnet domain.
 
-This can prevent browsers to warn that HTTP URLs to your Home Assistant device
-look unencrypted (browsers are not aware of that connections between Tailscale
+This can prevent browsers from warning that HTTP URLs to your Home Assistant instance
+look unencrypted (browsers are not aware of the connections between Tailscale
 nodes are secured with end-to-end encryption).
 
 More information: [Enabling HTTPS][tailscale_info_https]
 
-1. Configure Home Assistant to be accessible through HTTP connection (this is
+1. Configure Home Assistant to be accessible through an HTTP connection (this is
    the default). See [HTTP integration documentation][http_integration] for more
    information. If you still want to use another HTTPS connection to access Home
    Assistant, please use a reverse proxy add-on.
 
 1. Home Assistant, by default, blocks requests from reverse proxies, like the
-   Tailscale Proxy. In order to enable it, add the following lines to your
+   Tailscale Proxy. To enable it, add the following lines to your
    `configuration.yaml`, without changing anything:
 
    ```yaml
@@ -199,11 +206,15 @@ More information: [Enabling HTTPS][tailscale_info_https]
 
 1. Restart the add-on.
 
-**Note:** _You should not use any port number in the url that you used
+**Note:** _You should not use any port number in the URL that you used
 previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
 port 443._
 
-***Tailscale Funnel***
+### Option: `funnel`
+
+This requires Tailscale Proxy to be enabled.
+
+When not set, this option is enabled by default.
 
 With the Tailscale Funnel feature you can access your Home Assistant instance
 from the wider internet using your Tailscale domain (like
@@ -211,8 +222,8 @@ from the wider internet using your Tailscale domain (like
 Tailscale VPN client** (eg. general phones, tablets, laptops).
 
 > **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
-  _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP
-  web-server)
+> _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP
+> web-server)
 
 Without the Tailscale Funnel feature, you will be able to access your Home
 Assistant instance only when your devices (eg. phones, tablets, laptops) are
@@ -230,9 +241,9 @@ More information: [Tailscale Funnel][tailscale_info_funnel]
      "nodeAttrs": [
        {
          "target": ["autogroup:members"],
-         "attr":   ["funnel"],
-       },
-     ],
+         "attr": ["funnel"]
+       }
+     ]
    }
    ```
 

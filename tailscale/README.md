@@ -1,16 +1,15 @@
 # Home Assistant Custom Add-on: Tailscale with features
 
+Zero config VPN for building secure networks.
+
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Enables Tailscale's Funnel feature
->   - Enables Tailscale's Proxy feature
+>   - Enable Tailscale's Funnel feature
 
 ![Warning][warning_stripe]
-
-Zero config VPN for building secure networks.
 
 [![GitHub Release][releases-shield]][releases]
 [![Last Updated][updated-shield]][updated]
