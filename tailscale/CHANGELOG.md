@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1.4 (forked)
+
+- Protect local subnets from being routed toward Tailscale subnets if they collide
+
 ## 0.11.1.3 (forked)
 
 - Make userspace networking configurable
