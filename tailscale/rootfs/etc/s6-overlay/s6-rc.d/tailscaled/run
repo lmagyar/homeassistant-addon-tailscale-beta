@@ -5,6 +5,7 @@
 # Runs tailscale
 # ==============================================================================
 declare -a options
+declare -a routes=()
 
 bashio::log.info 'Starting Tailscale...'
 
@@ -30,6 +31,19 @@ then
   options+=(--tun=userspace-networking)
 else
   options+=(--tun=tailscale1)
+fi
+
+# In case of non userspace networking add local subnets to ip rules with higher priority than Tailscale's routing
+if bashio::config.false "userspace_networking"; then
+  readarray -t routes < <(subnet-routes)
+  if (( 0 < ${#routes[@]} )); then
+      bashio::log.info "Adding local subnets to ip rules with higher priority than Tailscale's routing,"
+      bashio::log.info "to prevent routing local subnets if the same subnet is routed within your tailnet."
+  fi
+  for route in "${routes[@]}"; do
+      bashio::log.info "Adding route ${route} to ip rules"
+      ip rule add to "${route}" priority 5000 table main
+  done
 fi
 
 # Run Tailscale
