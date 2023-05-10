@@ -184,9 +184,10 @@ If you need to access other clients on your Tailnet from your Home Assistant
 instance, ie. you need a VPN tunnel, a `tailscale0` network interface (like
 Ethernet or Wi-Fi), disable userspace networking mode.
 
-Be aware, that disabling userspace networking mode (ie. adding a new network
-interface to the host), in some cases can change your network settings in a way,
-that can make your instance unreachable through any network.
+In case your local subnets collide with subnet routes within your tailnet, your
+local network access has priority and these addresses won't be routed toward
+your tailnet. This will prevent your Home Assistant instance to lose network
+conection. 
 
 ### Option: `proxy`
 
