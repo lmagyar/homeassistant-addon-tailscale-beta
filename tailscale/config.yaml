@@ -1,6 +1,6 @@
 ---
 name: Tailscale with features
-version: 0.11.1.2
+version: 0.11.1.3
 slug: tailscale
 description: Zero config VPN for building secure networks
 url: https://github.com/lmagyar/homeassistant-addon-tailscale
@@ -33,6 +33,7 @@ schema:
   login_server: url?
   tags: ["match(^tag:[a-zA-Z0-9]-?[a-zA-Z0-9]+$)?"]
   taildrop: bool?
+  userspace_networking: bool?
   proxy: bool?
   funnel: bool?
 image: ghcr.io/lmagyar/{arch}-addon-tailscale
