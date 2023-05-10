@@ -10,6 +10,7 @@
 >
 > Changes:
 >   - Enable Tailscale's Funnel feature
+>   - Make userspace networking configurable
 
 ![Warning][warning_stripe]
 

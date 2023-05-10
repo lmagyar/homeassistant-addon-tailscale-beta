@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Make userspace networking configurable
+
 ## 0.11.1.2 (forked)
 
 - Merge (unreleased) changes from original add-on
