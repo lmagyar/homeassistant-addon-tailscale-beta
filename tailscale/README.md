@@ -9,6 +9,7 @@ Zero config VPN for building secure networks.
 > Changes:
 >   - Enable Tailscale's Funnel feature
 >   - Make userspace networking configurable
+>   - Protect local subnets from being routed toward Tailscale subnets if they collide
 
 ![Warning][warning_stripe]
 
