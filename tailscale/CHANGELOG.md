@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Protect local subnets from being routed toward Tailscale subnets if they are identical
+
 ## 0.11.1.3 (forked)
 
 - Make userspace networking configurable
