@@ -22,7 +22,15 @@ options+=(--statedir=/data/state)
 
 # Opt out of client log upload to log.tailscale.io
 options+=(--no-logs-no-support)
-options+=(--tun=tailscale1)
+
+# Use userspace networking by default when not set, or when explicitly enabled
+if ! bashio::config.has_value "userspace_networking" || \
+  bashio::config.true "userspace_networking";
+then
+  options+=(--tun=userspace-networking)
+else
+  options+=(--tun=tailscale1)
+fi
 
 # Run Tailscale
 if bashio::debug ; then

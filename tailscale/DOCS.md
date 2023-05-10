@@ -98,6 +98,7 @@ tags:
   - tag:example
   - tag:homeassistant
 taildrop: true
+userspace_networking: true
 proxy: true
 funnel: true
 ```
@@ -170,6 +171,21 @@ devices.
 When not set, this option is enabled by default.
 
 Received files are stored in the `/share/taildrop` directory.
+
+### Option: `userspace_networking`
+
+The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
+to make your Home Assistant instance accessible within your Tailnet.
+
+When not set, this option is enabled by default.
+
+If you need to access other clients on your Tailnet from your Home Assistant
+instance, ie. you need a VPN tunnel, a `tailscale0` network interface (like
+Ethernet or Wi-Fi), disable userspace networking mode.
+
+Be aware, that disabling userspace networking mode, ie. adding a new network
+interface to the host, in some cases can change your routing in a way that can
+make your instance unreachable through any network.
 
 ### Option: `proxy`
 
@@ -293,4 +309,5 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
+[tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking/
 [tailscale_machines]: https://login.tailscale.com/admin/machines
