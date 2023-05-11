@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.40.1
+
 ## 0.11.1.4 (forked)
 
 - Protect local subnets from being routed toward Tailscale subnets if they collide
