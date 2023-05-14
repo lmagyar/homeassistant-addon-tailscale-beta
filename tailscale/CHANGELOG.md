@@ -2,7 +2,14 @@
 
 ## vNext (forked)
 
-- Update Add-on base image to v14 (Update Alpine base image to v3.18.0)
+- Merge (unreleased) changes from original add-on
+  - Update coreutils to v9.3-r1
+  - Update ipcalc to v1.0.2-r0
+  - Update iproute2 to v6.3.0-r0
+  - Update iptables to v1.8.9-r2
+  - Update ip6tables to v1.8.9-r2
+  - Update nginx to v1.24.0-r3
+  - Update Add-on base image to v14 (Update Alpine base image to v3.18.0)
 
 ## 0.11.1.5 (forked)
 
