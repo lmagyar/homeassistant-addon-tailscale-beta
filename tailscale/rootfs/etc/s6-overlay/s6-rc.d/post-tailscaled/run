@@ -6,6 +6,7 @@
 # ==============================================================================
 declare -a options
 declare -a routes=()
+declare -a colliding_routes=()
 declare login_server
 declare tags
 
@@ -70,3 +71,19 @@ do
 done
 
 bashio::log.info "Tailscale is running"
+
+# Notify about colliding subnet routes
+readarray -t colliding_routes < <(comm -1 -2 \
+  <(printf '%s\n' "${routes[@]}") \
+  <(/opt/tailscale status --json --peers=true --self=false \
+    | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
+    | sort -u))
+if (( 0 < ${#colliding_routes[@]} )); then
+  bashio::log.warning "Currently the following subnets are both present as local subnets"
+  bashio::log.warning "and are also routed within your tailnet to other nodes!"
+  bashio::log.warning "Please reconfigure your subnet routing within your tailnet"
+  bashio::log.warning "to prevent collisions."
+fi
+for route in "${colliding_routes[@]}"; do
+  bashio::log.warning "  ${route}"
+done

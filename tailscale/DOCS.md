@@ -188,7 +188,8 @@ Ethernet or Wi-Fi), disable userspace networking mode.
 In case your local subnets collide with subnet routes within your tailnet, your
 local network access has priority and these addresses won't be routed toward
 your tailnet. This will prevent your Home Assistant instance to lose network
-conection.
+conection. This also means that using the same subnet on multiple nodes for load
+balancing and failover is not possible with the current add-on behaviour.
 
 ### Option: `proxy`
 

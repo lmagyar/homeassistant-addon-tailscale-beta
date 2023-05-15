@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Notify about colliding subnet routes
 - Merge (unreleased) changes from original add-on
   - Update coreutils to v9.3-r1
   - Update ipcalc to v1.0.2-r0
