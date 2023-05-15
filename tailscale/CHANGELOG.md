@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.6 (forked)
 
 - Notify about colliding subnet routes
 - Merge (unreleased) changes from original add-on

@@ -177,11 +177,11 @@ Received files are stored in the `/share/taildrop` directory.
 ### Option: `userspace_networking`
 
 The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
-to make your Home Assistant instance accessible within your Tailnet.
+to make your Home Assistant instance accessible within your tailnet.
 
 When not set, this option is enabled by default.
 
-If you need to access other clients on your Tailnet from your Home Assistant
+If you need to access other clients on your tailnet from your Home Assistant
 instance, ie. you need a VPN tunnel, a `tailscale0` network interface (like
 Ethernet or Wi-Fi), disable userspace networking mode.
 
