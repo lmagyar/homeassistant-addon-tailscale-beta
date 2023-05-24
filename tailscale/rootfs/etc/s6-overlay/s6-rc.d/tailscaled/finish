@@ -14,8 +14,12 @@ readonly service="tailscaled"
 if bashio::config.false "userspace_networking"; then
   while read -r route; do
     bashio::log.info "Removing route ${route} from ip rules"
-    ip rule del to "${route}"
-  done < <(ip rule list | grep -E '^5001:' | sed -nr 's/^\d+:\s+from all to ([^\s]+) lookup main/\1/p')
+    if [[ "${route}" =~ .*:.* ]]; then
+      ip -6 rule del to "${route}"
+    else
+      ip -4 rule del to "${route}"
+    fi
+  done < <({ ip -4 rule list; ip -6 rule list; } | grep -E '^5001:' | sed -nr 's/^\d+:\s+from all to ([^\s]+) lookup main/\1/p')
 fi
 
 bashio::log.info \
