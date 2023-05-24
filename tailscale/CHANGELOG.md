@@ -3,6 +3,8 @@
 ## vNext (forked)
 
 - Fix ip rule manipulation for IPv6
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.42.0
 
 ## 0.11.1.6 (forked)
 
