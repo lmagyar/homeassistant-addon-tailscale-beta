@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix ip rule manipulation for IPv6
+
 ## 0.11.1.6 (forked)
 
 - Notify about colliding subnet routes
