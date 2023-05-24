@@ -2,7 +2,7 @@
 
 ## vNext (forked)
 
-- Fix ip rule manipulation for IPv6
+- Fix ip rule manipulation for IPv6 (in case of non-userspace networking and colliding subnets)
 - Merge (unreleased) changes from original add-on
   - Update tailscale/tailscale to v1.42.0
 
