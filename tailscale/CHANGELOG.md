@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.7 (forked)
 
 - Fix ip rule manipulation for IPv6 (in case of non-userspace networking and colliding subnets)
 - Merge (unreleased) changes from original add-on
