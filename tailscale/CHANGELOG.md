@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Create fallback page for iOS browsers failing to open Tailscale login page (@bitfliq [#198](https://github.com/hassio-addons/addon-tailscale/pull/198))
+
 ## 0.11.1.7 (forked)
 
 - Fix ip rule manipulation for IPv6 (in case of non-userspace networking and colliding subnets)
