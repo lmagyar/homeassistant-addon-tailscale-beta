@@ -43,9 +43,9 @@ if bashio::config.false "userspace_networking"; then
   for route in "${routes[@]}"; do
     bashio::log.info "Adding route ${route} to ip rules"
     if [[ "${route}" =~ .*:.* ]]; then
-      ip -6 rule add to "${route}" priority 5000 table main
+      ip -6 rule add to "${route}" priority 5001 table main
     else
-      ip -4 rule add to "${route}" priority 5000 table main
+      ip -4 rule add to "${route}" priority 5001 table main
     fi
   done
 fi
