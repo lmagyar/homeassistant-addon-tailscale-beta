@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 - Do not opt out of client log upload in debug log level (fixes [#211](https://github.com/hassio-addons/addon-tailscale/issues/211))
-- Create fallback page for iOS browsers failing to open Tailscale login page (@bitfliq [#198](https://github.com/hassio-addons/addon-tailscale/pull/198))
+- Create fallback page for iOS browsers failing to open Tailscale login page (from PR [#198](https://github.com/hassio-addons/addon-tailscale/pull/198) by [@bitfliq](https://github.com/bitfliq))
 
 ## 0.11.1.7 (forked)
 

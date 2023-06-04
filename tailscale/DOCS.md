@@ -8,6 +8,8 @@
 >   - Enable Tailscale's Funnel feature
 >   - Make userspace networking configurable
 >   - Protect local subnets from being routed toward Tailscale subnets if they collide
+>   - Create fallback page for iOS browsers failing to open Tailscale login page
+>   - Do not opt out of client log upload in debug log level
 
 ![Warning][warning_stripe]
 
