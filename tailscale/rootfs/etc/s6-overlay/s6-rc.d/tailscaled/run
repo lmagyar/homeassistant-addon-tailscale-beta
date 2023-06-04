@@ -32,7 +32,7 @@ if ! bashio::config.has_value "userspace_networking" || \
 then
   options+=(--tun=userspace-networking)
 else
-  options+=(--tun=tailscale1)
+  options+=(--tun=tailscale2)
 fi
 
 # In case of non userspace networking add local subnets to ip rules with higher priority than Tailscale's routing
