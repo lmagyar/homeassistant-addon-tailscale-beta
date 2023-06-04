@@ -8,6 +8,8 @@
 >   - Enable Tailscale's Funnel feature
 >   - Make userspace networking configurable
 >   - Protect local subnets from being routed toward Tailscale subnets if they collide
+>   - Create fallback page for iOS browsers failing to open Tailscale login page
+>   - Do not opt out of client log upload in debug log level
 
 ![Warning][warning_stripe]
 
@@ -127,7 +129,9 @@ When not set, this option is enabled by default.
 ### Option: `log_level`
 
 Optionally enable tailscaled debug messages in the add-on's log. Turn it on only
-in case you are troubleshooting, because Tailscale's daemon is quite chatty.
+in case you are troubleshooting, because Tailscale's daemon is quite chatty. If
+`log_level` is set to `info` or less severe level, the add-on also opts out of
+client log upload to log.tailscale.io.
 
 The `log_level` option controls the level of log output by the addon and can
 be changed to be more or less verbose, which might be useful when you are
@@ -241,9 +245,8 @@ from the wider internet using your Tailscale domain (like
 `https://homeassistant.tail1234.ts.net`) even from devices **without installed
 Tailscale VPN client** (eg. general phones, tablets, laptops).
 
-> **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
-> _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP
-> web-server)
+**Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
+_VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 
 Without the Tailscale Funnel feature, you will be able to access your Home
 Assistant instance only when your devices (eg. phones, tablets, laptops) are
