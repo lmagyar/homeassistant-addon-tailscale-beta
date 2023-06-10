@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Sign add-on with Sigstore Cosign
+
 ## 0.11.1.8 (forked)
 
 - Do not opt out of client log upload in debug log level (fixes [#211](https://github.com/hassio-addons/addon-tailscale/issues/211))
