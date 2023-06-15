@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Update Add-on base image to v14.0.1
 - Sign add-on with Sigstore Cosign
 
 ## 0.11.1.8 (forked)
