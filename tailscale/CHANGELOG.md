@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- WIP: Site-to-site networking support
 - Update Add-on base image to v14.0.2
 - Sign add-on with Sigstore Cosign
 
