@@ -181,13 +181,18 @@ Received files are stored in the `/share/taildrop` directory.
 ### Option: `userspace_networking`
 
 The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
-to make your Home Assistant instance accessible within your tailnet.
+to make your Home Assistant instance (and optionally the local subnets)
+accessible within your tailnet.
 
 When not set, this option is enabled by default.
 
 If you need to access other clients on your tailnet from your Home Assistant
-instance, ie. you need a VPN tunnel, a `tailscale0` network interface (like
-Ethernet or Wi-Fi), disable userspace networking mode.
+instance, disable userspace networking mode, that will create a `tailscale0`
+network interface on your host.
+
+If you want to access other clients on your tailnet even from your local subnet,
+execute Step 2 and 3 as described on [Site-to-site
+networking][tailscale_info_site_to_site].
 
 In case your local subnets collide with subnet routes within your tailnet, your
 local network access has priority and these addresses won't be routed toward
@@ -316,5 +321,6 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
+[tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site/
 [tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking/
 [tailscale_machines]: https://login.tailscale.com/admin/machines
