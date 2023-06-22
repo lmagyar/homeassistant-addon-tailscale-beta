@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.9 (forked)
 
 - Sign add-on with Sigstore Cosign
 - Merge (unreleased) changes from original add-on
