@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.1.9 (forked)
+
+- Sign add-on with Sigstore Cosign
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.44.0
+  - Update Add-on base image to v14.0.2
+
 ## 0.11.1.8 (forked)
 
 - Do not opt out of client log upload in debug log level (fixes [#211](https://github.com/hassio-addons/addon-tailscale/issues/211))
