@@ -19,5 +19,4 @@ jobs:
         args: |
           --test \
           --${{ matrix.arch }} \
-          --no-cache \
           --target tailscale
