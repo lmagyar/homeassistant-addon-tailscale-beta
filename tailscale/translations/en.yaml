@@ -24,6 +24,14 @@ configuration:
       This option allows you to specify a custom control server for this
       Tailscale instance, for example, a self-host Headscale instance.
       By default, it uses the control server provided by Tailscale.
+  snat_subnet_routes:
+    name: Source NAT subnet routes
+    description: >-
+      This option allows subnet devices to see the traffic originating from the
+      subnet router, and this simplifyies routing configuration.
+      To support advanced Site-to-site networking (eg. to traverse multiple
+      networks), you can disable this functionality.
+      When not set, this option is enabled by default.
   tags:
     name: Tags
     description: >-

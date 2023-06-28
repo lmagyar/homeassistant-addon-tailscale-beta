@@ -15,6 +15,7 @@ Zero config VPN for building secure networks.
 >   - Make userspace networking configurable
 >   - Protect local subnets from being routed toward Tailscale subnets if they collide
 >   - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
+>   - Make subnet source NAT configurable (to support advanced site-to-site networking)
 >   - Create fallback page for iOS browsers failing to open Tailscale login page
 >   - Do not opt out of client log upload in debug log level
 

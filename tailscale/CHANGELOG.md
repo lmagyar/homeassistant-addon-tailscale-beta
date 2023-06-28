@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Make subnet source NAT configurable (to support advanced site-to-site networking)
 - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
 - Fix local subnet collision protection (to protect even when the network is reconfigured)
 
