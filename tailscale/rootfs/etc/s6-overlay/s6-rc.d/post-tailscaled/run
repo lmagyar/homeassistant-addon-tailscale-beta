@@ -84,7 +84,7 @@ if bashio::config.false "userspace_networking"; then
     bashio::log.info "to support site-to-site networking better"
     for interface in $(bashio::network.interfaces); do
       bashio::log.info "Clamping the MSS for interface ${interface}"
-      iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+      iptables -t mangle -A FORWARD -i tailscale2 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
     done
   fi
 fi
