@@ -9,4 +9,4 @@ protect-subnet-routes
 
 # runs scripts in /etc/NetworkManager/dispatcher.d
 # --debug is used to prevent logging to syslog (HA cli)
-/usr/libexec/nm-dispatcher --persist --debug > /dev/null
+exec /usr/libexec/nm-dispatcher --persist --debug > /dev/null
