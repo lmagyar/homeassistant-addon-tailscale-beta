@@ -39,6 +39,15 @@ then
   options+=(--login-server="${login_server}")
 fi
 
+# Support advanced site-to-site networking disable source addresses NAT
+if ! bashio::config.has_value "snat_subnet_routes" || \
+  bashio::config.true "snat_subnet_routes";
+then
+  options+=(--snat-subnet-routes)
+else
+  options+=(--snat-subnet-routes=false)
+fi
+
 # Get configured tags
 tags=$(bashio::config "tags//[] | join(\",\")" "")
 options+=(--advertise-tags="${tags}")
@@ -72,6 +81,20 @@ done
 
 bashio::log.info "Tailscale is running"
 
+# In case of non userspace networking, clamp the MSS to the MTU for all advertised subnet's interface
+# If user later enables subnet routing for site-to-site networking, these settings are already there
+# Source: https://tailscale.com/kb/1214/site-to-site/ Step 1 / Point 4
+if bashio::config.false "userspace_networking"; then
+  if (( 0 < ${#routes[@]} )); then
+    bashio::log.info "Clamping the MSS to the MTU for all advertised subnet's interface,"
+    bashio::log.info "to support site-to-site networking better"
+    for interface in $(bashio::network.interfaces); do
+      bashio::log.info "Clamping the MSS for interface ${interface}"
+      iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+    done
+  fi
+fi
+
 # Notify about colliding subnet routes
 readarray -t colliding_routes < <(comm -1 -2 \
   <(printf '%s\n' "${routes[@]}") \
@@ -82,7 +105,7 @@ if (( 0 < ${#colliding_routes[@]} )); then
   bashio::log.warning "Currently the following subnets are both present as local subnets"
   bashio::log.warning "and are also routed within your tailnet to other nodes!"
   bashio::log.warning "Please reconfigure your subnet routing within your tailnet"
-  bashio::log.warning "to prevent collisions."
+  bashio::log.warning "to prevent current or future collisions."
 fi
 for route in "${colliding_routes[@]}"; do
   bashio::log.warning "  ${route}"
