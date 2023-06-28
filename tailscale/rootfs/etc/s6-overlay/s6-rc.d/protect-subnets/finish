@@ -2,13 +2,15 @@
 # shellcheck shell=bash
 # ==============================================================================
 # Home Assistant Community Add-on: Tailscale
-# Take down the S6 supervision tree when Tailscale fails
+# Take down the S6 supervision tree when protect-subnets fails
 # ==============================================================================
 declare exit_code
 readonly exit_code_container=$(</run/s6-linux-init-container-results/exitcode)
 readonly exit_code_service="${1}"
 readonly exit_code_signal="${2}"
-readonly service="tailscaled"
+readonly service="protect-subnets"
+
+unprotect-subnet-routes
 
 bashio::log.info \
   "Service ${service} exited with code ${exit_code_service}" \

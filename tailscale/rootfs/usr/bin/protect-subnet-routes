@@ -1,0 +1,24 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# In case of non userspace networking,
+# add local subnets to ip rules with higher priority than Tailscale's routing
+# ==============================================================================
+
+declare -a routes=()
+
+if bashio::config.false "userspace_networking"; then
+  readarray -t routes < <(subnet-routes)
+  if (( 0 < ${#routes[@]} )); then
+    bashio::log.info "Adding local subnets to ip rules with higher priority than Tailscale's routing,"
+    bashio::log.info "to prevent routing local subnets if the same subnet is routed within your tailnet."
+  fi
+  for route in "${routes[@]}"; do
+    bashio::log.info "Adding route ${route} to ip rules"
+    if [[ "${route}" =~ .*:.* ]]; then
+      ip -6 rule add to "${route}" priority 5001 table main
+    else
+      ip -4 rule add to "${route}" priority 5001 table main
+    fi
+  done
+fi
