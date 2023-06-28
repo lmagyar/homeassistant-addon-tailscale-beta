@@ -2,7 +2,7 @@
 
 ## vNext (forked)
 
-- Fix local subnets protection: protect even when the network is reconfigured
+- Fix local subnet collision protection: protect even when the network is reconfigured
 
 ## 0.11.1.9 (forked)
 
