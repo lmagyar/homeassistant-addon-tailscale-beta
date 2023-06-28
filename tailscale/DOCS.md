@@ -95,6 +95,7 @@ accept_dns: true
 advertise_exit_node: true
 log_level: info
 login_server: "https://controlplane.tailscale.com"
+snat_subnet_routes: true
 tags:
   - tag:example
   - tag:homeassistant
@@ -157,6 +158,17 @@ This option lets you specify you to specify a custom control server instead of
 the default (`https://controlplane.tailscale.com`). This is useful if you
 are running your own Tailscale control server, for example, a self-hosted
 [Headscale] instance.
+
+### Option: `snat_subnet_routes`
+
+This option allows subnet devices to see the traffic originating from the subnet
+router, and this simplifyies routing configuration.
+
+When not set, this option is enabled by default.
+
+To support advanced [Site-to-site networking][tailscale_info_site_to_site] (eg.
+to traverse multiple networks), you can disable this functionality. But do it
+only when you really understand why you need this.
 
 ### Option: `tags`
 
