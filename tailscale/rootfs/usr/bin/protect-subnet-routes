@@ -8,6 +8,7 @@
 declare -a routes=()
 
 if bashio::config.false "userspace_networking"; then
+  bashio::cache.flush_all
   readarray -t routes < <(subnet-routes)
   if (( 0 < ${#routes[@]} )); then
     bashio::log.info "Adding local subnets to ip rules with higher priority than Tailscale's routing,"
