@@ -85,7 +85,7 @@ if (( 0 < ${#colliding_routes[@]} )); then
   bashio::log.warning "Currently the following subnets are both present as local subnets"
   bashio::log.warning "and are also routed within your tailnet to other nodes!"
   bashio::log.warning "Please reconfigure your subnet routing within your tailnet"
-  bashio::log.warning "to prevent collisions."
+  bashio::log.warning "to prevent current or future collisions."
 fi
 for route in "${colliding_routes[@]}"; do
   bashio::log.warning "  ${route}"

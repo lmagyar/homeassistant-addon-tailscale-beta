@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix local subnets protection: protect even when the network is reconfigured
+
 ## 0.11.1.9 (forked)
 
 - Sign add-on with Sigstore Cosign
