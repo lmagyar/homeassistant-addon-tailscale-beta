@@ -2,7 +2,8 @@
 
 ## vNext (forked)
 
-- Fix local subnets protection: protect even when the network is reconfigured
+- Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
+- Fix local subnet collision protection (to protect even when the network is reconfigured)
 
 ## 0.11.1.9 (forked)
 
