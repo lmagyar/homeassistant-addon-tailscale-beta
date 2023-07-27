@@ -117,11 +117,12 @@ if bashio::config.false "userspace_networking"; then
 fi
 
 # Notify about colliding subnet routes
-readarray -t colliding_routes < <(comm -1 -2 \
-  <(printf '%s\n' "${routes[@]}") \
-  <(/opt/tailscale status --json --peers=true --self=false \
-    | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
-    | sort -u))
+readarray -t colliding_routes < <( \
+  comm -1 -2 \
+    <(printf '%s\n' "${routes[@]}") \
+    <(/opt/tailscale status --json --peers=true --self=false \
+      | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
+      | sort -u))
 if (( 0 < ${#colliding_routes[@]} )); then
   bashio::log.warning "Currently the following subnets are both present as local subnets"
   bashio::log.warning "and are also routed within your tailnet to other nodes!"
