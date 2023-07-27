@@ -6,6 +6,7 @@
 # ==============================================================================
 
 declare -a routes=()
+declare route family
 
 if bashio::config.false "userspace_networking"; then
   readarray -t routes < <( \
@@ -15,9 +16,10 @@ if bashio::config.false "userspace_networking"; then
   for route in "${routes[@]}"; do
     bashio::log.info "Removing route ${route} from ip rules"
     if [[ "${route}" =~ .*:.* ]]; then
-      ip -6 rule del to "${route}"
+      family="-6"
     else
-      ip -4 rule del to "${route}"
+      family="-4"
     fi
+    ip "${family}" rule del to "${route}"
   done
 fi

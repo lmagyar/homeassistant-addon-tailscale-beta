@@ -6,6 +6,7 @@
 # ==============================================================================
 
 declare -a routes=()
+declare route family
 declare ipv4_multiple_tables_enabled
 declare ipv6_multiple_tables_enabled
 declare protected_routes=0
@@ -23,20 +24,19 @@ if bashio::config.false "userspace_networking"; then
     if [[ "${route}" =~ .*:.* ]]; then
       if (( 0 == ${ipv6_multiple_tables_enabled} )); then
         bashio::log.warning "IPv6 multiple routing tables are not enabled, skip adding route ${route} to ip rules"
-      else
-        bashio::log.info "Adding route ${route} to ip rules"
-        ip -6 rule add to "${route}" priority 5001 table main
-        (( protected_routes+=1 ))
+        continue
       fi
+      family="-6"
     else
       if (( 0 == ${ipv4_multiple_tables_enabled} )); then
         bashio::log.warning "IPv4 multiple routing tables are not enabled, skip adding route ${route} to ip rules"
-      else
-        bashio::log.info "Adding route ${route} to ip rules"
-        ip -4 rule add to "${route}" priority 5001 table main
-        (( protected_routes+=1 ))
+        continue
       fi
+      family="-4"
     fi
+    bashio::log.info "Adding route ${route} to ip rules"
+    ip "${family}" rule add to "${route}" priority 5001 table main
+    (( protected_routes+=1 ))
   done
   if (( 0 < ${#routes[@]} && 0 == ${protected_routes} )); then
     bashio::log.error "Can't protect any subnets"
