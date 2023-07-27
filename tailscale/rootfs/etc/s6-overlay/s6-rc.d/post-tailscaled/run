@@ -6,6 +6,8 @@
 # ==============================================================================
 declare -a options
 declare -a routes=()
+declare route family interface
+declare -a interfaces=()
 declare -a colliding_routes=()
 declare login_server
 declare tags
@@ -88,7 +90,23 @@ if bashio::config.false "userspace_networking"; then
   if (( 0 < ${#routes[@]} )); then
     bashio::log.info "Clamping the MSS to the MTU for all advertised subnet's interface,"
     bashio::log.info "to support site-to-site networking better"
-    for interface in $(bashio::network.interfaces); do
+
+    # Find interfaces for subnet routes
+    for route in "${routes[@]}"; do
+      if [[ "${route}" =~ .*:.* ]]; then
+        family="-6"
+      else
+        family="-4"
+      fi
+      for interface in $(ip "${family}" -json route show to match "${route}" | jq --raw-output -c -M '.[].dev'); do
+        interfaces+=("${interface}")
+      done
+    done
+
+    # Remove duplicate entries
+    readarray -t interfaces < <(printf "%s\n" "${interfaces[@]}" | sort -u)
+
+    for interface in "${interfaces[@]}"; do
       bashio::log.info "Clamping the MSS for interface ${interface}"
       iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
     done
