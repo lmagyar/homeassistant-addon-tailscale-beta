@@ -98,7 +98,10 @@ if bashio::config.false "userspace_networking"; then
       else
         family="-4"
       fi
-      for interface in $(ip "${family}" -json route show to match "${route}" | jq --raw-output -c -M '.[].dev'); do
+      for interface in $( \
+        ip "${family}" -json route show to match "${route}" \
+        | jq --raw-output -c -M '.[].dev')
+      do
         interfaces+=("${interface}")
       done
     done
