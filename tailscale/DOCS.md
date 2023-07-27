@@ -125,7 +125,7 @@ This option allows you to advertise this Tailscale instance as an exit node.
 By setting a device on your network as an exit node, you can use it to
 route all your public internet traffic as needed, like a consumer VPN.
 
-More information: <https://tailscale.com/kb/1103/exit-nodes/>
+More information: [Exit nodes][tailscale_info_exit_nodes]
 
 When not set, this option is enabled by default.
 
@@ -328,6 +328,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
+[tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes/
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
