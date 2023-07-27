@@ -1,5 +1,13 @@
 # Changelog
 
+## vNext (forked)
+
+- Make advertised subnet routes configurable
+- Fix issue [#43](https://github.com/lmagyar/homeassistant-addon-tailscale/issues/43) (HA OS VM IPv6 multiple routing tables are not enabled)
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.46.1
+  - Update Add-on base image to v14.0.6
+
 ## 0.11.1.10 (forked)
 
 - Make subnet source NAT configurable (to support advanced site-to-site networking)

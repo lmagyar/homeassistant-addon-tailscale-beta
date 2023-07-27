@@ -11,7 +11,8 @@
 > Changes:
 >   - Enable Tailscale's Funnel feature
 >   - Make userspace networking configurable
->   - Protect local subnets from being routed toward Tailscale subnets if they collide
+>   - Make advertised subnet routes configurable
+>   - Protect advertised subnets from being routed toward Tailscale subnets if they collide
 >   - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
 >   - Make subnet source NAT configurable (to support advanced site-to-site networking)
 >   - Create fallback page for iOS browsers failing to open Tailscale login page
@@ -98,6 +99,9 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 ```yaml
 accept_dns: true
 advertise_exit_node: true
+advertise_routes:
+  - 192.168.1.0/24
+  - fd12:3456:abcd::/64
 log_level: info
 login_server: "https://controlplane.tailscale.com"
 snat_subnet_routes: true
@@ -129,9 +133,22 @@ This option allows you to advertise this Tailscale instance as an exit node.
 By setting a device on your network as an exit node, you can use it to
 route all your public internet traffic as needed, like a consumer VPN.
 
-More information: <https://tailscale.com/kb/1103/exit-nodes/>
+More information: [Exit nodes][tailscale_info_exit_nodes]
 
 When not set, this option is enabled by default.
+
+### Option: `advertise_routes`
+
+This option allows you to advertise routes to subnets (accessible on the network
+your device is connected to) to other clients on your tailnet.
+
+By adding to the list the IP addresses and masks of the subnet routes, you can
+use it to make your devices on these subnets accessible within your tailnet.
+
+More information: [Subnet routers][tailscale_info_subnets]
+
+When not set, the add-on by default will advertise routes to your subnets on all
+supported interfaces.
 
 ### Option: `log_level`
 
@@ -332,9 +349,11 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
+[tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes/
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
 [tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site/
+[tailscale_info_subnets]: https://tailscale.com/kb/1019/subnets/
 [tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking/
 [tailscale_machines]: https://login.tailscale.com/admin/machines
