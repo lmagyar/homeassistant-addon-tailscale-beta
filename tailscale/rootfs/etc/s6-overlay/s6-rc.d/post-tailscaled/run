@@ -41,7 +41,7 @@ then
   options+=(--login-server="${login_server}")
 fi
 
-# Support advanced site-to-site networking disable source addresses NAT
+# Support advanced site-to-site networking, disable source addresses NAT
 if ! bashio::config.has_value "snat_subnet_routes" || \
   bashio::config.true "snat_subnet_routes";
 then
@@ -107,10 +107,10 @@ if bashio::config.false "userspace_networking"; then
     done
 
     # Remove duplicate entries
-    readarray -t interfaces < <(printf "%s\n" "${interfaces[@]}" | sort -u)
+    readarray -t interfaces < <(printf "%s" "${interfaces[@]/%/$'\n'}" | sort -u)
 
     for interface in "${interfaces[@]}"; do
-      bashio::log.info "Clamping the MSS for interface ${interface}"
+      bashio::log.info "  Clamping the MSS for interface ${interface}"
       iptables -t mangle -A FORWARD -i tailscale2 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
     done
   fi
@@ -119,7 +119,7 @@ fi
 # Notify about colliding subnet routes
 readarray -t colliding_routes < <( \
   comm -1 -2 \
-    <(printf '%s\n' "${routes[@]}") \
+    <(printf "%s" "${routes[@]/%/$'\n'}") \
     <(/opt/tailscale status --json --peers=true --self=false \
       | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
       | sort -u))
