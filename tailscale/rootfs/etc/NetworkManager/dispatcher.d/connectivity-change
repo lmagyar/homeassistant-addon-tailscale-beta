@@ -2,9 +2,9 @@
 # DO NOT use #!/command/with-contenv bashio, because that won't set the environment variables
 
 if [[ "$NM_DISPATCHER_ACTION" == "connectivity-change" ]]; then
-    if [[ "$CONNECTIVITY_STATE" == "FULL" ]]; then
-        protect-subnet-routes
-    else # UNKNOWN, NONE, PORTAL, LIMITED
-        unprotect-subnet-routes
-    fi
+  if [[ "$CONNECTIVITY_STATE" == "FULL" ]]; then
+    protect-subnet-routes
+  else # UNKNOWN, NONE, PORTAL, LIMITED
+    unprotect-subnet-routes
+  fi
 fi
