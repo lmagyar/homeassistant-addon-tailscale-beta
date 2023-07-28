@@ -41,7 +41,7 @@ then
   options+=(--login-server="${login_server}")
 fi
 
-# Support advanced site-to-site networking disable source addresses NAT
+# Support advanced site-to-site networking, disable source addresses NAT
 if ! bashio::config.has_value "snat_subnet_routes" || \
   bashio::config.true "snat_subnet_routes";
 then
