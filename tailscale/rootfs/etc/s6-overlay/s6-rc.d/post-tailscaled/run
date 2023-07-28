@@ -6,6 +6,8 @@
 # ==============================================================================
 declare -a options
 declare -a routes=()
+declare route family interface
+declare -a interfaces=()
 declare -a colliding_routes=()
 declare login_server
 declare tags
@@ -39,7 +41,7 @@ then
   options+=(--login-server="${login_server}")
 fi
 
-# Support advanced site-to-site networking disable source addresses NAT
+# Support advanced site-to-site networking, disable source addresses NAT
 if ! bashio::config.has_value "snat_subnet_routes" || \
   bashio::config.true "snat_subnet_routes";
 then
@@ -52,7 +54,7 @@ fi
 tags=$(bashio::config "tags//[] | join(\",\")" "")
 options+=(--advertise-tags="${tags}")
 
-# Find interfaces and matching addresses and extract routes to be advertised
+# Advertise subnet routes
 readarray -t routes < <(subnet-routes)
 IFS=","
 options+=(--advertise-routes="${routes[*]}")
@@ -88,19 +90,39 @@ if bashio::config.false "userspace_networking"; then
   if (( 0 < ${#routes[@]} )); then
     bashio::log.info "Clamping the MSS to the MTU for all advertised subnet's interface,"
     bashio::log.info "to support site-to-site networking better"
-    for interface in $(bashio::network.interfaces); do
-      bashio::log.info "Clamping the MSS for interface ${interface}"
+
+    # Find interfaces for subnet routes
+    for route in "${routes[@]}"; do
+      if [[ "${route}" =~ .*:.* ]]; then
+        family="-6"
+      else
+        family="-4"
+      fi
+      for interface in $( \
+        ip "${family}" -json route show to match "${route}" \
+        | jq --raw-output -c -M '.[].dev')
+      do
+        interfaces+=("${interface}")
+      done
+    done
+
+    # Remove duplicate entries
+    readarray -t interfaces < <(printf "%s" "${interfaces[@]/%/$'\n'}" | sort -u)
+
+    for interface in "${interfaces[@]}"; do
+      bashio::log.info "  Clamping the MSS for interface ${interface}"
       iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
     done
   fi
 fi
 
 # Notify about colliding subnet routes
-readarray -t colliding_routes < <(comm -1 -2 \
-  <(printf '%s\n' "${routes[@]}") \
-  <(/opt/tailscale status --json --peers=true --self=false \
-    | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
-    | sort -u))
+readarray -t colliding_routes < <( \
+  comm -1 -2 \
+    <(printf "%s" "${routes[@]/%/$'\n'}") \
+    <(/opt/tailscale status --json --peers=true --self=false \
+      | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
+      | sort -u))
 if (( 0 < ${#colliding_routes[@]} )); then
   bashio::log.warning "Currently the following subnets are both present as local subnets"
   bashio::log.warning "and are also routed within your tailnet to other nodes!"

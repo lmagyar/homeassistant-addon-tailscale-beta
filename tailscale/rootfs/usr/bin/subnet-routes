@@ -3,7 +3,9 @@
 # ==============================================================================
 # Print possible subnet routes to stdout
 # ==============================================================================
+declare interface
 declare -a addresses=()
+declare address
 declare -a routes=()
 declare ipinfo
 
@@ -12,11 +14,18 @@ function appendarray() {
   readarray -t -O "${#array[@]}" array
 }
 
-# Find interfaces and matching addresses from which we can extract routes to be advertised
-for interface in $(bashio::network.interfaces); do
-  appendarray addresses < <(bashio::network.ipv4_address "${interface}")
-  appendarray addresses < <(bashio::network.ipv6_address "${interface}")
-done
+if bashio::config.exists "advertise_routes"; then
+  # Configuration exists, use configured values
+  for address in $(bashio::config "advertise_routes"); do
+    addresses+=("${address}")
+  done
+else
+  # Find interfaces and matching addresses from which we can extract routes to be advertised
+  for interface in $(bashio::network.interfaces); do
+    appendarray addresses < <(bashio::network.ipv4_address "${interface}")
+    appendarray addresses < <(bashio::network.ipv6_address "${interface}")
+  done
+fi
 
 # Extract routes to be advertised
 for address in "${addresses[@]}"; do
@@ -41,6 +50,6 @@ for address in "${addresses[@]}"; do
 done
 
 # Remove duplicate entries
-readarray -t routes < <(printf "%s\n" "${routes[@]}" | sort -u)
+readarray -t routes < <(printf "%s" "${routes[@]/%/$'\n'}" | sort -u)
 
-printf '%s\n' "${routes[@]}"
+printf "%s" "${routes[@]/%/$'\n'}"
