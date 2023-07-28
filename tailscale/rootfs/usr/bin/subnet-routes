@@ -50,7 +50,7 @@ else
   done
 
   # Remove duplicate entries
-  readarray -t routes < <(printf "%s\n" "${routes[@]}" | sort -u)
+  readarray -t routes < <(printf "%s" "${routes[@]/%/$'\n'}" | sort -u)
 fi
 
-printf '%s\n' "${routes[@]}"
+printf "%s" "${routes[@]/%/$'\n'}"

@@ -119,7 +119,7 @@ fi
 # Notify about colliding subnet routes
 readarray -t colliding_routes < <( \
   comm -1 -2 \
-    <(printf '%s\n' "${routes[@]}") \
+    <(printf "%s" "${routes[@]/%/$'\n'}") \
     <(/opt/tailscale status --json --peers=true --self=false \
       | jq -rc '.Peer[] | select(has("PrimaryRoutes")) | .PrimaryRoutes[]' \
       | sort -u))
