@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.11 (forked)
 
 - Make advertised subnet routes configurable
 - Fix issue [#43](https://github.com/lmagyar/homeassistant-addon-tailscale/issues/43) (HA OS VM IPv6 multiple routing tables are not enabled)
