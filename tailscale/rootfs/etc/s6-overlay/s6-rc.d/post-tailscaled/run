@@ -107,10 +107,10 @@ if bashio::config.false "userspace_networking"; then
     done
 
     # Remove duplicate entries
-    readarray -t interfaces < <(printf "%s\n" "${interfaces[@]}" | sort -u)
+    readarray -t interfaces < <(printf "%s" "${interfaces[@]/%/$'\n'}" | sort -u)
 
     for interface in "${interfaces[@]}"; do
-      bashio::log.info "Clamping the MSS for interface ${interface}"
+      bashio::log.info "  Clamping the MSS for interface ${interface}"
       iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
     done
   fi
