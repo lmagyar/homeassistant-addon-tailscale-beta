@@ -6,7 +6,6 @@
 declare interface
 declare -a addresses=()
 declare address
-declare route
 declare -a routes=()
 declare ipinfo
 
@@ -17,8 +16,8 @@ function appendarray() {
 
 if bashio::config.exists "advertise_routes"; then
   # Configuration exists, use configured values
-  for route in $(bashio::config "advertise_routes"); do
-    routes+=("${route}")
+  for address in $(bashio::config "advertise_routes"); do
+    addresses+=("${address}")
   done
 else
   # Find interfaces and matching addresses from which we can extract routes to be advertised
@@ -26,31 +25,31 @@ else
     appendarray addresses < <(bashio::network.ipv4_address "${interface}")
     appendarray addresses < <(bashio::network.ipv6_address "${interface}")
   done
-
-  # Extract routes to be advertised
-  for address in "${addresses[@]}"; do
-    if bashio::var.has_value "${address}"; then
-      # Skip local link addresses
-      if [[ "${address:0:6}" == "fe80::" ]] || [[ "${address:0:8}" == "169.254." ]];
-      then
-        continue
-      fi
-
-      # Skip if forwarding for the address family is disabled
-      if [[ "${address}" =~ .*:.* ]];
-      then
-        [[ $(</proc/sys/net/ipv6/conf/all/forwarding) -eq 0 ]] && continue
-      else
-        [[ $(</proc/sys/net/ipv4/ip_forward) -eq 0 ]] && continue
-      fi
-
-      ipinfo="$(/usr/bin/ipcalc --json "${address}")"
-      routes+=("$(bashio::jq "${ipinfo}" '.NETWORK + "/" + .PREFIX')")
-    fi
-  done
-
-  # Remove duplicate entries
-  readarray -t routes < <(printf "%s" "${routes[@]/%/$'\n'}" | sort -u)
 fi
+
+# Extract routes to be advertised
+for address in "${addresses[@]}"; do
+  if bashio::var.has_value "${address}"; then
+    # Skip local link addresses
+    if [[ "${address:0:6}" == "fe80::" ]] || [[ "${address:0:8}" == "169.254." ]];
+    then
+      continue
+    fi
+
+    # Skip if forwarding for the address family is disabled
+    if [[ "${address}" =~ .*:.* ]];
+    then
+      [[ $(</proc/sys/net/ipv6/conf/all/forwarding) -eq 0 ]] && continue
+    else
+      [[ $(</proc/sys/net/ipv4/ip_forward) -eq 0 ]] && continue
+    fi
+
+    ipinfo="$(/usr/bin/ipcalc --json "${address}")"
+    routes+=("$(bashio::jq "${ipinfo}" '.NETWORK + "/" + .PREFIX')")
+  fi
+done
+
+# Remove duplicate entries
+readarray -t routes < <(printf "%s" "${routes[@]/%/$'\n'}" | sort -u)
 
 printf "%s" "${routes[@]/%/$'\n'}"
