@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update Add-on base image to v14.0.7
+
 ## 0.11.1.11 (forked)
 
 - Make advertised subnet routes configurable
