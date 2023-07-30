@@ -48,8 +48,8 @@ however, it is nice to know where you need to go later on.
    `https://github.com/lmagyar/homeassistant-addon-tailscale` as repository.
 1. Find the "Tailscale with features" add-on and click it. If it doesn't show
    up, wait until HA refreshes the information about the add-on, or click
-   **Reload** in the **...** menu at the top right corner.
-1. Click the "INSTALL" button to install the add-on.
+   **Check for updates** in the **...** menu at the top right corner.
+1. Click the "INSTALL" button.
 
 ## How to use
 
