@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.11.1.12 (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update Add-on base image to v14.0.7 (fixes [#50](https://github.com/lmagyar/homeassistant-addon-tailscale/issues/50) (CPU overload))
+
 ## 0.11.1.11 (forked)
 
 - Make advertised subnet routes configurable
