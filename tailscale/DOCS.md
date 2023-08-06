@@ -102,16 +102,16 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
+funnel: true
 log_level: info
 login_server: "https://controlplane.tailscale.com"
+proxy: true
 snat_subnet_routes: true
 tags:
   - tag:example
   - tag:homeassistant
 taildrop: true
 userspace_networking: true
-proxy: true
-funnel: true
 ```
 
 ### Option: `accept_dns`
@@ -149,130 +149,6 @@ More information: [Subnet routers][tailscale_info_subnets]
 
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
-
-### Option: `log_level`
-
-Optionally enable tailscaled debug messages in the add-on's log. Turn it on only
-in case you are troubleshooting, because Tailscale's daemon is quite chatty. If
-`log_level` is set to `info` or less severe level, the add-on also opts out of
-client log upload to log.tailscale.io.
-
-The `log_level` option controls the level of log output by the addon and can
-be changed to be more or less verbose, which might be useful when you are
-dealing with an unknown issue. Possible values are:
-
-- `trace`: Show every detail, like all called internal functions.
-- `debug`: Shows detailed debug information.
-- `info`: Normal (usually) interesting events.
-- `notice`: Normal but significant events.
-- `warning`: Exceptional occurrences that are not errors.
-- `error`: Runtime errors that do not require immediate action.
-- `fatal`: Something went terribly wrong. Add-on becomes unusable.
-
-Please note that each level automatically includes log messages from a
-more severe level, e.g., `debug` also shows `info` messages. By default,
-the `log_level` is set to `info`, which is the recommended setting unless
-you are troubleshooting.
-
-### Option: `login_server`
-
-This option lets you specify you to specify a custom control server instead of
-the default (`https://controlplane.tailscale.com`). This is useful if you
-are running your own Tailscale control server, for example, a self-hosted
-[Headscale] instance.
-
-### Option: `snat_subnet_routes`
-
-This option allows subnet devices to see the traffic originating from the subnet
-router, and this simplifyies routing configuration.
-
-When not set, this option is enabled by default.
-
-To support advanced [Site-to-site networking][tailscale_info_site_to_site] (eg.
-to traverse multiple networks), you can disable this functionality. But do it
-only when you really understand why you need this.
-
-### Option: `tags`
-
-This option allows you to specify specific ACL tags for this Tailscale
-instance. They need to start with `tag:`.
-
-More information: [ACL tags][tailscale_info_acls]
-
-### Option: `taildrop`
-
-This add-on support [Tailscale's Taildrop][taildrop] feature, which allows
-you to send files to your Home Assistant instance from other Tailscale
-devices.
-
-When not set, this option is enabled by default.
-
-Received files are stored in the `/share/taildrop` directory.
-
-### Option: `userspace_networking`
-
-The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
-to make your Home Assistant instance (and optionally the local subnets)
-accessible within your tailnet.
-
-When not set, this option is enabled by default.
-
-If you need to access other clients on your tailnet from your Home Assistant
-instance, disable userspace networking mode, that will create a `tailscale0`
-network interface on your host.
-
-If you want to access other clients on your tailnet even from your local subnet,
-execute Step 2 and 3 as described on [Site-to-site
-networking][tailscale_info_site_to_site].
-
-In case your local subnets collide with subnet routes within your tailnet, your
-local network access has priority and these addresses won't be routed toward
-your tailnet. This will prevent your Home Assistant instance to lose network
-conection. This also means that using the same subnet on multiple nodes for load
-balancing and failover is not possible with the current add-on behavior.
-
-### Option: `proxy`
-
-When not set, this option is enabled by default.
-
-Tailscale can provide a TLS certificate for your Home Assistant instance within
-your tailnet domain.
-
-This can prevent browsers from warning that HTTP URLs to your Home Assistant instance
-look unencrypted (browsers are not aware of the connections between Tailscale
-nodes are secured with end-to-end encryption).
-
-More information: [Enabling HTTPS][tailscale_info_https]
-
-1. Configure Home Assistant to be accessible through an HTTP connection (this is
-   the default). See [HTTP integration documentation][http_integration] for more
-   information. If you still want to use another HTTPS connection to access Home
-   Assistant, please use a reverse proxy add-on.
-
-1. Home Assistant, by default, blocks requests from reverse proxies, like the
-   Tailscale Proxy. To enable it, add the following lines to your
-   `configuration.yaml`, without changing anything:
-
-   ```yaml
-   http:
-     use_x_forwarded_for: true
-     trusted_proxies:
-       - 127.0.0.1
-   ```
-
-1. Navigate to the [DNS page][tailscale_dns] of the admin console:
-
-   - Choose a Tailnet name.
-
-   - Enable MagicDNS if not already enabled.
-
-   - Under HTTPS Certificates section, click Enable HTTPS.
-
-1. Restart the add-on.
-
-**Note:** _You should not use any port number in the URL that you used
-previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
-port 443._
 
 ### Option: `funnel`
 
@@ -324,6 +200,130 @@ port 443._
 
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
+
+### Option: `log_level`
+
+Optionally enable tailscaled debug messages in the add-on's log. Turn it on only
+in case you are troubleshooting, because Tailscale's daemon is quite chatty. If
+`log_level` is set to `info` or less severe level, the add-on also opts out of
+client log upload to log.tailscale.io.
+
+The `log_level` option controls the level of log output by the addon and can
+be changed to be more or less verbose, which might be useful when you are
+dealing with an unknown issue. Possible values are:
+
+- `trace`: Show every detail, like all called internal functions.
+- `debug`: Shows detailed debug information.
+- `info`: Normal (usually) interesting events.
+- `notice`: Normal but significant events.
+- `warning`: Exceptional occurrences that are not errors.
+- `error`: Runtime errors that do not require immediate action.
+- `fatal`: Something went terribly wrong. Add-on becomes unusable.
+
+Please note that each level automatically includes log messages from a
+more severe level, e.g., `debug` also shows `info` messages. By default,
+the `log_level` is set to `info`, which is the recommended setting unless
+you are troubleshooting.
+
+### Option: `login_server`
+
+This option lets you specify you to specify a custom control server instead of
+the default (`https://controlplane.tailscale.com`). This is useful if you
+are running your own Tailscale control server, for example, a self-hosted
+[Headscale] instance.
+
+### Option: `proxy`
+
+When not set, this option is enabled by default.
+
+Tailscale can provide a TLS certificate for your Home Assistant instance within
+your tailnet domain.
+
+This can prevent browsers from warning that HTTP URLs to your Home Assistant instance
+look unencrypted (browsers are not aware of the connections between Tailscale
+nodes are secured with end-to-end encryption).
+
+More information: [Enabling HTTPS][tailscale_info_https]
+
+1. Configure Home Assistant to be accessible through an HTTP connection (this is
+   the default). See [HTTP integration documentation][http_integration] for more
+   information. If you still want to use another HTTPS connection to access Home
+   Assistant, please use a reverse proxy add-on.
+
+1. Home Assistant, by default, blocks requests from reverse proxies, like the
+   Tailscale Proxy. To enable it, add the following lines to your
+   `configuration.yaml`, without changing anything:
+
+   ```yaml
+   http:
+     use_x_forwarded_for: true
+     trusted_proxies:
+       - 127.0.0.1
+   ```
+
+1. Navigate to the [DNS page][tailscale_dns] of the admin console:
+
+   - Choose a Tailnet name.
+
+   - Enable MagicDNS if not already enabled.
+
+   - Under HTTPS Certificates section, click Enable HTTPS.
+
+1. Restart the add-on.
+
+**Note:** _You should not use any port number in the URL that you used
+previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
+port 443._
+
+### Option: `snat_subnet_routes`
+
+This option allows subnet devices to see the traffic originating from the subnet
+router, and this simplifyies routing configuration.
+
+When not set, this option is enabled by default.
+
+To support advanced [Site-to-site networking][tailscale_info_site_to_site] (eg.
+to traverse multiple networks), you can disable this functionality. But do it
+only when you really understand why you need this.
+
+### Option: `tags`
+
+This option allows you to specify specific ACL tags for this Tailscale
+instance. They need to start with `tag:`.
+
+More information: [ACL tags][tailscale_info_acls]
+
+### Option: `taildrop`
+
+This add-on support [Tailscale's Taildrop][taildrop] feature, which allows
+you to send files to your Home Assistant instance from other Tailscale
+devices.
+
+When not set, this option is enabled by default.
+
+Received files are stored in the `/share/taildrop` directory.
+
+### Option: `userspace_networking`
+
+The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
+to make your Home Assistant instance (and optionally the local subnets)
+accessible within your tailnet.
+
+When not set, this option is enabled by default.
+
+If you need to access other clients on your tailnet from your Home Assistant
+instance, disable userspace networking mode, that will create a `tailscale0`
+network interface on your host.
+
+If you want to access other clients on your tailnet even from your local subnet,
+execute Step 2 and 3 as described on [Site-to-site
+networking][tailscale_info_site_to_site].
+
+In case your local subnets collide with subnet routes within your tailnet, your
+local network access has priority and these addresses won't be routed toward
+your tailnet. This will prevent your Home Assistant instance to lose network
+conection. This also means that using the same subnet on multiple nodes for load
+balancing and failover is not possible with the current add-on behavior.
 
 ## Support
 
