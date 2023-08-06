@@ -98,6 +98,7 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
+funnel: true
 log_level: info
 login_server: "https://controlplane.tailscale.com"
 proxy: true
@@ -107,7 +108,6 @@ tags:
   - tag:homeassistant
 taildrop: true
 userspace_networking: true
-funnel: true
 ```
 
 ### Option: `accept_dns`
@@ -145,6 +145,57 @@ More information: [Subnet routers][tailscale_info_subnets]
 
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
+
+### Option: `funnel`
+
+This requires Tailscale Proxy to be enabled.
+
+When not set, this option is enabled by default.
+
+With the Tailscale Funnel feature you can access your Home Assistant instance
+from the wider internet using your Tailscale domain (like
+`https://homeassistant.tail1234.ts.net`) even from devices **without installed
+Tailscale VPN client** (eg. general phones, tablets, laptops).
+
+**Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
+_VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
+
+Without the Tailscale Funnel feature, you will be able to access your Home
+Assistant instance only when your devices (eg. phones, tablets, laptops) are
+connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
+proxying for HTTPS communication.
+
+More information: [Tailscale Funnel][tailscale_info_funnel]
+
+1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
+   and add the below policy entries to the policy file. See [Server role
+   accounts using ACL tags][tailscale_info_acls] for more information.
+
+   ```json
+   {
+     "nodeAttrs": [
+       {
+         "target": ["autogroup:members"],
+         "attr": ["funnel"]
+       }
+     ]
+   }
+   ```
+
+1. Restart the add-on.
+
+**Note**: _After initial set up it can take up to 10 minutes for the domain to
+be publicly available. You can use the `dig` command (Linux/MacOS) to regularly
+check if an A-record is already present for your domain (`dig
+<machine-name>.<tailnet-name>.ts.net +short` should return an IP address once
+the record is published)._
+
+**Note:** _You should not use any port number in the url that you used
+previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
+port 443._
+
+**Note:** _If you encounter strange browser behaviour or strange error messages,
+try to clear all site related cookies, clear all browser cache, restart browser._
 
 ### Option: `log_level`
 
@@ -269,57 +320,6 @@ local network access has priority and these addresses won't be routed toward
 your tailnet. This will prevent your Home Assistant instance to lose network
 conection. This also means that using the same subnet on multiple nodes for load
 balancing and failover is not possible with the current add-on behavior.
-
-### Option: `funnel`
-
-This requires Tailscale Proxy to be enabled.
-
-When not set, this option is enabled by default.
-
-With the Tailscale Funnel feature you can access your Home Assistant instance
-from the wider internet using your Tailscale domain (like
-`https://homeassistant.tail1234.ts.net`) even from devices **without installed
-Tailscale VPN client** (eg. general phones, tablets, laptops).
-
-**Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
-_VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
-
-Without the Tailscale Funnel feature, you will be able to access your Home
-Assistant instance only when your devices (eg. phones, tablets, laptops) are
-connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
-proxying for HTTPS communication.
-
-More information: [Tailscale Funnel][tailscale_info_funnel]
-
-1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
-   and add the below policy entries to the policy file. See [Server role
-   accounts using ACL tags][tailscale_info_acls] for more information.
-
-   ```json
-   {
-     "nodeAttrs": [
-       {
-         "target": ["autogroup:members"],
-         "attr": ["funnel"]
-       }
-     ]
-   }
-   ```
-
-1. Restart the add-on.
-
-**Note**: _After initial set up it can take up to 10 minutes for the domain to
-be publicly available. You can use the `dig` command (Linux/MacOS) to regularly
-check if an A-record is already present for your domain (`dig
-<machine-name>.<tailnet-name>.ts.net +short` should return an IP address once
-the record is published)._
-
-**Note:** _You should not use any port number in the url that you used
-previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
-port 443._
-
-**Note:** _If you encounter strange browser behaviour or strange error messages,
-try to clear all site related cookies, clear all browser cache, restart browser._
 
 ## Support
 
