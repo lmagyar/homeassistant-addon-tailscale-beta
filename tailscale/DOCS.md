@@ -100,13 +100,13 @@ advertise_routes:
   - fd12:3456:abcd::/64
 log_level: info
 login_server: "https://controlplane.tailscale.com"
+proxy: true
 snat_subnet_routes: true
 tags:
   - tag:example
   - tag:homeassistant
 taildrop: true
 userspace_networking: true
-proxy: true
 funnel: true
 ```
 
@@ -177,6 +177,49 @@ the default (`https://controlplane.tailscale.com`). This is useful if you
 are running your own Tailscale control server, for example, a self-hosted
 [Headscale] instance.
 
+### Option: `proxy`
+
+When not set, this option is enabled by default.
+
+Tailscale can provide a TLS certificate for your Home Assistant instance within
+your tailnet domain.
+
+This can prevent browsers from warning that HTTP URLs to your Home Assistant instance
+look unencrypted (browsers are not aware of the connections between Tailscale
+nodes are secured with end-to-end encryption).
+
+More information: [Enabling HTTPS][tailscale_info_https]
+
+1. Configure Home Assistant to be accessible through an HTTP connection (this is
+   the default). See [HTTP integration documentation][http_integration] for more
+   information. If you still want to use another HTTPS connection to access Home
+   Assistant, please use a reverse proxy add-on.
+
+1. Home Assistant, by default, blocks requests from reverse proxies, like the
+   Tailscale Proxy. To enable it, add the following lines to your
+   `configuration.yaml`, without changing anything:
+
+   ```yaml
+   http:
+     use_x_forwarded_for: true
+     trusted_proxies:
+       - 127.0.0.1
+   ```
+
+1. Navigate to the [DNS page][tailscale_dns] of the admin console:
+
+   - Choose a Tailnet name.
+
+   - Enable MagicDNS if not already enabled.
+
+   - Under HTTPS Certificates section, click Enable HTTPS.
+
+1. Restart the add-on.
+
+**Note:** _You should not use any port number in the URL that you used
+previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
+port 443._
+
 ### Option: `snat_subnet_routes`
 
 This option allows subnet devices to see the traffic originating from the subnet
@@ -226,49 +269,6 @@ local network access has priority and these addresses won't be routed toward
 your tailnet. This will prevent your Home Assistant instance to lose network
 conection. This also means that using the same subnet on multiple nodes for load
 balancing and failover is not possible with the current add-on behavior.
-
-### Option: `proxy`
-
-When not set, this option is enabled by default.
-
-Tailscale can provide a TLS certificate for your Home Assistant instance within
-your tailnet domain.
-
-This can prevent browsers from warning that HTTP URLs to your Home Assistant instance
-look unencrypted (browsers are not aware of the connections between Tailscale
-nodes are secured with end-to-end encryption).
-
-More information: [Enabling HTTPS][tailscale_info_https]
-
-1. Configure Home Assistant to be accessible through an HTTP connection (this is
-   the default). See [HTTP integration documentation][http_integration] for more
-   information. If you still want to use another HTTPS connection to access Home
-   Assistant, please use a reverse proxy add-on.
-
-1. Home Assistant, by default, blocks requests from reverse proxies, like the
-   Tailscale Proxy. To enable it, add the following lines to your
-   `configuration.yaml`, without changing anything:
-
-   ```yaml
-   http:
-     use_x_forwarded_for: true
-     trusted_proxies:
-       - 127.0.0.1
-   ```
-
-1. Navigate to the [DNS page][tailscale_dns] of the admin console:
-
-   - Choose a Tailnet name.
-
-   - Enable MagicDNS if not already enabled.
-
-   - Under HTTPS Certificates section, click Enable HTTPS.
-
-1. Restart the add-on.
-
-**Note:** _You should not use any port number in the URL that you used
-previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
-port 443._
 
 ### Option: `funnel`
 
