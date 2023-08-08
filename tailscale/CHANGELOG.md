@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 - Merge (unreleased) changes from original add-on
-  - Update Add-on base image to v14.0.8
+  - Update Add-on base image to v14.1.0 (Update Alpine base image to v3.18.3)
 
 ## 0.11.1.12 (forked)
 
