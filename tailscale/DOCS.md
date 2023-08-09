@@ -160,7 +160,8 @@ supported interfaces.
 
 ### Option: `funnel`
 
-This requires Tailscale Proxy to be enabled.
+This requires Tailscale Proxy to be enabled. See "Option: `proxy`" documentation
+below for the required configuration changes!
 
 When not set, this option is enabled by default.
 

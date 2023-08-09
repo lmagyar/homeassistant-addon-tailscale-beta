@@ -37,6 +37,14 @@ then
   bashio::log.error "Unable to configure Tailscale Proxy"
   bashio::exit.nok
 fi
+
+# Test proxy configuration
+if (( 200 != $(curl -s -o /dev/null -w "%{http_code}" "https://$(domain):443") )); then
+  bashio::log.error "Unable to connect to Home Assistant on ${protocol}://127.0.0.1:$(bashio::core.port)"
+  bashio::log.error "Please check your configuration based on the add-on's Documentation under \"Option: proxy\"'"
+  bashio::exit.nok
+fi
+
 bashio::log.info "Tailscale Proxy is enabled:"
 bashio::log.info "  Your Home Assistant instance is available within your Tailnet VPN at"
 bashio::log.info "  https://${domain}"

@@ -10,12 +10,25 @@ declare route family
 declare ipv4_multiple_tables_enabled
 declare ipv6_multiple_tables_enabled
 declare protected_routes=0
+declare wait_counter=0
 
 if bashio::config.false "userspace_networking"; then
   ipv4_multiple_tables_enabled=$(zcat /proc/config.gz | { grep -Ec '^CONFIG_IP_MULTIPLE_TABLES=y$' || true ;})
   ipv6_multiple_tables_enabled=$(zcat /proc/config.gz | { grep -Ec '^CONFIG_IPV6_MULTIPLE_TABLES=y$' || true ;})
+
   # If it is called after network configuration is changed, we need to drop cached network info
   bashio::cache.flush_all
+  # It is possible to get "ERROR: Got unexpected response from the API: System is not ready with state: setup"
+  # So we wait a little
+  while ! bashio::api.supervisor GET "/addons/self/options/config" false &> /dev/null; do
+    if (( wait_counter++ == 15 )); then
+      bashio::log.error "Supervisor is unreachable"
+      bashio::exit.nok
+    fi
+    bashio::log.notice "Waiting for the supervisor to be ready..."
+    sleep 2
+  done
+
   readarray -t routes < <(subnet-routes)
   if (( 0 < ${#routes[@]} )); then
     bashio::log.info "Adding advertised local subnets to ip rules with higher priority than Tailscale's routing,"
