@@ -7,6 +7,7 @@
 
 declare domain
 declare protocol="http"
+declare wait_counter=0
 
 # Check if Tailscale HTTPS is enabled
 if ! /opt/tailscale status --self=true --peers=false --json \
@@ -39,11 +40,15 @@ then
 fi
 
 # Test proxy configuration
-if (( 200 != $(curl -s -o /dev/null -w "%{http_code}" "https://${domain}:443") )); then
-  bashio::log.error "Unable to connect to Home Assistant on ${protocol}://127.0.0.1:$(bashio::core.port)"
-  bashio::log.error "Please check your configuration based on the add-on's Documentation under \"Option: proxy\""
-  bashio::exit.nok
-fi
+while (( 200 != $(curl -s -o /dev/null -w "%{http_code}" "https://${domain}:443") )); do
+  if (( wait_counter++ == 5 )); then
+    bashio::log.error "Unable to connect to Home Assistant on ${protocol}://127.0.0.1:$(bashio::core.port)"
+    bashio::log.error "Please check your configuration based on the add-on's Documentation under \"Option: proxy\""
+    bashio::exit.nok
+  fi
+  bashio::log.info "Waiting for Tailscale Proxy to be ready..."
+  sleep 2
+done
 
 bashio::log.info "Tailscale Proxy is enabled:"
 bashio::log.info "  Your Home Assistant instance is available within your Tailnet VPN at"
