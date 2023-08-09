@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.16 (forked)
 
 - Remove HTTPS proxy configuration testing
 
