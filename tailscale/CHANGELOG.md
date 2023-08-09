@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.13 (forked)
 
 - Test HTTPS proxy configuration on startup
 - Protect against "System is not ready with state: setup" supervisor errors
