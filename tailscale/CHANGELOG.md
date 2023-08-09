@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Bugfix: fix HTTPS proxy configuration testing wait loop with increased timeout
+
 ## 0.11.1.14 (forked)
 
 - Bugfix: fix HTTPS proxy configuration testing with wait loop
