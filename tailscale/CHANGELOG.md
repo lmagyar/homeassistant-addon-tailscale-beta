@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1.14 (forked)
+
+- Bugfix: fix HTTPS proxy configuration testing with wait loop
+
 ## 0.11.1.13 (forked)
 
 - Test HTTPS proxy configuration on startup
