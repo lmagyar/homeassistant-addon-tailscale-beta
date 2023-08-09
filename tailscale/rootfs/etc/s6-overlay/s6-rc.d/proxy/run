@@ -6,7 +6,6 @@
 # ==============================================================================
 
 declare domain
-declare protocol="http"
 
 # Check if Tailscale HTTPS is enabled
 if ! /opt/tailscale status --self=true --peers=false --json \
@@ -20,10 +19,8 @@ domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertD
 
 # Checking if SSL is used
 if bashio::var.true "$(bashio::core.ssl)"; then
-  bashio::log.warning "Tailscale's HTTPS support is enabled, but Home Assistant is not accessible through plain HTTP connection"
-  bashio::log.warning "The add-on will communicate locally with Home Assistant through an encypted HTTPS connection,"
-  bashio::log.warning "that unnecessarily uses resources and slows down the communication on a possibly low end device"
-  protocol="https+insecure"
+  bashio::log.error "Tailscale's HTTPS support is enabled, but Home Assistant is not accessible through plain HTTP connection"
+  bashio::exit.nok
 fi
 
 # Set up proxy
@@ -32,9 +29,16 @@ fi
 # Note: If a tailnet node is renamed, there will be deprecated entries in status json under .Web.<different-domain:443>,
 #       those can be removed only with reseting the serve configuration
 if ! /opt/tailscale serve reset \
-  || ! /opt/tailscale serve https:443 / "${protocol}://127.0.0.1:$(bashio::core.port)"
+  || ! /opt/tailscale serve https:443 / "http://127.0.0.1:$(bashio::core.port)"
 then
   bashio::log.error "Unable to configure Tailscale Proxy"
+  bashio::exit.nok
+fi
+
+# Test proxy configuration
+if (( 200 != $(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$(bashio::core.port)") )); then
+  bashio::log.error "Unable to connect to Home Assistant on http://127.0.0.1:$(bashio::core.port)"
+  bashio::log.error "Please check your configuration based on the add-on's Documentation under \"Option: proxy\""
   bashio::exit.nok
 fi
 
