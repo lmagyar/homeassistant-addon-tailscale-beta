@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.17 (forked)
 
 - Re-add: Test HTTPS proxy configuration on startup
 - Remove: Allow proxy connection to HTTPS Home Assistant instance with insecure HTTPS proxying
