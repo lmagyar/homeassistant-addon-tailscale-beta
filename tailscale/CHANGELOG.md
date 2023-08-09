@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.11.1.13 (forked)
+
+- Test HTTPS proxy configuration on startup
+- Protect against "System is not ready with state: setup" supervisor errors
+- Merge (unreleased) changes from original add-on
+  - Update Add-on base image to v14.1.0 (Update Alpine base image to v3.18.3)
+
 ## 0.11.1.12 (forked)
 
 - Merge (unreleased) changes from original add-on
@@ -9,6 +16,8 @@
 
 - Make advertised subnet routes configurable
 - Fix issue [#43](https://github.com/lmagyar/homeassistant-addon-tailscale/issues/43) (HA OS VM IPv6 multiple routing tables are not enabled)
+- Allow proxy connection to HTTPS Home Assistant instance with insecure HTTPS proxying
+- Reset proxy configuration on startup
 - Merge (unreleased) changes from original add-on
   - Update tailscale/tailscale to v1.46.1
   - Update Add-on base image to v14.0.6
