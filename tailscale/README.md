@@ -7,6 +7,14 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
+>   - Release unreleased changes from community add-on:
+>     - Update tailscale/tailscale to v1.46.1
+>     - Enable Tailscale's builtin inbound HTTPS proxy
+>     - Fix login-server option
+>     - Drop userspace networking
+>     - Make accepting magicDNS optional
+>     - Make exit node advertisement configurable 
+>     - Make Taildrop configurable
 >   - Enable Tailscale's Funnel feature
 >   - Make userspace networking configurable
 >   - Make advertised subnet routes configurable
