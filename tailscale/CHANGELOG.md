@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.11.1.16 (forked)
+
+- Remove HTTPS proxy configuration testing
+
 ## 0.11.1.15 (forked)
 
 - Bugfix: fix HTTPS proxy configuration testing wait loop with increased timeout
