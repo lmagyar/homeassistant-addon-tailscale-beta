@@ -10,7 +10,7 @@
 >
 > Changes:
 >   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.46.1
+>     - Update tailscale/tailscale to v1.48.0
 >     - Enable Tailscale's builtin inbound HTTPS proxy
 >     - Fix login-server option
 >     - Drop userspace networking
@@ -160,8 +160,10 @@ supported interfaces.
 
 ### Option: `funnel`
 
-This requires Tailscale Proxy to be enabled. See "Option: `proxy`" documentation
-below for the required configuration changes!
+This requires Tailscale Proxy to be enabled.
+
+**Important:** See also the "Option: `proxy`" section of this documentation for the
+necessary configuration changes!
 
 When not set, this option is enabled by default.
 
