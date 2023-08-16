@@ -1,7 +1,8 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.18 (forked)
 
+- Handle previous non-graceful stop of add-on
 - Merge (unreleased) changes from original add-on
   - Update tailscale/tailscale to v1.48.0
 
