@@ -10,6 +10,7 @@ declare route family
 declare ipv4_multiple_tables_enabled
 declare ipv6_multiple_tables_enabled
 declare protected_routes=0
+declare response
 declare wait_counter=0
 
 if bashio::config.false "userspace_networking"; then
@@ -49,7 +50,14 @@ if bashio::config.false "userspace_networking"; then
       family="-4"
     fi
     bashio::log.info "  Adding route ${route} to ip rules"
-    ip "${family}" rule add to "${route}" priority 5001 table main
+    if ! response=$(ip "${family}" rule add to "${route}" priority 5001 table main); then
+      if [[ "${response}" != "ip: RTNETLINK answers: File exists" ]]; then
+        echo "${response}"
+        bashio::exit.nok
+      else
+        bashio::log.notice "  Route ${route} is already added to ip rules"
+      fi
+    fi
     (( protected_routes+=1 ))
   done
   if (( 0 < ${#routes[@]} && 0 == ${protected_routes} )); then
