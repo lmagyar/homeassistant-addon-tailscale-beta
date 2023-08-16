@@ -50,9 +50,9 @@ if bashio::config.false "userspace_networking"; then
       family="-4"
     fi
     bashio::log.info "  Adding route ${route} to ip rules"
-    if ! response=$(ip "${family}" rule add to "${route}" priority 5001 table main); then
+    if ! response=$(ip "${family}" rule add to "${route}" priority 5001 table main 2>&1); then
       if [[ "${response}" != "RTNETLINK answers: File exists" ]]; then
-        echo "ip: ${response}"
+        echo "${response}"
         bashio::exit.nok
       else
         bashio::log.notice "  Route ${route} is already added to ip rules"
