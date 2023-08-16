@@ -111,7 +111,14 @@ if bashio::config.false "userspace_networking"; then
 
     for interface in "${interfaces[@]}"; do
       bashio::log.info "  Clamping the MSS for interface ${interface}"
-      iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+      if [[ "${interface}" == $(iptables -t mangle -S FORWARD \
+        | { grep -E "^-A FORWARD -i tailscale\d -o ${interface}" || true ;} \
+        | sed -nr 's/^.*?-o\s([A-Za-z0-9]+)\s.*$/\1/p') ]]
+      then
+        bashio::log.notice "  MSS is already clamped for interface ${interface}"
+      else
+        iptables -t mangle -A FORWARD -i tailscale0 -o ${interface} -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu
+      fi
     done
   fi
 fi
