@@ -136,7 +136,7 @@ by adding `100.100.100.100` as a DNS server in your Pi-hole or AdGuard Home.
 This option allows you to accept subnet routes advertised by other nodes in
 your tailnet.
 
-More information: <https://tailscale.com/kb/1019/subnets/>
+More information: [Subnet routers][tailscale_info_subnets]
 
 When not set, this option is enabled by default.
 
