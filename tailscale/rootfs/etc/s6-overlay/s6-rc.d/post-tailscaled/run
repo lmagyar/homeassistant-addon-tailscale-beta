@@ -90,8 +90,11 @@ done
 
 bashio::log.info "Tailscale is running"
 
-# Notify about colliding subnet routes if non-userspace-networking is enabled
-if bashio::config.false "userspace_networking"; then
+# Notify about colliding subnet routes if non-userspace networking and accepting routes are enabled
+if bashio::config.false "userspace_networking" && \
+  (! bashio::config.has_value "accept_routes" || \
+    bashio::config.true "accept_routes");
+then
   readarray -t colliding_routes < <( \
     comm -1 -2 \
       <(printf "%s" "${routes[@]/%/$'\n'}") \
