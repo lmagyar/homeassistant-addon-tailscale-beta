@@ -17,14 +17,16 @@
 >     - Make accepting magicDNS optional
 >     - Make exit node advertisement configurable 
 >     - Make Taildrop configurable
->   - Enable Tailscale's Funnel feature
->   - Make userspace networking configurable
->   - Make advertised subnet routes configurable
->   - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
->   - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
->   - Make subnet source NAT configurable (to support advanced site-to-site networking)
->   - Create fallback page for iOS browsers failing to open Tailscale login page
->   - Do not opt out of client log upload in debug log level
+>   - Release unmerged changes from community add-on:
+>     - Enable Tailscale's Funnel feature
+>     - Make userspace networking configurable
+>     - Make advertised subnet routes configurable
+>     - Make accepting subnet routes configurable
+>     - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
+>     - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
+>     - Make subnet source NAT configurable (to support advanced site-to-site networking)
+>     - Create fallback page for iOS browsers failing to open Tailscale login page
+>     - Do not opt out of client log upload in debug log level
 
 ![Warning][warning_stripe]
 
@@ -106,6 +108,7 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 
 ```yaml
 accept_dns: true
+accept_routes: true
 advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
@@ -133,6 +136,15 @@ MagicDNS may cause issues if you run things like Pi-hole or AdGuard Home
 on the same machine as this add-on. In such cases disabling `accept_dns`
 will help. You can still leverage MagicDNS on other devices on your network,
 by adding `100.100.100.100` as a DNS server in your Pi-hole or AdGuard Home.
+
+### Option: `accept_routes`
+
+This option allows you to accept subnet routes advertised by other nodes in
+your tailnet.
+
+More information: [Subnet routers][tailscale_info_subnets]
+
+When not set, this option is enabled by default.
 
 ### Option: `advertise_exit_node`
 
