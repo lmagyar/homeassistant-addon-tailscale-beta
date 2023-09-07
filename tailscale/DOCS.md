@@ -13,14 +13,16 @@
 >     - Make accepting magicDNS optional
 >     - Make exit node advertisement configurable 
 >     - Make Taildrop configurable
->   - Enable Tailscale's Funnel feature
->   - Make userspace networking configurable
->   - Make advertised subnet routes configurable
->   - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
->   - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
->   - Make subnet source NAT configurable (to support advanced site-to-site networking)
->   - Create fallback page for iOS browsers failing to open Tailscale login page
->   - Do not opt out of client log upload in debug log level
+>   - Release unmerged changes from community add-on:
+>     - Enable Tailscale's Funnel feature
+>     - Make userspace networking configurable
+>     - Make advertised subnet routes configurable
+>     - Make accepting subnet routes configurable
+>     - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
+>     - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
+>     - Make subnet source NAT configurable (to support advanced site-to-site networking)
+>     - Create fallback page for iOS browsers failing to open Tailscale login page
+>     - Do not opt out of client log upload in debug log level
 
 ![Warning][warning_stripe]
 
