@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.20 (forked)
 
 - Make accepting subnet routes configurable (from PR [#252](https://github.com/hassio-addons/addon-tailscale/pull/252) by [@willnorris](https://github.com/willnorris))
 
