@@ -21,6 +21,7 @@ Zero config VPN for building secure networks.
 >     - Make Taildrop configurable
 >   - Release unmerged changes from community add-on:
 >     - Enable Tailscale's Funnel feature
+>     - Test Home Assistant's HTTP reverse proxy configuration
 >     - Make userspace networking configurable
 >     - Make advertised subnet routes configurable
 >     - Make accepting subnet routes configurable
