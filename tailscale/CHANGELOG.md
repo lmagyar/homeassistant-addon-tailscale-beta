@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.22 (forked)
 
 - Warn about key expiration on add-on startup
 
