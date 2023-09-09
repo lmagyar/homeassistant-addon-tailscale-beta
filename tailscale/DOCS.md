@@ -20,6 +20,7 @@
 >   - Release unmerged changes from community add-on:
 >     - Enable Tailscale's Funnel feature
 >     - Test Home Assistant's HTTP reverse proxy configuration
+>     - Warn about key expiration on add-on startup
 >     - Make userspace networking configurable
 >     - Make advertised subnet routes configurable
 >     - Make accepting subnet routes configurable

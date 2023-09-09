@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Warn about key expiration on add-on startup
+
 ## 0.11.1.21 (forked)
 
 - Properly test Home Assistant's HTTP reverse proxy configuration (especially test `use_x_forwarded_for` settings)
