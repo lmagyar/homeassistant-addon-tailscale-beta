@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.48.2
+
 ## 0.11.1.22 (forked)
 
 - Warn about key expiration on add-on startup
@@ -7,6 +12,8 @@
 ## 0.11.1.21 (forked)
 
 - Properly test Home Assistant's HTTP reverse proxy configuration (especially test `use_x_forwarded_for` settings)
+
+  ***IMPORTANT: Read proxy documentation before updating, this update can cause the add-on to not start, it can be a breaking change! If you don't use proxy functinality, disable it before installing this update!***
 
 ## 0.11.1.20 (forked)
 
