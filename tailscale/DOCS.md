@@ -6,7 +6,7 @@
 >
 > Changes:
 >   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.48.1
+>     - Update tailscale/tailscale to v1.48.2
 >     - Enable Tailscale's builtin inbound HTTPS proxy
 >     - Fix login-server option
 >     - Drop userspace networking

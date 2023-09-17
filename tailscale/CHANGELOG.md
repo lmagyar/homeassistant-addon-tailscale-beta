@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.11.1.23 (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.48.2
+
 ## 0.11.1.22 (forked)
 
 - Warn about key expiration on add-on startup
