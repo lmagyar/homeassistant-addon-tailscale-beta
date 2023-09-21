@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update Add-on base image to v14.1.1
+
 ## 0.11.1.23 (forked)
 
 - Merge (unreleased) changes from original add-on
