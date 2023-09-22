@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.24 (forked)
 
 - Detect kernel support for MSS clamping and skip it if not supported (workaround for HA OS Odroid N2)
 - Merge (unreleased) changes from original add-on
