@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.11.1.25 (forked)
+
+- Use new v1.50.0 .Self.CapMap in status json for https proxy and funnel support check
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.50.0
+
 ## 0.11.1.24 (forked)
 
 - Detect kernel support for MSS clamping and skip it if not supported (workaround for HA OS Odroid N2)
