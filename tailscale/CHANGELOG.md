@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Use new v1.50.0 .Self.CapMap in status json for https proxy and funnel support check
 - Merge (unreleased) changes from original add-on
   - Update tailscale/tailscale to v1.50.0
 
