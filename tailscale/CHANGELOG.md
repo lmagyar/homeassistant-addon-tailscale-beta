@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge (unreleased) changes from original add-on
+  - Update tailscale/tailscale to v1.50.0
+
 ## 0.11.1.24 (forked)
 
 - Detect kernel support for MSS clamping and skip it if not supported (workaround for HA OS Odroid N2)
