@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.25 (forked)
 
 - Use new v1.50.0 .Self.CapMap in status json for https proxy and funnel support check
 - Merge (unreleased) changes from original add-on
