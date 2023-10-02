@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:14.1.1
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:14.2.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.50.0"
+ARG TAILSCALE_VERSION="v1.50.1"
 RUN \
     apk add --no-cache \
         ip6tables=1.8.9-r2 \
