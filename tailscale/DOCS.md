@@ -65,6 +65,8 @@ however, it is nice to know where you need to go later on.
 
 ## How to use
 
+1. **See the "Option: `proxy`" section of this documentation for the necessary
+   configuration changes in Home Assistant!**
 1. Start the "Tailscale with features" add-on.
 1. Check the logs of the "Tailscale with features" add-on to see if everything
    went well.
@@ -177,7 +179,7 @@ supported interfaces.
 This requires Tailscale Proxy to be enabled.
 
 **Important:** See also the "Option: `proxy`" section of this documentation for the
-necessary configuration changes!
+necessary configuration changes in Home Assistant!
 
 When not set, this option is enabled by default.
 
