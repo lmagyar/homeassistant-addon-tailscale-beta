@@ -173,7 +173,7 @@ supported interfaces.
 This requires Tailscale Proxy to be enabled.
 
 **Important:** See also the "Option: `proxy`" section of this documentation for the
-necessary configuration changes!
+necessary configuration changes in Home Assistant!
 
 When not set, this option is enabled by default.
 
