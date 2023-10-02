@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.11.1.26 (forked)
 
 - Warn when userspace networking is used to turn it off to access other clients on the tailnet
 - Merge (unreleased) changes from original add-on
