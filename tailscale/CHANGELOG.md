@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 - Merge (unreleased) changes from original add-on
-  - Update Add-on base image to v14.2.1
+  - Update Add-on base image to v14.2.2
 
 ## 0.11.1.26 (forked)
 
