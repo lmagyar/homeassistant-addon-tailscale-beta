@@ -91,6 +91,13 @@ done
 
 bashio::log.info "Tailscale is running"
 
+# Warn about key expiration
+if keyexpiry=$(/opt/tailscale status --self=true --peers=false --json | jq -rce '.Self.KeyExpiry'); then
+  bashio::log.warning "The connection's key will expire on: ${keyexpiry}"
+  bashio::log.warning "Consider disabling key expiry to avoid losing connection to your Home Assistant device."
+  bashio::log.warning "Please check your configuration based on the add-on's Documentation under \"Configuration\""
+fi
+
 # Notify about colliding subnet routes if non-userspace networking and accepting routes are enabled
 if bashio::config.false "userspace_networking" && \
   (! bashio::config.has_value "accept_routes" || \
@@ -111,13 +118,6 @@ then
   for route in "${colliding_routes[@]}"; do
     bashio::log.warning "  ${route}"
   done
-fi
-
-# Warn about key expiration
-if keyexpiry=$(/opt/tailscale status --self=true --peers=false --json | jq -rce '.Self.KeyExpiry'); then
-  bashio::log.warning "The connection's key will expire on: ${keyexpiry}"
-  bashio::log.warning "Consider disabling key expiry to avoid losing connection to your Home Assistant device."
-  bashio::log.warning "Please check your configuration based on the add-on's Documentation under \"Configuration\""
 fi
 
 # Warn about userspace networking

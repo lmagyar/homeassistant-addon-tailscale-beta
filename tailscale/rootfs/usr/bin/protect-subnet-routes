@@ -26,9 +26,12 @@ if bashio::config.false "userspace_networking"; then
       bashio::log.error "Supervisor is unreachable"
       bashio::exit.nok
     fi
-    bashio::log.notice "Waiting for the supervisor to be ready..."
+    bashio::log.info "Waiting for the supervisor to be ready..."
     sleep 2
   done
+  if (( wait_counter != 0 )); then
+    bashio::log.info "Supervisor is ready"
+  fi
 
   readarray -t routes < <(subnet-routes)
   if (( 0 < ${#routes[@]} )); then
