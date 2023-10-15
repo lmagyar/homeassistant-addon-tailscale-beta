@@ -21,6 +21,7 @@ Zero config VPN for building secure networks.
 >     - Make Taildrop configurable
 >   - Release unmerged changes from community add-on:
 >     - Enable Tailscale's Funnel feature
+>     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 >     - Test Home Assistant's HTTP reverse proxy configuration
 >     - Warn about key expiration on add-on startup
 >     - Make userspace networking configurable

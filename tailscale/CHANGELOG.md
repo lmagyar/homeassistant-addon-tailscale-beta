@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Optionally copy Tailscale Proxy's certificate files to /ssl folder
 - Merge (unreleased) changes from original add-on
   - Update Add-on base image to v14.2.2
 
