@@ -5,26 +5,8 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.50.1
->     - Enable Tailscale's builtin inbound HTTPS proxy
->     - Fix login-server option
->     - Drop userspace networking
->     - Make accepting magicDNS optional
->     - Make exit node advertisement configurable 
->     - Make Taildrop configurable
 >   - Release unmerged changes from community add-on:
->     - Enable Tailscale's Funnel feature
->     - Test Home Assistant's HTTP reverse proxy configuration
->     - Warn about key expiration on add-on startup
->     - Make userspace networking configurable
->     - Make advertised subnet routes configurable
->     - Make accepting subnet routes configurable
->     - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
->     - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
->     - Make subnet source NAT configurable (to support advanced site-to-site networking)
->     - Create fallback page for iOS browsers failing to open Tailscale login page
->     - Do not opt out of client log upload in debug log level
+>     - Test Home Assistant's HTTP reverse proxy configuration on add-on start
 
 ![Warning][warning_stripe]
 

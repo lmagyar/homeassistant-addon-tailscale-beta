@@ -1,8 +1,9 @@
 # Changelog
 
-## vNext (forked)
+## vNext-0.12.0.1 (forked)
 
-- Merge (unreleased) changes from original add-on
+- Merge changes from original add-on
+  - Sync all final details of the merged PRs (tiny non-functional changes)
   - Update Add-on base image to v14.2.2
 
 ## 0.11.1.26 (forked)
