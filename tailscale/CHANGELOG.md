@@ -2,7 +2,8 @@
 
 ## vNext (forked)
 
-- Optionally copy Tailscale Proxy's certificate files to /ssl folder
+- New: Optionally copy Tailscale Proxy's certificate files to /ssl folder
+- Bugfix: Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
 - Merge (unreleased) changes from original add-on
   - Update Add-on base image to v14.2.2
 
