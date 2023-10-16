@@ -60,7 +60,7 @@ configuration:
     name: Source NAT subnet routes
     description: >-
       This option allows subnet devices to see the traffic originating from the
-      subnet router, and this simplifyies routing configuration.
+      subnet router, and this simplifies routing configuration.
       To support advanced Site-to-site networking (eg. to traverse multiple
       networks), you can disable this functionality.
       When not set, this option is enabled by default.
@@ -80,6 +80,6 @@ configuration:
     description: >-
       This option allows you to enable userspace networking mode.
       If you need to access other clients on your tailnet from your Home
-      Assistant instance, disable userspace networking mode, that will create a
+      Assistant instance, disable userspace networking mode, which will create a
       `tailscale0` network interface on your host.
       When not set, this option is enabled by default.

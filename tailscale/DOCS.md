@@ -9,28 +9,10 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.50.1
->     - Enable Tailscale's builtin inbound HTTPS proxy
->     - Fix login-server option
->     - Drop userspace networking
->     - Make accepting magicDNS optional
->     - Make exit node advertisement configurable 
->     - Make Taildrop configurable
 >   - Release unmerged changes from community add-on:
->     - Enable Tailscale's Funnel feature
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 >     - Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
->     - Test Home Assistant's HTTP reverse proxy configuration
->     - Warn about key expiration on add-on startup
->     - Make userspace networking configurable
->     - Make advertised subnet routes configurable
->     - Make accepting subnet routes configurable
->     - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
->     - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
->     - Make subnet source NAT configurable (to support advanced site-to-site networking)
->     - Create fallback page for iOS browsers failing to open Tailscale login page
->     - Do not opt out of client log upload in debug log level
+>     - Test Home Assistant's HTTP reverse proxy configuration on add-on start
 
 ![Warning][warning_stripe]
 
@@ -191,17 +173,17 @@ necessary configuration changes in Home Assistant!
 
 When not set, this option is enabled by default.
 
-With the Tailscale Funnel feature you can access your Home Assistant instance
+With the Tailscale Funnel feature, you can access your Home Assistant instance
 from the wider internet using your Tailscale domain (like
 `https://homeassistant.tail1234.ts.net`) even from devices **without installed
-Tailscale VPN client** (eg. general phones, tablets, laptops).
+Tailscale VPN client** (for example, on general phones, tablets, and laptops).
 
 **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
 _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 
 Without the Tailscale Funnel feature, you will be able to access your Home
-Assistant instance only when your devices (eg. phones, tablets, laptops) are
-connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
+Assistant instance only when your devices (for example, phones, tablets, and laptops)
+are connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
 proxying for HTTPS communication.
 
 More information: [Tailscale Funnel][tailscale_info_funnel]
@@ -223,13 +205,10 @@ More information: [Tailscale Funnel][tailscale_info_funnel]
 
 1. Restart the add-on.
 
-**Note**: _After initial set up it can take up to 10 minutes for the domain to
-be publicly available. You can use the `dig` command (Linux/MacOS) to regularly
-check if an A-record is already present for your domain (`dig
-<machine-name>.<tailnet-name>.ts.net +short` should return an IP address once
-the record is published)._
+**Note**: _After initial setup, it can take up to 10 minutes for the domain to
+be publicly available._
 
-**Note:** _You should not use any port number in the url that you used
+**Note:** _You should not use any port number in the URL that you used
 previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
 port 443._
 
@@ -344,7 +323,7 @@ port 443._
 ### Option: `snat_subnet_routes`
 
 This option allows subnet devices to see the traffic originating from the subnet
-router, and this simplifyies routing configuration.
+router, and this simplifies routing configuration.
 
 When not set, this option is enabled by default.
 
@@ -378,18 +357,18 @@ accessible within your tailnet.
 When not set, this option is enabled by default.
 
 If you need to access other clients on your tailnet from your Home Assistant
-instance, disable userspace networking mode, that will create a `tailscale0`
+instance, disable userspace networking mode, which will create a `tailscale0`
 network interface on your host.
 
 If you want to access other clients on your tailnet even from your local subnet,
-execute Step 2 and 3 as described on [Site-to-site
+execute steps 2 and 3 as described on [Site-to-site
 networking][tailscale_info_site_to_site].
 
 In case your local subnets collide with subnet routes within your tailnet, your
-local network access has priority and these addresses won't be routed toward
-your tailnet. This will prevent your Home Assistant instance to lose network
-conection. This also means that using the same subnet on multiple nodes for load
-balancing and failover is not possible with the current add-on behavior.
+local network access has priority, and these addresses won't be routed toward
+your tailnet. This will prevent your Home Assistant instance from losing network
+connection. This also means that using the same subnet on multiple nodes for load
+balancing and failover is impossible with the current add-on behavior.
 
 ## Support
 
