@@ -2,10 +2,19 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Proxy and Funnel is disabled by default, because this got to be the default in the original add-on.
+  If you previously used the default settings, enable them explicitly:
+  ```
+  funnel: true
+  proxy: true
+  ```
+
+Nonbreaking changes:
 - New: Optionally copy Tailscale Proxy's certificate files to /ssl folder
 - Bugfix: Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
 - Merge changes from original add-on
-  - Sync all final details of the merged PRs (tiny non-functional changes)
+  - Sync all final details of the merged PRs
   - Update Add-on base image to v14.2.2
 
 ## 0.11.1.26 (forked)
