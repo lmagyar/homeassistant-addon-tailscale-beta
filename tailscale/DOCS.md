@@ -216,6 +216,7 @@ _Until a bug in the Supervisor/UI is not fixed (see
 the normal configuration schema (see below) as optional values. If the issues
 get fixed in the future, configuration will be changed back to something better,
 like:_
+
 ```
 lets_encrypt:
   certfile: fullchain.pem
