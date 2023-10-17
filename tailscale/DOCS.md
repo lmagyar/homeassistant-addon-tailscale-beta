@@ -314,7 +314,7 @@ More information: [Enabling HTTPS][tailscale_info_https]
 
 1. Navigate to the [DNS page][tailscale_dns] of the admin console:
 
-   - Choose a Tailnet name.
+   - Choose a tailnet name.
 
    - Enable MagicDNS if not already enabled.
 
