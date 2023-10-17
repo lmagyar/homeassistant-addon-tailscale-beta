@@ -31,8 +31,7 @@ if (( 200 != $(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$(bashio
 fi
 
 # Set up proxy
-if ! /opt/tailscale serve https:443 / "http://127.0.0.1:$(bashio::core.port)"
-then
+if ! /opt/tailscale serve https:443 / "http://127.0.0.1:$(bashio::core.port)"; then
   bashio::log.error "Unable to configure Tailscale Proxy"
   bashio::exit.nok
 fi
