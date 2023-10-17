@@ -36,8 +36,8 @@ if ! bashio::config.true 'proxy' || ! bashio::config.true 'funnel'; then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/funnel
 fi
 
-# Disable certificate service when it is not configured
-if bashio::config.false 'proxy' || \
+# Disable certificate service when it has not been configured
+if ! bashio::config.true 'proxy' || \
     ! bashio::config.has_value "lets_encrypt_certfile" || \
     ! bashio::config.has_value "lets_encrypt_keyfile";
 then
