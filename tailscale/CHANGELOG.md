@@ -4,7 +4,7 @@
 
 ***BREAKING CHANGES:***
 - Proxy and Funnel is disabled by default, because this got to be the default in the original add-on.
-  If you previously used the default settings, enable them explicitly:
+  **If you previously used the default settings, enable them explicitly before installing this update:**
   ```
   funnel: true
   proxy: true
