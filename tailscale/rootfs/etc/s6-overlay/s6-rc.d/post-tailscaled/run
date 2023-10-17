@@ -129,3 +129,12 @@ then
   bashio::log.notice "disable userspace networking mode, that will create a \"tailscale0\" network interface on your host."
   bashio::log.notice "Please check your configuration based on the add-on's documentation under \"Option: userspace_networking\""
 fi
+
+# Warn about invalid certificate service configuration (can't be checked by the UI)
+if (bashio::config.has_value "lets_encrypt.certfile" && ! bashio::config.has_value "lets_encrypt.keyfile") ||
+    (! bashio::config.has_value "lets_encrypt.certfile" && bashio::config.has_value "lets_encrypt.keyfile");
+then
+    bashio::log.warning \
+        "Both 'lets_encrypt' options ('lets_encrypt.certfile' and 'lets_encrypt.keyfile')" \
+        "has to be specified or omitted together."
+fi
