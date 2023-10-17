@@ -31,13 +31,7 @@ if (( 200 != $(curl -s -o /dev/null -w "%{http_code}" "http://127.0.0.1:$(bashio
 fi
 
 # Set up proxy
-# Note: Configuration is persistent between reboots, though configuring the same value won't cause duplicate entries,
-#       but will overwite previous entry if core.port has been changed
-# Note: If a tailnet node is renamed, there will be deprecated entries in status json under .Web.<different-domain:443>,
-#       those can be removed only with reseting the serve configuration
-if ! /opt/tailscale serve reset \
-  || ! /opt/tailscale serve https:443 / "http://127.0.0.1:$(bashio::core.port)"
-then
+if ! /opt/tailscale serve https:443 / "http://127.0.0.1:$(bashio::core.port)"; then
   bashio::log.error "Unable to configure Tailscale Proxy"
   bashio::exit.nok
 fi
