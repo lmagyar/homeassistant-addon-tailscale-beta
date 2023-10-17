@@ -38,17 +38,17 @@ fi
 
 # Disable certificate service when it is not configured
 if bashio::config.false 'proxy' || \
-    ! bashio::config.has_value "lets_encrypt-certfile" || \
-    ! bashio::config.has_value "lets_encrypt-keyfile";
+    ! bashio::config.has_value "lets_encrypt_certfile" || \
+    ! bashio::config.has_value "lets_encrypt_keyfile";
 then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/certificate
     rm /etc/s6-overlay/s6-rc.d/proxy/dependencies.d/certificate
 fi
 # Warn about invalid certificate service configuration (can't be checked by the UI)
-if (bashio::config.has_value "lets_encrypt-certfile" && ! bashio::config.has_value "lets_encrypt-keyfile") ||
-    (! bashio::config.has_value "lets_encrypt-certfile" && bashio::config.has_value "lets_encrypt-keyfile");
+if (bashio::config.has_value "lets_encrypt_certfile" && ! bashio::config.has_value "lets_encrypt_keyfile") ||
+    (! bashio::config.has_value "lets_encrypt_certfile" && bashio::config.has_value "lets_encrypt_keyfile");
 then
     bashio::log.warning \
-        "Both 'lets_encrypt' options ('lets_encrypt-certfile' and 'lets_encrypt-keyfile')" \
+        "Both 'lets_encrypt' options ('lets_encrypt_certfile' and 'lets_encrypt_keyfile')" \
         "has to be specified or omitted together."
 fi
