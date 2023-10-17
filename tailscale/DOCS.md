@@ -45,8 +45,6 @@ however, it is nice to know where you need to go later on.
 
 ## How to use
 
-1. **See the "Option: `proxy`" section of this documentation for the necessary
-   configuration changes in Home Assistant!**
 1. Start the "Tailscale with features" add-on.
 1. Check the logs of the "Tailscale with features" add-on to see if everything
    went well.
@@ -97,13 +95,13 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-funnel: true
+funnel: false
 lets_encrypt:
   certfile: fullchain.pem
   keyfile: privkey.pem
 log_level: info
 login_server: "https://controlplane.tailscale.com"
-proxy: true
+proxy: false
 snat_subnet_routes: true
 tags:
   - tag:example
@@ -167,7 +165,7 @@ This requires Tailscale Proxy to be enabled.
 **Important:** See also the "Option: `proxy`" section of this documentation for the
 necessary configuration changes in Home Assistant!
 
-When not set, this option is enabled by default.
+When not set, this option is disabled by default.
 
 With the Tailscale Funnel feature, you can access your Home Assistant instance
 from the wider internet using your Tailscale domain (like
@@ -281,7 +279,7 @@ are running your own Tailscale control server, for example, a self-hosted
 
 ### Option: `proxy`
 
-When not set, this option is enabled by default.
+When not set, this option is disabled by default.
 
 Tailscale can provide a TLS certificate for your Home Assistant instance within
 your tailnet domain.
