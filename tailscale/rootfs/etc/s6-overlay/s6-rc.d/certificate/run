@@ -17,8 +17,8 @@ then
 fi
 
 domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertDomains[0]")
-certfile=$(bashio::config "lets_encrypt.certfile")
-keyfile=$(bashio::config "lets_encrypt.keyfile")
+certfile=$(bashio::config "lets_encrypt_certfile")
+keyfile=$(bashio::config "lets_encrypt_keyfile")
 
 # Copy certificate files first time this functionality is used
 if ! cp --force --update "/data/state/certs/${domain}.crt" "/ssl/${certfile}"; then

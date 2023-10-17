@@ -38,8 +38,8 @@ fi
 
 # Disable certificate service when it is not configured
 if bashio::config.false 'proxy' || \
-    ! bashio::config.has_value "lets_encrypt.certfile" || \
-    ! bashio::config.has_value "lets_encrypt.keyfile";
+    ! bashio::config.has_value "lets_encrypt_certfile" || \
+    ! bashio::config.has_value "lets_encrypt_keyfile";
 then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/certificate
     rm /etc/s6-overlay/s6-rc.d/proxy/dependencies.d/certificate
