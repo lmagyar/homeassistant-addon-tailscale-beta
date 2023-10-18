@@ -12,7 +12,7 @@ declare certfile keyfile
 if ! /opt/tailscale status --self=true --peers=false --json \
   | jq -rce '.Self.CapMap | has("https")' > /dev/null;
 then
-  bashio::log.error "Tailscale's HTTPS support is disabled. Therefore, can't save certificate files."
+  bashio::log.error "Tailscale's HTTPS support is disabled"
   bashio::exit.nok
 fi
 
