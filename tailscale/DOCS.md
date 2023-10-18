@@ -289,10 +289,9 @@ you are troubleshooting.
 
 ### Option: `login_server`
 
-This option lets you specify you to specify a custom control server instead of
-the default (`https://controlplane.tailscale.com`). This is useful if you
-are running your own Tailscale control server, for example, a self-hosted
-[Headscale] instance.
+This option lets you to specify a custom control server instead of the default
+(`https://controlplane.tailscale.com`). This is useful if you are running your
+own Tailscale control server, for example, a self-hosted [Headscale] instance.
 
 ### Option: `proxy`
 
