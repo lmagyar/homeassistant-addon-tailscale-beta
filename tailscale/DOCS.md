@@ -95,6 +95,7 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
+auth_key: "tskey-abcdef1432341818"
 funnel: false
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
@@ -156,6 +157,13 @@ More information: [Subnet routers][tailscale_info_subnets]
 
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
+
+### Option: `auth_key`
+
+Pre-authentication keys let you register new nodes without needing to sign in
+via a web browser.
+
+More information: [Auth keys][tailscale_info_auth_keys]
 
 ### Option: `funnel`
 
@@ -410,6 +418,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
+[tailscale_info_auth_keys]: https://tailscale.com/kb/1085/auth-keys
 [tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes/
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
