@@ -100,7 +100,7 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-auth_key: "tskey-abcdef1432341818"
+auth_key: "tskey-auth-xxx"
 funnel: false
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
@@ -165,8 +165,9 @@ supported interfaces.
 
 ### Option: `auth_key`
 
-Pre-authentication keys let you register new nodes without needing to sign in
-via a web browser.
+This options allows to couple your Home Assistant instance with your Tailscale
+account using an Auth key instead of the regular authentication flow using the
+Web UI.
 
 More information: [Auth keys][tailscale_info_auth_keys]
 
@@ -194,20 +195,11 @@ proxying for HTTPS communication.
 
 More information: [Tailscale Funnel][tailscale_info_funnel]
 
-1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
-   and add the below policy entries to the policy file. See [Server role
-   accounts using ACL tags][tailscale_info_acls] for more information.
+1. Navigate to the [Access controls page][tailscale_acls] of the admin console:
 
-   ```json
-   {
-     "nodeAttrs": [
-       {
-         "target": ["autogroup:members"],
-         "attr": ["funnel"]
-       }
-     ]
-   }
-   ```
+   - Add the required `funnel` node attribute to the tailnet policy file. See
+     [Tailnet policy file requirement][tailscale_info_funnel_policy_requirement]
+     for more information.
 
 1. Restart the add-on.
 
@@ -426,6 +418,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_auth_keys]: https://tailscale.com/kb/1085/auth-keys
 [tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes/
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
+[tailscale_info_funnel_policy_requirement]: https://tailscale.com/kb/1223/tailscale-funnel/#tailnet-policy-file-requirement
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
 [tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site/

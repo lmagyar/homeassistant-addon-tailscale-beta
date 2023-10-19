@@ -118,7 +118,7 @@ if keyexpiry=$(/opt/tailscale status --self=true --peers=false --json | jq -rce 
   bashio::log.warning "Please check your configuration based on the add-on's documentation under \"Configuration\""
 fi
 
-# Notify about colliding subnet routes if non-userspace networking and accepting routes are enabled
+# Warn about colliding subnet routes if non-userspace networking and accepting routes are enabled
 if bashio::config.false "userspace_networking" && \
   (! bashio::config.has_value "accept_routes" || \
     bashio::config.true "accept_routes");
@@ -140,16 +140,6 @@ then
   done
 fi
 
-# Warn about userspace networking
-if ! bashio::config.has_value "userspace_networking" || \
-    bashio::config.true "userspace_networking";
-then
-  bashio::log.notice "The add-on uses userspace networking mode."
-  bashio::log.notice "If you need to access other clients on your tailnet from your Home Assistant instance,"
-  bashio::log.notice "disable userspace networking mode, that will create a \"tailscale0\" network interface on your host."
-  bashio::log.notice "Please check your configuration based on the add-on's documentation under \"Option: userspace_networking\""
-fi
-
 # Warn about invalid certificate service configuration (can't be checked by the UI)
 if (bashio::config.has_value "lets_encrypt_certfile" && ! bashio::config.has_value "lets_encrypt_keyfile") ||
     (! bashio::config.has_value "lets_encrypt_certfile" && bashio::config.has_value "lets_encrypt_keyfile");
@@ -157,4 +147,14 @@ then
     bashio::log.warning \
         "Both 'lets_encrypt' options ('lets_encrypt_certfile' and 'lets_encrypt_keyfile')" \
         "has to be specified or omitted together."
+fi
+
+# Notify about userspace networking
+if ! bashio::config.has_value "userspace_networking" || \
+    bashio::config.true "userspace_networking";
+then
+  bashio::log.notice "The add-on uses userspace networking mode."
+  bashio::log.notice "If you need to access other clients on your tailnet from your Home Assistant instance,"
+  bashio::log.notice "disable userspace networking mode, that will create a \"tailscale0\" network interface on your host."
+  bashio::log.notice "Please check your configuration based on the add-on's documentation under \"Option: userspace_networking\""
 fi

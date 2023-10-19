@@ -12,7 +12,7 @@
 
 Nonbreaking changes:
 - New: Optionally copy Tailscale Proxy's certificate files to /ssl folder
-- New: Make auth-key configurable
+- New: Make auth-key configurable (inspired by [@laenbdarceq](https://github.com/laenbdarceq))
 - Bugfix: Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
 - Merge changes from original add-on
   - Sync all final details of the merged PRs
