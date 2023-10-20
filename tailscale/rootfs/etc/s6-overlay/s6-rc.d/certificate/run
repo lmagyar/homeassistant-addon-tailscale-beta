@@ -20,20 +20,14 @@ domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertD
 certfile=$(bashio::config "lets_encrypt_certfile")
 keyfile=$(bashio::config "lets_encrypt_keyfile")
 
-# Copy certificate files first time this functionality is used
-if ! cp --force --update "/data/state/certs/${domain}.crt" "/ssl/${certfile}"; then
-  bashio::log.error "Unable to copy new certificate file '/data/state/certs/${domain}.crt' to '/ssl/${certfile}'"
-  bashio::log.error "Check configuration and restart add-on"
-fi
-if ! cp --force --update "/data/state/certs/${domain}.key" "/ssl/${keyfile}"; then
-  bashio::log.error "Unable to copy new key file '/data/state/certs/${domain}.key' to '/ssl/${keyfile}'"
-  bashio::log.error "Check configuration and restart add-on"
-fi
-
 # After tailscale serv is up, it will automatically update the files, we can catch the events
-inotifywait --quiet --monitor /data/state/certs --include='^.*?\.(crt|key)$' \
+# But if the update is already happened, inotifywait can't catch it
+# That's why inotifywait is running in non-quiet mode, and the event "Watches established."
+#   printed on stderr triggers an initial update of the files,
+#   and it updates the files on the first usage of the service also
+inotifywait --monitor /data/state/certs --include='^.*?\.(crt|key)$' \
     --event='close_write,moved_to' --format '%f' \
-  | while IFS= read -r changed
+  |& while IFS= read -r changed
 do
   # Currently if the machine name is changed, tailscale changes the json status,
   # but the proxy isn't restarted and do not change to the new domain, and won't create new certs for the new domain,
@@ -41,17 +35,25 @@ do
   # # Check if domain has changed
   # domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertDomains[0]")
 
+  if [[ "${changed}" == "Watches established." ]]; then
+    changed="[WATCHES_ESTABLISHED]"
+  fi
+
   # Check if filename is the domain name (do not update on other certificate changes)
-  if [[ "${changed%.*}" == "${domain}" ]]; then
-    if [[ "${changed##*.}" == "crt" ]]; then
-      if ! cp --force --update "/data/state/certs/$changed" "/ssl/${certfile}"; then
-        bashio::log.error "Unable to copy renewed certificate file '/data/state/certs/$changed' to '/ssl/${certfile}'"
+  if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed%.*}" == "${domain}" ]]; then
+    if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "crt" ]]; then
+      if ! cp --force --update=older --preserve=mode,ownership,timestamps \
+          "/data/state/certs/${domain}.crt" "/ssl/${certfile}";
+      then
+        bashio::log.error "Unable to copy certificate file '/data/state/certs/${domain}.crt' to '/ssl/${certfile}'"
         bashio::log.error "Check configuration and restart add-on"
       fi
     fi
-    if [[ "${changed##*.}" == "key" ]]; then
-      if ! cp --force --update "/data/state/certs/$changed" "/ssl/${keyfile}"; then
-        bashio::log.error "Unable to copy renewed key file '/data/state/certs/$changed' to '/ssl/${keyfile}'"
+    if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "key" ]]; then
+      if ! cp --force --update=older --preserve=mode,ownership,timestamps \
+          "/data/state/certs/${domain}.key" "/ssl/${keyfile}";
+      then
+        bashio::log.error "Unable to copy key file '/data/state/certs/${domain}.key' to '/ssl/${keyfile}'"
         bashio::log.error "Check configuration and restart add-on"
       fi
     fi

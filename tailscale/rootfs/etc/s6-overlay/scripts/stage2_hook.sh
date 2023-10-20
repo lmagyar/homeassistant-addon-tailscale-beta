@@ -32,5 +32,4 @@ if ! bashio::config.true 'proxy' || \
     ! bashio::config.has_value "lets_encrypt_keyfile";
 then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/certificate
-    rm /etc/s6-overlay/s6-rc.d/proxy/dependencies.d/certificate
 fi
