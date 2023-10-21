@@ -5,8 +5,11 @@
 # Copies Tailscale Proxy certificates to /ssl folder
 # ==============================================================================
 
+readonly CERTS_FOLDER=/data/state/certs
+
 declare domain
 declare certfile keyfile
+declare cp_log
 
 # Check if Tailscale HTTPS is enabled
 if ! /opt/tailscale status --self=true --peers=false --json \
@@ -25,7 +28,7 @@ keyfile=$(bashio::config "lets_encrypt_keyfile")
 # That's why inotifywait is running in non-quiet mode, and the event "Watches established."
 #   printed on stderr triggers an initial update of the files,
 #   and it updates the files on the first usage of the service also
-inotifywait --monitor /data/state/certs --include='^.*?\.(crt|key)$' \
+inotifywait --monitor "${CERTS_FOLDER}" --include='^.*?\.(crt|key)$' \
     --event='close_write,moved_to' --format '%f' \
   |& while IFS= read -r changed
 do
@@ -42,19 +45,23 @@ do
   # Check if filename is the domain name (do not update on other certificate changes)
   if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed%.*}" == "${domain}" ]]; then
     if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "crt" ]]; then
-      if ! cp --force --update=older --preserve=mode,ownership,timestamps \
-          "/data/state/certs/${domain}.crt" "/ssl/${certfile}";
+      if ! cp_log=$(cp --force --update=older --preserve=mode,ownership,timestamps --verbose \
+          "${CERTS_FOLDER}/${domain}.crt" "/ssl/${certfile}");
       then
-        bashio::log.error "Unable to copy certificate file '/data/state/certs/${domain}.crt' to '/ssl/${certfile}'"
+        bashio::log.error "Unable to copy certificate file '${CERTS_FOLDER}/${domain}.crt' to '/ssl/${certfile}'"
         bashio::log.error "Check configuration and restart add-on"
+      elif [[ "${cp_log:0:7}" != "skipped" ]]; then
+        bashio::log.info "Updated certificate file '/ssl/${certfile}' with '${domain}.crt'"
       fi
     fi
     if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "key" ]]; then
-      if ! cp --force --update=older --preserve=mode,ownership,timestamps \
-          "/data/state/certs/${domain}.key" "/ssl/${keyfile}";
+      if ! cp_log=$(cp --force --update=older --preserve=mode,ownership,timestamps --verbose \
+          "${CERTS_FOLDER}/${domain}.key" "/ssl/${keyfile}");
       then
-        bashio::log.error "Unable to copy key file '/data/state/certs/${domain}.key' to '/ssl/${keyfile}'"
+        bashio::log.error "Unable to copy key file '${CERTS_FOLDER}/${domain}.key' to '/ssl/${keyfile}'"
         bashio::log.error "Check configuration and restart add-on"
+      elif [[ "${cp_log:0:7}" != "skipped" ]]; then
+        bashio::log.info "Updated key file '/ssl/${keyfile}' with '${domain}.key'"
       fi
     fi
   fi
