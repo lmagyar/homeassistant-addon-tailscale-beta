@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext-0.12.0.1 (forked)
+## 0.12.0.1 (forked)
 
 ***BREAKING CHANGES:***
 - Proxy and Funnel is disabled by default, because this got to be the default in the original add-on.
