@@ -51,7 +51,7 @@ do
         bashio::log.error "Unable to copy certificate file '${CERTS_FOLDER}/${domain}.crt' to '/ssl/${certfile}'"
         bashio::log.error "Check configuration and restart add-on"
       elif [[ "${cp_log:0:7}" != "skipped" ]]; then
-        bashio::log.info "Updated certificate file '/ssl/${certfile}' with '${domain}.crt'"
+        bashio::log.info "Updated certificate file '${domain}.crt' to '/ssl/${certfile}'"
       fi
     fi
     if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "key" ]]; then
@@ -61,7 +61,7 @@ do
         bashio::log.error "Unable to copy key file '${CERTS_FOLDER}/${domain}.key' to '/ssl/${keyfile}'"
         bashio::log.error "Check configuration and restart add-on"
       elif [[ "${cp_log:0:7}" != "skipped" ]]; then
-        bashio::log.info "Updated key file '/ssl/${keyfile}' with '${domain}.key'"
+        bashio::log.info "Updated key file '${domain}.key' to '/ssl/${keyfile}'"
       fi
     fi
   fi
