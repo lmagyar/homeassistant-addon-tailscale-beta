@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:14.2.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:14.2.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -14,9 +14,10 @@ RUN \
         ipcalc=1.0.2-r0 \
         iproute2=6.3.0-r0 \
         iptables=1.8.9-r2 \
-        nginx=1.24.0-r6 \
+        nginx=1.24.0-r7 \
         coreutils=9.3-r1 \
         networkmanager-common=1.42.8-r0 \
+        inotify-tools=3.22.6.0-r2 \
     \
     && ln -sf /sbin/xtables-nft-multi /sbin/ip6tables \
     && ln -sf /sbin/xtables-nft-multi /sbin/iptables \

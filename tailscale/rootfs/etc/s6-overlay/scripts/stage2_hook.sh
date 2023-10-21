@@ -21,17 +21,15 @@ then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/mss-clamping
 fi
 
-# Disable taildrop service when it is has been explicitly disabled
+# Disable taildrop service when it has been explicitly disabled
 if bashio::config.false 'taildrop'; then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/taildrop
 fi
 
-# Disable proxy service when it is has been explicitly disabled
-if bashio::config.false 'proxy'; then
-    rm /etc/s6-overlay/s6-rc.d/user/contents.d/proxy
-fi
-
-# Disable funnel service when it is has been explicitly disabled
-if bashio::config.false 'proxy' || bashio::config.false 'funnel'; then
-    rm /etc/s6-overlay/s6-rc.d/user/contents.d/funnel
+# Disable certificate service when it has not been configured
+if ! bashio::config.true 'proxy' || \
+    ! bashio::config.has_value "lets_encrypt_certfile" || \
+    ! bashio::config.has_value "lets_encrypt_keyfile";
+then
+    rm /etc/s6-overlay/s6-rc.d/user/contents.d/certificate
 fi

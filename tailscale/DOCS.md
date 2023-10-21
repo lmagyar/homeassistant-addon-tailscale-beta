@@ -5,26 +5,13 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.50.1
->     - Enable Tailscale's builtin inbound HTTPS proxy
->     - Fix login-server option
->     - Drop userspace networking
->     - Make accepting magicDNS optional
->     - Make exit node advertisement configurable 
->     - Make Taildrop configurable
 >   - Release unmerged changes from community add-on:
->     - Enable Tailscale's Funnel feature
->     - Test Home Assistant's HTTP reverse proxy configuration
->     - Warn about key expiration on add-on startup
->     - Make userspace networking configurable
->     - Make advertised subnet routes configurable
->     - Make accepting subnet routes configurable
->     - Protect advertised local subnets from being routed toward Tailscale subnets if they collide
->     - Clamp the MSS to the MTU for all advertised subnet's interface (to support site-to-site networking better)
->     - Make subnet source NAT configurable (to support advanced site-to-site networking)
->     - Create fallback page for iOS browsers failing to open Tailscale login page
->     - Do not opt out of client log upload in debug log level
+>     - Make Tailscale Proxy and Funnel port configurable
+>     - Make auth-key configurable
+>     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
+>     - Really disable Tailscale Proxy and Funnel when they are disabled
+>     - Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
+>     - Test Home Assistant's HTTP reverse proxy configuration on add-on start
 
 ![Warning][warning_stripe]
 
@@ -61,8 +48,6 @@ however, it is nice to know where you need to go later on.
 
 ## How to use
 
-1. **See the "Option: `proxy`" section of this documentation for the necessary
-   configuration changes in Home Assistant!**
 1. Start the "Tailscale with features" add-on.
 1. Check the logs of the "Tailscale with features" add-on to see if everything
    went well.
@@ -113,10 +98,13 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-funnel: true
+auth_key: "tskey-auth-xxx"
+funnel: false
+lets_encrypt_certfile: fullchain.pem
+lets_encrypt_keyfile: privkey.pem
 log_level: info
 login_server: "https://controlplane.tailscale.com"
-proxy: true
+proxy: false
 snat_subnet_routes: true
 tags:
   - tag:example
@@ -173,6 +161,14 @@ More information: [Subnet routers][tailscale_info_subnets]
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
 
+### Option: `auth_key`
+
+This options allows to couple your Home Assistant instance with your Tailscale
+account using an Auth key instead of the regular authentication flow using the
+Web UI.
+
+More information: [Auth keys][tailscale_info_auth_keys]
+
 ### Option: `funnel`
 
 This requires Tailscale Proxy to be enabled.
@@ -180,52 +176,91 @@ This requires Tailscale Proxy to be enabled.
 **Important:** See also the "Option: `proxy`" section of this documentation for the
 necessary configuration changes in Home Assistant!
 
-When not set, this option is enabled by default.
+When not set, this option is disabled by default.
 
-With the Tailscale Funnel feature you can access your Home Assistant instance
+With the Tailscale Funnel feature, you can access your Home Assistant instance
 from the wider internet using your Tailscale domain (like
 `https://homeassistant.tail1234.ts.net`) even from devices **without installed
-Tailscale VPN client** (eg. general phones, tablets, laptops).
+Tailscale VPN client** (for example, on general phones, tablets, and laptops).
 
 **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
 _VPN_ &#8658; **Tailscale Proxy** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 
 Without the Tailscale Funnel feature, you will be able to access your Home
-Assistant instance only when your devices (eg. phones, tablets, laptops) are
-connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
+Assistant instance only when your devices (for example, phones, tablets, and laptops)
+are connected to your Tailscale VPN, there will be no Internet &#8658; VPN TCP
 proxying for HTTPS communication.
 
 More information: [Tailscale Funnel][tailscale_info_funnel]
 
-1. Navigate to the [Access controls page][tailscale_acls] of the admin console,
-   and add the below policy entries to the policy file. See [Server role
-   accounts using ACL tags][tailscale_info_acls] for more information.
+1. Navigate to the [Access controls page][tailscale_acls] of the admin console:
 
-   ```json
-   {
-     "nodeAttrs": [
-       {
-         "target": ["autogroup:members"],
-         "attr": ["funnel"]
-       }
-     ]
-   }
-   ```
+   - Add the required `funnel` node attribute to the tailnet policy file. See
+     [Tailnet policy file requirement][tailscale_info_funnel_policy_requirement]
+     for more information.
 
 1. Restart the add-on.
 
-**Note**: _After initial set up it can take up to 10 minutes for the domain to
-be publicly available. You can use the `dig` command (Linux/MacOS) to regularly
-check if an A-record is already present for your domain (`dig
-<machine-name>.<tailnet-name>.ts.net +short` should return an IP address once
-the record is published)._
-
-**Note:** _You should not use any port number in the url that you used
-previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
-port 443._
+**Note**: _After initial setup, it can take up to 10 minutes for the domain to
+be publicly available._
 
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
+
+### _Note on the `lets_encrypt` options below_
+
+_Until a bug in the Supervisor/UI is not fixed (see
+[#4606](https://github.com/home-assistant/supervisor/issues/4606) and
+[#2640](https://github.com/home-assistant/supervisor/issues/2640)), we can't use
+the normal configuration schema (see below) as optional values. If the issues
+get fixed in the future, configuration will be changed back to something better,
+like:_
+
+```
+lets_encrypt:
+  certfile: fullchain.pem
+  keyfile: privkey.pem
+```
+
+### Option: `lets_encrypt_certfile`
+
+This requires Tailscale Proxy to be enabled.
+
+**Important:** See also the "Option: `proxy`" section of this documentation for
+the necessary configuration changes in Home Assistant!
+
+The name of the certificate file generated by Tailscale Proxy using Let's
+Encrypt. Use "." to save the file with the original name containing the domain
+(like "homeassistant.tail1234.ts.net.crt"), or use the regular
+"fullchain.pem" or any file or folder name you prefer.
+
+Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
+has to be specified or omitted together.
+
+**Note:** _The file is stored in the /ssl/ folder, which is the default for Home
+Assistant._
+
+When not set, this option is disabled by default.
+
+### Option: `lets_encrypt_keyfile`
+
+This requires Tailscale Proxy to be enabled.
+
+**Important:** See also the "Option: `proxy`" section of this documentation for
+the necessary configuration changes in Home Assistant!
+
+The name of the private key file generated by Tailscale Proxy using Let's
+Encrypt. Use "." to save the file with the original name containing the domain
+(like "homeassistant.tail1234.ts.net.key"), or use the regular
+"privkey.pem" or any file or folder name you prefer.
+
+Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
+has to be specified or omitted together.
+
+**Note:** _The file is stored in the /ssl/ folder, which is the default for Home
+Assistant._
+
+When not set, this option is disabled by default.
 
 ### Option: `log_level`
 
@@ -253,14 +288,13 @@ you are troubleshooting.
 
 ### Option: `login_server`
 
-This option lets you specify you to specify a custom control server instead of
-the default (`https://controlplane.tailscale.com`). This is useful if you
-are running your own Tailscale control server, for example, a self-hosted
-[Headscale] instance.
+This option lets you to specify a custom control server instead of the default
+(`https://controlplane.tailscale.com`). This is useful if you are running your
+own Tailscale control server, for example, a self-hosted [Headscale] instance.
 
 ### Option: `proxy`
 
-When not set, this option is enabled by default.
+When not set, this option is disabled by default.
 
 Tailscale can provide a TLS certificate for your Home Assistant instance within
 your tailnet domain.
@@ -289,7 +323,7 @@ More information: [Enabling HTTPS][tailscale_info_https]
 
 1. Navigate to the [DNS page][tailscale_dns] of the admin console:
 
-   - Choose a Tailnet name.
+   - Choose a tailnet name.
 
    - Enable MagicDNS if not already enabled.
 
@@ -297,14 +331,10 @@ More information: [Enabling HTTPS][tailscale_info_https]
 
 1. Restart the add-on.
 
-**Note:** _You should not use any port number in the URL that you used
-previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
-port 443._
-
 ### Option: `snat_subnet_routes`
 
 This option allows subnet devices to see the traffic originating from the subnet
-router, and this simplifyies routing configuration.
+router, and this simplifies routing configuration.
 
 When not set, this option is enabled by default.
 
@@ -338,18 +368,18 @@ accessible within your tailnet.
 When not set, this option is enabled by default.
 
 If you need to access other clients on your tailnet from your Home Assistant
-instance, disable userspace networking mode, that will create a `tailscale0`
+instance, disable userspace networking mode, which will create a `tailscale0`
 network interface on your host.
 
 If you want to access other clients on your tailnet even from your local subnet,
-execute Step 2 and 3 as described on [Site-to-site
+execute steps 2 and 3 as described on [Site-to-site
 networking][tailscale_info_site_to_site].
 
 In case your local subnets collide with subnet routes within your tailnet, your
-local network access has priority and these addresses won't be routed toward
-your tailnet. This will prevent your Home Assistant instance to lose network
-conection. This also means that using the same subnet on multiple nodes for load
-balancing and failover is not possible with the current add-on behavior.
+local network access has priority, and these addresses won't be routed toward
+your tailnet. This will prevent your Home Assistant instance from losing network
+connection. This also means that using the same subnet on multiple nodes for load
+balancing and failover is impossible with the current add-on behavior.
 
 ## Support
 
@@ -375,8 +405,10 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
+[tailscale_info_auth_keys]: https://tailscale.com/kb/1085/auth-keys
 [tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes/
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
+[tailscale_info_funnel_policy_requirement]: https://tailscale.com/kb/1223/tailscale-funnel/#tailnet-policy-file-requirement
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
 [tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry/
 [tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site/
