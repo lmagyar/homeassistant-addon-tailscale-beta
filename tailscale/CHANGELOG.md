@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.12.0.1 (forked)
 
 ***BREAKING CHANGES:***
 - Proxy and Funnel is disabled by default, because this got to be the default in the original add-on.
@@ -11,12 +11,13 @@
   ```
 
 Nonbreaking changes:
-- New: Make Proxy and Funnel port configurable
+- New: Make Tailscale Proxy and Funnel port configurable
 - New: Make auth-key configurable (inspired by [@laenbdarceq](https://github.com/laenbdarceq))
 - New: Optionally copy Tailscale Proxy's certificate files to /ssl folder
+- Bugfix: Really disable Tailscale Proxy and Funnel when they are disabled
 - Bugfix: Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
 - Merge changes from original add-on
-  - Sync all final details of the merged PRs
+  - Sync all details of the merged and unmerged PRs
   - Update Add-on base image to v14.2.2
 
 ## 0.11.1.26 (forked)
