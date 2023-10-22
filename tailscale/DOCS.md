@@ -13,8 +13,6 @@
 >     - Make Tailscale Proxy and Funnel port configurable
 >     - Make auth-key configurable
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
->     - Really disable Tailscale Proxy and Funnel when they are disabled
->     - Always protect the _local_ subnets (not the configurable _advertised_ subnets) from collision
 >     - Test Home Assistant's HTTP reverse proxy configuration on add-on start
 
 ![Warning][warning_stripe]
