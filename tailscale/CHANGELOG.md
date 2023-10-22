@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Bugfix: Test Home Assistant's HTTP reverse proxy configuration on add-on start _only when Home Assistant is running_
+
 ## 0.12.0.1 (forked)
 
 ***BREAKING CHANGES:***
