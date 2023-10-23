@@ -11,7 +11,6 @@ Zero config VPN for building secure networks.
 >     - Make Tailscale Proxy and Funnel port configurable
 >     - Make auth-key configurable
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
->     - Test Home Assistant's HTTP reverse proxy configuration on add-on start
 
 ![Warning][warning_stripe]
 
