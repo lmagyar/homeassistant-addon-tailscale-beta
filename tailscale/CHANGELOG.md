@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.13.0.1 (forked)
 
 ***BREAKING CHANGES:***
 - Drop support for armhf & i386, because this is dropped from the original add-on repo also
