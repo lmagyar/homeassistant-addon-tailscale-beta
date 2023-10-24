@@ -7,6 +7,9 @@
 
 Nonbreaking changes:
 - Bugfix: Test Home Assistant's HTTP reverse proxy configuration on add-on start _only when Home Assistant is running_
+- Merge changes from original add-on
+  - Sync all details of the merged and unmerged PRs
+  - Update Add-on base image to v14.3.0
 
 ## 0.12.0.1 (forked)
 
