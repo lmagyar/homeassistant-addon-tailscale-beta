@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.13.0.1 (forked)
+
+***BREAKING CHANGES:***
+- Drop support for armhf & i386, because this is dropped from the original add-on repo also
+
+Nonbreaking changes:
+- Bugfix: Test Home Assistant's HTTP reverse proxy configuration on add-on start _only when Home Assistant is running_
+- Merge changes from original add-on
+  - Sync all details of the merged and unmerged PRs
+  - Update Add-on base image to v14.3.0
+
 ## 0.12.0.1 (forked)
 
 ***BREAKING CHANGES:***
