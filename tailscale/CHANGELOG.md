@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.13.1.0 (forked)
+
+- Merge changes from original add-on
+  - Update Add-on base image to v14.3.1
+ 
 ## 0.13.0.1 (forked)
 
 ***BREAKING CHANGES:***
