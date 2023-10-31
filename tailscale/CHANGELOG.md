@@ -1,7 +1,8 @@
 # Changelog
 
-## vNext (forked)
+## 0.13.1.1 (forked)
 
+- Use modified tailscale cli arguments for serve and funnel
 - Merge changes from original add-on
   - Update tailscale/tailscale to v1.52.0
 
