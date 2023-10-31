@@ -5,23 +5,8 @@
 # Enables Tailscale Funnel feature
 # ==============================================================================
 
-declare already_configured_funnel_port
 declare https_port
 declare domain
-
-# Tailscale serve and funnel configuration is persistent between restarts
-# Disable previously configured tailscale funnel functionality with deleting the tailscale funnel configuration
-# There is no tailscale funnel reset command currently, we loop through previous config
-for already_configured_funnel_port in $( \
-  /opt/tailscale funnel status --json \
-  | jq -rc '.AllowFunnel // [] | keys[]' \
-  | sed -nr 's/^[^:]*:(\d*)$/\1/p');
-do
-  if ! /opt/tailscale funnel "${already_configured_funnel_port}" off; then
-    bashio::log.error "Unable to reset Tailscale Funnel settings"
-    bashio::exit.nok
-  fi
-done
 
 # Enable funnel service only when it has been explicitly enabled
 if bashio::config.true 'proxy' && bashio::config.true 'funnel'; then
@@ -53,7 +38,7 @@ if bashio::config.true 'proxy' && bashio::config.true 'funnel'; then
   fi
 
   # Set up funnel
-  if ! /opt/tailscale funnel "${https_port}" on; then
+  if ! /opt/tailscale funnel --bg --https=${https_port} --set-path=/ "http://127.0.0.1:$(bashio::core.port)" > /dev/null; then
     bashio::log.error "Unable to configure Tailscale Funnel"
     bashio::exit.nok
   fi
