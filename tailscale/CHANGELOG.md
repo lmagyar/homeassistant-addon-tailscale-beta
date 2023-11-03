@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix certificate export: Do not swallow real error messages from inotifywait
+- Fix certificate export: Do not fail on first startup if certs dir doesn't exist
+
 ## 0.13.1.2 (forked)
 
 - Merge unreleased changes from original add-on
