@@ -30,7 +30,7 @@ keyfile=$(bashio::config "lets_encrypt_keyfile")
 #   and it updates the files on the first usage of the service also
 inotifywait --monitor "${CERTS_FOLDER}" --include='^.*?\.(crt|key)$' \
     --event='close_write,moved_to' --format '%f' \
-  |& while IFS= read -r changed
+  2> >(tee /dev/fd/2) | while IFS= read -r changed
 do
   # Currently if the machine name is changed, tailscale changes the json status,
   # but the proxy isn't restarted and do not change to the new domain, and won't create new certs for the new domain,
