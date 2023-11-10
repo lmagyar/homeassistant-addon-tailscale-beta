@@ -33,3 +33,9 @@ if ! bashio::config.true 'proxy' || \
 then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/certificate
 fi
+
+# Disable proxy and funnel service when advanced_config has been enabled
+if bashio::config.true "advanced_config"; then
+    rm /etc/s6-overlay/s6-rc.d/user/contents.d/proxy
+    rm /etc/s6-overlay/s6-rc.d/user/contents.d/funnel
+fi
