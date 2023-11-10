@@ -24,6 +24,7 @@ privileged:
 devices:
   - /dev/net/tun
 map:
+  - addon_config:rw
   - share:rw
   - ssl:rw
 schema:
