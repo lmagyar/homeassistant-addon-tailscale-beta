@@ -257,8 +257,8 @@ lets_encrypt:
 
 ### Option: `lets_encrypt_certfile`
 
-This requires Tailscale Proxy to be enabled or "Option: `advanced_serve_config`"
-to set up properly
+This requires Tailscale Proxy or Advanced config to be enabled and set up
+properly.
 
 **Important:** See also the "Option: `proxy`" section of this documentation for
 the necessary configuration changes in Home Assistant!
@@ -278,8 +278,8 @@ When not set, this option is disabled by default.
 
 ### Option: `lets_encrypt_keyfile`
 
-This requires Tailscale Proxy to be enabled or "Option: `advanced_serve_config`"
-to set up properly
+This requires Tailscale Proxy or Advanced config to be enabled and set up
+properly.
 
 **Important:** See also the "Option: `proxy`" section of this documentation for
 the necessary configuration changes in Home Assistant!
