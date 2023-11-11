@@ -1,0 +1,28 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Tailscale
+# Configures tailscale serve with JSON config
+# ==============================================================================
+
+# Tailscale serve and funnel configuration is persistent between restarts
+# Disable previously configured tailscale serve functionality with deleting the tailscale serve configuration
+# Due to funnel config is based on serve config, this will reset funnel config also
+if ! /opt/tailscale serve reset; then
+  bashio::log.error "Unable to reset tailscale serve settings"
+  bashio::exit.nok
+fi
+
+# Set up serve with undocumented set-raw feature
+if ! /opt/tailscale serve set-raw < /config/$(bashio::config "advanced_serve_config"); then
+  bashio::log.error "Unable to configure tailscale serve with advance JSON settings"
+  bashio::exit.nok
+fi
+
+bashio::log.info "Tailscale serve is configured with advance JSON settings"
+
+# The set-raw feature never returns an error, invalid JSON-s are not rejected, but partially processed
+# So we can test the execution, if there are differences, we can emit a warning
+if ! diff -bBd /config/$(bashio::config "advanced_serve_config") <(/opt/tailscale serve status --json); then
+  bashio::log.warning "There are differences between the configured advance JSON settings and what tailscale serve configuration finally got set"
+fi

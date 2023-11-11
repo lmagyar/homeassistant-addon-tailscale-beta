@@ -95,6 +95,7 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 ```yaml
 accept_dns: true
 accept_routes: true
+advanced_serve_config: serve.json
 advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
@@ -134,6 +135,42 @@ your tailnet.
 More information: [Subnet routers][tailscale_info_subnets]
 
 When not set, this option is enabled by default.
+
+### Option: `advanced_serve_config`
+
+Path to the JSON configuration file within the add-on's `/config` folder.
+
+**Important:** See also the "Option: `proxy`" and "Option: `funnel`" sections of
+this documentation for the necessary configuration changes in Home Assistant and
+at tailscale!
+
+When not set, this option is disabled by default.
+
+This option overwrites the proxy and funnel settings, they will not have any
+effect when this option is set.
+
+This option is for advanced users who really know what they are doing. Though it
+is recommended even for them, to set up proxy and funnel at first, and only
+start advanced configuration when the basic proxy and funnel features are
+working properly.
+
+Recommended steps to configure:
+
+1. Login to this add-on's container with `docker exec -it
+   addon_09716aab_tailscale /bin/bash`
+
+1. Fine tune your tailscale settings with manual `/opt/tailscale serve --bg` and
+   `/opt/tailscale funnel --bg` commands.
+
+1. When everything works properly, save the tailscale serve configuration (this
+   implicitly includes serve and funnel config also) with something like
+   `/opt/tailscale serve status --json > /config/serve.json`. If you see
+   `Foreground` entries in the JSON file, you haven't used the `--bg` flag
+   above. Start over.
+
+1. Configure add-on with something like `advanced_serve_config: serve.json`
+
+1. Restart the add-on.
 
 ### Option: `advertise_exit_node`
 
