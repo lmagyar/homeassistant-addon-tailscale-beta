@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Add HEALTHCHECK support
+
 ## 0.21.0.1 (forked)
 
 ***BREAKING CHANGES:***
