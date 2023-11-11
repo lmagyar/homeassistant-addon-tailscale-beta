@@ -55,9 +55,6 @@ if bashio::config.true 'proxy'; then
     fi
   fi
 
-  # On first startup it is created only with some delay, but other services (like certificate export) can rely on the existence of it
-  mkdir -p /data/state/certs
-
   # Set up proxy
   if ! /opt/tailscale serve --bg --https=${https_port} --set-path=/ "http://127.0.0.1:$(bashio::core.port)" > /dev/null; then
     bashio::log.error "Unable to configure Tailscale Proxy"

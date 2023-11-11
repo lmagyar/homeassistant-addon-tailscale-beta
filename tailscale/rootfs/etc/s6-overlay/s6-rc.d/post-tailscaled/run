@@ -97,6 +97,9 @@ do
   sleep 2
 done
 
+# On first startup it is created only with some delay, but other services (like certificate export) can rely on the existence of it
+mkdir -p /data/state/certs
+
 bashio::log.info "Tailscale is running"
 
 # Warn about key expiration
