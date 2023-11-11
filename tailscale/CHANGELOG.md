@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.13.1.3 (forked)
 
 - Experimental advanced Tailscale Proxy and Funnel configuration
 - Fix certificate export: Do not swallow real error messages from inotifywait
