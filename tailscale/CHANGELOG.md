@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Experimental advanced `tailscale serve` configuration
 - Fix certificate export: Do not swallow real error messages from inotifywait
 - Fix certificate export: Do not fail on first startup if certs dir doesn't exist
 

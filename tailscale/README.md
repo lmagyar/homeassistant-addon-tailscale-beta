@@ -15,6 +15,7 @@ Zero config VPN for building secure networks.
 >     - Make Tailscale Proxy and Funnel port configurable
 >     - Make auth-key configurable
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
+>     - Experimental advanced `tailscale serve` configuration
 
 ![Warning][warning_stripe]
 
