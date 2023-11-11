@@ -38,4 +38,5 @@ fi
 if bashio::config.true "advanced_config"; then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/proxy
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/funnel
+    rm /etc/s6-overlay/s6-rc.d/certificate/dependencies.d/proxy
 fi
