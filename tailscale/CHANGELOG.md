@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Adds HEALTCHECK support
+
 ## 0.13.1.3 (forked)
 
 - Experimental advanced Tailscale Proxy and Funnel configuration
