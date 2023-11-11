@@ -13,6 +13,9 @@ if ! /opt/tailscale serve reset; then
   bashio::exit.nok
 fi
 
+# On first startup it is created only with some delay, but other services (like certificate export) can rely on the existence of it
+mkdir -p /data/state/certs
+
 # Set up serve with undocumented set-raw feature
 if ! /opt/tailscale serve set-raw < /config/$(bashio::config "advanced_serve_config"); then
   bashio::log.error "Unable to configure tailscale serve with advance JSON settings"
