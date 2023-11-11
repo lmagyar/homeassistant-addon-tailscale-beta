@@ -36,6 +36,9 @@ RUN \
 # Copy root filesystem
 COPY rootfs /
 
+HEALTHCHECK \
+    CMD if [ "0" = $(/opt/tailscale status --self=false --peers=false --json | jq -rc '.Health | length') ]; then exit 0; else exit 1; fi
+
 # S6 Overlay stage 2 hook
 ENV S6_STAGE2_HOOK=/etc/s6-overlay/scripts/stage2_hook.sh
 
