@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from original add-on
+  - Update Add-on base image to v14.3.2
+
 ## 0.13.1.3 (forked)
 
 - Experimental advanced Tailscale Proxy and Funnel configuration
