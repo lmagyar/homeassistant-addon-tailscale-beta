@@ -37,8 +37,9 @@ RUN \
 COPY rootfs /
 
 HEALTHCHECK \
-    CMD if [ "0" = $(/opt/tailscale status --self=false --peers=false --json | jq -rc '.Health | length') ] \
-            || /opt/tailscale status --self=false --peers=false --json | jq -rce '.BackendState == "NeedsLogin"'; then exit 0; else exit 1; fi
+    CMD /opt/tailscale status --json --self=false --peers=false | jq --exit-status '.BackendState != "Stopped"' > /dev/null
+    # Note: Plain (non-json) tailscale status returns error when status is not Running or Starting, so NeedsLogin and NeedsMachineAuth would make it unhealthy
+    # Note: The .Health json filter returns any problems, so even temporary health problems would make it unhealthy
 
 # S6 Overlay stage 2 hook
 ENV S6_STAGE2_HOOK=/etc/s6-overlay/scripts/stage2_hook.sh
