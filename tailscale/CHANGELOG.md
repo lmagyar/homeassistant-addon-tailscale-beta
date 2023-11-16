@@ -3,6 +3,9 @@
 ## vNext (forked)
 
 - Adds HEALTCHECK support
+- Merge unreleased changes from original add-on
+  - Update tailscale/tailscale to v1.54.0
+  - Update Add-on base image to v14.3.2
 
 ## 0.13.1.3 (forked)
 
