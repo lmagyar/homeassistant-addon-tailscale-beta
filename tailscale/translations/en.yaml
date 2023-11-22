@@ -33,12 +33,6 @@ configuration:
       your device is connected to) to other clients on your tailnet.
       When not set, the add-on by default will advertise routes to your subnets on all
       supported interfaces.
-  auth_key:
-    name: Auth key
-    description: >-
-      This options allows to couple your Home Assistant instance with your Tailscale
-      account using an Auth key instead of the regular authentication flow using the
-      Web UI.
   funnel:
     name: Tailscale Funnel
     description: >-

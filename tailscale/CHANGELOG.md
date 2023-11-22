@@ -1,5 +1,12 @@
 # Changelog
 
+## vNext (forked)
+
+***BREAKING CHANGES:***
+- Remove: Make auth-key configurable
+
+Nonbreaking changes:
+
 ## 0.13.1.4 (forked)
 
 - Adds HEALTCHECK support
