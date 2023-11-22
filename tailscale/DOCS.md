@@ -97,7 +97,7 @@ advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-auth_key: "tskey-auth-xxx"
+auth_key: "tskey-abcdef1432341818"
 funnel: false
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
@@ -192,9 +192,8 @@ supported interfaces.
 
 ### Option: `auth_key`
 
-This options allows to couple your Home Assistant instance with your Tailscale
-account using an Auth key instead of the regular authentication flow using the
-Web UI.
+Pre-authentication keys let you register new nodes without needing to sign in
+via a web browser.
 
 More information: [Auth keys][tailscale_info_auth_keys]
 
