@@ -6,6 +6,8 @@
 - Remove: Make auth-key configurable
 
 Nonbreaking changes:
+- Merge unreleased changes from original add-on
+  - Update tailscale/tailscale to v1.54.1
 
 ## 0.13.1.4 (forked)
 
