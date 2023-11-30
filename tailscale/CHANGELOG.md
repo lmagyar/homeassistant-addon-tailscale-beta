@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.13.1.5 (forked)
+
+***BREAKING CHANGES:***
+- Remove: Make auth-key configurable
+
+Nonbreaking changes:
+- Fix certificate copy on first startup
+- Merge unreleased changes from original add-on
+  - Update tailscale/tailscale to v1.54.1
+
 ## 0.13.1.4 (forked)
 
 - Merge unreleased changes from original add-on
