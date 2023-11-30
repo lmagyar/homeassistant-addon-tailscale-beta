@@ -44,7 +44,7 @@ do
 
   # Check if filename is the domain name (do not update on other certificate changes)
   if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed%.*}" == "${domain}" ]]; then
-    if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "crt" ]]; then
+    if [[ "${changed}" == "[WATCHES_ESTABLISHED]" && -f "${CERTS_FOLDER}/${domain}.crt" || "${changed##*.}" == "crt" ]]; then
       if ! cp_log=$(cp --force --update=older --preserve=mode,ownership,timestamps --verbose \
           "${CERTS_FOLDER}/${domain}.crt" "/ssl/${certfile}");
       then
@@ -54,7 +54,7 @@ do
         bashio::log.info "Updated certificate file '${domain}.crt' to '/ssl/${certfile}'"
       fi
     fi
-    if [[ "${changed}" == "[WATCHES_ESTABLISHED]" || "${changed##*.}" == "key" ]]; then
+    if [[ "${changed}" == "[WATCHES_ESTABLISHED]" && -f "${CERTS_FOLDER}/${domain}.key" || "${changed##*.}" == "key" ]]; then
       if ! cp_log=$(cp --force --update=older --preserve=mode,ownership,timestamps --verbose \
           "${CERTS_FOLDER}/${domain}.key" "/ssl/${keyfile}");
       then
