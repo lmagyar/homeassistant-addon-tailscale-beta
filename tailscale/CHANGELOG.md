@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Fix: Clamping the MSS for IPv6 also
+- Fix: Certificate export log message
 - Merge unreleased changes from original add-on
   - Update Add-on base image to v15.0.0 (Update Alpine base image to v3.19.0)
 
