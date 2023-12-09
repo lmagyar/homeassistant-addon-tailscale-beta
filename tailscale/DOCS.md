@@ -7,7 +7,7 @@
 > Changes:
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.54.1
->     - Update Add-on base image to v15.0.0 (Update Alpine base image to v3.19.0)
+>     - Update Add-on base image to v15.0.1 (Update Alpine base image to v3.19.0)
 >   - Release unmerged changes from community add-on:
 >     - Make Tailscale Proxy and Funnel port configurable
 >     - Advanced Tailscale Proxy and Funnel configuration

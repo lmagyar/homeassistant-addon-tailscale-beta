@@ -5,7 +5,7 @@
 - Fix: Clamping the MSS for IPv6 also
 - Fix: Certificate export log message
 - Merge unreleased changes from original add-on
-  - Update Add-on base image to v15.0.0 (Update Alpine base image to v3.19.0)
+  - Update Add-on base image to v15.0.1 (Update Alpine base image to v3.19.0)
 
 ## 0.13.1.5 (forked)
 
