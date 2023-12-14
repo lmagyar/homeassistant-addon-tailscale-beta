@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.13.1.6 (forked)
 
 - Fix: Clamping the MSS for IPv6 also
 - Fix: Certificate export log message
