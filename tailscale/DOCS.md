@@ -198,6 +198,15 @@ be publicly available._
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
 
+**Note**: _Advanced users who really know what they are doing can configure
+tailscale's proxy and funnel feature directly from the command line. Though it
+is recommended even for them, to set up proxy and funnel at first through the
+add-on options, and only start advanced manual configuration when the basic
+proxy and funnel features are working properly. To login to this add-on's
+container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
+fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
+`/opt/tailscale funnel --bg ...` commands.
+
 ### _Note on the `lets_encrypt` options below_
 
 _Until a bug in the Supervisor/UI is not fixed (see
@@ -323,6 +332,15 @@ More information: [Enabling HTTPS][tailscale_info_https]
    - Under HTTPS Certificates section, click Enable HTTPS.
 
 1. Restart the add-on.
+
+**Note**: _Advanced users who really know what they are doing can configure
+tailscale's proxy and funnel feature directly from the command line. Though it
+is recommended even for them, to set up proxy and funnel at first through the
+add-on options, and only start advanced manual configuration when the basic
+proxy and funnel features are working properly. To login to this add-on's
+container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
+fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
+`/opt/tailscale funnel --bg ...` commands.
 
 ### Option: `snat_subnet_routes`
 
