@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.13.1.7 (forked)
 
 ***BREAKING CHANGES:***
 - Remove: Advanced Tailscale Proxy and Funnel configuration - ie. advanced_config option (after the add-on doesn't reset serve config, manual configuration will not interfere with it)
