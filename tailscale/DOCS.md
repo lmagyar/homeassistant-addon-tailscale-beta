@@ -208,7 +208,7 @@ add-on options, and only start advanced manual configuration when the basic
 proxy and funnel features are working properly. To login to this add-on's
 container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
 fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
-`/opt/tailscale funnel --bg ...` commands.
+`/opt/tailscale funnel --bg ...` commands._
 
 ### _Note on the `lets_encrypt` options below_
 
@@ -341,7 +341,7 @@ add-on options, and only start advanced manual configuration when the basic
 proxy and funnel features are working properly. To login to this add-on's
 container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
 fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
-`/opt/tailscale funnel --bg ...` commands.
+`/opt/tailscale funnel --bg ...` commands._
 
 ### Option: `snat_subnet_routes`
 
