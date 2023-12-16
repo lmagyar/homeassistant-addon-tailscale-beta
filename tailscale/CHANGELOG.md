@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from original add-on
+  - Update tailscale/tailscale to v1.56.1
+
 ## 0.13.1.6 (forked)
 
 - Fix: Clamping the MSS for IPv6 also
