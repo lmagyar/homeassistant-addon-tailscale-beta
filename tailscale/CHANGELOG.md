@@ -3,10 +3,10 @@
 ## vNext (forked)
 
 ***BREAKING CHANGES:***
-- Remove: Advanced Tailscale Proxy and Funnel configuration - ie. advanced_config option (after proxy and funnel are longrun and do not reset serve config, manual configuration will not interfere with them)
+- Remove: Advanced Tailscale Proxy and Funnel configuration - ie. advanced_config option (after the add-on doesn't reset serve config, manual configuration will not interfere with it)
 
 Nonbreaking changes:
-- Make funnel and proxy services longrun services, drop internal serve config reset
+- Merge funnel and proxy services into longrun serve service, drop internal serve config reset
 - Merge unreleased changes from original add-on
   - Update tailscale/tailscale to v1.56.1
 
