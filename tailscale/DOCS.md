@@ -14,7 +14,6 @@
 >     - Update Add-on base image to v15.0.1 (Update Alpine base image to v3.19.0)
 >   - Release unmerged changes from community add-on:
 >     - Make Tailscale Proxy and Funnel port configurable
->     - Advanced Tailscale Proxy and Funnel configuration
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
@@ -98,7 +97,6 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 ```yaml
 accept_dns: true
 accept_routes: true
-advanced_config: false
 advertise_exit_node: true
 advertise_routes:
   - 192.168.1.0/24
@@ -137,36 +135,6 @@ your tailnet.
 More information: [Subnet routers][tailscale_info_subnets]
 
 When not set, this option is enabled by default.
-
-### Option: `advanced_config`
-
-This option overrides the add-on's Tailscale Proxy and Tailscale Funnel
-settings, they will not have any effect when this option is enabled. The add-on
-will not change any proxy or funnel related tailscale settings on startup.
-Tailscale will save and reuse any manually configured settings.
-
-**Important:** See also the "Option: `proxy`" and "Option: `funnel`" sections of
-this documentation for the necessary configuration changes in Home Assistant and
-at tailscale!
-
-When not set, this option is disabled by default.
-
-This option is for advanced users who really know what they are doing. Though it
-is recommended even for them, to set up proxy and funnel at first, and only
-start advanced manual configuration when the basic proxy and funnel features are
-working properly.
-
-Recommended steps to configure:
-
-1. Login to this add-on's container with
-   ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``
-
-1. Fine tune your tailscale settings with manual `/opt/tailscale serve --bg ...` and
-   `/opt/tailscale funnel --bg ...` commands.
-
-1. Enable the `advanced_config` option.
-
-1. Restart the add-on.
 
 ### Option: `advertise_exit_node`
 
@@ -233,6 +201,15 @@ be publicly available._
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
 
+**Note**: _Advanced users who really know what they are doing can configure
+tailscale's proxy and funnel feature directly from the command line. Though it
+is recommended even for them, to set up proxy and funnel at first through the
+add-on options, and only start advanced manual configuration when the basic
+proxy and funnel features are working properly. To login to this add-on's
+container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
+fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
+`/opt/tailscale funnel --bg ...` commands.
+
 ### _Note on the `lets_encrypt` options below_
 
 _Until a bug in the Supervisor/UI is not fixed (see
@@ -250,8 +227,7 @@ lets_encrypt:
 
 ### Option: `lets_encrypt_certfile`
 
-This requires Tailscale Proxy or Advanced config to be enabled and set up
-properly.
+This requires Tailscale Proxy to be enabled and set up properly.
 
 **Important:** See also the "Option: `proxy`" section of this documentation for
 the necessary configuration changes in Home Assistant!
@@ -271,8 +247,7 @@ When not set, this option is disabled by default.
 
 ### Option: `lets_encrypt_keyfile`
 
-This requires Tailscale Proxy or Advanced config to be enabled and set up
-properly.
+This requires Tailscale Proxy to be enabled and set up properly.
 
 **Important:** See also the "Option: `proxy`" section of this documentation for
 the necessary configuration changes in Home Assistant!
@@ -358,6 +333,15 @@ More information: [Enabling HTTPS][tailscale_info_https]
    - Under HTTPS Certificates section, click Enable HTTPS.
 
 1. Restart the add-on.
+
+**Note**: _Advanced users who really know what they are doing can configure
+tailscale's proxy and funnel feature directly from the command line. Though it
+is recommended even for them, to set up proxy and funnel at first through the
+add-on options, and only start advanced manual configuration when the basic
+proxy and funnel features are working properly. To login to this add-on's
+container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
+fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
+`/opt/tailscale funnel --bg ...` commands.
 
 ### Option: `snat_subnet_routes`
 
