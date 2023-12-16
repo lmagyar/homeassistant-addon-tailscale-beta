@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.13.1.7 (forked)
+
+***BREAKING CHANGES:***
+- Remove: Advanced Tailscale Proxy and Funnel configuration - ie. advanced_config option (after the add-on doesn't reset serve config, manual configuration will not interfere with it)
+
+Nonbreaking changes:
+- Merge funnel and proxy services into longrun serve service, drop internal serve config reset
+- Merge unreleased changes from original add-on
+  - Update tailscale/tailscale to v1.56.1
+
 ## 0.13.1.6 (forked)
 
 - Fix: Clamping the MSS for IPv6 also
