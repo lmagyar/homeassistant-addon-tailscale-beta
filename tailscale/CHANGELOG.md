@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from original add-on
+  - Update Add-on base image to v15.0.2
+
 ## 0.13.1.7 (forked)
 
 ***BREAKING CHANGES:***
