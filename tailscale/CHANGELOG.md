@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Increase wait time for Supervisor
 - Merge unreleased changes from original add-on
   - Update Add-on base image to v15.0.2
 
