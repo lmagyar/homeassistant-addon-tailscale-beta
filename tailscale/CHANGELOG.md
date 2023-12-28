@@ -4,7 +4,7 @@
 
 - Increase wait time for Supervisor
 - Merge unreleased changes from original add-on
-  - Update Add-on base image to v15.0.2
+  - Update Add-on base image to v15.0.3
 
 ## 0.13.1.7 (forked)
 
