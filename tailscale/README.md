@@ -9,7 +9,7 @@ Zero config VPN for building secure networks.
 > Changes:
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.56.1
->     - Update Add-on base image to v15.0.2 (Update Alpine base image to v3.19.0)
+>     - Update Add-on base image to v15.0.3 (Update Alpine base image to v3.19.0)
 >   - Release unmerged changes from community add-on:
 >     - Make Tailscale Proxy and Funnel port configurable
 >     - Merge funnel and proxy services into longrun serve service, drop internal serve config reset
