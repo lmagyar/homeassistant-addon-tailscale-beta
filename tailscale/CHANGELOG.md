@@ -2,8 +2,10 @@
 
 ## vNext (forked)
 
+- Increase wait time for Supervisor
+- Wait for HA to be available during startup
 - Merge unreleased changes from original add-on
-  - Update Add-on base image to v15.0.2
+  - Update Add-on base image to v15.0.3
 
 ## 0.13.1.7 (forked)
 
