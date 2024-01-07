@@ -104,6 +104,7 @@ lets_encrypt_keyfile: privkey.pem
 log_level: info
 login_server: "https://controlplane.tailscale.com"
 proxy: false
+proxy_and_funnel_port: 443
 snat_subnet_routes: true
 tags:
   - tag:example
@@ -194,6 +195,10 @@ More information: [Tailscale Funnel][tailscale_info_funnel]
 
 **Note**: _After initial setup, it can take up to 10 minutes for the domain to
 be publicly available._
+
+**Note:** _You should not use the port number in the URL that you used
+previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
+port 443 (or the port configured in option `proxy_and_funnel_port`)._
 
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
@@ -321,6 +326,20 @@ More information: [Enabling HTTPS][tailscale_info_https]
    - Under HTTPS Certificates section, click Enable HTTPS.
 
 1. Restart the add-on.
+
+**Note:** _You should not use the port number in the URL that you used
+previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
+port 443 (or the port configured in option `proxy_and_funnel_port`)._
+
+### Option: `proxy_and_funnel_port`
+
+This option allows you to configure the port the Tailscale Proxy and Funnel
+features are accessible on the tailnet (in case of Tailscale Proxy is enabled)
+and optionally on the internet (in case of Tailscale Funnel is also enabled).
+
+Only port number 443, 8443 and 10000 is allowed by Tailscale.
+
+When not set, port number 443 is used by default.
 
 ### Option: `snat_subnet_routes`
 
