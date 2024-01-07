@@ -1,6 +1,9 @@
 # Changelog
 
-## vNext (forked)
+## 0.14.0.0 (forked)
+
+This version is basically equivalent with the official 0.14.0 version. Only remaining additional functionality:
+  - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ***BREAKING CHANGES:***
 - Configuring Tailscale Proxy and Funnel port from now on is done by the `proxy_and_funnel_port` add-on config option and not by the networking host port configuration section. This is the accepted and merged solution for this issue.
