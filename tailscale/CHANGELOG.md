@@ -2,6 +2,10 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Configuring Tailscale Proxy and Funnel port from now on is done by the `proxy_and_funnel_port` add-on config option and not by the networking host port configuration section.
+
+Nonbreaking changes:
 - Increase wait time for Supervisor
 - Wait for HA to be available during startup
 - Merge unreleased changes from original add-on
