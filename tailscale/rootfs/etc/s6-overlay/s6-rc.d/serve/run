@@ -5,18 +5,9 @@
 # Enables Tailscale Proxy and Funnel feature
 # ==============================================================================
 
-declare https_port
 declare wait_counter=0
 declare curl_result
 declare tailscale_command
-
-https_port=$(bashio::addon.port 443)
-
-# Check if HTTPS port is configured properly
-if ! bashio::var.has_value "${https_port}"; then
-  bashio::log.error "No HTTPS port is configured"
-  bashio::exit.nok
-fi
 
 # Check if Tailscale HTTPS is enabled
 if ! /opt/tailscale status --self=true --peers=false --json \
@@ -72,4 +63,4 @@ else
 fi
 
 # Set up serve
-exec /opt/tailscale ${tailscale_command} --https=${https_port} --set-path=/ "http://127.0.0.1:$(bashio::core.port)"
+exec /opt/tailscale ${tailscale_command} --https=$(bashio::config "proxy_and_funnel_port" "443") --set-path=/ "http://127.0.0.1:$(bashio::core.port)"
