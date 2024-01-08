@@ -5,12 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.56.1
->     - Update Add-on base image to v15.0.1 (Update Alpine base image to v3.19.0)
 >   - Release unmerged changes from community add-on:
->     - Make Tailscale Proxy and Funnel port configurable
->     - Merge funnel and proxy services into longrun serve service, drop internal serve config reset
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
@@ -104,6 +99,7 @@ lets_encrypt_keyfile: privkey.pem
 log_level: info
 login_server: "https://controlplane.tailscale.com"
 proxy: false
+proxy_and_funnel_port: 443
 snat_subnet_routes: true
 tags:
   - tag:example
@@ -195,17 +191,12 @@ More information: [Tailscale Funnel][tailscale_info_funnel]
 **Note**: _After initial setup, it can take up to 10 minutes for the domain to
 be publicly available._
 
+**Note:** _You should not use the port number in the URL that you used
+previously to access Home Assistant. Tailscale Funnel works on the default HTTPS
+port 443 (or the port configured in option `proxy_and_funnel_port`)._
+
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
-
-**Note**: _Advanced users who really know what they are doing can configure
-tailscale's proxy and funnel feature directly from the command line. Though it
-is recommended even for them, to set up proxy and funnel at first through the
-add-on options, and only start advanced manual configuration when the basic
-proxy and funnel features are working properly. To login to this add-on's
-container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
-fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
-`/opt/tailscale funnel --bg ...` commands._
 
 ### _Note on the `lets_encrypt` options below_
 
@@ -331,14 +322,19 @@ More information: [Enabling HTTPS][tailscale_info_https]
 
 1. Restart the add-on.
 
-**Note**: _Advanced users who really know what they are doing can configure
-tailscale's proxy and funnel feature directly from the command line. Though it
-is recommended even for them, to set up proxy and funnel at first through the
-add-on options, and only start advanced manual configuration when the basic
-proxy and funnel features are working properly. To login to this add-on's
-container use ``docker exec -it `docker ps -q -f name=tailscale` /bin/bash``, to
-fine tune your tailscale settings use the `/opt/tailscale serve --bg ...` and
-`/opt/tailscale funnel --bg ...` commands._
+**Note:** _You should not use the port number in the URL that you used
+previously to access Home Assistant. Tailscale Proxy works on the default HTTPS
+port 443 (or the port configured in option `proxy_and_funnel_port`)._
+
+### Option: `proxy_and_funnel_port`
+
+This option allows you to configure the port the Tailscale Proxy and Funnel
+features are accessible on the tailnet (in case of Tailscale Proxy is enabled)
+and optionally on the internet (in case of Tailscale Funnel is also enabled).
+
+Only port number 443, 8443 and 10000 is allowed by Tailscale.
+
+When not set, port number 443 is used by default.
 
 ### Option: `snat_subnet_routes`
 

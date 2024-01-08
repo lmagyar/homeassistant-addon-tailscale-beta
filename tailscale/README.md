@@ -7,12 +7,7 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.56.1
->     - Update Add-on base image to v15.0.1 (Update Alpine base image to v3.19.0)
 >   - Release unmerged changes from community add-on:
->     - Make Tailscale Proxy and Funnel port configurable
->     - Merge funnel and proxy services into longrun serve service, drop internal serve config reset
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
@@ -54,7 +49,7 @@ manages firewall rules for you, and works from anywhere you are.
 [installations-shield]: https://img.shields.io/badge/dynamic/json?label=reported%20installations&query=$[%2709716aab_tailscale%27].total&url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json
 [license-shield]: https://img.shields.io/github/license/lmagyar/homeassistant-addon-tailscale.svg
 [licence]: https://github.com/lmagyar/homeassistant-addon-tailscale/blob/main/LICENSE
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2023.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2024.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-orange.svg
 [releases-shield]: https://img.shields.io/github/tag/lmagyar/homeassistant-addon-tailscale.svg?label=release
 [releases]: https://github.com/lmagyar/homeassistant-addon-tailscale/tags
