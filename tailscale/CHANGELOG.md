@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge released (?) changes from original add-on
+  - Update Add-on base image to v15.0.4
+
 ## 0.14.0.0 (forked)
 
 This version is basically equivalent with the 0.14.0 community add-on version. Only remaining additional functionality:
