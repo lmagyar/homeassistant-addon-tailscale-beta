@@ -1,5 +1,11 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from original add-on
+  - Update tailscale/tailscale to v1.58.2
+  - Update Add-on base image to v15.0.5
+
 ## 0.14.0.0 (forked)
 
 This version is basically equivalent with the 0.14.0 community add-on version. Only remaining additional functionality:
