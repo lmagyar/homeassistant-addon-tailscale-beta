@@ -4,7 +4,7 @@
 
 - Merge unreleased changes from original add-on
   - Update tailscale/tailscale to v1.58.2
-  - Update Add-on base image to v15.0.5
+  - Update Add-on base image to v15.0.6
 
 ## 0.14.0.0 (forked)
 
