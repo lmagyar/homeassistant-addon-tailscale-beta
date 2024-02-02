@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:15.0.3
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:15.0.6
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,14 +7,14 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.56.1"
+ARG TAILSCALE_VERSION="v1.58.2"
 RUN \
     apk add --no-cache \
         ipcalc=1.0.3-r0 \
         iproute2=6.6.0-r0 \
         iptables=1.8.10-r3 \
-        nginx=1.24.0-r14 \
-        coreutils=9.4-r1 \
+        nginx=1.24.0-r15 \
+        coreutils=9.4-r2 \
         networkmanager-common=1.44.2-r1 \
         inotify-tools=4.23.9.0-r0 \
     \
