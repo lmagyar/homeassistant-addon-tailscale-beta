@@ -9,6 +9,7 @@
 >     - Update tailscale/tailscale to v1.58.2
 >     - Update Add-on base image to v15.0.6
 >   - Release unmerged changes from community add-on:
+>     - Fix kernel configuration access for Debian Supervised installations
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]

@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Fix kernel configuration access for Debian Supervised installations
 - Merge unreleased changes from original add-on
   - Update tailscale/tailscale to v1.58.2
   - Update Add-on base image to v15.0.6
