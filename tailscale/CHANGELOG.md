@@ -2,6 +2,8 @@
 
 ## vNext (forked)
 
+***Note: Do not use the Tailscale web UI to modify `advertise_exit_node` and `advertise_routes` settings, the next restart of the add-on will overwrite those changes. Soon a locked read-only web UI option will be released by Tailscale to address this issue (see [#10999](https://github.com/tailscale/tailscale/pull/10999)).***
+
 - Fix kernel configuration access for Debian Supervised installations
 - Merge unreleased changes from original add-on
   - Update tailscale/tailscale to v1.58.2
