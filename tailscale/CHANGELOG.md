@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.15.0.1 (forked)
 
 - Drop kernel configuration access (really fixes [#325](https://github.com/hassio-addons/addon-tailscale/issues/325))
 
