@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Merge unreleased changes from community add-on
+  - Use readonly webui mode in v1.60
   - Update Add-on base image to v15.0.7
 
 ## 0.15.0.1 (forked)

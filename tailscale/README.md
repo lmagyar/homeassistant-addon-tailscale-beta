@@ -8,6 +8,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 >   - Release unreleased changes from community add-on:
+>     - Use readonly webui mode in v1.60
 >     - Drop kernel configuration access
 >     - Update Add-on base image to v15.0.7
 >   - Release unmerged changes from community add-on:
