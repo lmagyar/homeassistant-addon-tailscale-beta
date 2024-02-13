@@ -5,7 +5,9 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Drop kernel configuration access
+>   - Release unreleased changes from community add-on:
+>     - Drop kernel configuration access
+>     - Update Add-on base image to v15.0.7
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
