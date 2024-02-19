@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.16.0.0 (forked)
+
+- Merge released changes from community add-on
+  - Update tailscale/tailscale to v1.60.0
+  - Use readonly webui mode in v1.60.0
+  - Update Add-on base image to v15.0.7
+
 ## 0.15.0.1 (forked)
 
 - Drop kernel configuration access (really fixes [#325](https://github.com/hassio-addons/addon-tailscale/issues/325))
