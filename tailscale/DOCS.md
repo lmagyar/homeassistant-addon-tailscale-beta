@@ -9,10 +9,6 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Release unreleased changes from community add-on:
->     - Use readonly webui mode in v1.60
->     - Drop kernel configuration access
->     - Update Add-on base image to v15.0.7
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
@@ -93,6 +89,11 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
    expiry" option.
 
 ## Add-on configuration
+
+**Note:** _Some of the options below also available on Tailscale's web interface
+through the Web UI, but they are made read only there. You can't change them
+through the Web UI, because all the changes made there would be lost when the
+add-on is restarted._
 
 ```yaml
 accept_dns: true
