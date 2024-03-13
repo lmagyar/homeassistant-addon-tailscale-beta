@@ -6,7 +6,7 @@
 >
 > Changes:
 >   - Release unreleased changes from community add-on
->     - Update tailscale/tailscale to v1.60.1
+>     - Update tailscale/tailscale to v1.62.0
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
