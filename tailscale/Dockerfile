@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.62.0"
+ARG TAILSCALE_VERSION="v1.62.1"
 RUN \
     apk add --no-cache \
         ipcalc=1.0.3-r0 \
@@ -15,7 +15,7 @@ RUN \
         iptables=1.8.10-r3 \
         nginx=1.24.0-r15 \
         coreutils=9.4-r2 \
-        networkmanager-common=1.44.2-r1 \
+        networkmanager-common=1.44.4-r0 \
         inotify-tools=4.23.9.0-r0 \
     \
     && ln -sf /sbin/xtables-nft-multi /sbin/ip6tables \
