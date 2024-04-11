@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from community add-on
+  - Update Add-on base image to v15.0.8
+
 ## 0.17.0.0 (forked)
 
 - Merge released changes from community add-on
