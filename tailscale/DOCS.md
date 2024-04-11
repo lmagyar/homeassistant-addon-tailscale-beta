@@ -6,6 +6,7 @@
 >
 > Changes:
 >   - Release unmerged changes from community add-on:
+>     - Fix tag name validation regex
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]

@@ -2,6 +2,8 @@
 
 ## vNext (forked)
 
+- Merge unmerged changes from community add-on
+  - Fix tag name validation regex
 - Merge unreleased changes from community add-on
   - Update Add-on base image to v15.0.8
 
