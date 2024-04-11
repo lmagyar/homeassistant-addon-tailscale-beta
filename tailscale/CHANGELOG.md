@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.17.0.1 (forked)
 
 - Merge unmerged changes from community add-on
   - Fix tag name validation regex
