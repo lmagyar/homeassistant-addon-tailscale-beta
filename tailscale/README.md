@@ -8,8 +8,8 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 >   - Update tailscale/tailscale to v1.64.0
+>   - Fix tag name validation regex
 >   - Release unmerged changes from community add-on:
->     - Fix tag name validation regex
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
