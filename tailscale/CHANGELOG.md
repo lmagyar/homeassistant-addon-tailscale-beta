@@ -2,7 +2,8 @@
 
 ## 0.17.0.2 (forked)
 
-- Update tailscale/tailscale to v1.64.0
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.64.0
 
 ## 0.17.0.1 (forked)
 
