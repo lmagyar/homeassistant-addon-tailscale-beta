@@ -7,8 +7,9 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
->   - Update tailscale/tailscale to v1.64.0
->   - Fix tag name validation regex
+>   - Release unreleased changes from community add-on:
+>     - Update tailscale/tailscale to v1.64.0
+>     - Fix tag name validation regex
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
