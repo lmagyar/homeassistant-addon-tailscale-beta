@@ -7,9 +7,8 @@
 
 ## 0.17.0.1 (forked)
 
-- Merge unmerged changes from community add-on
-  - Fix tag name validation regex
 - Merge unreleased changes from community add-on
+  - Fix tag name validation regex
   - Update Add-on base image to v15.0.8
 
 ## 0.17.0.0 (forked)
