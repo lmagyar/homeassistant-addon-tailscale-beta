@@ -6,8 +6,7 @@
 >
 > Changes:
 >   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.64.0
->     - Fix tag name validation regex
+>     - Update tailscale/tailscale to v1.66.0
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
