@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.18.0.1 (forked)
 
 - Linux optimizations for subnet routers and exit nodes ([details](https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes))
 - Merge unreleased changes from community add-on
