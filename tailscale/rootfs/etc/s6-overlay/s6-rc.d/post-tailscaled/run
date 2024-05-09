@@ -94,6 +94,11 @@ mkdir -p /data/state/certs
 
 bashio::log.info "Tailscale is running"
 
+# Linux optimizations for subnet routers and exit nodes
+# based on: https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
+# Note: Changes made via ethtool are not persistent and will be lost after the machine shuts down.
+ethtool -K $(ip route show 0/0 | cut -f5 -d' ') rx-udp-gro-forwarding on rx-gro-list off
+
 # Delete previously created persistent tailscale serve configuration ONCE
 # After add-on's serve (proxy and funnel) service is a longrun service, we do not modify the serve state permanently
 # This step can be removed in a later version with the file in the data folder also
