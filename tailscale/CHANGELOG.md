@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Linux optimizations for subnet routers and exit nodes ([details](https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes))
 - Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.66.0
 
