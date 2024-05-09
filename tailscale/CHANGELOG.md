@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.66.0
+
 ## 0.17.0.2 (forked)
 
 - Merge unreleased changes from community add-on
