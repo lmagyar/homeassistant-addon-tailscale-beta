@@ -9,7 +9,7 @@ Zero config VPN for building secure networks.
 > Changes:
 >   - Linux optimizations for subnet routers and exit nodes ([details](https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes))
 >   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.66.0
+>     - Update tailscale/tailscale to v1.66.1
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
