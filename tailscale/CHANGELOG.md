@@ -2,7 +2,7 @@
 
 ## 0.18.0.4 (forked)
 
-- Make stateful-filtering configurable
+- Make stateful-filtering configurable (disable it, if you previously configured eg. site-to-site networking on some level: ie. enabled your non-tailscale devices in a routed subnet to initiate traffic toward your tailnet (other tailnet nodes, or other subnets))
 
 ## 0.18.0.3 (forked)
 
