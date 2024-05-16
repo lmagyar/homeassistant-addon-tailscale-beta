@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Make stateful-filtering configurable
+
 ## 0.18.0.3 (forked)
 
 - Merge unreleased changes from community add-on
