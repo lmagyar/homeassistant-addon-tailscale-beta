@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.18.0.4 (forked)
 
 - Make stateful-filtering configurable
 
