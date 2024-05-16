@@ -5,6 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
+>   - Make stateful-filtering configurable
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.66.3
 >     - Linux optimizations for subnet routers and exit nodes ([details](https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes))
@@ -109,6 +110,7 @@ login_server: "https://controlplane.tailscale.com"
 proxy: false
 proxy_and_funnel_port: 443
 snat_subnet_routes: true
+stateful_filtering: true
 tags:
   - tag:example
   - tag:homeassistant
@@ -352,8 +354,23 @@ router, and this simplifies routing configuration.
 When not set, this option is enabled by default.
 
 To support advanced [Site-to-site networking][tailscale_info_site_to_site] (eg.
-to traverse multiple networks), you can disable this functionality. But do it
-only when you really understand why you need this.
+to traverse multiple networks), you can disable this functionality, and execute
+steps 2 and 3 as described on [Site-to-site
+networking][tailscale_info_site_to_site]. But do it only when you really
+understand why you need this.
+
+### Option: `stateful_filtering`
+
+This option enables stateful packet filtering on packet-forwarding nodes (exit
+nodes, subnet routers, and app connectors), to only allow return packets for
+existing outbound connections. Inbound packets that don't belong to an existing
+connection are dropped.
+
+When not set, this option is enabled by default.
+
+To support basic [Site-to-site networking][tailscale_info_site_to_site], you can
+disable this functionality, and execute steps 2 and 3 as described on
+[Site-to-site networking][tailscale_info_site_to_site].
 
 ### Option: `tags`
 
@@ -385,8 +402,8 @@ instance, disable userspace networking mode, which will create a `tailscale0`
 network interface on your host.
 
 If you want to access other clients on your tailnet even from your local subnet,
-execute steps 2 and 3 as described on [Site-to-site
-networking][tailscale_info_site_to_site].
+disable `stateful_filtering` and execute steps 2 and 3 as described on
+[Site-to-site networking][tailscale_info_site_to_site].
 
 In case your local subnets collide with subnet routes within your tailnet, your
 local network access has priority, and these addresses won't be routed toward

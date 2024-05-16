@@ -1,6 +1,6 @@
 ---
 name: Tailscale with features
-version: 0.18.0.3
+version: 0.18.0.4
 slug: tailscale
 description: Zero config VPN for building secure networks
 url: https://github.com/lmagyar/homeassistant-addon-tailscale
@@ -40,6 +40,7 @@ schema:
   proxy: bool?
   proxy_and_funnel_port: match(^(443|8443|10000)$)?
   snat_subnet_routes: bool?
+  stateful_filtering: bool?
   tags:
     - "match(^tag:[a-zA-Z][a-zA-Z0-9-]*$)?"
   taildrop: bool?
