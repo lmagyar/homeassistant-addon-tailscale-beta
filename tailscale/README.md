@@ -10,6 +10,7 @@ Zero config VPN for building secure networks.
 >   - Make stateful-filtering configurable
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.66.3
+>     - Add app connector option
 >     - Linux optimizations for subnet routers and exit nodes ([details](https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes))
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
