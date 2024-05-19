@@ -8,6 +8,7 @@
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.66.3
 >     - Make stateful-filtering configurable
+>     - Add app connector option
 >     - Linux optimizations for subnet routers and exit nodes
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
@@ -99,6 +100,7 @@ add-on is restarted._
 accept_dns: true
 accept_routes: true
 advertise_exit_node: true
+advertise_connector: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
@@ -147,6 +149,22 @@ By setting a device on your network as an exit node, you can use it to
 route all your public internet traffic as needed, like a consumer VPN.
 
 More information: [Exit nodes][tailscale_info_exit_nodes]
+
+When not set, this option is enabled by default.
+
+### Option: `advertise_connector`
+
+This option allows you to advertise this Tailscale instance as an app connector.
+
+When you use an app connector, you specify which applications you wish to make
+accessible over your tailnet, and the domains for those applications. Any traffic
+for that application is then forced over the tailnet to a node running an app
+connector before egressing to the target domains. This is useful for cases where
+the application has an allowlist of IP addresses which can connect to it: the IP
+address of the node running the app connector can be added to the allowlist, and
+all nodes on the tailnet will use that IP address for their traffic egress.
+
+More information: [App connectors][tailscale_info_app_connectors]
 
 When not set, this option is enabled by default.
 
@@ -436,6 +454,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_dns]: https://login.tailscale.com/admin/dns
 [tailscale_info_acls]: https://tailscale.com/kb/1068/acl-tags/
 [tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes/
+[tailscale_info_app_connectors]: https://tailscale.com/kb/1281/app-connectors
 [tailscale_info_funnel]: https://tailscale.com/kb/1223/tailscale-funnel/
 [tailscale_info_funnel_policy_requirement]: https://tailscale.com/kb/1223/tailscale-funnel/#tailnet-policy-file-requirement
 [tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https/
