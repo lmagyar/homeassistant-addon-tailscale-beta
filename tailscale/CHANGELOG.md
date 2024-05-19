@@ -4,6 +4,7 @@
 
 - Merge unreleased changes from community add-on
   - Add app connector option
+  - Fix Linux optimizations
 
 ## 0.18.0.4 (forked)
 
