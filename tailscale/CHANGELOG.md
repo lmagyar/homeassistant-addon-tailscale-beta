@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.18.0.5 (forked)
 
 - Merge unreleased changes from community add-on
   - Add app connector option
