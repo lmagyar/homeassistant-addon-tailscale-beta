@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.18.0.6 (forked)
 
 - Merge unreleased changes from community add-on
   - Allow Linux optimizations (UDP GRO for forwarding) on multiple interfaces and IPv6
