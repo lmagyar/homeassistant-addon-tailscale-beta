@@ -3,6 +3,11 @@
 ## vNext (forked)
 
 - Merge unreleased changes from community add-on
+  - Allow Linux optimizations (UDP GRO for forwarding) on multiple interfaces and IPv6
+
+## 0.18.0.5 (forked)
+
+- Merge unreleased changes from community add-on
   - Add app connector option
   - Fix Linux optimizations
 
