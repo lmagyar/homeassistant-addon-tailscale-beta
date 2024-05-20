@@ -4,12 +4,7 @@
 
 > This is a **fork** of the [community add-on][community_addon]!
 >
-> Changes:
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.66.3
->     - Make stateful-filtering configurable
->     - Add app connector option
->     - Linux optimizations for subnet routers and exit nodes
+> Changes (compared to the latest released v0.19.0 community add-on):
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
