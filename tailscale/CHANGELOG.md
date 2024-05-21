@@ -4,6 +4,7 @@
 
 - Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.66.4
+  - Update Add-on base image to v15.0.9
 
 ## 0.18.0.6 (forked)
 
