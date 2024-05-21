@@ -8,7 +8,11 @@
 
 > This is a **fork** of the [community add-on][community_addon]!
 >
-> Changes (compared to the latest released v0.19.0 community add-on):
+> Changes:
+>   - Release unreleased changes from community add-on:
+>     - Update tailscale/tailscale to v1.66.4
+>     - Stateful filtering is now off by default
+>     - Update Add-on base image to v15.0.9
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
@@ -383,11 +387,7 @@ nodes, subnet routers, and app connectors), to only allow return packets for
 existing outbound connections. Inbound packets that don't belong to an existing
 connection are dropped.
 
-When not set, this option is enabled by default.
-
-To support basic [Site-to-site networking][tailscale_info_site_to_site], you can
-disable this functionality, and execute steps 2 and 3 as described on
-[Site-to-site networking][tailscale_info_site_to_site].
+When not set, this option is disabled by default.
 
 ### Option: `tags`
 
@@ -419,8 +419,8 @@ instance, disable userspace networking mode, which will create a `tailscale0`
 network interface on your host.
 
 If you want to access other clients on your tailnet even from your local subnet,
-disable `stateful_filtering` and execute steps 2 and 3 as described on
-[Site-to-site networking][tailscale_info_site_to_site].
+execute steps 2 and 3 as described on [Site-to-site
+networking][tailscale_info_site_to_site].
 
 In case your local subnets collide with subnet routes within your tailnet, your
 local network access has priority, and these addresses won't be routed toward
