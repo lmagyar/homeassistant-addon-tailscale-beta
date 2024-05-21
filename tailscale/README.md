@@ -14,6 +14,7 @@ Zero config VPN for building secure networks.
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.66.4
 >     - Stateful filtering is now off by default
+>     - Skip default networks without a gateway to enable UDP GRO for forwarding
 >     - Update Add-on base image to v15.0.9
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
