@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.19.1.1 (forked)
+
+- Revert "Linux optimizations for subnet routers and exit nodes"
+
 ## 0.19.0.1 (forked)
 
 - Merge unreleased changes from community add-on
