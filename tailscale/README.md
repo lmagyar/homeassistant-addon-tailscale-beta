@@ -9,6 +9,7 @@ Zero config VPN for building secure networks.
 > Changes:
 >   - Release unreleased changes from community add-on:
 >     - Revert "Linux optimizations for subnet routers and exit nodes"
+>     - Update Add-on base image to v16.0.0 (Update Alpine base image to v3.20.0)
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
