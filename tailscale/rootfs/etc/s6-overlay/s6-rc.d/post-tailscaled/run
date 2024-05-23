@@ -116,15 +116,17 @@ bashio::log.info "Tailscale is running"
 # Linux optimizations for subnet routers and exit nodes
 # Based on: https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
 # Note: Changes made via ethtool are not persistent and will be lost after the machine shuts down
-# Note: Everything fails silently, we do a best effort only.
+# Note: Everything fails silently, we do a best effort only
 if interface=$( \
   curl -sf --unix-socket /var/run/tailscale/tailscaled.sock http://local-tailscaled.sock/localapi/v0/check-udp-gro-forwarding \
   | jq -rc '.Warning' \
   | sed -nr 's/^UDP GRO forwarding is suboptimally configured on (\S+),.*$/\1/p') \
   && bashio::var.has_value "${interface}";
 then
-  bashio::log.info "Allow UDP GRO for forwarding on ${interface}"
-  ethtool -K "${interface}" rx-udp-gro-forwarding on rx-gro-list off &> /dev/null || true
+  bashio::log.info "Enabling UDP GRO for forwarding on ${interface}"
+  if ! ethtool -K "${interface}" rx-udp-gro-forwarding on rx-gro-list off; then
+    bashio::log.warning "Enabling UDP GRO failed"
+  fi
 fi
 
 # Delete previously created persistent tailscale serve configuration ONCE
