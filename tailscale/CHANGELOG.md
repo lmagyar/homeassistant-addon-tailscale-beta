@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.19.1.2 (forked)
 
 - Merge unreleased changes from community add-on
   - Failsafe enabling of UDP GRO for forwarding
