@@ -3,7 +3,8 @@
 ## vNext (forked)
 
 - Merge unreleased changes from community add-on
-  - Update Add-on base image to v16.1.0
+  - Update tailscale/tailscale to v1.68.2
+  - Update Add-on base image to v16.1.2
 
 ## 0.20.0.1 (forked)
 
