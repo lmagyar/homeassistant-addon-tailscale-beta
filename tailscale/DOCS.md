@@ -119,6 +119,7 @@ tags:
   - tag:example
   - tag:homeassistant
 taildrop: true
+udp_port: 12345
 userspace_networking: true
 ```
 
@@ -404,6 +405,12 @@ devices.
 When not set, this option is enabled by default.
 
 Received files are stored in the `/share/taildrop` directory.
+
+### Option: `udp_port`
+
+UDP port to listen on for WireGuard and peer-to-peer traffic.
+
+When not set, automatically selected port is used by default.
 
 ### Option: `userspace_networking`
 
