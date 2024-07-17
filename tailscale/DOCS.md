@@ -5,6 +5,7 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
+>   - Make UDP port configurable
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.70.0
 >     - Update Add-on base image to v16.1.3
