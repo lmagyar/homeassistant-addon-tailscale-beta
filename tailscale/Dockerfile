@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:16.1.2
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:16.1.3
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.68.2"
+ARG TAILSCALE_VERSION="v1.70.0"
 RUN \
     apk add --no-cache \
         ethtool=6.7-r0 \

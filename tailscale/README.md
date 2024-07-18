@@ -7,9 +7,10 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
+>   - Make UDP port configurable
 >   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.68.2
->     - Update Add-on base image to v16.1.2
+>     - Update tailscale/tailscale to v1.70.0
+>     - Update Add-on base image to v16.1.3
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 

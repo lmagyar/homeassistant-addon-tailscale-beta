@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.20.0.3 (forked)
+
+- Make UDP port configurable
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.70.0
+  - Update Add-on base image to v16.1.3
+
 ## 0.20.0.2 (forked)
 
 - Merge unreleased changes from community add-on
