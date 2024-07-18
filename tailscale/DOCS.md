@@ -115,6 +115,7 @@ tags:
   - tag:example
   - tag:homeassistant
 taildrop: true
+udp_port: 12345
 userspace_networking: true
 ```
 
@@ -400,6 +401,17 @@ devices.
 When not set, this option is enabled by default.
 
 Received files are stored in the `/share/taildrop` directory.
+
+### Option: `udp_port`
+
+UDP port to listen on for WireGuard and peer-to-peer traffic.
+
+Use this option (and router port forwarding) if you experience that Tailscale
+can't establish peer-to-peer connections to some of your devices (usually behind
+CGNAT networks). You can test connections with `tailscale ping
+<hostname-or-ip>`.
+
+When not set, an automatically selected port is used by default.
 
 ### Option: `userspace_networking`
 
