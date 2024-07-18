@@ -104,7 +104,7 @@ configuration:
     name: UDP port
     description: >-
       UDP port to listen on for WireGuard and peer-to-peer traffic.
-      When not set, automatically selected port is used by default.
+      When not set, an automatically selected port is used by default.
   userspace_networking:
     name: Userspace networking mode
     description: >-

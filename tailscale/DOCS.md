@@ -411,7 +411,12 @@ Received files are stored in the `/share/taildrop` directory.
 
 UDP port to listen on for WireGuard and peer-to-peer traffic.
 
-When not set, automatically selected port is used by default.
+Use this option (and router port forwarding) if you experience that Tailscale
+can't establish peer-to-peer connections to some of your devices (usually behind
+CGNAT networks). You can test connections with `tailscale ping
+<hostname-or-ip>`.
+
+When not set, an automatically selected port is used by default.
 
 ### Option: `userspace_networking`
 
