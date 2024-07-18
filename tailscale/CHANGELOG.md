@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.20.0.3 (forked)
 
 - Make UDP port configurable
 - Merge unreleased changes from community add-on
