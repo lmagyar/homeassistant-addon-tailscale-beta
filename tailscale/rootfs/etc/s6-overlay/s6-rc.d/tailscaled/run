@@ -29,7 +29,7 @@ fi
 # Use configured UDP port
 udp_port=$(bashio::addon.port 41641)
 if bashio::var.has_value "${udp_port}"; then
-  options+=(--port=${udp_port}))
+  options+=(--port=${udp_port})
 fi
 
 # Use userspace networking by default when not set, or when explicitly enabled
