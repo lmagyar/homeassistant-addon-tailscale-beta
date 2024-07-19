@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Refactor UDP port into Network config option
+
 ## 0.20.0.3 (forked)
 
 - Make UDP port configurable
