@@ -2,7 +2,13 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
 - Refactor UDP port into Network config option
+
+Nonbreaking changes:
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.72.1
+  - Update Add-on base image to v16.2.1
 
 ## 0.20.0.3 (forked)
 
