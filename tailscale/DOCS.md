@@ -7,8 +7,8 @@
 > Changes:
 >   - Make UDP port configurable
 >   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.70.0
->     - Update Add-on base image to v16.1.3
+>     - Update tailscale/tailscale to v1.72.1
+>     - Update Add-on base image to v16.2.1
 >   - Release unmerged changes from community add-on:
 >     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
@@ -116,7 +116,6 @@ tags:
   - tag:example
   - tag:homeassistant
 taildrop: true
-udp_port: 12345
 userspace_networking: true
 ```
 
@@ -403,17 +402,6 @@ When not set, this option is enabled by default.
 
 Received files are stored in the `/share/taildrop` directory.
 
-### Option: `udp_port`
-
-UDP port to listen on for WireGuard and peer-to-peer traffic.
-
-Use this option (and router port forwarding) if you experience that Tailscale
-can't establish peer-to-peer connections to some of your devices (usually behind
-CGNAT networks). You can test connections with `tailscale ping
-<hostname-or-ip>`.
-
-When not set, an automatically selected port is used by default.
-
 ### Option: `userspace_networking`
 
 The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
@@ -435,6 +423,19 @@ local network access has priority, and these addresses won't be routed toward
 your tailnet. This will prevent your Home Assistant instance from losing network
 connection. This also means that using the same subnet on multiple nodes for load
 balancing and failover is impossible with the current add-on behavior.
+
+## Network
+
+### Port: `41641/udp`
+
+UDP port to listen on for WireGuard and peer-to-peer traffic.
+
+Use this option (and router port forwarding) if you experience that Tailscale
+can't establish peer-to-peer connections to some of your devices (usually behind
+CGNAT networks). You can test connections with `tailscale ping
+<hostname-or-ip>`.
+
+When not set, an automatically selected port is used by default.
 
 ## Support
 
