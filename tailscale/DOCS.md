@@ -11,6 +11,7 @@
 > Changes:
 >   - Experimental:
 >     - Make UDP port configurable
+>     - Add HEALTHCHECK support
 >   - Release unreleased changes from community add-on:
 >     - Update tailscale/tailscale to v1.72.1
 >     - Update Add-on base image to v16.2.1
