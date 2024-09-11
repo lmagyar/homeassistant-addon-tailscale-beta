@@ -3,6 +3,8 @@
 ## vNext (forked)
 
 - Add HEALTHCHECK support
+- Merge unreleased changes from community add-on
+  - Update Add-on base image to v16.3.0
 
 ## 0.21.0.1 (forked)
 
