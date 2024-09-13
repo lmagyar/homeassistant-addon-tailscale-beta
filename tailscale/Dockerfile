@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:16.2.1
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:16.3.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,7 +7,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.72.1"
+ARG TAILSCALE_VERSION="v1.74.0"
 RUN \
     apk add --no-cache \
         ethtool=6.7-r0 \
@@ -35,6 +35,11 @@ RUN \
 
 # Copy root filesystem
 COPY rootfs /
+
+HEALTHCHECK \
+    CMD /opt/tailscale status --json --self=false --peers=false | jq --exit-status '.BackendState != "Stopped"' > /dev/null
+    # Note: Plain (non-json) tailscale status returns error when status is not Running or Starting, so NeedsLogin and NeedsMachineAuth would make it unhealthy
+    # Note: The .Health json filter returns any problems, so even temporary health problems would make it unhealthy
 
 # S6 Overlay stage 2 hook
 ENV S6_STAGE2_HOOK=/etc/s6-overlay/scripts/stage2_hook.sh

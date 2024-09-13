@@ -5,12 +5,14 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
+> - Experimental:
+>   - Add HEALTHCHECK support
+> - Release unreleased changes from community add-on:
+>   - Update tailscale/tailscale to v1.74.0
 >   - Make UDP port configurable
->   - Release unreleased changes from community add-on:
->     - Update tailscale/tailscale to v1.72.1
->     - Update Add-on base image to v16.2.1
->   - Release unmerged changes from community add-on:
->     - Optionally copy Tailscale Proxy's certificate files to /ssl folder
+>   - Update Add-on base image to v16.3.1
+> - Release unmerged changes from community add-on:
+>   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
 
