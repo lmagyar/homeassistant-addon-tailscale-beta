@@ -7,10 +7,6 @@
 > Changes:
 > - Experimental:
 >   - Add HEALTHCHECK support
-> - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.74.1
->   - Make UDP port configurable
->   - Update Add-on base image to v16.3.1
 > - Release unmerged changes from community add-on:
 >   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
