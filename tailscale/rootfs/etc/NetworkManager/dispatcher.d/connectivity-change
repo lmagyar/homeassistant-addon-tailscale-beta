@@ -2,13 +2,13 @@
 # DO NOT use #!/command/with-contenv bashio, because that won't set the environment variables
 
 if [[ "$NM_DISPATCHER_ACTION" == "connectivity-change" ]]; then
-  if [[ "$CONNECTIVITY_STATE" == "FULL" ]]; then
-    if ! protect-subnet-routes; then
+  if [[ "$CONNECTIVITY_STATE" == "FULL" || "$CONNECTIVITY_STATE" == "LIMITED" || "$CONNECTIVITY_STATE" == "PORTAL" ]]; then
+    if ! protect-subnet-routes $CONNECTIVITY_STATE; then
       # Better stop add-on than risking losing all network connections
       echo -n 1 > /run/s6-linux-init-container-results/exitcode
       exec /run/s6/basedir/bin/halt
     fi
-  else # UNKNOWN, NONE, PORTAL, LIMITED
-    unprotect-subnet-routes
+  else # UNKNOWN, NONE
+    unprotect-subnet-routes $CONNECTIVITY_STATE
   fi
 fi
