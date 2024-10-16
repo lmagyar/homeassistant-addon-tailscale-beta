@@ -12,7 +12,7 @@ declare wait_counter=0
 
 if bashio::config.false "userspace_networking"; then
   if [[ "${1-}" != "" ]]; then
-    bashio::log.info "Connectivity state changed to $1"
+    bashio::log.debug "Network Manager connectivity state changed to $1"
   fi
   # PREVIOUS_SUBNET_ROUTE_PROTECTION_STATE is in contenv at /var/run/s6/container_environment
   if [[ "${PREVIOUS_SUBNET_ROUTE_PROTECTION_STATE-}" != "protected" ]]; then
