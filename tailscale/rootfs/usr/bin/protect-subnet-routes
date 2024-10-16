@@ -11,11 +11,11 @@ declare response
 declare wait_counter=0
 
 if bashio::config.false "userspace_networking"; then
-  if [[ "$1" != "" ]]; then
+  if [[ "${1-}" != "" ]]; then
     bashio::log.info "Connectivity state changed to $1"
   fi
   # PREVIOUS_SUBNET_ROUTE_PROTECTION_STATE is in contenv at /var/run/s6/container_environment
-  if [[ "$PREVIOUS_SUBNET_ROUTE_PROTECTION_STATE" != "protected" ]]; then
+  if [[ "${PREVIOUS_SUBNET_ROUTE_PROTECTION_STATE-}" != "protected" ]]; then
     # If it is called after network configuration is changed, we need to drop cached network info
     bashio::cache.flush_all
     # It is possible to get "ERROR: Got unexpected response from the API: System is not ready with state: setup"
