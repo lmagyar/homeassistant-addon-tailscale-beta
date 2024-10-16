@@ -46,7 +46,7 @@ fi
 
 # Prepare DSCP setting
 if ! bashio::config.has_value "dscp" || \
-  bashio::config.equals 0;
+  bashio::config.equals "dscp" 0;
 then
   tailscaled_gid=0
 else
