@@ -52,6 +52,8 @@ then
 else
   tailscaled_gid=$TAILSCALED_GID
 
+  # It is not strictly necessary to create the group for the gid, s6-setuidgid can set any arbitrary value, but at least we can identify it with a name
+  # Until processes running with root user, they won't have restrictions
   addgroup -g $tailscaled_gid -S tailscaled || true
   adduser root tailscaled || true
 
