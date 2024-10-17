@@ -9,9 +9,6 @@ Zero config VPN for building secure networks.
 > Changes:
 > - Experimental:
 >   - Add HEALTHCHECK support
-> - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.76.0
->   - Update Add-on base image to v16.3.3
 > - Release unmerged changes from community add-on:
 >   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
