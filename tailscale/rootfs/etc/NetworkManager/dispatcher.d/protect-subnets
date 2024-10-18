@@ -1,0 +1,13 @@
+#!/bin/bash
+# DO NOT use #!/command/with-contenv bashio, because that won't set the environment variables
+
+case "$NM_DISPATCHER_ACTION" in
+  up|down|dhcp4-change|dhcp6-change)
+    unprotect-subnet-routes
+    if ! protect-subnet-routes; then
+      # Better stop add-on than risking losing all network connections
+      echo -n 1 > /run/s6-linux-init-container-results/exitcode
+      exec /run/s6/basedir/bin/halt
+    fi
+    ;;
+esac
