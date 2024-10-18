@@ -21,10 +21,10 @@ if bashio::var.equals "${backend_state}" "Running" && bashio::var.equals "${self
   printf "${LAST_ONLINE_TIMESTAMP}" > /var/run/s6/container_environment/LAST_ONLINE_TIMESTAMP
 fi
 
-if [[ "${backend_state}" == "Stopped" ]] \
-  || bashio::config.has_value "healthcheck_timeout" \
-    && bashio::var.has_value "${LAST_ONLINE_TIMESTAMP-}" \
-    && (( $(date +"%s") - ${LAST_ONLINE_TIMESTAMP} > $(bashio::config "healthcheck_timeout") ))
+if [[ "${backend_state}" == "Stopped" ]] || \
+  bashio::config.has_value "healthcheck_timeout" && \
+    bashio::var.has_value "${LAST_ONLINE_TIMESTAMP-}" && \
+    (( $(date +"%s") - ${LAST_ONLINE_TIMESTAMP} > $(bashio::config "healthcheck_timeout") ))
 then
   exit 1
 fi
