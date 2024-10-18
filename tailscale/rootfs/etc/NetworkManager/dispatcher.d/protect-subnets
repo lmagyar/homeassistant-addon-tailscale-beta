@@ -1,9 +1,9 @@
 #!/usr/bin/bashio
 # DO NOT use #!/command/with-contenv bashio, because that won't set the environment variables
 
-case "$NM_DISPATCHER_ACTION" in
+case "${NM_DISPATCHER_ACTION}" in
   up|down|dhcp4-change|dhcp6-change)
-    bashio::log.info "Handling Network Manager action $NM_DISPATCHER_ACTION"
+    bashio::log.info "Handling Network Manager action ${DEVICE_IP_IFACE-} ${NM_DISPATCHER_ACTION}"
     unprotect-subnet-routes
     if ! protect-subnet-routes; then
       # Better stop add-on than risking losing all network connections
