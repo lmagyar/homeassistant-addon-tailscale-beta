@@ -12,7 +12,7 @@ case "${NM_DISPATCHER_ACTION}" in
     fi
     ;;
   connectivity-change)
-    bashio::log.debug "Unhandled Network Manager action ${NM_DISPATCHER_ACTION} ${$CONNECTIVITY_STATE-}"
+    bashio::log.debug "Unhandled Network Manager action ${NM_DISPATCHER_ACTION} ${CONNECTIVITY_STATE-}"
     ;;
   *)
     bashio::log.debug "Unhandled Network Manager action ${DEVICE_IP_IFACE-} ${NM_DISPATCHER_ACTION}"
