@@ -1,5 +1,6 @@
-#!/usr/bin/bashio
-# DO NOT use #!/command/with-contenv bashio, because that won't set the environment variables
+#!/command/with-contenv-merge bashio
+# shellcheck shell=bash
+# The shebang 'with-contenv-merge' above is identical with 'with-contenv', but doesn't clear the current environment containing the dispatcher variables
 
 case "${NM_DISPATCHER_ACTION}" in
   up|down|dhcp4-change|dhcp6-change)
