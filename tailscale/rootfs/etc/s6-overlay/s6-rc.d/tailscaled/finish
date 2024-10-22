@@ -9,7 +9,7 @@ readonly exit_code_service="${1}"
 readonly exit_code_signal="${2}"
 readonly service="tailscaled"
 
-readonly TAILSCALED_GID=51892
+readonly TAILSCALED_GID=51894
 
 # Remove DSCP setting
 if (( 0 < $( \
