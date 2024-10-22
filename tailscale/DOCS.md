@@ -109,6 +109,7 @@ advertise_routes:
   - fd12:3456:abcd::/64
 dscp: 52
 funnel: false
+healthcheck_timeout: 110
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -238,6 +239,23 @@ port 443 (or the port configured in option `proxy_and_funnel_port`)._
 
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
+
+### Option: `healthcheck_timeout`
+
+This option allows you to set timeout in seconds for Tailscale to be offline.
+
+Tailscale is quite resilient and can recover from nearly any network change. But
+in case it fails to recover and remains offline longer than healthcheck_timeout
+seconds, the add-on can be restarted. The check happens only when Tailscale is
+running, ie. it won't have any effect when Tailscale's status is eg. Starting,
+NeedsLogin or NeedsMachineAuth.
+
+The Stopped status is deemed unhealthy by default.
+
+Note: The add-on's health is checked by Home Assistant in each 30s, ie. the
+effective resolution of this option is 30s, not 1s.
+
+When not set, this option is disabled by default.
 
 ### _Note on the `lets_encrypt` options below_
 
