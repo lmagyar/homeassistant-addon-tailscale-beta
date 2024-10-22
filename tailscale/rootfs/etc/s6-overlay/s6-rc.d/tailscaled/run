@@ -4,7 +4,7 @@
 # Home Assistant Community Add-on: Tailscale
 # Runs tailscale
 # ==============================================================================
-readonly TAILSCALED_GID=51892
+readonly TAILSCALED_GID=51893
 
 declare -a options
 declare udp_port
