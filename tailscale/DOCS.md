@@ -11,8 +11,10 @@
 > Changes:
 > - Experimental:
 >   - Add HEALTHCHECK support
+>   - Make DSCP configurable on tailscaled's network traffic
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.76.0
+>   - Fix subnet protection when connectivity state is not 'full'
 > - Release unmerged changes from community add-on:
 >   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 

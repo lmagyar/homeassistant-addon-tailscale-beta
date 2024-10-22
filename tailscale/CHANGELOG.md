@@ -1,5 +1,13 @@
 # Changelog
 
+## vNext (forked)
+
+- Experimental
+  - Make HEALTHCHECK timeout configurable
+  - Make DSCP configurable on tailscaled's network traffic
+- Merge unreleased changes from community add-on
+  - Fix subnet protection when connectivity state is not 'full'
+
 ## 0.22.1.1 (forked)
 
 - Merge unreleased changes from community add-on
