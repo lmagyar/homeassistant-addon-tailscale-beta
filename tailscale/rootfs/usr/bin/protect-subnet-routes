@@ -4,7 +4,7 @@
 # In case of non userspace networking,
 # add local subnets to ip rules with higher priority than Tailscale's routing
 # ==============================================================================
-readonly PROTECTION_RULE_PRIORITY=5000
+readonly PROTECTION_RULE_PRIORITY=5002
 
 declare -a routes=()
 declare route family

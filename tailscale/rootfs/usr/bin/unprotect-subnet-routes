@@ -4,7 +4,7 @@
 # In case of non userspace networking,
 # remove local subnets from ip rules
 # ==============================================================================
-readonly PROTECTION_RULE_PRIORITY=5000
+readonly PROTECTION_RULE_PRIORITY=5002
 
 declare -a routes=()
 declare route family
