@@ -7,8 +7,10 @@
 > Changes:
 > - Experimental:
 >   - Add HEALTHCHECK support
+>   - Make DSCP configurable on tailscaled's network traffic
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.76.0
+>   - Fix subnet protection when connectivity state is not 'full'
+>   - Update Add-on base image to v16.3.4
 > - Release unmerged changes from community add-on:
 >   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
@@ -103,7 +105,9 @@ advertise_connector: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
+dscp: 52
 funnel: false
+healthcheck_timeout: 110
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -183,6 +187,15 @@ More information: [Subnet routers][tailscale_info_subnets]
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
 
+### Option: `dscp`
+
+This option allows you to set DSCP value on all tailscaled originated network
+traffic. This allows you to handle Tailscale's network traffic on your router
+separately from other network traffic.
+
+When not set, this option is disabled by default, ie. DSCP will be set to the
+default 0.
+
 ### Option: `funnel`
 
 This requires Tailscale Proxy to be enabled.
@@ -224,6 +237,23 @@ port 443 (or the port configured in option `proxy_and_funnel_port`)._
 
 **Note:** _If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser._
+
+### Option: `healthcheck_timeout`
+
+This option allows you to set timeout in seconds for Tailscale to be offline.
+
+Tailscale is quite resilient and can recover from nearly any network change. But
+in case it fails to recover and remains offline longer than healthcheck_timeout
+seconds, the add-on can be restarted. The check happens only when Tailscale is
+running, ie. it won't have any effect when Tailscale's status is eg. Starting,
+NeedsLogin or NeedsMachineAuth.
+
+The Stopped status is deemed unhealthy by default.
+
+Note: The add-on's health is checked by Home Assistant in each 30s, ie. the
+effective resolution of this option is 30s, not 1s.
+
+When not set, this option is disabled by default.
 
 ### _Note on the `lets_encrypt` options below_
 
