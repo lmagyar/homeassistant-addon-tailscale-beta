@@ -7,6 +7,9 @@
   - Make DSCP configurable on tailscaled's network traffic
 - Merge unreleased changes from community add-on
   - Fix subnet protection when connectivity state is not 'full'
+  - Update Add-on base image to v16.3.4
+- Merge released changes from community add-on
+  - Update tailscale/tailscale to v1.76.1
 
 ## 0.22.1.1 (forked)
 
