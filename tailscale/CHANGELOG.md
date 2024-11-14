@@ -5,6 +5,7 @@
 ***BREAKING CHANGES:***
 - Rename healthcheck_timeout to healthcheck_offline_timeout
 
+Nonbreaking changes:
 - Experimental
   - Make HEALTHCHECK restart timeout configurable
 - Merge released changes from community add-on
