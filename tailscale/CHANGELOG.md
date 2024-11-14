@@ -5,6 +5,8 @@
 ***BREAKING CHANGES:***
 - Rename healthcheck_timeout to healthcheck_offline_timeout
 
+- Experimental
+  - Make HEALTHCHECK restart timeout configurable
 - Merge released changes from community add-on
   - Update tailscale/tailscale to v1.76.6
 - Merge unreleased changes from community add-on

@@ -38,6 +38,7 @@ schema:
   dscp: int(0,63)?
   funnel: bool?
   healthcheck_offline_timeout: int?
+  healthcheck_restart_timeout: int(900,)?
   lets_encrypt_certfile: str?
   lets_encrypt_keyfile: str?
   log_level: list(trace|debug|info|notice|warning|error|fatal)?
