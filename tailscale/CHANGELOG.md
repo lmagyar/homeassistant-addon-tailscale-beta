@@ -2,6 +2,9 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Rename healthcheck_timeout to healthcheck_offline_timeout
+
 - Merge released changes from community add-on
   - Update tailscale/tailscale to v1.76.6
 - Merge unreleased changes from community add-on
@@ -10,7 +13,7 @@
 ## 0.23.1.1 (forked)
 
 - Experimental
-  - Make HEALTHCHECK timeout configurable
+  - Make HEALTHCHECK offline timeout configurable
   - Make DSCP configurable on tailscaled's network traffic
 - Merge unreleased changes from community add-on
   - Fix subnet protection when connectivity state is not 'full'
