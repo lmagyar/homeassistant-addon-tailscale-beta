@@ -11,8 +11,9 @@ Nonbreaking changes:
 - Merge released changes from community add-on
   - Update tailscale/tailscale to v1.76.6
 - Merge unreleased changes from community add-on
-  - Configure log format for the add-on to be compatible with Tailscale's format
   - Update Add-on base image to v16.3.6
+- Release unmerged changes from community add-on
+  - Configure log format for the add-on to be compatible with Tailscale's format
 
 ## 0.23.1.1 (forked)
 
