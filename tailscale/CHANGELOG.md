@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.23.2.1 (forked)
 
 ***BREAKING CHANGES:***
 - Rename healthcheck_timeout to healthcheck_offline_timeout
