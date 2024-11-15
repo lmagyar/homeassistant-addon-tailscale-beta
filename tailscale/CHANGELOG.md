@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.23.2.1 (forked)
 
 ***BREAKING CHANGES:***
 - Rename healthcheck_timeout to healthcheck_offline_timeout
@@ -13,6 +13,8 @@ Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Configure log format for the add-on to be compatible with Tailscale's format
   - Update Add-on base image to v16.3.6
+- Release unmerged changes from community add-on
+  - Configure log format for the add-on to be compatible with Tailscale's format
 
 ## 0.23.1.1 (forked)
 

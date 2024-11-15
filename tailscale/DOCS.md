@@ -11,12 +11,12 @@
 > Changes:
 > - Experimental:
 >   - Add HEALTHCHECK support
->   - Make DSCP configurable on tailscaled's network traffic
 > - Release unreleased changes from community add-on:
 >   - Fix subnet protection when connectivity state is not 'full'
->   - Configure log format for the add-on to be compatible with Tailscale's format
+>   - Make DSCP configurable on tailscaled's network traffic
 >   - Update Add-on base image to v16.3.6
 > - Release unmerged changes from community add-on:
+>   - Configure log format for the add-on to be compatible with Tailscale's format
 >   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
