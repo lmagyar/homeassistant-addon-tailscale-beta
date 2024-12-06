@@ -6,7 +6,7 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.78.0
+>   - Update tailscale/tailscale to v1.78.1
 >   - Add HEALTHCHECK support
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
