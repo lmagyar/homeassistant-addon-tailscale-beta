@@ -7,7 +7,7 @@
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
-  - Update Add-on base image to v17.0.0 (Alpine v3.21.0)
+  - Update Add-on base image to v17.0.0 (Update Alpine base image to v3.21.0)
   
 ## 0.23.3.1 (forked)
 
