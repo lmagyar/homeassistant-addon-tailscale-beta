@@ -5,11 +5,9 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
-> - Experimental:
->   - Add HEALTHCHECK support
 > - Release unreleased changes from community add-on:
->   - Fix subnet protection when connectivity state is not 'full'
->   - Update Add-on base image to v16.3.6
+>   - Update tailscale/tailscale to v1.78.1
+>   - Add HEALTHCHECK support
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
