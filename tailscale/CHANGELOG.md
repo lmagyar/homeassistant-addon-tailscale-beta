@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+***BREAKING CHANGES:***
+- Remove healthcheck_offline_timeout and healthcheck_restart_timeout options, hardwire 5 minutes and 1 hour (this is the accepted and merged solution in the official add-on)
+
 ## 0.23.3.1 (forked)
 
 - Merge unreleased changes from community add-on
