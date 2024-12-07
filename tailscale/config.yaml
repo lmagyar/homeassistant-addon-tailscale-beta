@@ -1,6 +1,6 @@
 ---
 name: "[BETA] Tailscale with features"
-version: 0.23.3.2-rc01
+version: 0.23.3.2-rc02
 slug: tailscale-beta
 description: "[BETA] Zero config VPN for building secure networks"
 url: https://github.com/lmagyar/homeassistant-addon-tailscale-beta
