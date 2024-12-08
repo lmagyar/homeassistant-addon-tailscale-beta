@@ -6,7 +6,7 @@
 - Remove healthcheck_offline_timeout and healthcheck_restart_timeout options, hardwire 5 minutes and 1 hour (this is the accepted and merged solution in the official add-on)
 
 Nonbreaking changes:
-- Merge unreleased changes from community add-on
+- Merge released changes from community add-on
   - Update Add-on base image to v17.0.0 (Update Alpine base image to v3.21.0)
   
 ## 0.23.3.1 (forked)

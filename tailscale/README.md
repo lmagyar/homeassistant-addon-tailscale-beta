@@ -8,9 +8,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.78.1
 >   - Add HEALTHCHECK support
->   - Update Add-on base image to v17.0.0 (Alpine v3.21.0)
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
