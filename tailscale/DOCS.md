@@ -7,6 +7,7 @@
 > Changes:
 > - Release unreleased changes from community add-on:
 >   - Add HEALTHCHECK support
+>   - Update Add-on base image to v17.0.1
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
