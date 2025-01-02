@@ -7,8 +7,9 @@
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
-  - Update Add-on base image to v17.0.0 (Update Alpine base image to v3.21.0)
-  
+  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+  - Update Add-on base image to v17.0.1 (Update Alpine base image to v3.21.0)
+
 ## 0.23.3.1 (forked)
 
 - Merge unreleased changes from community add-on
