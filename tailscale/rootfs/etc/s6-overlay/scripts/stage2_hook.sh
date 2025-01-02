@@ -7,6 +7,7 @@
 
 declare options
 declare proxy funnel proxy_and_funnel_port
+declare healthcheck_offline_timeout healthcheck_restart_timeout
 
 # Upgrade configuration from 'proxy', 'funnel' and 'proxy_and_funnel_port' to 'share_homeassistant' and 'share_on_port'
 # This step can be removed in a later version
@@ -35,6 +36,16 @@ if bashio::var.has_value "${funnel}"; then
 fi
 if bashio::var.has_value "${proxy_and_funnel_port}"; then
     bashio::addon.option 'proxy_and_funnel_port'
+fi
+
+# Remove unused options
+healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout // empty')
+healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout // empty')
+if bashio::var.has_value "${healthcheck_offline_timeout}"; then
+    bashio::addon.option 'healthcheck_offline_timeout'
+fi
+if bashio::var.has_value "${healthcheck_restart_timeout}"; then
+    bashio::addon.option 'healthcheck_restart_timeout'
 fi
 
 # Disable protect-subnets service when userspace-networking is enabled or accepting routes is disabled
