@@ -18,7 +18,7 @@ Zero config VPN for building secure networks.
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
->   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
+>   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
 

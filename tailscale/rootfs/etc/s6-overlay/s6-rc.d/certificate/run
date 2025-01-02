@@ -2,7 +2,7 @@
 # shellcheck shell=bash
 # ==============================================================================
 # Home Assistant Community Add-on: Tailscale
-# Copies Tailscale Proxy certificates to /ssl folder
+# Copies Tailscale Serve certificates to /ssl folder
 # ==============================================================================
 
 readonly CERTS_FOLDER=/data/state/certs
