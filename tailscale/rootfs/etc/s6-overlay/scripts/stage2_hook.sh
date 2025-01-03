@@ -15,7 +15,7 @@ declare forward_to_host
 # where set -e is not propagated inside the function and bashio relies on set -e for api error handling
 function try {
     set +e
-    (set -e; $@)
+    (set -e; "$@")
     declare -gx TRY_ERROR=$?
     set -e
 }
