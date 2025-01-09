@@ -547,6 +547,17 @@ page][tailscale_dns] of the admin console, then:
    DNS for your tailnet domain as upstream DNS server (e.g. in case of AdGuard
    `[/tail1234.ts.net/]100.100.100.100`).
 
+## Healthcheck
+
+Tailscale is quite resilient and can recover from nearly any network change. In
+case it fails to recover, the add-on's health is set unhealthy. The add-on's
+health is checked by Home Assistant in each 30s, and if it reports itself 3
+times unhealthy in a row, the add-on will be restarted.
+
+The add-on's health is set unhealthy:
+- once it was online and gets offline for longer than 5 minutes
+- after a (re)start can't get online for longer than 1 hour
+
 ## Support
 
 Got questions?
