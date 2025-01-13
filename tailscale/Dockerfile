@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:17.0.1
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:17.0.2
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -15,7 +15,7 @@ RUN \
         iproute2=6.11.0-r0 \
         iptables=1.8.10-r5 \
         nginx=1.26.2-r4 \
-        coreutils=9.5-r1 \
+        coreutils=9.5-r2 \
         networkmanager=1.50.1-r0 \
         inotify-tools=4.23.9.0-r0 \
     \
