@@ -14,6 +14,7 @@ Zero config VPN for building secure networks.
 > - Release unreleased changes from community add-on:
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+>   - Update documentation about DNS configuration
 >   - Update Add-on base image to v17.0.2
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
