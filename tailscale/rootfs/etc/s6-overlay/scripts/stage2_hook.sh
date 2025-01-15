@@ -8,6 +8,7 @@
 declare options
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 
+# Load add-on options, even deprecated one to upgrade
 options=$(bashio::addon.options)
 
 # Remove unused options
