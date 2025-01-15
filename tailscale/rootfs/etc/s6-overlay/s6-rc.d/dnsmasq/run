@@ -5,7 +5,7 @@
 # Runs the dnsmasq daemon
 # ==============================================================================
 
-readonly DNSMASQ_PORT=25798
+readonly DNSMASQ_PORT=25797
 
 bashio::log.info "Starting dnsmasq..."
 # This is a dummy DNS to suppress tailscaled warnings about not configured upstream on each DNS query
