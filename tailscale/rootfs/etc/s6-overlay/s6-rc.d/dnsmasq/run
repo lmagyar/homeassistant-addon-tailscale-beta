@@ -5,7 +5,7 @@
 # Runs the dnsmasq daemon
 # ==============================================================================
 
-readonly DNSMASQ_ADDRESS=127.52.52.51
+readonly DNSMASQ_ADDRESS=127.52.52.50
 
 bashio::log.info "Starting dnsmasq..."
 
