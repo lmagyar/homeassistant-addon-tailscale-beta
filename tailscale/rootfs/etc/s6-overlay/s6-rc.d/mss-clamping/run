@@ -5,7 +5,7 @@
 # Clamp the MSS to the MTU
 # ==============================================================================
 
-readonly TAILSCALE_INTERFACE="tailscale0"
+readonly TAILSCALE_INTERFACE="tailscale2"
 readonly CLAMPING_IPTABLES_OPTIONS="-p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu"
 
 # In case of non userspace networking, clamp the MSS to the MTU for tailscale's interface
