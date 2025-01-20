@@ -234,7 +234,7 @@ lets_encrypt:
 
 ### Option: `lets_encrypt_certfile`
 
-This requires Tailscale Serve to be enabled and set up properly.
+This requires `share_homeassistant` option to be enabled and set up properly.
 
 **Important:** See also the "Option: `share_homeassistant`" section of this
 documentation for the necessary configuration changes in Home Assistant!
@@ -254,7 +254,7 @@ When not set, this option is disabled by default.
 
 ### Option: `lets_encrypt_keyfile`
 
-This requires Tailscale Serve to be enabled and set up properly.
+This requires `share_homeassistant` option to be enabled and set up properly.
 
 **Important:** See also the "Option: `share_homeassistant`" section of this
 documentation for the necessary configuration changes in Home Assistant!
