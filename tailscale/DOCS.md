@@ -198,7 +198,7 @@ This option allows you to set DSCP value on all tailscaled originated network
 traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
-When not set, this option is disabled by default, ie. DSCP will be set to the
+When not set, this option is disabled by default, i.e. DSCP will be set to the
 default 0.
 
 ### Option: `forward_to_host`
