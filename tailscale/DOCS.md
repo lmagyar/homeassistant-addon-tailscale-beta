@@ -190,6 +190,10 @@ More information: [Subnet routers][tailscale_info_subnets]
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
 
+**Note:** If you only want to access your local subnet from other clients on
+your tailnet, but you don't want to access other clients on your tailnet from
+your local subnet, you don't need to disable the `userspace_networking` option.
+
 ### Option: `dscp`
 
 This option allows you to set DSCP value on all tailscaled originated network
@@ -403,7 +407,11 @@ To support advanced [Site-to-site networking][tailscale_info_site_to_site] (eg.
 to traverse multiple networks), you can disable this functionality, and follow
 steps on [Site-to-site networking][tailscale_info_site_to_site] (Note: "IP
 address forwarding" and "Clamp the MSS to the MTU" is already done by the
-add-on). But do it only when you really understand why you need this.
+add-on).
+
+**Note:** Disable this option only when you really understand why you need this.
+If you are not interested in the real source IP address, you don't need to
+disable this option.
 
 ### Option: `stateful_filtering`
 
@@ -451,11 +459,21 @@ follow steps on [Site-to-site networking][tailscale_info_site_to_site] (Note:
 "IP address forwarding" and "Clamp the MSS to the MTU" is already done by the
 add-on).
 
-In case your local subnets collide with subnet routes within your tailnet, your
-local network access has priority, and these addresses won't be routed toward
-your tailnet. This will prevent your Home Assistant instance from losing network
-connection. This also means that using the same subnet on multiple nodes for load
-balancing and failover is impossible with the current add-on behavior.
+**Note:** In case your local subnets collide with subnet routes within your
+tailnet, your local network access has priority, and these addresses won't be
+routed toward your tailnet. This will prevent your Home Assistant instance from
+losing network connection. This also means that using the same subnet on
+multiple nodes for load balancing and failover is impossible with the current
+add-on behavior.
+
+**Note:** If you only want to access your local subnet from other clients on
+your tailnet, but you don't want to access other clients on your tailnet from
+your local subnet, you don't need to disable the `userspace_networking` option.
+
+**Note:** If you implement Site-to-site networking, but you are not interested
+in the real source IP address, ie. subnet devices can see the traffic
+originating from the subnet router, you don't need to disable the
+`snat_subnet_routes` option, this can simplify routing configuration.
 
 ## Network
 
@@ -574,7 +592,7 @@ device.
   add-on. This will prevent your local Tailscale DNS to accept DNS settings of
   your tailnet that are configured on the the admin console above. This will
   prevent the Tailscale DNS to redirect queries from your device back to your
-  device, causing an infinite loop.
+  device, causing a loop.
 
 - Under **Settings** -> **System** -> **Network** configure your DNS as the only
   DNS server (eg. IPv4: 127.0.0.1, IPv6: ::1).
@@ -586,10 +604,11 @@ device.
 your normal DNS servers (eg. 192.168.1.1 or 1.1.1.1) at the second or lower
 positions.
 
-**Note:** Do not configure Tailscale's DNS in Home Assistant, because when
-`accept_dns` option is disabled, Tailscale's DNS resolves only tailnet addresses
-and logs a warning for each DNS query that doesn't query this domain, and in
-Home Assistant you can't specify domains for a DNS.
+**Note:** Do not configure Tailscale's DNS in Home Assistant's network
+configuration, because when `accept_dns` option is disabled, Tailscale's DNS
+resolves only tailnet addresses and logs a warning for each DNS query that
+doesn't query this domain, and in Home Assistant you can't specify domains for a
+DNS.
 
 ## Healthcheck
 
