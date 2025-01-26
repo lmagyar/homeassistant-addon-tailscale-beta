@@ -7,6 +7,7 @@
 > Changes:
 > - Release unreleased changes from community add-on:
 >   - Add HEALTHCHECK support
+>   - Fix MSS clamping for site-to-site networking
 >   - Update Add-on base image to v17.1.0
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
