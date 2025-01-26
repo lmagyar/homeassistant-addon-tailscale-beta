@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from community add-on
+  - Update Add-on base image to v17.1.0 (Update Alpine base image to v3.21)
+
 ## 0.23.3.1 (forked)
 
 - Merge unreleased changes from community add-on
