@@ -1,0 +1,35 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community Add-on: Tailscale
+# Remove forwarding
+# ==============================================================================
+
+declare from_address_ipv4 from_address_ipv6
+declare to_address
+
+# Tailscale's IP addresses
+from_address_ipv4=$(/opt/tailscale ip -4)
+from_address_ipv6=$(/opt/tailscale ip -6)
+
+# In case of non userspace networking and if enabled, remove the forwarding from tailnet to host
+for to_address in $( \
+  iptables -t nat -S PREROUTING \
+  | { grep -E "^-A PREROUTING -d ${from_address_ipv4}/32 -j DNAT --to-destination \S+$" || true ;} \
+  | sed -nr 's/^.*?--to-destination\s(\S+)$/\1/p')
+do
+  bashio::log.info "Removing the forwarding from ${from_address_ipv4} to ${to_address} (IPv4)"
+  if ! iptables -t nat -D PREROUTING -d ${from_address_ipv4} -j DNAT --to-destination ${to_address}; then
+    bashio::log.warning "Removing forwarding is unsuccessful"
+  fi
+done
+for to_address in $( \
+  ip6tables -t nat -S PREROUTING \
+  | { grep -E "^-A PREROUTING -d ${from_address_ipv6}/128 -j DNAT --to-destination \S+$" || true ;} \
+  | sed -nr 's/^.*?--to-destination\s(\S+)$/\1/p')
+do
+  bashio::log.info "Removing the forwarding from ${from_address_ipv6} to ${to_address} (IPv6)"
+  if ! ip6tables -t nat -D PREROUTING -d ${from_address_ipv6} -j DNAT --to-destination ${to_address}; then
+    bashio::log.warning "Removing forwarding is unsuccessful"
+  fi
+done

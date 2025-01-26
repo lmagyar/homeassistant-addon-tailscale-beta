@@ -42,6 +42,12 @@ configuration:
       separately from other network traffic.
       When not set, this option is disabled by default, ie. DSCP will be set to the
       default 0.
+  forward_to_host:
+    name: Forward to host
+    description: >-
+      Forward incoming tailnet connections to the host's primary interface when
+      userspace networking is disabled.
+      When not set, this option is enabled by default.
   funnel:
     name: Tailscale Funnel
     description: >-

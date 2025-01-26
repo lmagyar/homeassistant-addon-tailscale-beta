@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Merge unreleased changes from community add-on
+  - Forward incoming tailnet connections to the host's primary interface
   - Fix MSS clamping for site-to-site networking
   - Update Add-on base image to v17.1.0 (Update Alpine base image to v3.21)
 
