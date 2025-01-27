@@ -12,20 +12,22 @@ readonly service="tailscaled"
 readonly TAILSCALED_GID=51894
 
 # Remove DSCP setting
-if (( 0 < $( \
-  iptables -t mangle -S OUTPUT \
-  | { grep -Ec "^-A OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp" || true ;}) ))
-then
-  bashio::log.info "Removing DSCP setting for tailscaled (IPv4)"
-  iptables -t mangle -D OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp $(bashio::config "dscp")
-fi
-if (( 0 < $( \
-  ip6tables -t mangle -S OUTPUT \
-  | { grep -Ec "^-A OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp" || true ;}) ))
-then
-  bashio::log.info "Removing DSCP setting for tailscaled (IPv6)"
-  ip6tables -t mangle -D OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp $(bashio::config "dscp")
-fi
+function remove_dscp() {
+  local cmd="$1"
+  local ip_version="$2"
+
+  if ${cmd} -t mangle -S OUTPUT \
+    | grep -Eq "^-A OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp \S+$"
+  then
+    bashio::log.info "Removing DSCP setting for tailscaled (${ip_version})"
+    if ! ${cmd} -t mangle -D OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp $(bashio::config "dscp"); then
+      bashio::log.warning "Removing DSCP setting is unsuccessful (${ip_version})"
+    fi
+  fi
+}
+
+remove_dscp "iptables" "IPv4"
+remove_dscp "ip6tables" "IPv6"
 
 bashio::log.info \
   "Service ${service} exited with code ${exit_code_service}" \
