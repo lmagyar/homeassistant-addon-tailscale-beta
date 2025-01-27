@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.24.0.1 (forked)
+## vNext (forked)
 
 ***BREAKING CHANGES:***
 - Remove healthcheck_offline_timeout and healthcheck_restart_timeout options, hardwire 5 minutes and 1 hour (this is the accepted and merged solution in the official add-on)
@@ -8,6 +8,10 @@
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+
+## 0.24.0.1 (forked)
+
+- Merge unreleased changes from community add-on
   - Fix MagicDNS incompatibility with Home Assistant
   - Forward incoming tailnet connections to the host's primary interface
   - Fix MSS clamping for site-to-site networking
