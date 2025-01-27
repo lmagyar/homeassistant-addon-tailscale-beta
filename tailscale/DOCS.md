@@ -190,17 +190,13 @@ More information: [Subnet routers][tailscale_info_subnets]
 When not set, the add-on by default will advertise routes to your subnets on all
 supported interfaces.
 
-**Note:** If you only want to access your local subnet from other clients on
-your tailnet, but you don't want to access other clients on your tailnet from
-your local subnet, you don't need to disable the `userspace_networking` option.
-
 ### Option: `dscp`
 
 This option allows you to set DSCP value on all tailscaled originated network
 traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
-When not set, this option is disabled by default, ie. DSCP will be set to the
+When not set, this option is disabled by default, i.e. DSCP will be set to the
 default 0.
 
 ### Option: `forward_to_host`
@@ -219,8 +215,8 @@ have to enable subnet routing just to access services on the host from the
 tailnet.
 
 **Note:** Without forwarding, services running only on the interfaces managed by
-Home Assistant (ie. not on all interfaces), are not accessible directly from the
-tailnet when userspace networking is disabled.
+Home Assistant (i.e. not on all interfaces), are not accessible directly from
+the tailnet when userspace networking is disabled.
 
 **Note:** Tailscale's serve and funnel features have priority over this plain
 port forwarding, those connections won't be forwarded directly to the host.
@@ -325,7 +321,7 @@ Tailscale can provide a TLS certificate for your Home Assistant instance within
 your tailnet domain.
 
 This can prevent browsers from warning that HTTP URLs to your Home Assistant
-instance look unencrypted (browsers are not aware of the connections between
+instance look unencrypted (browsers are not aware that the connections between
 Tailscale nodes are secured with end-to-end encryption).
 
 With the Tailscale Serve feature, you can access your Home Assistant instance
@@ -403,15 +399,15 @@ router, and this simplifies routing configuration.
 
 When not set, this option is enabled by default.
 
-To support advanced [Site-to-site networking][tailscale_info_site_to_site] (eg.
+To support advanced [Site-to-site networking][tailscale_info_site_to_site] (e.g.
 to traverse multiple networks), you can disable this functionality, and follow
-steps on [Site-to-site networking][tailscale_info_site_to_site] (Note: "IP
-address forwarding" and "Clamp the MSS to the MTU" is already done by the
-add-on).
+steps in the [Site-to-site networking][tailscale_info_site_to_site] guide (Note:
+The add-on already handles "IP address forwarding" and "Clamp the MSS to the
+MTU" for you).
 
-**Note:** Disable this option only when you really understand why you need this.
-If you are not interested in the real source IP address, you don't need to
-disable this option.
+**Note:** Only disable this option if you fully understand the implications.
+Keep it enabled if preserving the real source IP address is not critical for
+your use case.
 
 ### Option: `stateful_filtering`
 
@@ -455,9 +451,9 @@ To be able to address other clients on your tailnet not only with their tailnet
 IP, but with their tailnet name, see the "DNS" section of this documentation.
 
 If you want to access other clients on your tailnet even from your local subnet,
-follow steps on [Site-to-site networking][tailscale_info_site_to_site] (Note:
-"IP address forwarding" and "Clamp the MSS to the MTU" is already done by the
-add-on).
+follow steps in the [Site-to-site networking][tailscale_info_site_to_site] guide
+(Note: The add-on already handles "IP address forwarding" and "Clamp the MSS to
+the MTU" for you).
 
 **Note:** In case your local subnets collide with subnet routes within your
 tailnet, your local network access has priority, and these addresses won't be
@@ -466,12 +462,12 @@ losing network connection. This also means that using the same subnet on
 multiple nodes for load balancing and failover is impossible with the current
 add-on behavior.
 
-**Note:** If you only want to access your local subnet from other clients on
-your tailnet, but you don't want to access other clients on your tailnet from
-your local subnet, you don't need to disable the `userspace_networking` option.
+**Note:** The `userspace_networking` option can remain enabled if you only need
+one-way access from tailnet clients to your local subnet, without requiring
+access from your local subnet to other tailnet clients.
 
 **Note:** If you implement Site-to-site networking, but you are not interested
-in the real source IP address, ie. subnet devices can see the traffic
+in the real source IP address, i.e. subnet devices can see the traffic
 originating from the subnet router, you don't need to disable the
 `snat_subnet_routes` option, this can simplify routing configuration.
 
@@ -508,7 +504,7 @@ address in Home Assistant's network configuration manually to let Home Assistant
 
 **Important:** The only difference of this configuration compared to the general
 Tailscale experience, is that you always have to use the fully qualified domain
-name instead of only the device name, ie. `ping
+name instead of only the device name, i.e. `ping
 some-tailnet-device.tail1234.ts.net` works, but `ping some-tailnet-device` does
 not work.
 
@@ -544,7 +540,7 @@ local DNS" is disabled, and no "Global nameservers" are configured.
 
 - Under **Settings** -> **System** -> **Network** configure Tailscale's DNS as
   the first DNS server (IPv4: 100.100.100.100, IPv6: fd7a:115c:a1e0::53). Move
-  your normal DNS servers (eg. 192.168.1.1 or 1.1.1.1) to lower positions.
+  your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) to lower positions.
 
 In this configuration Home Assistant will first try to resolve addresses with
 Tailscale's DNS, if Tailscale's DNS can't resolve it (because it is not in the
@@ -569,7 +565,7 @@ console.
   the only DNS server (IPv4: 100.100.100.100, IPv6: fd7a:115c:a1e0::53).
 
 **Note:** As a backup, if the Tailscale add-on fails to start up, you can
-configure your normal DNS servers (eg. 192.168.1.1 or 1.1.1.1) at the second or
+configure your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) at the second or
 lower positions.
 
 In this configuration Home Assistant (as any other general device on the
@@ -584,28 +580,28 @@ On the [DNS page][tailscale_dns] of the admin console you already enabled
 "Override local DNS", and configured "Global nameservers".
 
 **Important:** In this scenario your Home Assistant device's tailnet IP (not LAN
-IP) **is configured** as global nameserver on the admin console, because you
-want to redirect all DNS queries within your tailnet to the DNS running on this
+IP) **is configured** as global nameserver on the admin console because you want
+to redirect all DNS queries within your tailnet to the DNS running on this
 device.
 
 - In the add-on's configuration disable `accept_dns` option and restart the
   add-on. This will prevent your local Tailscale DNS to accept DNS settings of
-  your tailnet that are configured on the the admin console above. This will
-  prevent the Tailscale DNS to redirect queries from your device back to your
-  device, causing a loop.
+  your tailnet that are configured on the admin console above. This will prevent
+  the Tailscale DNS to redirect queries from your device back to your device,
+  causing a loop.
 
 - Under **Settings** -> **System** -> **Network** configure your DNS as the only
-  DNS server (eg. IPv4: 127.0.0.1, IPv6: ::1).
+  DNS server (e.g. IPv4: 127.0.0.1, IPv6: ::1).
 
 - In your DNS configure Tailscale DNS for your tailnet domain as upstream DNS
-  server (eg. in case of AdGuard `[/tail1234.ts.net/]100.100.100.100`).
+  server (e.g. in case of AdGuard `[/tail1234.ts.net/]100.100.100.100`).
 
 **Note:** As a backup, if the DNS add-on fails to start up, you can configure
-your normal DNS servers (eg. 192.168.1.1 or 1.1.1.1) at the second or lower
+your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) at the second or lower
 positions.
 
 **Note:** Do not configure Tailscale's DNS in Home Assistant's network
-configuration, because when `accept_dns` option is disabled, Tailscale's DNS
+configuration because when `accept_dns` option is disabled, Tailscale's DNS
 resolves only tailnet addresses and logs a warning for each DNS query that
 doesn't query this domain, and in Home Assistant you can't specify domains for a
 DNS.
