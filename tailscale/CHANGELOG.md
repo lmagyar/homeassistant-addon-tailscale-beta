@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.24.0.2 (forked)
+
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.80.0
+  - Bugfix previous MagicDNS incompatibility fix (for Headscale users)
+
 ## 0.24.0.1 (forked)
 
 - Merge unreleased changes from community add-on
