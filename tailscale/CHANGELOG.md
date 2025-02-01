@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from community add-on
+  - Bugfix previous MagicDNS incompatibility fix (for Headscale users)
+
 ## 0.24.0.1 (forked)
 
 - Merge unreleased changes from community add-on
