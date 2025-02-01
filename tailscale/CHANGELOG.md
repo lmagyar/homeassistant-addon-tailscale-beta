@@ -7,9 +7,13 @@
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
+  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+
+## 0.24.0.2 (forked)
+
+- Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.80.0
   - Bugfix previous MagicDNS incompatibility fix (for Headscale users)
-  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 
 ## 0.24.0.1 (forked)
 
