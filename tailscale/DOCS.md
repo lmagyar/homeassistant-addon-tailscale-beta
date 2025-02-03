@@ -135,7 +135,7 @@ userspace_networking: true
 This option allows you to accept DNS settings of your tailnet that are
 configured on the [DNS page][tailscale_dns] of the admin console.
 
-For more information see the "DNS" section of this documentation.
+For more information, see the "DNS" section of this documentation.
 
 When not set, this option is enabled by default.
 
@@ -216,8 +216,8 @@ have to enable subnet routing just to access services on the host from the
 tailnet.
 
 **Note:** Without forwarding, services running only on the interfaces managed by
-Home Assistant (i.e. not on all interfaces), are not accessible directly from
-the tailnet when userspace networking is disabled.
+Home Assistant (i.e. not on all interfaces), are inaccessible from the tailnet
+when userspace networking is disabled.
 
 **Note:** Tailscale's serve and funnel features have priority over this plain
 port forwarding, those connections won't be forwarded directly to the host.
@@ -575,7 +575,7 @@ Tailscale's DNS will also resolve non-tailnet addresses. Whether you have your
 own DNS (like AdGuard) _on another tailnet device_, is irrelevant for this
 configuration.
 
-### Using Tailscale DNS to resolve everything and you have your own DNS (like AdGuard) _on this device_ also
+### Using Tailscale DNS to resolve everything, and you have your own DNS (like AdGuard) _on this device_ also
 
 On the [DNS page][tailscale_dns] of the admin console, you already enabled
 "Override local DNS", and configured "Global nameservers".
@@ -585,7 +585,7 @@ LAN IP) **is configured** as global nameserver on the admin console because you
 want to redirect all DNS queries within your tailnet to the DNS running on this
 device.
 
-- In the add-on's configuration disable `accept_dns` option and restart the
+- In the add-on's configuration, disable `accept_dns` option and restart the
   add-on. This will prevent your local Tailscale DNS to accept DNS settings of
   your tailnet that are configured on the admin console above. This will prevent
   the Tailscale DNS to redirect queries from your device back to your device,
@@ -594,7 +594,7 @@ device.
 - Under **Settings** -> **System** -> **Network** configure your DNS as the only
   DNS server (e.g. IPv4: 127.0.0.1, IPv6: ::1).
 
-- In your DNS configure Tailscale DNS for your tailnet domain as upstream DNS
+- In your DNS, configure Tailscale DNS for your tailnet domain as upstream DNS
   server (e.g. in case of AdGuard `[/tail1234.ts.net/]100.100.100.100`).
 
 **Note:** As a backup, if the DNS add-on fails to start up, you can configure
