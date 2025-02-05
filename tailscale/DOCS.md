@@ -135,17 +135,17 @@ userspace_networking: true
 > optional configuration options" switch on the Configuration tab!
 
 > [!CAUTION]
-> When you want to change the default behaviour of any of these optional
-> configuration options, **add them to the YAML add-on configuration manually**,
-> by using the "Edit in YAML" in the ... menu on the right and save them! Use
-> the UI to edit them only after you added them manually!
+> When you want to change the default behaviour of these optional configuration
+> options, **add them to the YAML add-on configuration manually**, by using the
+> "Edit in YAML" in the ... menu on the right and save them! Use the UI to edit
+> them only after you added them manually!
 
 > [!WARNING]
 > Home Assistant's UI will show you all the optional configuration options
-> turned off instead of grayed out, and you will falsely believe that those are
-> the values that will be stored, so you will enable options, that by default
-> are already enabled when unused, and you will let options be disabled, that
-> you originally wanted to disable, but the **UI will not add these disabled
+> turned off instead of grayed out. You will falsely believe that those are the
+> values that will be stored, so you will enable options, that by default are
+> already enabled when unused, and you will let options be disabled, that you
+> originally wanted to disable. But the **UI will not add these disabled
 > optional configuration options** to the YAML add-on configuration, and at the
 > end nothing will change in the add-on's functionality after a restart!
 
@@ -274,8 +274,8 @@ Encrypt. Use "." to save the file with the original name containing the domain
 Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
 has to be specified or omitted together.
 
-**Note:** _The file is stored in the /ssl/ folder, which is the default for Home
-Assistant._
+**Note:** The file is stored in the /ssl/ folder, which is the default for Home
+Assistant.
 
 When not set, this option is disabled by default.
 
@@ -294,8 +294,8 @@ Encrypt. Use "." to save the file with the original name containing the domain
 Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
 has to be specified or omitted together.
 
-**Note:** _The file is stored in the /ssl/ folder, which is the default for Home
-Assistant._
+**Note:** The file is stored in the /ssl/ folder, which is the default for Home
+Assistant.
 
 When not set, this option is disabled by default.
 
@@ -393,15 +393,15 @@ Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel]
 
 1. Restart the add-on.
 
-**Note**: _After initial setup, it can take up to 10 minutes for the domain to
-be publicly available._
+**Note**: After initial setup, it can take up to 10 minutes for the domain to
+be publicly available.
 
-**Note:** _You should not use the port number in the URL that you used
+**Note:** You should not use the port number in the URL that you used
 previously to access Home Assistant. Tailscale Serve and Funnel works on the
-default HTTPS port 443 (or the port configured in option `share_on_port`)._
+default HTTPS port 443 (or the port configured in option `share_on_port`).
 
-**Note:** _If you encounter strange browser behaviour or strange error messages,
-try to clear all site related cookies, clear all browser cache, restart browser._
+**Note:** If you encounter strange browser behaviour or strange error messages,
+try to clear all site related cookies, clear all browser cache, restart browser.
 
 ### Option: `share_on_port`
 
@@ -518,7 +518,7 @@ described in Tailscale's online documentation or read in forums.
 **Important:** Tailscale's MagicDNS consists of 2 parts, the DNS server
 mentioned above, and the "magical" local DNS configuration manipulation to let
 the device use this DNS. This manipulation interferes with Home Assistant's DNS,
-and completely disabled in this add-on. You have to configure Tailscale's DNS
+and is completely disabled in this add-on. You have to configure Tailscale's DNS
 address in Home Assistant's network configuration manually to let Home Assistant
 (and any add-on, even this Tailscale add-on) to use Tailscale's DNS.
 
@@ -555,17 +555,18 @@ Below we describe some typical scenarios for DNS configuration.
 
 ### Using Tailscale DNS to resolve only tailnet devices
 
-On the [DNS page][tailscale_dns] of the admin console check, that "Override
-local DNS" is disabled, and no "Global nameservers" are configured.
-
-- Under **Settings** -> **System** -> **Network** configure Tailscale's DNS as
-  the first DNS server (IPv4: 100.100.100.100, IPv6: fd7a:115c:a1e0::53). Move
-  your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) to lower positions.
-
 In this configuration Home Assistant will first try to resolve addresses with
 Tailscale's DNS, if Tailscale's DNS can't resolve it (because it is not in the
 tailnet), Home Assistant will use DNS servers specified at the second or lower
 positions.
+
+- On the [DNS page][tailscale_dns] of the admin console check, that "Override
+  local DNS" is disabled, and no "Global nameservers" are configured.
+
+- Under **Settings** -> **System** -> **Network** configure Tailscale's DNS as
+  the first DNS server (IPv4: 100.100.100.100, IPv6: fd7a:115c:a1e0::53).
+
+- Move your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) to lower positions.
 
 **Note:** If the Tailscale add-on is not started and Tailscale's DNS is not
 available, Home Assistant's DNS will resolve the public IP of devices where
@@ -574,12 +575,18 @@ the add-on is started and Tailscale's DNS is available.
 
 ### Using Tailscale DNS to resolve everything
 
-On the [DNS page][tailscale_dns] of the admin console, you already enabled
-"Override local DNS", and configured "Global nameservers".
+In this configuration Home Assistant (as any other general device on the
+tailnet) will always try to resolve addresses with Tailscale's DNS and
+Tailscale's DNS will also resolve non-tailnet addresses. Whether you have your
+own DNS (like AdGuard) _on another tailnet device_, is irrelevant for this
+configuration.
 
-**Important:** In this scenario, your Home Assistant device's tailnet IP (and
-especially LAN IP) **is NOT configured** as global nameserver on the admin
-console.
+- On the [DNS page][tailscale_dns] of the admin console, you already enabled
+  "Override local DNS", and configured "Global nameservers".
+
+- **Important:** In this scenario, your Home Assistant device's tailnet IP (and
+  especially LAN IP) **is NOT configured** as global nameserver on the admin
+  console.
 
 - Under **Settings** -> **System** -> **Network** configure Tailscale's DNS as
   the only DNS server (IPv4: 100.100.100.100, IPv6: fd7a:115c:a1e0::53).
@@ -588,21 +595,18 @@ console.
 configure your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) at the second or
 lower positions.
 
-In this configuration Home Assistant (as any other general device on the
-tailnet) will always try to resolve addresses with Tailscale's DNS and
-Tailscale's DNS will also resolve non-tailnet addresses. Whether you have your
-own DNS (like AdGuard) _on another tailnet device_, is irrelevant for this
-configuration.
-
 ### Using Tailscale DNS to resolve everything, and you have your own DNS (like AdGuard) _on this device_ also
 
-On the [DNS page][tailscale_dns] of the admin console, you already enabled
-"Override local DNS", and configured "Global nameservers".
+In this configuration Home Assistant (as any other general device on the
+tailnet) will always try to resolve addresses with your own DNS.
 
-**Important:** In this scenario, your Home Assistant device's tailnet IP (not
-LAN IP) **is configured** as global nameserver on the admin console because you
-want to redirect all DNS queries within your tailnet to the DNS running on this
-device.
+- On the [DNS page][tailscale_dns] of the admin console, you already enabled
+  "Override local DNS", and configured "Global nameservers".
+
+- **Important:** In this scenario, your Home Assistant device's tailnet IP (not
+  LAN IP) **is configured** as global nameserver on the admin console because
+  you want to redirect all DNS queries within your tailnet to the DNS running on
+  this device.
 
 - In the add-on's configuration, disable `accept_dns` option and restart the
   add-on. This will prevent your local Tailscale DNS to accept DNS settings of
