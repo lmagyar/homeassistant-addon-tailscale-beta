@@ -126,10 +126,10 @@ userspace_networking: true
 ```
 
 > [!NOTE]
-> Some of the options also available on Tailscale's web interface through the
-> Web UI, but they are made read only there. You can't change them through the
-> Web UI, because all the changes made there would be lost when the add-on is
-> restarted.
+> Some of the configuration options are also available on Tailscale's web
+> interface through the Web UI, but they are made read only there. You can't
+> change them through the Web UI, because all the changes made there would be
+> lost when the add-on is restarted.
 
 > [!CAUTION]
 > Due to limitations in Home Assistant's UI, **do not use** the "Show unused
