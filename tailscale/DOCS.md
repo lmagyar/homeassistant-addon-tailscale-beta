@@ -95,11 +95,6 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 
 ## Add-on configuration
 
-**Note:** _Some of the options below also available on Tailscale's web interface
-through the Web UI, but they are made read only there. You can't change them
-through the Web UI, because all the changes made there would be lost when the
-add-on is restarted._
-
 ```yaml
 accept_dns: true
 accept_routes: true
@@ -127,6 +122,12 @@ tags:
 taildrop: true
 userspace_networking: true
 ```
+
+> [!NOTE]
+> Some of the options also available on Tailscale's web interface through the
+> Web UI, but they are made read only there. You can't change them through the
+> Web UI, because all the changes made there would be lost when the add-on is
+> restarted.
 
 > [!CAUTION]
 > Due to limitations in Home Assistant's UI, **do not use** the "Show unused
