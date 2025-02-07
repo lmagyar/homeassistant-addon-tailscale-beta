@@ -9,6 +9,7 @@ Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Fix: Warn when there's no default interface on the host to forward incoming tailnet connections to
+  - Update Add-on base image to v17.1.1
 
 ## 0.24.0.2 (forked)
 
