@@ -15,15 +15,18 @@ readonly TAILSCALED_GID=51893
 function remove_dscp() {
   local cmd="$1"
   local ip_version="$2"
+  local dscp
 
-  if ${cmd} -t mangle -S OUTPUT \
-    | grep -Eq "^-A OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp \S+$"
-  then
+  for dscp in $( \
+    ${cmd} -t mangle -S OUTPUT \
+    | { grep -E "^-A OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp \S+$" || true ;} \
+    | sed -nr 's/^.*?--set-dscp\s(\S+)$/\1/p')
+  do
     bashio::log.info "Removing DSCP setting for tailscaled (${ip_version})"
-    if ! ${cmd} -t mangle -D OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp $(bashio::config "dscp"); then
+    if ! ${cmd} -t mangle -D OUTPUT -m owner --gid-owner ${TAILSCALED_GID} -j DSCP --set-dscp ${dscp}; then
       bashio::log.warning "Removing DSCP setting is unsuccessful (${ip_version})"
     fi
-  fi
+  done
 }
 
 remove_dscp "iptables" "IPv4"
