@@ -6,7 +6,7 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.80.0
+>   - Update tailscale/tailscale to v1.80.2
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 >   - Fix MagicDNS incompatibility with Home Assistant
