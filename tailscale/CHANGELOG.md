@@ -10,7 +10,7 @@ Nonbreaking changes:
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Fix: Warn when there's no default interface on the host to forward incoming tailnet connections to
   - Fix: Properly remove DSCP setting from iptables
-  - Update Add-on base image to v17.1.4
+  - Update Add-on base image to v17.1.5
 
 ## 0.24.0.2 (forked)
 
