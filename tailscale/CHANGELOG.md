@@ -1,17 +1,25 @@
 # Changelog
 
+## 0.24.0.3 (forked)
+
+- Fix: Warn when there's no default interface on the host to forward incoming tailnet connections to
+- Fix: Properly remove DSCP setting from iptables
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.80.2
+  - Update Add-on base image to v17.1.5
+
 ## 0.24.0.2 (forked)
 
+- Bugfix previous MagicDNS incompatibility fix (for Headscale users)
 - Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.80.0
-  - Bugfix previous MagicDNS incompatibility fix (for Headscale users)
 
 ## 0.24.0.1 (forked)
 
+- Fix MagicDNS incompatibility with Home Assistant
+- Forward incoming tailnet connections to the host's primary interface
+- Fix MSS clamping for site-to-site networking
 - Merge unreleased changes from community add-on
-  - Fix MagicDNS incompatibility with Home Assistant
-  - Forward incoming tailnet connections to the host's primary interface
-  - Fix MSS clamping for site-to-site networking
   - Update Add-on base image to v17.1.0 (Update Alpine base image to v3.21)
 
 ## 0.23.3.1 (forked)
