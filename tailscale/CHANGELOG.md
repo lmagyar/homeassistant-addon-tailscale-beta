@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.80.2
   - Fix: Warn when there's no default interface on the host to forward incoming tailnet connections to
   - Fix: Properly remove DSCP setting from iptables
   - Update Add-on base image to v17.1.5

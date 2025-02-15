@@ -8,7 +8,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.80.0
+>   - Update tailscale/tailscale to v1.80.2
 >   - Add HEALTHCHECK support
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
