@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from community add-on
+  - Update Add-on base image to v17.2.1
+
 ## 0.24.0.3 (forked)
 
 - Fix: Warn when there's no default interface on the host to forward incoming tailnet connections to
