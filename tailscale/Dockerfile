@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:17.1.5
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:17.2.1
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -10,7 +10,7 @@ ARG BUILD_ARCH=amd64
 ARG TAILSCALE_VERSION="v1.80.2"
 RUN \
     apk add --no-cache \
-        bind-tools=9.18.33-r0 \
+        bind-tools=9.18.34-r0 \
         dnsmasq=2.90-r3 \
         ethtool=6.11-r0 \
         ipcalc=1.0.3-r0 \
