@@ -103,7 +103,6 @@ advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
 dscp: 52
-forward_to_host: true
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -213,31 +212,6 @@ separately from other network traffic.
 
 When not set, this option is disabled by default, i.e. DSCP will be set to the
 default 0.
-
-### Option: `forward_to_host`
-
-Forward incoming tailnet connections to the host's primary interface when
-userspace networking is disabled.
-
-When not set, this option is enabled by default.
-
-When userspace networking is enabled, Tailscale automatically forwards incoming
-tailnet connections to localhost.
-
-When userspace networking is disabled, the add-on can forward incoming tailnet
-connections to Home Assistant's primary host interface. This means you don't
-have to enable subnet routing just to access services on the host from the
-tailnet.
-
-**Note:** Without forwarding, services running only on the interfaces managed by
-Home Assistant (i.e. not on all interfaces), are inaccessible from the tailnet
-when userspace networking is disabled.
-
-**Note:** Tailscale's serve and funnel features have priority over this plain
-port forwarding, those connections won't be forwarded directly to the host.
-
-**Note:** Hairpinning is not implemented, do not test forwarding by accessing
-the host, from itself, through the tailscale0 interface.
 
 ### _Note on the `lets_encrypt` options below_
 
