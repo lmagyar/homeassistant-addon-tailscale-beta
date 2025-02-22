@@ -12,8 +12,8 @@ declare healthcheck_offline_timeout healthcheck_restart_timeout
 options=$(bashio::addon.options)
 
 # Remove unused options
-healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout // empty')
-healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout // empty')
+healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout | select(.!=null)')
+healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout | select(.!=null)')
 if bashio::var.has_value "${healthcheck_offline_timeout}"; then
     bashio::addon.option 'healthcheck_offline_timeout'
 fi
