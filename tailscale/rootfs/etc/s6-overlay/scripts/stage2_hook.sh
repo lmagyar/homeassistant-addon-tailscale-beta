@@ -5,6 +5,19 @@
 # S6 Overlay stage2 hook to customize services
 # ==============================================================================
 
+declare options
+declare forward_to_host
+
+# Load add-on options, even deprecated one to upgrade
+options=$(bashio::addon.options)
+
+# Remove unused options
+forward_to_host=$(bashio::jq "${options}" '.forward_to_host | select(.!=null)')
+if bashio::var.has_value "${forward_to_host}"; then
+    bashio::log.info 'Removing deprecated forward_to_host option'
+    bashio::addon.option 'forward_to_host'
+fi
+
 # Disable dnsmasq service when userspace-networking is enabled or accepting dns is disabled
 if ! bashio::config.has_value "userspace_networking" || \
     bashio::config.true "userspace_networking" || \

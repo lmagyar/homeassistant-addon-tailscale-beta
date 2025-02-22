@@ -1,5 +1,12 @@
 # Changelog
 
+## vNext (forked)
+
+***BREAKING CHANGES:***
+- Remove forward_to_host option, always enabled from now on (because this is removed in the official add-on)
+
+Nonbreaking changes:
+
 ## 0.25.0.2 (forked)
 
 - Merge unreleased changes from community add-on
