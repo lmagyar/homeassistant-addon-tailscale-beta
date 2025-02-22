@@ -74,9 +74,11 @@ fi
 healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout | select(.!=null)')
 healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout | select(.!=null)')
 if bashio::var.has_value "${healthcheck_offline_timeout}"; then
+    bashio::log.info 'Removing deprecated healthcheck_offline_timeout option'
     bashio::addon.option 'healthcheck_offline_timeout'
 fi
 if bashio::var.has_value "${healthcheck_restart_timeout}"; then
+    bashio::log.info 'Removing deprecated healthcheck_restart_timeout option'
     bashio::addon.option 'healthcheck_restart_timeout'
 fi
 
