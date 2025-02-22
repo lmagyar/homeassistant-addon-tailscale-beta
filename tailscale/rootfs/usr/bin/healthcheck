@@ -7,7 +7,6 @@
 # - .BackendState == "Stopped"
 # - if once was online but gets offline for more then HEALTHCHECK_OFFLINE_TIMEOUT seconds
 # - if never gets online for more then HEALTHCHECK_RESTART_TIMEOUT seconds
-#   This can handle internal TS bugs, like https://github.com/tailscale/tailscale/issues/12021 where TS fails to recover from rerouting traffic from normal WAN to failover WAN
 
 # Redirect healthchecks' output to the log
 exec &> /proc/1/fd/1
