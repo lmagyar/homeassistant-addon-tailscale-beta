@@ -4,6 +4,7 @@
 
 ***BREAKING CHANGES:***
 - Remove healthcheck_offline_timeout and healthcheck_restart_timeout options, hardwire 5 minutes and 1 hour (because they are removed in the official add-on)
+- Remove forward_to_host option, always enabled from now on (because this is removed in the official add-on)
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on

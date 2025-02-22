@@ -9,6 +9,7 @@ declare options
 declare proxy funnel proxy_and_funnel_port
 declare share_homeassistant share_on_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
+declare forward_to_host
 
 # This is to execute potentially failing supervisor api functions within conditions,
 # where set -e is not propagated inside the function and bashio relies on set -e for api error handling
@@ -73,6 +74,7 @@ fi
 # Remove unused options
 healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout | select(.!=null)')
 healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout | select(.!=null)')
+forward_to_host=$(bashio::jq "${options}" '.forward_to_host | select(.!=null)')
 if bashio::var.has_value "${healthcheck_offline_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_offline_timeout option'
     bashio::addon.option 'healthcheck_offline_timeout'
@@ -80,6 +82,10 @@ fi
 if bashio::var.has_value "${healthcheck_restart_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_restart_timeout option'
     bashio::addon.option 'healthcheck_restart_timeout'
+fi
+if bashio::var.has_value "${forward_to_host}"; then
+    bashio::log.info 'Removing deprecated forward_to_host option'
+    bashio::addon.option 'forward_to_host'
 fi
 
 # Disable dnsmasq service when userspace-networking is enabled or accepting dns is disabled
