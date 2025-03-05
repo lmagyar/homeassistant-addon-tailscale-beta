@@ -9,6 +9,10 @@
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+
+## 0.25.0.1 (forked)
+
+- Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.80.3
 - Merge released changes from community add-on
   - Update Add-on base image to v17.2.1
