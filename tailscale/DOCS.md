@@ -374,6 +374,9 @@ default HTTPS port 443 (or the port configured in option `share_on_port`).
 **Note:** If you encounter strange browser behaviour or strange error messages,
 try to clear all site related cookies, clear all browser cache, restart browser.
 
+**Note:** If you want to share other services than Home Assistant, see the
+"Sharing other services with serve or funnel" section of this documentation.
+
 ### Option: `share_on_port`
 
 This option allows you to configure the port the Tailscale Serve and Funnel
@@ -521,6 +524,71 @@ The add-on's health is set unhealthy:
 - Once it was online and gets offline for longer than 5 minutes.
 
 - After a (re)start can't get online for longer than 1 hour.
+
+## Sharing other services with serve or funnel
+
+The `share_homeassistant` option allows you to enable Tailscale Serve or Funnel
+features to present your Home Assistant instance.
+
+If you want to share other services than Home Assistant, it can be done, but
+there is no add-on configuration option for this. Maybe Tailscale will add this
+to the web UI in the future.
+
+Requirements:
+
+- You ***can't*** use the same port, that the add-on is using to share Home
+  Assistant (the port that is configured under `share_on_port` option), the
+  reason is that a foreground service is running on this port by the add-on, so
+  you can't reuse this port, you have to use a different port (you can select
+  from 443, 8443, and 10000 in case of funnel, or any port in case of serve).
+
+- You must use the cli to set this up, but the config is permanent, you have to
+  do this only once, it will work after a restart, or even backup/restore.
+
+- Please check, that your other add-ons you want to share are using the host
+  network or expose ports on the host, because you can't use anything else to
+  share with Tailscale, only localhost is allowed.
+
+- Please check, that your other add-ons are accessible through plain http,
+  ***not*** https.
+
+Steps:
+
+1. In the cli (eg. Advanced SSH add-on
+   https://github.com/hassio-addons/addon-ssh) execute: ``docker exec -it
+   `docker ps -q -f name=tailscale` /bin/bash`` Now you are in this add-on's
+   cli.
+
+1. Execute something like `/opt/tailscale funnel --bg --https=8443
+   --set-path=/someservice localhost:1234`
+
+   - `serve` or `funnel`, your choice
+
+   - `--bg` means Tailscale will start up the service in the backgroud, when the
+     add-on is started, and Tailscale remembers this setting
+
+   - `--https:8443` must be different from the add-on's serve/funnel port, or
+     you will get an "foreground already exists under this port" error from
+     Tailscale
+
+   - `--set-path=/someservice` if you plan to share multiple services/ports, you
+     can use different paths for each service
+
+   - `localhost:1234` port 1234 is where your other add-on's service is
+     accessible on the localhost
+
+   - You can disable/delete this config with `/opt/tailscale funnel --bg
+     --https=8443 --set-path=/someservice off`
+
+1. You can add as many different paths as you want.
+
+Result:
+
+- You can access HA at https://devicename.tailxxxx.ts.net (with the help of the
+  `share_homeassistant` option)
+
+- You can access your other service at
+  https://devicename.tailxxxx.ts.net:8443/someservice
 
 ## Support
 
