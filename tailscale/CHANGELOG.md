@@ -2,13 +2,17 @@
 
 ## vNext (forked)
 
+- Merge unreleased changes from community add-on
+  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+
+## 0.25.0.3 (forked)
+
 ***BREAKING CHANGES:***
 - Remove healthcheck_offline_timeout and healthcheck_restart_timeout options, hardwire 5 minutes and 1 hour (because they are removed during review in the official add-on)
 - Remove forward_to_host option, always enabled from now on (because this is removed during review in the official add-on)
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
-  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Update tailscale/tailscale to v1.82.5
   - Update Add-on base image to v17.2.4
 
