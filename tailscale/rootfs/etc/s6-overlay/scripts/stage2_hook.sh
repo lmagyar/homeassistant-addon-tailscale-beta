@@ -7,6 +7,7 @@
 
 declare options
 declare healthcheck_offline_timeout healthcheck_restart_timeout
+declare forward_to_host
 
 # Load add-on options, even deprecated one to upgrade
 options=$(bashio::addon.options)
@@ -14,6 +15,7 @@ options=$(bashio::addon.options)
 # Remove unused options
 healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout | select(.!=null)')
 healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout | select(.!=null)')
+forward_to_host=$(bashio::jq "${options}" '.forward_to_host | select(.!=null)')
 if bashio::var.has_value "${healthcheck_offline_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_offline_timeout option'
     bashio::addon.option 'healthcheck_offline_timeout'
@@ -21,6 +23,10 @@ fi
 if bashio::var.has_value "${healthcheck_restart_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_restart_timeout option'
     bashio::addon.option 'healthcheck_restart_timeout'
+fi
+if bashio::var.has_value "${forward_to_host}"; then
+    bashio::log.info 'Removing deprecated forward_to_host option'
+    bashio::addon.option 'forward_to_host'
 fi
 
 # Disable dnsmasq service when userspace-networking is enabled or accepting dns is disabled
@@ -41,10 +47,9 @@ then
     rm /etc/s6-overlay/s6-rc.d/post-tailscaled/dependencies.d/protect-subnets
 fi
 
-# Disable forwarding service when userspace-networking is enabled or forwarding to host is disabled
+# Disable forwarding service when userspace-networking is enabled
 if ! bashio::config.has_value "userspace_networking" || \
-    bashio::config.true "userspace_networking" || \
-    bashio::config.false "forward_to_host";
+    bashio::config.true "userspace_networking";
 then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/forwarding
 fi
