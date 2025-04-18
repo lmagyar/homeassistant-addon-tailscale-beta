@@ -5,6 +5,24 @@
 # S6 Overlay stage2 hook to customize services
 # ==============================================================================
 
+declare options
+declare healthcheck_offline_timeout healthcheck_restart_timeout
+
+# Load add-on options, even deprecated one to upgrade
+options=$(bashio::addon.options)
+
+# Remove unused options
+healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout | select(.!=null)')
+healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout | select(.!=null)')
+if bashio::var.has_value "${healthcheck_offline_timeout}"; then
+    bashio::log.info 'Removing deprecated healthcheck_offline_timeout option'
+    bashio::addon.option 'healthcheck_offline_timeout'
+fi
+if bashio::var.has_value "${healthcheck_restart_timeout}"; then
+    bashio::log.info 'Removing deprecated healthcheck_restart_timeout option'
+    bashio::addon.option 'healthcheck_restart_timeout'
+fi
+
 # Disable dnsmasq service when userspace-networking is enabled or accepting dns is disabled
 if ! bashio::config.has_value "userspace_networking" || \
     bashio::config.true "userspace_networking" || \

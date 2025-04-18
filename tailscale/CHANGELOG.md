@@ -2,6 +2,10 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Remove healthcheck_offline_timeout and healthcheck_restart_timeout options, hardwire 5 minutes and 1 hour (because they are removed during review in the official add-on)
+
+Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.82.5
   - Update Add-on base image to v17.2.4
