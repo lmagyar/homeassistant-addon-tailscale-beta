@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 ***BREAKING CHANGES:***
-- Remove forward_to_host option, always enabled from now on (because this is removed in the official add-on)
+- Remove forward_to_host option, always enabled from now on (because this is removed during review in the official add-on)
 
 Nonbreaking changes:
 
