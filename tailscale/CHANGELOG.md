@@ -1,10 +1,8 @@
 # Changelog
 
-## vNext (forked)
+## 0.25.0.4 (forked)
 
 - Fix dnsmasq startup race condition (that caused high CPU load)
-- Merge unreleased changes from community add-on
-  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 
 ## 0.25.0.3 (forked)
 
