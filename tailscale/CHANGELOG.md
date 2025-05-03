@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.25.0.4 (forked)
+
+- Fix dnsmasq startup race condition (that caused high CPU load)
+
 ## 0.25.0.3 (forked)
 
 ***BREAKING CHANGES:***
