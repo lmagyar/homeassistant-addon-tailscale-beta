@@ -8,7 +8,7 @@ codenotary: lmagyar1973@gmail.com
 ingress: true
 ingress_port: 0
 ingress_stream: true
-startup: application
+startup: services
 panel_icon: mdi:vpn
 arch:
   - aarch64
