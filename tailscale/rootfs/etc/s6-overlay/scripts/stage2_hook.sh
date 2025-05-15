@@ -34,7 +34,6 @@ if ! bashio::config.has_value "userspace_networking" || \
     bashio::config.true "userspace_networking" || \
     bashio::config.false "accept_dns";
 then
-    rm /etc/s6-overlay/s6-rc.d/user/contents.d/dnsmasq
     rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/dnsmasq
 fi
 
@@ -43,8 +42,13 @@ if ! bashio::config.has_value "userspace_networking" || \
     bashio::config.true "userspace_networking" || \
     bashio::config.false "accept_routes";
 then
-    rm /etc/s6-overlay/s6-rc.d/user/contents.d/protect-subnets
     rm /etc/s6-overlay/s6-rc.d/post-tailscaled/dependencies.d/protect-subnets
+fi
+
+# If advertise_routes is configured, do not wait for the local network to be ready to collect subnet information
+if bashio::config.exists "advertise_routes";
+then
+    rm /etc/s6-overlay/s6-rc.d/post-tailscaled/dependencies.d/local-network
 fi
 
 # Disable forwarding service when userspace-networking is enabled
