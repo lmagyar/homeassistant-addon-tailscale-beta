@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge unreleased changes from community add-on
+  - Update Add-on base image to v17.2.5
+
 ## 0.25.0.4 (forked)
 
 - Fix dnsmasq startup race condition (that caused high CPU load)
