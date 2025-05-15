@@ -5,6 +5,15 @@
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 
+## 0.25.0.5 (forked)
+
+- Fix: Skip DHCP lease renewal if nothing has changed (subnet protection)
+- Fix: Do not fail if local network is down on startup (healthcheck)
+- Merge unreleased changes from community add-on
+  - Wait for local network on startup
+  - Remove duplicated service dependencies
+  - Update Add-on base image to v17.2.5
+
 ## 0.25.0.4 (forked)
 
 - Fix dnsmasq startup race condition (that caused high CPU load)
