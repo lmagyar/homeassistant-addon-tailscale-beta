@@ -4,6 +4,7 @@
 
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+  - Update Add-on base image to v17.2.5
 
 ## 0.25.0.4 (forked)
 
