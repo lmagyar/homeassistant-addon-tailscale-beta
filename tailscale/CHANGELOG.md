@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.25.0.5 (forked)
 
 - Fix: Skip DHCP lease renewal if nothing has changed (subnet protection)
 - Fix: Do not fail if local network is down on startup (healthcheck)
