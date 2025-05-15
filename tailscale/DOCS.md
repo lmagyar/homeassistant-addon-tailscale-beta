@@ -11,6 +11,7 @@
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
+>   - Wait for local network on startup
 >   - Update Add-on base image to v17.2.5
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
