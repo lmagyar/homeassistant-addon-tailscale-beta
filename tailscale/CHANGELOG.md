@@ -20,6 +20,7 @@
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
+  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 
 ## 0.25.0.6 (forked)
@@ -49,7 +50,6 @@ Nonbreaking changes:
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
-  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Update tailscale/tailscale to v1.82.5
   - Update Add-on base image to v17.2.4
 
