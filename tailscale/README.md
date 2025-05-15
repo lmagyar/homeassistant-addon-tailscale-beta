@@ -12,6 +12,7 @@ Zero config VPN for building secure networks.
 >   - Add HEALTHCHECK support
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
+>   - Wait for local network on startup
 >   - Update Add-on base image to v17.2.5
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
