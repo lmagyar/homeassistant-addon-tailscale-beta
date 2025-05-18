@@ -15,6 +15,7 @@ Zero config VPN for building secure networks.
 >   - Update tailscale/tailscale to v1.82.5
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+>   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 >   - Wait for local network on startup
