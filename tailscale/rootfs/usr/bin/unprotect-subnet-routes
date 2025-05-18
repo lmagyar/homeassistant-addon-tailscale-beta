@@ -10,7 +10,7 @@ declare -a routes=()
 declare route family
 
 if bashio::config.false "userspace_networking" && \
-  (! bashio::config.has_value "accept_routes" || bashio::config.true "accept_routes")
+  bashio::config.true "accept_routes"
 then
   if ! [[ "${1-}" =~ ^(|test)$ ]]; then
     echo "Usage: unprotect-subnet-routes [test]" 1>&2
