@@ -14,15 +14,12 @@ declare host_record=
 
 bashio::log.info "Starting dnsmasq..."
 
-# Get hostname if configured
-if bashio::config.has_value "login_server"; then
-  # We have to be able to resolve this address
-  if ! hostname=$(awk -F[/:] '{print $4}' <<<$(bashio::config "login_server")) || \
-    ! bashio::var.has_value "${hostname}"
-  then
-    bashio::log.error "Determining host name from '$(bashio::config "login_server")' has failed"
-    bashio::exit.nok
-  fi
+# We have to be able to determine hostname from this address
+if ! hostname=$(awk -F[/:] '{print $4}' <<<$(bashio::config "login_server")) || \
+  ! bashio::var.has_value "${hostname}"
+then
+  bashio::log.error "Determining host name from '$(bashio::config "login_server")' has failed"
+  bashio::exit.nok
 fi
 
 # Resolve hostname
