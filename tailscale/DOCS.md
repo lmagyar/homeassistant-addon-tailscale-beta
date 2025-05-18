@@ -106,7 +106,7 @@ advertise_connector: true
 advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-dscp: 0
+dscp: 52
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -196,7 +196,8 @@ This option allows you to set DSCP value on all tailscaled originated network
 traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
-This option is disabled by default, i.e. DSCP will be set to the default 0.
+When not set, this option is disabled by default, i.e. DSCP will be set to the
+default 0.
 
 ### _Note on the `lets_encrypt` options below_
 
@@ -231,7 +232,7 @@ has to be specified or omitted together.
 **Note:** The file is stored in the /ssl/ folder, which is the default for Home
 Assistant.
 
-This option is disabled by default.
+When not set, this option is disabled by default.
 
 ### Option: `lets_encrypt_keyfile`
 
@@ -251,7 +252,7 @@ has to be specified or omitted together.
 **Note:** The file is stored in the /ssl/ folder, which is the default for Home
 Assistant.
 
-This option is disabled by default.
+When not set, this option is disabled by default.
 
 ### Option: `log_level`
 
