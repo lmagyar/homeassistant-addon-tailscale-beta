@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.25.0.6 (forked)
 
 - Fix: letsencrypt's api dns resolution for serve certificate generation
 
