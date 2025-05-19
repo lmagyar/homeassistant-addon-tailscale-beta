@@ -6,6 +6,10 @@
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Make all config options mandatory, fill in the default values for previously optional config options
 
+## 0.25.0.6 (forked)
+
+- Fix: letsencrypt's api dns resolution for serve certificate generation
+
 ## 0.25.0.5 (forked)
 
 - Fix: Skip DHCP lease renewal if nothing has changed (subnet protection)
