@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix: letsencrypt's api dns resolution for serve certificate generation
+
 ## 0.25.0.5 (forked)
 
 - Fix: Skip DHCP lease renewal if nothing has changed (subnet protection)
