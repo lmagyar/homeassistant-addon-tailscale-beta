@@ -596,6 +596,15 @@ Result:
 - You can access your other service at
   https://devicename.tailxxxx.ts.net:8443/someservice
 
+**Note:** If your service is not responding at
+https://devicename.tailxxxx.ts.net:8443/someservice url:
+
+- Turn on Inspect view in your browser and check what's going on (errors,
+  network communication, etc.).
+
+- Try `--set-path=/` in the funnel config and try accessing the service at
+https://devicename.tailxxxx.ts.net:8443/.
+
 ## Support
 
 Got questions?
