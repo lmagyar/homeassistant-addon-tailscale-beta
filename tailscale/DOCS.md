@@ -10,7 +10,7 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.82.5
+>   - Update tailscale/tailscale to v1.84.0
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 >   - Make all config options mandatory, fill in the default values for previously optional config options
@@ -573,6 +573,15 @@ Result:
 
 - You can access your other service at
   https://devicename.tailxxxx.ts.net:8443/someservice
+
+**Note:** If your service is not responding at
+https://devicename.tailxxxx.ts.net:8443/someservice url:
+
+- Turn on Inspect view in your browser and check what's going on (errors,
+  network communication, etc.).
+
+- Try `--set-path=/` in the funnel config and try accessing the service at
+https://devicename.tailxxxx.ts.net:8443/.
 
 ## Support
 
