@@ -41,7 +41,7 @@ function get_host_address() {
   local ip_version="${1}"
 
   if ! bashio::var.equals "$(bashio::network.${ip_version}_method)" "disabled"; then
-    for address in "$(bashio::network.${ip_version}_address)"; do
+    for address in $(bashio::network.${ip_version}_address); do
       if get_forwardable_address "${address}"; then
         break
       else
@@ -68,7 +68,7 @@ function setup_forwarding() {
       bashio::log.notice "Forwarding is already set (${ip_version})"
     else
       # Difference compared to Tailscale's docker image: using only -A append, less intrusive than -I insert
-      if ! ${cmd} -t nat -A PREROUTING -d ${from_address} -j DNAT --to-destination ${to_address}; then
+      if ! ${cmd} -t nat -A PREROUTING -d "${from_address}" -j DNAT --to-destination "${to_address}"; then
         bashio::log.warning "Setting up forwarding is unsuccessful (${ip_version})"
       fi
     fi
