@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.25.0.6 (forked)
+
+- Fix: letsencrypt's api dns resolution for serve certificate generation (bugfix in the solution for MagicDNS incompatibility with Home Assistant)
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.84.0
+
 ## 0.25.0.5 (forked)
 
 - Fix: Skip DHCP lease renewal if nothing has changed (subnet protection)

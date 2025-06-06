@@ -38,10 +38,10 @@ function get_forwardable_address() {
 
 # Host's IP addresses, it never fails, but can return empty
 function get_host_address() {
-  local ip_version="$1"
+  local ip_version="${1}"
 
   if ! bashio::var.equals "$(bashio::network.${ip_version}_method)" "disabled"; then
-    for address in "$(bashio::network.${ip_version}_address)"; do
+    for address in $(bashio::network.${ip_version}_address); do
       if get_forwardable_address "${address}"; then
         break
       else
@@ -53,22 +53,22 @@ function get_host_address() {
 
 # In case of non userspace networking, forward incoming tailnet connections to the host's primary interface
 function setup_forwarding() {
-  local cmd="$1"
-  local ip_version="$2"
-  local from_address="$3"
-  local from_address_bits="$4"
-  local to_address="$5"
+  local cmd="${1}"
+  local ip_version="${2}"
+  local address_bits="${3}"
+  local from_address="${4}"
+  local to_address="${5}"
 
   if bashio::var.has_value "${from_address}" && bashio::var.has_value "${to_address}"; then
     bashio::log.info \
       "Forwarding incoming tailnet connections directed to ${from_address} to the host's ${to_address} address (${ip_version})"
     if ${cmd} -t nat -S PREROUTING \
-      | grep -Eq "^-A PREROUTING -d ${from_address}/${from_address_bits} -j DNAT --to-destination ${to_address}$"
+      | grep -Eq "^-A PREROUTING -d ${from_address}/${address_bits} -j DNAT --to-destination ${to_address}$"
     then
       bashio::log.notice "Forwarding is already set (${ip_version})"
     else
       # Difference compared to Tailscale's docker image: using only -A append, less intrusive than -I insert
-      if ! ${cmd} -t nat -A PREROUTING -d ${from_address} -j DNAT --to-destination ${to_address}; then
+      if ! ${cmd} -t nat -A PREROUTING -d "${from_address}" -j DNAT --to-destination "${to_address}"; then
         bashio::log.warning "Setting up forwarding is unsuccessful (${ip_version})"
       fi
     fi
@@ -92,6 +92,6 @@ else
   to_address_ipv4=$(get_host_address "ipv4")
   to_address_ipv6=$(get_host_address "ipv6")
 
-  setup_forwarding "iptables" "IPv4" "${from_address_ipv4}" "32" "${to_address_ipv4}"
-  setup_forwarding "ip6tables" "IPv6" "${from_address_ipv6}" "128" "${to_address_ipv6}"
+  setup_forwarding "iptables" "IPv4" "32" "${from_address_ipv4}" "${to_address_ipv4}"
+  setup_forwarding "ip6tables" "IPv6" "128" "${from_address_ipv6}" "${to_address_ipv6}"
 fi
