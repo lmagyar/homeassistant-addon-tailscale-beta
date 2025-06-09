@@ -401,9 +401,9 @@ More information: [Tags][tailscale_info_tags]
 
 ### Option: `taildrop`
 
-This add-on support [Tailscale's Taildrop][taildrop] feature, which allows
-you to send files to your Home Assistant instance from other Tailscale
-devices.
+This add-on supports [Tailscale's Taildrop][tailscale_info_taildrop] feature,
+which allows you to send files to your Home Assistant instance from other
+Tailscale devices.
 
 This option is enabled by default.
 
@@ -597,7 +597,6 @@ You could also [open an issue here][issue] on GitHub.
 [http_integration]: https://www.home-assistant.io/integrations/http/
 [issue]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
 [reddit]: https://reddit.com/r/homeassistant
-[taildrop]: https://tailscale.com/taildrop
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
 [tailscale_acls]: https://login.tailscale.com/admin/acls
@@ -616,5 +615,6 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site
 [tailscale_info_subnets]: https://tailscale.com/kb/1019/subnets
 [tailscale_info_tags]: https://tailscale.com/kb/1068/tags
+[tailscale_info_taildrop]: https://tailscale.com/kb/1106/taildrop
 [tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking
 [tailscale_machines]: https://login.tailscale.com/admin/machines
