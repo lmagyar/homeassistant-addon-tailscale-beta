@@ -5,6 +5,7 @@
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Make all config options mandatory, fill in the default values for previously optional config options
+  - Add support for Taildrive
 
 ## 0.25.0.6 (forked)
 
