@@ -6,6 +6,17 @@
 
 Zero config VPN for building secure networks.
 
+> [!CAUTION]
+> Due to a Tailscale bug
+> ([#15065](https://github.com/tailscale/tailscale/issues/15065)), when you try
+> to log in to your tailnet, you will receive a "Failed to login" error message.
+>
+> Workaround: see the add-on's log, there is a line:
+> ```
+> To authenticate, visit:
+> 	https://login.tailscale.com/a/xxxxxxxxxxxxxxxx
+> ```
+
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
