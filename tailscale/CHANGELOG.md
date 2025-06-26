@@ -20,6 +20,7 @@
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
+  - Make exit-node configurable
   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 
 ## 0.25.0.6 (forked)
