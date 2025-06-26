@@ -126,6 +126,7 @@ advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
 dscp: 52
+exit_node: 100.101.102.103
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -185,6 +186,10 @@ More information: [Exit nodes][tailscale_info_exit_nodes]
 
 This option is enabled by default.
 
+**Note:** You can't advertise this device as an exit node and at the same time
+specify an exit node to use. See also the "Option: `exit_node`" section of this
+documentation.
+
 ### Option: `advertise_connector`
 
 This option allows you to advertise this Tailscale instance as an app connector.
@@ -225,6 +230,27 @@ separately from other network traffic.
 
 When not set, this option is disabled by default, i.e. DSCP will be set to the
 default 0.
+
+### Option: `exit_node`
+
+This option allows you to specify another Tailscale instance as an exit node for
+this device.
+
+By setting a device on your network as an exit node, you can use it to
+route all your public internet traffic as needed, like a consumer VPN.
+
+More information: [Exit nodes][tailscale_info_exit_nodes]
+
+This option is unused by default. To make it visible on the configuration
+editor, click "Show unused optional configuration options" at the bottom of the
+page.
+
+**Note:** You can't advertise this device as an exit node and at the same time
+specify an exit node to use. See also the "Option: `advertise_exit_node`"
+section of this documentation.
+
+**Note:** The `exit-node-allow-lan-access` option is always enabled when an exit
+node is specified. This is required by the Home Assistant environment.
 
 ### _Note on the `lets_encrypt` options below_
 
