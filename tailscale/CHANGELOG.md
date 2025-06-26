@@ -1,5 +1,20 @@
 # Changelog
 
+## vNext (forked)
+
+***BREAKING CHANGES:***
+- Fix DNS documentation
+- Check DNS configuration
+
+  Before upgrade :
+  1. Check that under **Settings** -> **System** -> **Network** Tailscale's DNS is
+     ***not*** configured as DNS server.
+  1. In the command line execute `ha dns options --servers dns://100.100.100.100`.
+
+  This is required for the Supervisor to not lose name resolution and network connectivity.
+
+Nonbreaking changes:
+
 ## 0.25.0.6 (forked)
 
 - Fix: letsencrypt's api dns resolution for serve certificate generation (bugfix in the solution for MagicDNS incompatibility with Home Assistant)
