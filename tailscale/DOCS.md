@@ -582,7 +582,7 @@ to the web UI in the future.
 
 Requirements:
 
-- You ***can't*** use the same port, that the add-on is using to share Home
+- You **_can't_** use the same port, that the add-on is using to share Home
   Assistant (the port that is configured under `share_on_port` option), the
   reason is that a foreground service is running on this port by the add-on, so
   you can't reuse this port, you have to use a different port (you can select
@@ -596,7 +596,7 @@ Requirements:
   share with Tailscale, only localhost is allowed.
 
 - Please check, that your other add-ons are accessible through plain http,
-  ***not*** https.
+  **_not_** https.
 
 Steps:
 
