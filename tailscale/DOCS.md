@@ -30,7 +30,7 @@
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 >   - Wait for local network on startup
->   - Update Add-on base image to v17.2.5
+>   - Update Add-on base image to v18.0.0 (Update Alpine base image to v3.22.0)
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
@@ -647,7 +647,7 @@ https://devicename.tailxxxx.ts.net:8443/someservice url:
   network communication, etc.).
 
 - Try `--set-path=/` in the funnel config and try accessing the service at
-https://devicename.tailxxxx.ts.net:8443/.
+  https://devicename.tailxxxx.ts.net:8443/.
 
 ## Support
 
