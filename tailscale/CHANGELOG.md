@@ -14,6 +14,8 @@
   This is required for the Supervisor to not lose name resolution and network connectivity.
 
 Nonbreaking changes:
+- Merge unreleased changes from community add-on
+  - Update Add-on base image to v18.0.0 (Update Alpine base image to v3.22.0)
 
 ## 0.25.0.6 (forked)
 
