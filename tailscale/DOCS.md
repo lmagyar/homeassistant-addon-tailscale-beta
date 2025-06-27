@@ -643,7 +643,7 @@ https://devicename.tailxxxx.ts.net:8443/someservice url:
   network communication, etc.).
 
 - Try `--set-path=/` in the funnel config and try accessing the service at
-https://devicename.tailxxxx.ts.net:8443/.
+  https://devicename.tailxxxx.ts.net:8443/.
 
 ## Support
 
