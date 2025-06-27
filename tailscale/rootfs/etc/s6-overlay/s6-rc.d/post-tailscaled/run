@@ -30,11 +30,28 @@ else
   options+=(--accept-routes=false)
 fi
 
+# Check exit node configuration
+if bashio::config.true "advertise_exit_node" && \
+  bashio::config.has_value "exit_node"
+then
+  bashio::exit.nok "You can't advertise this device as an exit node and at the same time specify an exit node to use"
+fi
+
 # Advertise as exit node when explicitly enabled
 if bashio::config.true "advertise_exit_node"; then
   options+=(--advertise-exit-node)
 else
   options+=(--advertise-exit-node=false)
+fi
+
+# Use exit node when explicitly defined
+if bashio::config.has_value "exit_node"; then
+  options+=(--exit-node=$(bashio::config "exit_node"))
+  # The exit-node-allow-lan-access=true is required to access the internal hassio and docker networks also, even when exit node is specified
+  options+=(--exit-node-allow-lan-access=true)
+else
+  options+=(--exit-node=)
+  options+=(--exit-node-allow-lan-access=false)
 fi
 
 # Advertise app connector when explicitly enabled

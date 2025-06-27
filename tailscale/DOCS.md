@@ -26,6 +26,7 @@
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
+>   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 >   - Wait for local network on startup
@@ -130,6 +131,7 @@ advertise_routes:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
 dscp: 52
+exit_node: 100.101.102.103
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -189,6 +191,10 @@ More information: [Exit nodes][tailscale_info_exit_nodes]
 
 This option is enabled by default.
 
+**Note:** You can't advertise this device as an exit node and at the same time
+specify an exit node to use. See also the "Option: `exit_node`" section of this
+documentation.
+
 ### Option: `advertise_connector`
 
 This option allows you to advertise this Tailscale instance as an app connector.
@@ -229,6 +235,27 @@ separately from other network traffic.
 
 When not set, this option is disabled by default, i.e. DSCP will be set to the
 default 0.
+
+### Option: `exit_node`
+
+This option allows you to specify another Tailscale instance as an exit node for
+this device.
+
+By setting a device on your network as an exit node, you can use it to
+route all your public internet traffic as needed, like a consumer VPN.
+
+More information: [Exit nodes][tailscale_info_exit_nodes]
+
+This option is unused by default. To make it visible on the configuration
+editor, click "Show unused optional configuration options" at the bottom of the
+page.
+
+**Note:** You can't advertise this device as an exit node and at the same time
+specify an exit node to use. See also the "Option: `advertise_exit_node`"
+section of this documentation.
+
+**Note:** The `exit-node-allow-lan-access` option is always enabled when an exit
+node is specified. This is required by the Home Assistant environment.
 
 ### _Note on the `lets_encrypt` options below_
 
@@ -514,11 +541,10 @@ Pi-hole from anywhere][tailscale_info_pi_hole]
 
 1. Check that the `userspace_networking` option is disabled.
 
-1. Under **Settings** -> **System** -> **Network** configure Tailscale's DNS as
-   the first DNS server (IPv4: 100.100.100.100, IPv6: fd7a:115c:a1e0::53).
+1. In the command line execute `ha dns options --servers dns://100.100.100.100`.
 
-1. Move your normal DNS servers (e.g. 192.168.1.1 or 1.1.1.1) to lower
-   positions.
+1. Check that under **Settings** -> **System** -> **Network** Tailscale's DNS is
+   ***not*** configured as DNS server.
 
 **Note:** The only difference compared to the general Tailscale experience, is
 that you always have to use the fully qualified domain name instead of only the

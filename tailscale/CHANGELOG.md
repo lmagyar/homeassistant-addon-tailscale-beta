@@ -2,10 +2,23 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Fix DNS documentation
+- Check DNS configuration
+
+  Before upgrade :
+  1. Check that under **Settings** -> **System** -> **Network** Tailscale's DNS is
+     ***not*** configured as DNS server.
+  1. In the command line execute `ha dns options --servers dns://100.100.100.100`.
+
+  This is required for the Supervisor to not lose name resolution and network connectivity.
+
+Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Make all config options mandatory, fill in the default values for previously optional config options
   - Add support for Taildrive
+  - Make exit-node configurable
 
 ## 0.25.0.6 (forked)
 
