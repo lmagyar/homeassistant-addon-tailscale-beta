@@ -165,7 +165,8 @@ userspace_networking: true
 
 This option allows you to accept the DNS settings of your tailnet that are
 configured on the [DNS page][tailscale_dns] of the admin console. When disabled,
-Tailscale's DNS resolves only tailnet addresses
+Tailscale's DNS resolves only tailnet addresses, no global nameservers from the
+admin console are applied.
 
 For more information, see the "DNS" section of this documentation.
 
@@ -492,8 +493,8 @@ If you need to access other clients on your tailnet from your Home Assistant
 instance, disable userspace networking mode, which will create a `tailscale0`
 network interface on your host.
 
-To be able to address other clients on your tailnet not only with their tailnet
-IP, but with their tailnet name, see the "DNS" section of this documentation.
+To be able to address other clients on your tailnet not only by their tailnet IP
+but also by their tailnet name, see the "DNS" section of this documentation.
 
 If you want to access other clients on your tailnet even from your local subnet,
 follow steps in the [Site-to-site networking][tailscale_info_site_to_site] guide
@@ -535,16 +536,22 @@ When the `userspace_networking` option is disabled, Tailscale provides a DNS (at
 100.100.100.100) to be able to address other clients on your tailnet not only
 with their tailnet IP, but with their tailnet name.
 
-More information: [What is 100.100.100.100][tailscale_info_quad100], [DNS in
-Tailscale][tailscale_info_dns], [MagicDNS][tailscale_info_magicdns], [Access a
-Pi-hole from anywhere][tailscale_info_pi_hole]
+More information: [What is 100.100.100.100][tailscale_info_quad100],
+[DNS in Tailscale][tailscale_info_dns], [MagicDNS][tailscale_info_magicdns],
+[Access a Pi-hole from anywhere][tailscale_info_pi_hole].
 
 1. Check that the `userspace_networking` option is disabled.
 
-1. In the command line execute `ha dns options --servers dns://100.100.100.100`.
+1. In the command line, execute `ha dns options --servers
+   dns://100.100.100.100`.
+
+   **Note:** _This command replaces the existing DNS server list in Home
+   Assistant and restarts the internal DNS server. To specify an empty DNS list
+   (i.e. to remove `dns://100.100.100.100` from the list), you must use `ha dns
+   reset` and `ha dns restart` commands both._
 
 1. Check that under **Settings** -> **System** -> **Network** Tailscale's DNS is
-   ***not*** configured as DNS server.
+   **_not_** configured as a DNS server.
 
 **Note:** The only difference compared to the general Tailscale experience, is
 that you always have to use the fully qualified domain name instead of only the
@@ -555,8 +562,8 @@ some-tailnet-device` does not work.
 device also, and this device is configured as global nameserver on the [DNS
 page][tailscale_dns] of the admin console, then:
 
-1. Disable the `accept_dns` option to prevent the Tailscale DNS to redirect
-   queries from your device back to your device, causing a loop.
+1. Disable the `accept_dns` option to prevent the Tailscale DNS from redirecting
+   queries from your device back to itself, which would cause a loop.
 
 1. Configure your DNS for Home Assistant, and in your DNS configure Tailscale
    DNS for your tailnet domain as upstream DNS server (e.g. in case of AdGuard
@@ -586,7 +593,7 @@ to the web UI in the future.
 
 Requirements:
 
-- You ***can't*** use the same port, that the add-on is using to share Home
+- You **_can't_** use the same port, that the add-on is using to share Home
   Assistant (the port that is configured under `share_on_port` option), the
   reason is that a foreground service is running on this port by the add-on, so
   you can't reuse this port, you have to use a different port (you can select
@@ -600,7 +607,7 @@ Requirements:
   share with Tailscale, only localhost is allowed.
 
 - Please check, that your other add-ons are accessible through plain http,
-  ***not*** https.
+  **_not_** https.
 
 Steps:
 
