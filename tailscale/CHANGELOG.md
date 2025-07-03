@@ -19,7 +19,7 @@ Nonbreaking changes:
   - Make all config options mandatory, fill in the default values for previously optional config options
   - Add support for Taildrive
   - Make exit-node configurable
-  - Update Add-on base image to v18.0.0 (Update Alpine base image to v3.22.0)
+  - Update Add-on base image to v18.0.2 (Update Alpine base image to v3.22.0)
 
 ## 0.25.0.6 (forked)
 
