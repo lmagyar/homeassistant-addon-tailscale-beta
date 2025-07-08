@@ -77,16 +77,17 @@ configuration:
     name: Share Home Assistant with Serve or Funnel
     description: >-
       This option allows you to enable Tailscale Serve or Funnel features to present
-      your Home Assistant instance with a valid certificate on your tailnet or
+      your Home Assistant instance with a valid certificate on your tailnet or on the
       internet.
       This option is disabled by default.
   share_on_port:
     name: Share on port
     description: >-
-      This option allows you to configure the port the Tailscale Serve and Funnel
-      features are accessible on the tailnet and internet.
-      Only port number 443, 8443 and 10000 is allowed by Tailscale.
-      Port number 443 is used by default.
+      This option lets you specify which port the Tailscale Serve and Funnel features
+      will use to present your Home Assistant instance on the tailnet and on the
+      internet.
+      Only ports 443, 8443, and 10000 are allowed by Tailscale.
+      Port 443 is used by default.
   snat_subnet_routes:
     name: Source NAT subnet routes
     description: >-

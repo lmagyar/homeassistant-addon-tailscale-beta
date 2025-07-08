@@ -30,7 +30,7 @@
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 >   - Wait for local network on startup
->   - Update Add-on base image to v18.0.0 (Update Alpine base image to v3.22.0)
+>   - Update Add-on base image to v18.0.2 (Update Alpine base image to v3.22.0)
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
@@ -346,7 +346,7 @@ own Tailscale control server, for example, a self-hosted [Headscale] instance.
 ### Option: `share_homeassistant`
 
 This option allows you to enable Tailscale Serve or Funnel features to present
-your Home Assistant instance with a valid certificate on your tailnet or
+your Home Assistant instance with a valid certificate on your tailnet or on the
 internet.
 
 This option is disabled by default.
@@ -371,8 +371,8 @@ Tailscale VPN client** (for example, on general phones, tablets, and laptops).
 **Client** &#8658; _Internet_ &#8658; **Tailscale Funnel** (TCP proxy) &#8658;
 _VPN_ &#8658; **Tailscale Serve** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 
-More information: [Enabling HTTPS][tailscale_info_https], [Tailscale
-Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel]
+More information: [Enabling HTTPS][tailscale_info_https],
+[Tailscale Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel].
 
 1. Configure Home Assistant to be accessible through an HTTP connection (this is
    the default). See [HTTP integration documentation][http_integration] for more
@@ -391,7 +391,6 @@ Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel]
    ```
 
 1. Navigate to the [DNS page][tailscale_dns] of the admin console:
-
    - Choose a tailnet name.
 
    - Enable MagicDNS if not already enabled.
@@ -400,7 +399,6 @@ Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel]
 
 1. Optionally, if you want to use Tailscale Funnel, navigate to the [Access
    controls page][tailscale_acls] of the admin console:
-
    - Add the required `funnel` node attribute to the tailnet policy file. See
      [Tailnet policy file requirement][tailscale_info_funnel_policy_requirement]
      for more information.
@@ -415,19 +413,21 @@ previously to access Home Assistant. Tailscale Serve and Funnel works on the
 default HTTPS port 443 (or the port configured in option `share_on_port`).
 
 **Note:** If you encounter strange browser behaviour or strange error messages,
-try to clear all site related cookies, clear all browser cache, restart browser.
+try to clear all site-related cookies, clear all browser cache, and restart the
+browser.
 
 **Note:** If you want to share other services than Home Assistant, see the
 "Sharing other services with serve or funnel" section of this documentation.
 
 ### Option: `share_on_port`
 
-This option allows you to configure the port the Tailscale Serve and Funnel
-features are accessible on the tailnet and internet.
+This option lets you specify which port the Tailscale Serve and Funnel features
+will use to present your Home Assistant instance on the tailnet and on the
+internet.
 
-Only port number 443, 8443 and 10000 is allowed by Tailscale.
+Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
-Port number 443 is used by default.
+Port 443 is used by default.
 
 ### Option: `snat_subnet_routes`
 
@@ -533,8 +533,8 @@ When not set, an automatically selected port is used by default.
 ## DNS
 
 When the `userspace_networking` option is disabled, Tailscale provides a DNS (at
-100.100.100.100) to be able to address other clients on your tailnet not only
-with their tailnet IP, but with their tailnet name.
+100.100.100.100 and fd7a:115c:a1e0::53) to be able to address other clients on
+your tailnet not only by their tailnet IP but also by their tailnet name.
 
 More information: [What is 100.100.100.100][tailscale_info_quad100],
 [DNS in Tailscale][tailscale_info_dns], [MagicDNS][tailscale_info_magicdns],
@@ -542,13 +542,12 @@ More information: [What is 100.100.100.100][tailscale_info_quad100],
 
 1. Check that the `userspace_networking` option is disabled.
 
-1. In the command line, execute `ha dns options --servers
-   dns://100.100.100.100`.
+1. In the command line, execute `ha dns options --servers dns://100.100.100.100`.
 
    **Note:** _This command replaces the existing DNS server list in Home
    Assistant and restarts the internal DNS server. To specify an empty DNS list
-   (i.e. to remove `dns://100.100.100.100` from the list), you must use `ha dns
-   reset` and `ha dns restart` commands both._
+   (i.e. to remove `dns://100.100.100.100` from the list), you must use
+   `ha dns reset` and `ha dns restart` commands both._
 
 1. Check that under **Settings** -> **System** -> **Network** Tailscale's DNS is
    **_not_** configured as a DNS server.
