@@ -11,6 +11,11 @@
      ***not*** configured as DNS server.
   1. In the command line execute `ha dns options --servers dns://100.100.100.100`.
 
+     **Note:** _This command replaces the existing DNS server list in Home
+     Assistant and restarts the internal DNS server. To specify an empty DNS list
+     (i.e. to remove `dns://100.100.100.100` from the list), you must use
+     `ha dns reset` and `ha dns restart` commands both._
+
   This is required for the Supervisor to not lose name resolution and network connectivity.
 
 Nonbreaking changes:
