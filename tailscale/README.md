@@ -28,7 +28,7 @@ Zero config VPN for building secure networks.
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 >   - Wait for local network on startup
->   - Update Add-on base image to v18.0.2 (Update Alpine base image to v3.22.0)
+>   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
