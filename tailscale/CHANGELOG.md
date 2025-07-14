@@ -14,7 +14,9 @@
      **Note:** _This command replaces the existing DNS server list in Home
      Assistant and restarts the internal DNS server. To specify an empty DNS list
      (i.e. to remove `dns://100.100.100.100` from the list), you must use
-     `ha dns reset` and `ha dns restart` commands both._
+     `ha dns reset` and `ha dns restart` commands both. This server list is
+     additional and queried before the DNS servers specified in Network settings
+     above._
 
   This is required for the Supervisor to not lose name resolution and network connectivity.
 
