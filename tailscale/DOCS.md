@@ -4,17 +4,6 @@
 
 # Home Assistant Custom Add-on: Tailscale with features
 
-> [!CAUTION]
-> Due to a Tailscale bug
-> ([#15065](https://github.com/tailscale/tailscale/issues/15065)), when you try
-> to log in to your tailnet, you will receive a "Failed to login" error message.
->
-> Workaround: see the add-on's log, there is a line:
-> ```
-> To authenticate, visit:
-> 	https://login.tailscale.com/a/xxxxxxxxxxxxxxxx
-> ```
-
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community add-on][community_addon]!
@@ -80,17 +69,6 @@ however, it is nice to know where you need to go later on.
 
    **Note:** _Some browsers don't work with this step. It is recommended to
    complete this step on a desktop or laptop computer using the Chrome browser._
-
-> [!CAUTION]
-> Due to a Tailscale bug
-> ([#15065](https://github.com/tailscale/tailscale/issues/15065)), when you try
-> to log in to your tailnet, you will receive a "Failed to login" error message.
->
-> Workaround: see the add-on's log, there is a line:
-> ```
-> To authenticate, visit:
-> 	https://login.tailscale.com/a/xxxxxxxxxxxxxxxx
-> ```
 
 1. Check the logs of the "Tailscale with features" add-on again to see if
    everything went well.
