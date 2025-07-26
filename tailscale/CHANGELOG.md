@@ -22,6 +22,7 @@
 
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.86.0
   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 
 ## 0.25.0.6 (forked)
