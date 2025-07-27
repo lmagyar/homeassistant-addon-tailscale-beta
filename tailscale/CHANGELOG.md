@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix Taildrive breaking startup
+
 ## 0.25.0.8 (forked)
 
 - Fix config migration script (merge proxy and funnel options into share_homeassistant)
