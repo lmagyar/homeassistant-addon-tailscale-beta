@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Make Tailscale SSH configurable
+
 ## 0.25.0.9 (forked)
 
 - Fix Taildrive breaking startup

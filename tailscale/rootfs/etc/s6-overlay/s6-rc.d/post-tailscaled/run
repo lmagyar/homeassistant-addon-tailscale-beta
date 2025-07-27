@@ -65,6 +65,13 @@ fi
 login_server=$(bashio::config "login_server")
 options+=(--login-server="${login_server}")
 
+# Enable ssh when explicitly enabled
+if bashio::config.true "ssh"; then
+  options+=(--ssh)
+else
+  options+=(--ssh=false)
+fi
+
 # Enable stateful filtering when explicitly enabled
 if bashio::config.true "stateful_filtering"; then
   options+=(--stateful-filtering)
