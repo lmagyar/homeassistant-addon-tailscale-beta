@@ -15,8 +15,7 @@ declare cp_log
 if ! /opt/tailscale status --self=true --peers=false --json \
   | jq -rce '.Self.CapMap | has("https")' > /dev/null;
 then
-  bashio::log.error "Tailscale's HTTPS support is disabled"
-  bashio::exit.nok
+  bashio::exit.nok "Tailscale's HTTPS support is disabled"
 fi
 
 domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertDomains[0]")

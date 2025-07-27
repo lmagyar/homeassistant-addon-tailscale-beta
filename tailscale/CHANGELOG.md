@@ -1,5 +1,30 @@
 # Changelog
 
+## vNext (forked)
+
+***BREAKING CHANGES:***
+- Fix DNS documentation
+- Check DNS configuration
+
+  Before upgrade :
+  1. Check that under **Settings** -> **System** -> **Network** Tailscale's DNS is
+     ***not*** configured as DNS server.
+  1. In the command line execute `ha dns options --servers dns://100.100.100.100`.
+
+     **Note:** _This command replaces the existing DNS server list in Home
+     Assistant and restarts the internal DNS server. To specify an empty DNS list
+     (i.e. to remove `dns://100.100.100.100` from the list), you must use
+     `ha dns reset` and `ha dns restart` commands both. This server list is
+     additional and queried before the DNS servers specified in Network settings
+     above._
+
+  This is required for the Supervisor to not lose name resolution and network connectivity.
+
+Nonbreaking changes:
+- Merge unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.86.0
+  - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
+
 ## 0.25.0.6 (forked)
 
 - Fix: letsencrypt's api dns resolution for serve certificate generation (bugfix in the solution for MagicDNS incompatibility with Home Assistant)
