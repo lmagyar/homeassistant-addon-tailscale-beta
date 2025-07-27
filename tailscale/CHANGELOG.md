@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.25.0.10 (forked)
 
 - Make Tailscale SSH configurable
 
