@@ -21,6 +21,7 @@ Zero config VPN for building secure networks.
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.86.0
 >   - Add HEALTHCHECK support
+>   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
 >   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
@@ -29,7 +30,7 @@ Zero config VPN for building secure networks.
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
->   - Optionally copy Tailscale Proxy's certificate files to /ssl folder
+>   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
 

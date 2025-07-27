@@ -23,6 +23,7 @@
 Nonbreaking changes:
 - Merge unreleased changes from community add-on
   - Update tailscale/tailscale to v1.86.0
+  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
   - Make exit-node configurable
   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 
