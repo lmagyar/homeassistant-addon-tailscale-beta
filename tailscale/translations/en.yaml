@@ -42,6 +42,14 @@ configuration:
       separately from other network traffic.
       When not set, this option is disabled by default, ie. DSCP will be set to the
       default 0.
+  exit_node:
+    name: Use exit node
+    description: >-
+      This option allows you to specify another Tailscale instance as an exit node for
+      this device.
+      By setting a device on your network as an exit node, you can use it to
+      route all your public internet traffic as needed, like a consumer VPN.
+      This option is unused by default.
   funnel:
     name: Tailscale Funnel
     description: >-

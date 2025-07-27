@@ -21,6 +21,7 @@ Zero config VPN for building secure networks.
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.86.0
 >   - Add HEALTHCHECK support
+>   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 >   - Wait for local network on startup
