@@ -20,6 +20,7 @@
 >   - Update tailscale/tailscale to v1.86.0
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+>   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
@@ -91,21 +92,18 @@ however, it is nice to know where you need to go later on.
 
 ## Configuration
 
-This add-on has almost no additional configuration options for the
-add-on itself.
-
-However, when logging in to Tailscale, you can configure your Tailscale
-network right from their interface.
-
-<https://login.tailscale.com/>
-
-The add-on exposes "Exit Node" capabilities that you can enable from your
-Tailscale account. Additionally, if the Supervisor managed your network (which
-is the default), the add-on will also advertise routes to your subnets on all
-supported interfaces to Tailscale.
+The add-on by default exposes "Exit Node" capabilities that you can enable from
+your Tailscale account. Additionally, if the Supervisor managed your network
+(which is the default), the add-on will also advertise routes to your subnets on
+all supported interfaces to Tailscale.
 
 Consider disabling key expiry to avoid losing connection to your Home Assistant
 device. See [Key expiry][tailscale_info_key_expiry] for more information.
+
+Logging in to Tailscale, you can configure your Tailscale network right from
+their interface.
+
+<https://login.tailscale.com/>
 
 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
    find your Home Assistant instance.
@@ -150,25 +148,6 @@ userspace_networking: true
 > change them through the Web UI, because all the changes made there would be
 > lost when the add-on is restarted.
 
-> [!CAUTION]
-> Due to limitations in Home Assistant's UI, **do not use** the "Show unused
-> optional configuration options" switch on the Configuration tab!
-
-> [!CAUTION]
-> When you want to change the default behaviour of these optional configuration
-> options, **add them to the YAML add-on configuration manually**, by using the
-> "Edit in YAML" in the ... menu on the right and save them! Use the UI to edit
-> them only after you added them manually!
-
-> [!WARNING]
-> Home Assistant's UI will show you all the optional configuration options
-> turned off instead of grayed out. You will falsely believe that those are the
-> values that will be stored, so you will enable options, that by default are
-> already enabled when unused, and you will let options be disabled, that you
-> originally wanted to disable. But the **UI will not add these disabled
-> optional configuration options** to the YAML add-on configuration, and at the
-> end nothing will change in the add-on's functionality after a restart!
-
 ### Option: `accept_dns`
 
 This option allows you to accept the DNS settings of your tailnet that are
@@ -178,7 +157,7 @@ admin console are applied.
 
 For more information, see the "DNS" section of this documentation.
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 ### Option: `accept_routes`
 
@@ -187,7 +166,7 @@ your tailnet.
 
 More information: [Subnet routers][tailscale_info_subnets]
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 ### Option: `advertise_exit_node`
 
@@ -198,7 +177,7 @@ route all your public internet traffic as needed, like a consumer VPN.
 
 More information: [Exit nodes][tailscale_info_exit_nodes]
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 **Note:** You can't advertise this device as an exit node and at the same time
 specify an exit node to use. See also the "Option: `exit_node`" section of this
@@ -218,7 +197,7 @@ all nodes on the tailnet will use that IP address for their traffic egress.
 
 More information: [App connectors][tailscale_info_app_connectors]
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 ### Option: `advertise_routes`
 
@@ -233,8 +212,8 @@ If you want to disable this option, specify an empty list in the configuration
 
 More information: [Subnet routers][tailscale_info_subnets]
 
-When not set, the add-on by default will advertise routes to your subnets on all
-supported interfaces.
+The add-on by default will advertise routes to your subnets on all supported
+interfaces by adding `local_subnets` to the list.
 
 ### Option: `dscp`
 
@@ -357,7 +336,7 @@ This option allows you to enable Tailscale Serve or Funnel features to present
 your Home Assistant instance with a valid certificate on your tailnet or on the
 internet.
 
-When not set, this option is disabled by default.
+This option is disabled by default.
 
 Tailscale can provide a TLS certificate for your Home Assistant instance within
 your tailnet domain.
@@ -435,14 +414,14 @@ internet.
 
 Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
-When not set, port 443 is used by default.
+Port 443 is used by default.
 
 ### Option: `snat_subnet_routes`
 
 This option allows subnet devices to see the traffic originating from the subnet
 router, and this simplifies routing configuration.
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 To support advanced [Site-to-site networking][tailscale_info_site_to_site] (e.g.
 to traverse multiple networks), you can disable this functionality, and follow
@@ -461,7 +440,7 @@ nodes, subnet routers, and app connectors), to only allow return packets for
 existing outbound connections. Inbound packets that don't belong to an existing
 connection are dropped.
 
-When not set, this option is disabled by default.
+This option is disabled by default.
 
 ### Option: `tags`
 
@@ -476,7 +455,7 @@ This add-on supports [Tailscale's Taildrop][tailscale_info_taildrop] feature,
 which allows you to send files to your Home Assistant instance from other
 Tailscale devices.
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 Received files are stored in the `/share/taildrop` directory.
 
@@ -486,7 +465,7 @@ The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
 to make your Home Assistant instance (and optionally the local subnets)
 accessible within your tailnet.
 
-When not set, this option is enabled by default.
+This option is enabled by default.
 
 If you need to access other clients on your tailnet from your Home Assistant
 instance, disable userspace networking mode, which will create a `tailscale0`
