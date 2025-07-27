@@ -119,7 +119,7 @@ login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
 snat_subnet_routes: true
-ssh: true
+ssh: false
 stateful_filtering: false
 tags:
   - tag:example
@@ -439,7 +439,7 @@ Tailscale account.
 
 More information: [Tailscale SSH][tailscale_info_ssh]
 
-This option is enabled by default.
+This option is disabled by default.
 
 **Note**: Using Tailscale SSH you will access only this add-on's command line,
 **_not_** eg. the Advanced SSH add-on's command line!

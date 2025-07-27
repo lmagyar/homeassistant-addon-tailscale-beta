@@ -101,7 +101,7 @@ configuration:
     description: >-
       This option allows you to expose SSH capabilities that you can enable from your
       Tailscale account.
-      This option is enabled by default.
+      This option is disabled by default.
   stateful_filtering:
     name: Stateful packet filtering
     description: >-

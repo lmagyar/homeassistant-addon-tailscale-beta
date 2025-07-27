@@ -1,6 +1,6 @@
 ---
 name: "[BETA] Tailscale with features"
-version: 0.25.0.10-rc01
+version: 0.25.0.10
 slug: tailscale-beta
 description: "[BETA] Zero config VPN for building secure networks"
 url: https://github.com/lmagyar/homeassistant-addon-tailscale-beta
@@ -46,7 +46,7 @@ options:
   share_homeassistant: disabled
   share_on_port: 443
   snat_subnet_routes: true
-  ssh: true
+  ssh: false
   stateful_filtering: false
   tags: []
   taildrive:
