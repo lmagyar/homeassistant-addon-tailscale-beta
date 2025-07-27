@@ -210,7 +210,8 @@ traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
 When not set, this option is disabled by default, i.e. DSCP will be set to the
-default 0.
+default 0. To make this option visible on the configuration editor, click "Show
+unused optional configuration options" at the bottom of the page.
 
 ### Option: `exit_node`
 
@@ -266,7 +267,9 @@ has to be specified or omitted together.
 **Note:** The file is stored in the /ssl/ folder, which is the default for Home
 Assistant.
 
-When not set, this option is disabled by default.
+When not set, this option is disabled by default. To make this option visible on
+the configuration editor, click "Show unused optional configuration options" at
+the bottom of the page.
 
 ### Option: `lets_encrypt_keyfile`
 
@@ -286,7 +289,9 @@ has to be specified or omitted together.
 **Note:** The file is stored in the /ssl/ folder, which is the default for Home
 Assistant.
 
-When not set, this option is disabled by default.
+When not set, this option is disabled by default. To make this option visible on
+the configuration editor, click "Show unused optional configuration options" at
+the bottom of the page.
 
 ### Option: `log_level`
 
