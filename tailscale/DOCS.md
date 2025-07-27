@@ -7,15 +7,16 @@
 > Changes:
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.86.0
+>   - Wait for local network on startup
+>   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
+> - Release pending changes from community add-on:
 >   - Add HEALTHCHECK support
->   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+>   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - ***config is automatically updated***
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
 >   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
->   - Wait for local network on startup
->   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
