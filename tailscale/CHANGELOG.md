@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.25.0.7 (forked)
+## vNext (forked)
 
 ***BREAKING CHANGES:***
 - Fix DNS documentation
