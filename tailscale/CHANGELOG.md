@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.25.0.7 (forked)
 
 ***BREAKING CHANGES:***
 - Fix DNS documentation
@@ -21,28 +21,30 @@
   This is required for the Supervisor to not lose name resolution and network connectivity.
 
 Nonbreaking changes:
-- Merge unreleased changes from community add-on
+- Release unreleased changes from community add-on
   - Update tailscale/tailscale to v1.86.0
-  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+  - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
+- Release pending changes from community add-on:
+  - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - ***config is automatically updated***
   - Make all config options mandatory, fill in the default values for previously optional config options
   - Add support for Taildrive (from PR [#509](https://github.com/hassio-addons/addon-tailscale/pull/509) by [@ananthb](https://github.com/ananthb))
   - Make exit-node configurable
-  - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 
 ## 0.25.0.6 (forked)
 
 - Fix: letsencrypt's api dns resolution for serve certificate generation (bugfix in the solution for MagicDNS incompatibility with Home Assistant)
-- Merge unreleased changes from community add-on
+- Release unreleased changes from community add-on
   - Update tailscale/tailscale to v1.84.0
 
 ## 0.25.0.5 (forked)
 
 - Fix: Skip DHCP lease renewal if nothing has changed (subnet protection)
 - Fix: Do not fail if local network is down on startup (healthcheck)
-- Merge unreleased changes from community add-on
+- Release unreleased changes from community add-on
+  - Update Add-on base image to v17.2.5
+- Release pending changes from community add-on:
   - Wait for local network on startup
   - Remove duplicated service dependencies
-  - Update Add-on base image to v17.2.5
 
 ## 0.25.0.4 (forked)
 
@@ -55,19 +57,19 @@ Nonbreaking changes:
 - Remove forward_to_host option, always enabled from now on (because this is removed during review in the official add-on)
 
 Nonbreaking changes:
-- Merge unreleased changes from community add-on
+- Release unreleased changes from community add-on
   - Update tailscale/tailscale to v1.82.5
   - Update Add-on base image to v17.2.4
 
 ## 0.25.0.2 (forked)
 
-- Merge unreleased changes from community add-on
+- Release unreleased changes from community add-on
   - Update tailscale/tailscale to v1.82.0
   - Update Add-on base image to v17.2.2
 
 ## 0.25.0.1 (forked)
 
-- Merge unreleased changes from community add-on
+- Release unreleased changes from community add-on
   - Update tailscale/tailscale to v1.80.3
 - Merge released changes from community add-on
   - Update Add-on base image to v17.2.1

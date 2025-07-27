@@ -7,15 +7,16 @@
 > Changes:
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.86.0
+>   - Wait for local network on startup
+>   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
+> - Release pending changes from community add-on:
 >   - Add HEALTHCHECK support
->   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port (config automatically updated)
+>   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - ***config is automatically updated***
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
 >   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
->   - Wait for local network on startup
->   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 > - Release unmerged changes from community add-on:
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
@@ -209,7 +210,8 @@ traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
 When not set, this option is disabled by default, i.e. DSCP will be set to the
-default 0.
+default 0. To make this option visible on the configuration editor, click "Show
+unused optional configuration options" at the bottom of the page.
 
 ### Option: `exit_node`
 
@@ -265,7 +267,9 @@ has to be specified or omitted together.
 **Note:** The file is stored in the /ssl/ folder, which is the default for Home
 Assistant.
 
-When not set, this option is disabled by default.
+When not set, this option is disabled by default. To make this option visible on
+the configuration editor, click "Show unused optional configuration options" at
+the bottom of the page.
 
 ### Option: `lets_encrypt_keyfile`
 
@@ -285,7 +289,9 @@ has to be specified or omitted together.
 **Note:** The file is stored in the /ssl/ folder, which is the default for Home
 Assistant.
 
-When not set, this option is disabled by default.
+When not set, this option is disabled by default. To make this option visible on
+the configuration editor, click "Show unused optional configuration options" at
+the bottom of the page.
 
 ### Option: `log_level`
 
