@@ -18,6 +18,7 @@
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 > - Release unmerged changes from community add-on:
+>   - Make Tailscale SSH configurable
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
@@ -114,6 +115,7 @@ login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
 snat_subnet_routes: true
+ssh: false
 stateful_filtering: false
 tags:
   - tag:example
@@ -426,6 +428,18 @@ MTU" for you).
 Keep it enabled if preserving the real source IP address is not critical for
 your use case.
 
+### Option: `ssh`
+
+This option allows you to expose SSH capabilities that you can enable from your
+Tailscale account.
+
+More information: [Tailscale SSH][tailscale_info_ssh]
+
+This option is disabled by default.
+
+**Note**: Using Tailscale SSH you will access only this add-on's command line,
+**_not_** eg. the Advanced SSH add-on's command line!
+
 ### Option: `stateful_filtering`
 
 This option enables stateful packet filtering on packet-forwarding nodes (exit
@@ -671,6 +685,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_quad100]: https://tailscale.com/kb/1381/what-is-quad100
 [tailscale_info_serve]: https://tailscale.com/kb/1312/serve
 [tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site
+[tailscale_info_ssh]: https://tailscale.com/kb/1193/tailscale-ssh/
 [tailscale_info_subnets]: https://tailscale.com/kb/1019/subnets
 [tailscale_info_tags]: https://tailscale.com/kb/1068/tags
 [tailscale_info_taildrive]: https://tailscale.com/kb/1369/taildrive

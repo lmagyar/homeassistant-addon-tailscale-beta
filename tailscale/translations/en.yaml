@@ -96,6 +96,12 @@ configuration:
       To support advanced Site-to-site networking (eg. to traverse multiple
       networks), you can disable this functionality.
       This option is enabled by default.
+  ssh:
+    name: Tailscale SSH
+    description: >-
+      This option allows you to expose SSH capabilities that you can enable from your
+      Tailscale account.
+      This option is disabled by default.
   stateful_filtering:
     name: Stateful packet filtering
     description: >-
