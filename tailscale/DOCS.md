@@ -18,6 +18,7 @@
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Forward incoming tailnet connections to the host's primary interface
 > - Release unmerged changes from community add-on:
+>   - Make Tailscale SSH configurable
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
