@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.25.0.8 (forked)
+
+- Fix config migration script (merge proxy and funnel options into share_homeassistant)
+
 ## 0.25.0.7 (forked)
 
 ***BREAKING CHANGES:***
