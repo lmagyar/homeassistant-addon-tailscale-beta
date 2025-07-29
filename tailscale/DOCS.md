@@ -6,7 +6,7 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.86.0
+>   - Update tailscale/tailscale to v1.86.2
 >   - Wait for local network on startup
 >   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 > - Release pending changes from community add-on:
