@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.25.0.11 (forked)
+
+- Release unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.86.2
+
 ## 0.25.0.10 (forked)
 
 - Make Tailscale SSH configurable

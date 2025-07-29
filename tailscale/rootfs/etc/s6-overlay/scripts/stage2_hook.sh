@@ -7,7 +7,6 @@
 
 declare options
 declare proxy funnel proxy_and_funnel_port
-declare share_homeassistant share_on_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 declare forward_to_host
 

@@ -6,12 +6,12 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.86.0
+>   - Update tailscale/tailscale to v1.86.2
 >   - Wait for local network on startup
 >   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
 > - Release pending changes from community add-on:
 >   - Add HEALTHCHECK support
->   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - ***config is automatically updated***
+>   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - **_config is automatically updated_**
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
 >   - Make exit-node configurable
@@ -607,12 +607,12 @@ Requirements:
 Steps:
 
 1. In the cli (eg. Advanced SSH add-on
-   https://github.com/hassio-addons/addon-ssh) execute: ``docker exec -it
-   `docker ps -q -f name=tailscale` /bin/bash`` Now you are in this add-on's
+   https://github.com/hassio-addons/addon-ssh) execute: `` docker exec -it
+`docker ps -q -f name=tailscale` /bin/bash `` Now you are in this add-on's
    cli.
 
 1. Execute something like `/opt/tailscale funnel --bg --https=8443
-   --set-path=/someservice localhost:1234`
+--set-path=/someservice localhost:1234`
 
    - `serve` or `funnel`, your choice
 
@@ -630,7 +630,7 @@ Steps:
      accessible on the localhost
 
    - You can disable/delete this config with `/opt/tailscale funnel --bg
-     --https=8443 --set-path=/someservice off`
+--https=8443 --set-path=/someservice off`
 
 1. You can add as many different paths as you want.
 
