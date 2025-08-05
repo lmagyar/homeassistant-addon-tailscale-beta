@@ -10,7 +10,7 @@ Zero config VPN for building secure networks.
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.86.2
 >   - Wait for local network on startup
->   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
+>   - Update Add-on base image to v18.1.0
 > - Release pending changes from community add-on:
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - ***config is automatically updated***
