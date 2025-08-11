@@ -9,6 +9,7 @@ readonly CERTS_FOLDER=/data/state/certs
 
 declare domain
 declare certfile keyfile
+declare certdir keydir
 declare cp_log
 
 # Check if Tailscale HTTPS is enabled
@@ -21,6 +22,16 @@ fi
 domain=$(/opt/tailscale status --self=true --peers=false --json | jq -rc ".CertDomains[0]")
 certfile=$(bashio::config "lets_encrypt_certfile")
 keyfile=$(bashio::config "lets_encrypt_keyfile")
+certdir=$(dirname "/ssl/${certfile}")
+keydir=$(dirname "/ssl/${keyfile}")
+
+# Create cert file directories
+if ! mkdir -p "${certdir}"; then
+  bashio::exit.nok "Can't create '${certdir}' directory"
+fi
+if ! mkdir -p "${keydir}"; then
+  bashio::exit.nok "Can't create '${keydir}' directory"
+fi
 
 # After tailscale serv is up, it will automatically update the files, we can catch the events
 # But if the update is already happened, inotifywait can't catch it
