@@ -1,7 +1,8 @@
 # Changelog
 
-## vNext (forked)
+## 0.25.0.12 (forked)
 
+- Fix: create certificate file directories for lets_encrypt_certfile and lets_encrypt_keyfile if they don't exists already
 - Release unreleased changes from community add-on
   - Update Add-on base image to v18.1.0
 
