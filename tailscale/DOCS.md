@@ -12,7 +12,7 @@
 > - Release unreleased changes from community add-on:
 >   - Update tailscale/tailscale to v1.86.2
 >   - Wait for local network on startup
->   - Update Add-on base image to v18.0.3 (Update Alpine base image to v3.22.0)
+>   - Update Add-on base image to v18.1.0
 > - Release pending changes from community add-on:
 >   - Add HEALTHCHECK support
 >   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - **_config is automatically updated_**
@@ -270,8 +270,9 @@ Encrypt. Use "." to save the file with the original name containing the domain
 Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
 has to be specified or omitted together.
 
-**Note:** The file is stored in the /ssl/ folder, which is the default for Home
-Assistant.
+**Note:** The file is stored in the /ssl/ folder (which is the default for Home
+Assistant), so **_do not_** start it with "/ssl", and **_do not_** start it with
+"/" either.
 
 When not set, this option is disabled by default. To make this option visible on
 the configuration editor, click "Show unused optional configuration options" at
@@ -292,8 +293,9 @@ Encrypt. Use "." to save the file with the original name containing the domain
 Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
 has to be specified or omitted together.
 
-**Note:** The file is stored in the /ssl/ folder, which is the default for Home
-Assistant.
+**Note:** The file is stored in the /ssl/ folder (which is the default for Home
+Assistant), so **_do not_** start it with "/ssl", and **_do not_** start it with
+"/" either.
 
 When not set, this option is disabled by default. To make this option visible on
 the configuration editor, click "Show unused optional configuration options" at

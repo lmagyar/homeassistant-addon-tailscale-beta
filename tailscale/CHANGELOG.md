@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community add-on
+  - Update Add-on base image to v18.1.0
+
 ## 0.25.0.11 (forked)
 
 - Release unreleased changes from community add-on
