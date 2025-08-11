@@ -266,8 +266,9 @@ Encrypt. Use "." to save the file with the original name containing the domain
 Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
 has to be specified or omitted together.
 
-**Note:** The file is stored in the /ssl/ folder, which is the default for Home
-Assistant.
+**Note:** The file is stored in the /ssl/ folder (which is the default for Home
+Assistant), so **_do not_** start it with "/ssl", and **_do not_** start it with
+"/" either.
 
 When not set, this option is disabled by default. To make this option visible on
 the configuration editor, click "Show unused optional configuration options" at
@@ -288,8 +289,9 @@ Encrypt. Use "." to save the file with the original name containing the domain
 Both `lets_encrypt` options (`lets_encrypt_certfile` and `lets_encrypt_keyfile`)
 has to be specified or omitted together.
 
-**Note:** The file is stored in the /ssl/ folder, which is the default for Home
-Assistant.
+**Note:** The file is stored in the /ssl/ folder (which is the default for Home
+Assistant), so **_do not_** start it with "/ssl", and **_do not_** start it with
+"/" either.
 
 When not set, this option is disabled by default. To make this option visible on
 the configuration editor, click "Show unused optional configuration options" at
