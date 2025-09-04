@@ -5,23 +5,16 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
-> - Release unreleased changes from community add-on:
->   - Update tailscale/tailscale to v1.86.2
->   - Wait for local network on startup
->   - Update Add-on base image to v18.1.0
 > - Release pending changes from community add-on:
->   - Add HEALTHCHECK support
->   - Merge proxy and funnel options into share_homeassistant, rename proxy_and_funnel_port to share_on_port - **_config is automatically updated_**
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
 >   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
->   - Forward incoming tailnet connections to the host's primary interface
 > - Release unmerged changes from community add-on:
 >   - Make Tailscale SSH configurable
+>   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
->   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 
 ![Warning][warning_stripe]
 
