@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.26.0.1 (forked)
+
+- Release unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.88.1
+- Merge released changes from community add-on
+  - Update Add-on base image to v18.1.1
+
 ## 0.25.0.12 (forked)
 
 - Fix: create certificate file directories for lets_encrypt_certfile and lets_encrypt_keyfile if they don't exists already
