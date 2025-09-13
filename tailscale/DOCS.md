@@ -11,12 +11,12 @@
 > Changes:
 > - Release unreleased changes from community add-on
 >   - Update tailscale/tailscale to v1.88.1
-> - Release pending changes from community add-on:
+> - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
 >   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
-> - Release unmerged changes from community add-on:
+> - Release unmerged changes from community add-on
 >   - Make Tailscale SSH configurable
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
