@@ -97,6 +97,7 @@ accept_routes: true
 advertise_exit_node: true
 advertise_connector: true
 advertise_routes:
+  - local_subnets
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
 dscp: 52
