@@ -5,10 +5,11 @@
 > This is a **fork** of the [community add-on][community_addon]!
 >
 > Changes:
+> - Release unreleased changes from community add-on
+>   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
->   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 > - Release unmerged changes from community add-on
 >   - Make Tailscale SSH configurable

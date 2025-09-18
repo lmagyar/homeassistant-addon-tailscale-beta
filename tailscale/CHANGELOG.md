@@ -1,5 +1,7 @@
 # Changelog
 
+## vNext (forked)
+
 ## 0.26.0.1 (forked)
 
 - Release unreleased changes from community add-on
