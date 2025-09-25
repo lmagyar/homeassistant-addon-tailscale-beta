@@ -8,6 +8,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community add-on
+>   - Update tailscale/tailscale to v1.88.3
 >   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options

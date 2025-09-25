@@ -2,6 +2,9 @@
 
 ## vNext (forked)
 
+- Release unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.88.3
+
 ## 0.26.0.1 (forked)
 
 - Release unreleased changes from community add-on
