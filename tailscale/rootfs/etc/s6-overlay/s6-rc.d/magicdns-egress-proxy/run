@@ -28,11 +28,14 @@ bashio::log.info "Starting MagicDNS egress proxy..."
 
 function dig_hassio_dns() {
   local type="${1}"
-  dig dns.local.hass.io "${type}" +short | { grep -Ev '^;|\.$|^$' || true ;} | head -n 1
+  dig dns.local.hass.io "${type}" +short \
+    | { grep -Ev '^;|\.$|^$' || true ;} \
+    | head -n 1
 }
 
 options+=(--no-hosts)
 options+=(--no-resolv)
+options+=(--conf-file=/dev/null)
 options+=(--keep-in-foreground)
 options+=(--log-facility='-')
 options+=(--cache-size=0)
@@ -49,7 +52,7 @@ then
 fi
 
 # White-list
-readarray -t white_list < ${DNSMASQ_BLACK_WHITE_LIST_LOCATION}
+readarray -t white_list < "${DNSMASQ_BLACK_WHITE_LIST_LOCATION}"
 
 # Return NXDOMAIN for everything, except the white_list
 options+=(--address=/#/)

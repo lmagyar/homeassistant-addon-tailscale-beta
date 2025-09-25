@@ -6,11 +6,11 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on
->   - Update tailscale/tailscale to v1.88.1
+>   - Update tailscale/tailscale to v1.88.3
+>   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Add support for Taildrive
->   - Make exit-node configurable
 >   - Fix MagicDNS incompatibility with Home Assistant
 > - Release unmerged changes from community add-on
 >   - Make Tailscale SSH configurable
@@ -99,6 +99,7 @@ accept_routes: true
 advertise_exit_node: true
 advertise_connector: true
 advertise_routes:
+  - local_subnets
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
 dscp: 52
@@ -360,7 +361,8 @@ More information: [Enabling HTTPS][tailscale_info_https],
 
 1. Home Assistant, by default, blocks requests from reverse proxies, like the
    Tailscale Serve. To enable it, add the following lines to your
-   `configuration.yaml`, without changing anything:
+   `configuration.yaml`, without changing anything (don't forget to restart Home
+   Assistant after the changes are saved):
 
    ```yaml
    http:

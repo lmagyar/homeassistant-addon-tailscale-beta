@@ -22,6 +22,7 @@ bashio::log.info "Starting MagicDNS ingress proxy..."
 
 options+=(--no-hosts)
 options+=(--no-resolv)
+options+=(--conf-file=/dev/null)
 options+=(--keep-in-foreground)
 options+=(--log-facility='-')
 options+=(--cache-size=0)
@@ -46,7 +47,7 @@ options+=(--bind-dynamic)
 options+=(--port=${DNSMASQ_INGRESS_PORT})
 
 # Black-list
-readarray -t black_list < ${DNSMASQ_BLACK_WHITE_LIST_LOCATION}
+readarray -t black_list < "${DNSMASQ_BLACK_WHITE_LIST_LOCATION}"
 
 # Forward everything to MagicDNS, except the black_list
 options+=(--server=${MAGIC_DNS_IPV4})
