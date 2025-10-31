@@ -10,7 +10,7 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on
->   - Update tailscale/tailscale to v1.88.3
+>   - Update tailscale/tailscale to v1.90.6
 >   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
@@ -610,12 +610,12 @@ Requirements:
 Steps:
 
 1. In the cli (eg. Advanced SSH add-on
-   https://github.com/hassio-addons/addon-ssh) execute: `` docker exec -it
-`docker ps -q -f name=tailscale` /bin/bash `` Now you are in this add-on's
+   https://github.com/hassio-addons/addon-ssh) execute: ``docker exec -it
+   `docker ps -q -f name=tailscale` /bin/bash`` Now you are in this add-on's
    cli.
 
 1. Execute something like `/opt/tailscale funnel --bg --https=8443
---set-path=/someservice localhost:1234`
+   --set-path=/someservice localhost:1234`
 
    - `serve` or `funnel`, your choice
 
@@ -633,7 +633,7 @@ Steps:
      accessible on the localhost
 
    - You can disable/delete this config with `/opt/tailscale funnel --bg
---https=8443 --set-path=/someservice off`
+     --https=8443 --set-path=/someservice off`
 
 1. You can add as many different paths as you want.
 
