@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.26.1.3 (forked)
 
 - ***CRITICAL*** Workaround for add-on base image and bashio bug that causes add-ons to crash when debug level logging is enabled
 

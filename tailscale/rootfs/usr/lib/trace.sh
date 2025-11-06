@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # shellcheck shell=bash
-export LOG_FD
 
 # ------------------------------------------------------------------------------
 # Checks if we are currently running in trace mode, based on the bashio log module.
