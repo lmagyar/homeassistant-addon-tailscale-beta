@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community add-on
+  - Remove deprecated codenotary fields
+
 ## 0.26.1.3 (forked)
 
 - ***CRITICAL*** Workaround for add-on base image and bashio bug that causes add-ons to crash when debug level logging is enabled
