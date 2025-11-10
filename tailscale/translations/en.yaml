@@ -50,6 +50,12 @@ configuration:
       By setting a device on your network as an exit node, you can use it to
       route all your public internet traffic as needed, like a consumer VPN.
       This option is unused by default.
+  forward_to_host:
+    name: Forward to host
+    description: >-
+      Forward incoming tailnet connections to the host's primary interface when
+      userspace networking is disabled.
+      When not set, this option is enabled by default.
   lets_encrypt_certfile:
     name: Let's Encrypt certificate chain file storage location
     description: >-

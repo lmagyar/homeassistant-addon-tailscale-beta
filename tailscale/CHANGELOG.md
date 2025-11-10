@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Make forwarding to host configurable (temporarily)
 - Release unreleased changes from community add-on
   - Remove deprecated codenotary fields
 
