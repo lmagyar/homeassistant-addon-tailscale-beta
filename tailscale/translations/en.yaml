@@ -55,7 +55,7 @@ configuration:
     description: >-
       Forward incoming tailnet connections to the host's primary interface when
       userspace networking is disabled.
-      When not set, this option is enabled by default.
+      This option is enabled by default.
   lets_encrypt_certfile:
     name: Let's Encrypt certificate chain file storage location
     description: >-
