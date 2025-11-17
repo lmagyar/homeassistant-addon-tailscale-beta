@@ -10,6 +10,7 @@ declare options
 declare proxy funnel proxy_and_funnel_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 declare forward_to_host
+declare advertise_routes
 
 # This is to execute potentially failing supervisor api functions within conditions,
 # where set -e is not propagated inside the function and bashio relies on set -e for api error handling
@@ -76,6 +77,16 @@ fi
 if bashio::var.has_value "${forward_to_host}"; then
     bashio::log.info 'Removing deprecated forward_to_host option'
     bashio::addon.option 'forward_to_host'
+fi
+
+# Update changed options
+advertise_routes=$(bashio::jq "${options}" '.advertise_routes | select(.!=null)')
+if bashio::var.has_value "${advertise_routes}" && \
+    bashio::jq.has_value "${advertise_routes}" '.[] | select(.|match("^local[^_]subnets$"))'
+then
+    bashio::log.info 'Updating advertise_routes option to match new schema'
+    advertise_routes=$(bashio::jq "${advertise_routes}" '(.[] | select(.|match("^local[^_]subnets$"))) |= "local_subnets"')
+    bashio::addon.option 'advertise_routes' "^${advertise_routes}"
 fi
 
 # Disable MagicDNS proxy services when userspace-networking is enabled or accepting dns is disabled
