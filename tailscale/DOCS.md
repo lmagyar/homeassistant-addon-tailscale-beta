@@ -10,6 +10,7 @@
 >   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
+>   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
 > - Release unmerged changes from community add-on
