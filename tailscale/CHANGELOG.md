@@ -1,5 +1,7 @@
 # Changelog
 
+- Remove forward_to_host option
+
 ## vNext (forked)
 
 - Release unreleased changes from community add-on
