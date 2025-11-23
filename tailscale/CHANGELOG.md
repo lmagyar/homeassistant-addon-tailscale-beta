@@ -2,12 +2,13 @@
 
 ## vNext (forked)
 
-- Make forwarding to host configurable (temporarily)
 - Release unreleased changes from community add-on
   - Update tailscale/tailscale to v1.90.8
   - Remove deprecated codenotary fields
 - Release pending changes from community add-on
   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
+- Release unmerged changes from community add-on
+  - Make forwarding to host configurable [only in the beta repo]
 
 ## 0.26.1.3 (forked)
 
