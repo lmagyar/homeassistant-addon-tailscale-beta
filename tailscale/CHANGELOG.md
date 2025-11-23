@@ -4,7 +4,10 @@
 
 - Make forwarding to host configurable (temporarily)
 - Release unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.90.8
   - Remove deprecated codenotary fields
+- Release pending changes from community add-on
+  - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
 
 ## 0.26.1.3 (forked)
 

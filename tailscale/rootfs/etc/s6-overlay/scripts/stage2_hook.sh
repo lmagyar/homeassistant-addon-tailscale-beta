@@ -10,6 +10,7 @@ declare options
 declare proxy funnel proxy_and_funnel_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 declare forward_to_host
+declare advertise_routes
 
 # This is to execute potentially failing supervisor api functions within conditions,
 # where set -e is not propagated inside the function and bashio relies on set -e for api error handling
@@ -73,6 +74,16 @@ if bashio::var.has_value "${healthcheck_restart_timeout}"; then
     bashio::addon.option 'healthcheck_restart_timeout'
 fi
 
+# Update changed options
+advertise_routes=$(bashio::jq "${options}" '.advertise_routes | select(.!=null)')
+if bashio::var.has_value "${advertise_routes}" && \
+    bashio::jq.has_value "${advertise_routes}" '.[] | select(.|match("^local[^_]subnets$"))'
+then
+    bashio::log.info 'Updating advertise_routes option to match new schema'
+    advertise_routes=$(bashio::jq "${advertise_routes}" '(.[] | select(.|match("^local[^_]subnets$"))) |= "local_subnets"')
+    bashio::addon.option 'advertise_routes' "^${advertise_routes}"
+fi
+
 # Disable MagicDNS proxy services when userspace-networking is enabled or accepting dns is disabled
 if bashio::config.true "userspace_networking" || \
     bashio::config.false "accept_dns";
@@ -90,7 +101,7 @@ then
 fi
 
 # If local subnets are not configured in advertise_routes, do not wait for the local network to be ready to collect subnet information
-if ! bashio::config "advertise_routes" | grep -Eq "^local.subnets$";
+if ! bashio::config "advertise_routes" | grep -Eq "^local_subnets$";
 then
     rm /etc/s6-overlay/s6-rc.d/post-tailscaled/dependencies.d/local-network
 fi
