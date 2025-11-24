@@ -6,12 +6,16 @@
 >
 > Changes:
 > - Release unreleased changes from community add-on
->   - Update tailscale/tailscale to v1.90.6
+>   - Update tailscale/tailscale to v1.90.8
 >   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
+>   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
+> - Withhold changes from community add-on (will be released here later)
+>   - Drop support for armv7 architecture
+>   - Update Add-on base image to v19 (drop armv7 support)
 > - Release unmerged changes from community add-on
 >   - Make Tailscale SSH configurable
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
@@ -95,7 +99,7 @@ their interface.
 
 ```yaml
 accept_dns: true
-accept_routes: true
+accept_routes: false
 advertise_exit_node: true
 advertise_connector: true
 advertise_routes:
@@ -152,7 +156,7 @@ your tailnet.
 
 More information: [Subnet routers][tailscale_info_subnets]
 
-This option is enabled by default.
+This option is disabled by default.
 
 ### Option: `advertise_exit_node`
 
