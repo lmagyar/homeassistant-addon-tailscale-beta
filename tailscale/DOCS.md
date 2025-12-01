@@ -13,6 +13,7 @@
 >   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
+>   - Make always use derp option configurable
 > - Withhold changes from community add-on (will be released here later)
 >   - Drop support for armv7 architecture
 >   - Update Add-on base image to v19 (drop armv7 support)

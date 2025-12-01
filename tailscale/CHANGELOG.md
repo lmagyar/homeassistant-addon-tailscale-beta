@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Make always use derp option configurable
+
 ## 0.26.1.5 (forked)
 
 - Release unreleased changes from community add-on
