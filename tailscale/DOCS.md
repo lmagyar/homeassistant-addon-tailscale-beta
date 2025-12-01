@@ -106,6 +106,7 @@ advertise_routes:
   - local_subnets
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
+always_use_derp: false
 dscp: 52
 exit_node: 100.101.102.103
 lets_encrypt_certfile: fullchain.pem
@@ -204,6 +205,18 @@ More information: [Subnet routers][tailscale_info_subnets]
 
 The add-on by default will advertise routes to your subnets on all supported
 interfaces by adding `local_subnets` to the list.
+
+### Option: `always_use_derp`
+
+When enabled forces all peer communication over DERP by disabling the use of
+UDP.
+
+This option is disabled by default.
+
+Basically you will never want to enable this option. Try to enable it only, when
+you experience that connections to your Home Assistant device regularly freeze,
+and you have to reload the web page or force stop the Home Assistant app. The
+root cause can be that your ISP drops UDP packages on certain conditions.
 
 ### Option: `dscp`
 
