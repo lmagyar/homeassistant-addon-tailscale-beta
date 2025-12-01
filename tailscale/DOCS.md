@@ -24,7 +24,6 @@
 >   - Make Tailscale SSH configurable
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make forwarding to host configurable [only in the beta repo]
->   - Make always use derp option configurable [only in the beta repo]
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 
