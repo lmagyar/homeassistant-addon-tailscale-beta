@@ -221,9 +221,11 @@ UDP.
 This option is disabled by default.
 
 Basically you will never want to enable this option. Try to enable it only, when
-you experience that connections to your Home Assistant device regularly freeze,
-and you have to reload the web page or force stop the Home Assistant app. The
-root cause can be that your ISP drops UDP packages on certain conditions.
+you experience that connections to your Home Assistant device regularly freeze
+(even when you can ping the device, the web page or the Home Assistant app is
+unresponsive), and you have to reload the web page or force stop the Home
+Assistant app to make them work again. The root cause can be that your ISP
+erroneously drops UDP packets on certain conditions.
 
 ### Option: `dscp`
 
