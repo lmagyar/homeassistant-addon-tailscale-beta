@@ -24,7 +24,6 @@
 > - Release unmerged changes from community add-on
 >   - Make Tailscale SSH configurable
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
->   - Make forwarding to host configurable [only in the beta repo]
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 
@@ -115,7 +114,6 @@ advertise_routes:
 always_use_derp: false
 dscp: 52
 exit_node: 100.101.102.103
-forward_to_host: true
 lets_encrypt_certfile: fullchain.pem
 lets_encrypt_keyfile: privkey.pem
 log_level: info
@@ -257,31 +255,6 @@ section of this documentation.
 
 **Note:** The `exit-node-allow-lan-access` option is always enabled when an exit
 node is specified. This is required by the Home Assistant environment.
-
-### Option: `forward_to_host`
-
-Forward incoming tailnet connections to the host's primary interface when
-userspace networking is disabled.
-
-This option is enabled by default.
-
-When userspace networking is enabled, Tailscale automatically forwards incoming
-tailnet connections to localhost.
-
-When userspace networking is disabled, the add-on can forward incoming tailnet
-connections to Home Assistant's primary host interface. This means you don't
-have to enable subnet routing just to access services on the host from the
-tailnet.
-
-**Note:** Without forwarding, services running only on the interfaces managed by
-Home Assistant (i.e. not on all interfaces), are inaccessible from the tailnet
-even when userspace networking is disabled.
-
-**Note:** Tailscale's serve and funnel features have priority over this plain
-port forwarding, those connections won't be forwarded directly to the host.
-
-**Note:** Hairpinning is not implemented, do not test forwarding by accessing
-the host, from itself, through the tailscale0 interface.
 
 ### _Note on the `lets_encrypt` options below_
 

@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Make always use derp option configurable
+- Remove forward_to_host option [this was only in the beta repo]
 
 ## 0.26.1.5 (forked)
 
