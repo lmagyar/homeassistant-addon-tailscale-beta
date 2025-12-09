@@ -1,8 +1,8 @@
 # Changelog
 
-## vNext (forked)
+## 0.26.1.6 (forked)
 
-- Make always use derp option configurable
+- Make always use derp option configurable (fixes [569](https://github.com/hassio-addons/addon-tailscale/issues/569))
 - Remove forward_to_host option [this was only in the beta repo]
 
 ## 0.26.1.5 (forked)
