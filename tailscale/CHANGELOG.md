@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.26.1.7 (forked)
+
+- Release unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.92.1
+
 ## 0.26.1.6 (forked)
 
 - Make always use derp option configurable (fixes [569](https://github.com/hassio-addons/addon-tailscale/issues/569))
