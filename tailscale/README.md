@@ -16,6 +16,7 @@ Zero config VPN for building secure networks.
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Make always use derp option configurable
+>   - Create persistent notification also (not just log warning) when key expiration is detected
 > - Withhold changes from community add-on (will be released here later)
 >   - Drop support for armv7 architecture
 >   - Update Add-on base image to v19 (drop armv7 support)

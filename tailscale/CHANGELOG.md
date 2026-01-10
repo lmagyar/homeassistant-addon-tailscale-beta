@@ -1,5 +1,9 @@
 # Changelog
 
+## vNext (forked)
+
+- Create persistent notification also (not just log warning) when key expiration is detected
+
 ## 0.26.1.9 (forked)
 
 - Release unreleased changes from community add-on
