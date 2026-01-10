@@ -15,6 +15,7 @@ arch:
   - armv7
 init: false
 hassio_api: true
+homeassistant_api: true
 host_network: true
 host_dbus: true
 privileged:
