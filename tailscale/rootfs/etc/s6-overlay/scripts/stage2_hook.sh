@@ -96,7 +96,7 @@ if bashio::var.has_value "${tags}"; then
     try bashio::addon.option 'advertise_tags' "^${tags}"
     if ((TRY_ERROR)); then
         bashio::log.warning "The tags option value is invalid, tags option is dropped, using default no advertise_tags."
-        bashio::log.warning "The tags option value: '${tags}'"
+        bashio::log.warning "The invalid tags option value is: '${tags}'"
     else
         bashio::log.info "Successfully renamed tags option to advertise_tags"
     fi

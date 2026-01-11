@@ -15,7 +15,7 @@
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
->   - Make advertise_exit_node, advertise_connector and taildrop options default disabled to align with stock Tailscale's platform-specific behavior
+>   - Make advertise_exit_node, advertise_connector, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
@@ -138,7 +138,7 @@ taildrive:
   share: false
   ssl: false
 taildrop: false
-userspace_networking: true
+userspace_networking: false
 ```
 
 > [!NOTE]
@@ -206,13 +206,10 @@ your device is connected to) to other clients on your tailnet.
 By adding to the list the IP addresses and masks of the subnet routes, you can
 use it to make your devices on these subnets accessible within your tailnet.
 
-If you want to disable this option, specify an empty list in the configuration
-(`[]` in YAML).
+By adding `local_subnets` to the list, the add-on will advertise routes to your
+subnets on all supported interfaces.
 
 More information: [Subnet routers][tailscale_info_subnets]
-
-The add-on by default will advertise routes to your subnets on all supported
-interfaces by adding `local_subnets` to the list.
 
 ### Option: `advertise_tags`
 
@@ -505,15 +502,11 @@ Received files are stored in the `/share/taildrop` directory.
 
 ### Option: `userspace_networking`
 
-The add-on uses [userspace networking mode][tailscale_info_userspace_networking]
-to make your Home Assistant instance (and optionally the local subnets)
-accessible within your tailnet.
+When enabled, Tailscale will not create a `tailscale0` network interface on your
+host, i.e. you get one-way access from tailnet clients to your Home Assistant
+instance (and optionally the local subnets).
 
-This option is enabled by default.
-
-If you need to access other clients on your tailnet from your Home Assistant
-instance, disable userspace networking mode, which will create a `tailscale0`
-network interface on your host.
+This option is disabled by default.
 
 To be able to address other clients on your tailnet not only by their tailnet IP
 but also by their tailnet name, see the "DNS" section of this documentation.
@@ -521,7 +514,11 @@ but also by their tailnet name, see the "DNS" section of this documentation.
 If you want to access other clients on your tailnet even from your local subnet,
 follow steps in the [Site-to-site networking][tailscale_info_site_to_site] guide
 (Note: The add-on already handles "IP address forwarding" and "Clamp the MSS to
-the MTU" for you).
+the MTU" for you). See also the "Option: `snat_subnet_routes`" section of this
+documentation.
+
+More information: [Userspace networking
+mode][tailscale_info_userspace_networking]
 
 **Note:** In case your local subnets collide with subnet routes within your
 tailnet, your local network access has priority, and these addresses won't be
@@ -529,15 +526,6 @@ routed toward your tailnet. This will prevent your Home Assistant instance from
 losing network connection. This also means that using the same subnet on
 multiple nodes for load balancing and failover is impossible with the current
 add-on behavior.
-
-**Note:** The `userspace_networking` option can remain enabled if you only need
-one-way access from tailnet clients to your local subnet, without requiring
-access from your local subnet to other tailnet clients.
-
-**Note:** If you implement Site-to-site networking, but you are not interested
-in the real source IP address, i.e. subnet devices can see the traffic
-originating from the subnet router, you don't need to disable the
-`snat_subnet_routes` option, this can simplify routing configuration.
 
 ## Network
 
