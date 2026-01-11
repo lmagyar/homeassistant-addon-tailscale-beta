@@ -93,9 +93,14 @@ fi
 # Rename changed options
 tags=$(bashio::jq "${options}" '.tags | select(.!=null)')
 if bashio::var.has_value "${tags}"; then
-    bashio::log.info 'Renaming tags option to advertise_tags'
+    try bashio::addon.option 'advertise_tags' "^${tags}"
+    if ((TRY_ERROR)); then
+        bashio::log.warning "The tags option value is invalid, tags option is dropped, using default no advertise_tags."
+        bashio::log.warning "The tags option value: '${tags}'"
+    else
+        bashio::log.info "Successfully renamed tags option to advertise_tags"
+    fi
     bashio::addon.option 'tags'
-    bashio::addon.option 'advertise_tags' "^${tags}"
 fi
 
 # Disable MagicDNS proxy services when userspace-networking is enabled or accepting dns is disabled
@@ -115,8 +120,7 @@ then
 fi
 
 # If local subnets are not configured in advertise_routes, do not wait for the local network to be ready to collect subnet information
-if ! bashio::config "advertise_routes" | grep -Eq "^local_subnets$";
-then
+if ! bashio::config "advertise_routes" | grep -Fxq "local_subnets"; then
     rm /etc/s6-overlay/s6-rc.d/post-tailscaled/dependencies.d/local-network
 fi
 
