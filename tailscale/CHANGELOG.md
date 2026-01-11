@@ -2,7 +2,10 @@
 
 ## vNext (forked)
 
-- Create persistent notification also (not just log warning) when key expiration is detected
+- Release pending changes from community add-on
+  - Create persistent notification also (not just log warning) when key expiration is detected
+  - Make advertise_exit_node, advertise_connector and taildrop options default disabled to align with stock Tailscale's platform-specific behavior
+  - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 
 ## 0.26.1.9 (forked)
 
@@ -21,7 +24,8 @@
 
 ## 0.26.1.6 (forked)
 
-- Make always use derp option configurable (fixes [569](https://github.com/hassio-addons/addon-tailscale/issues/569))
+- Release pending changes from community add-on
+  - Make always use derp option configurable (fixes [569](https://github.com/hassio-addons/addon-tailscale/issues/569))
 
 ## 0.26.1.5 (forked)
 
@@ -41,7 +45,8 @@
 
 ## 0.26.1.3 (forked)
 
-- ***CRITICAL*** Workaround for add-on base image and bashio bug that causes add-ons to crash when debug level logging is enabled
+- Release pending changes from community add-on
+  - ***CRITICAL*** Workaround for add-on base image and bashio bug that causes add-ons to crash when debug level logging is enabled
 
 ## 0.26.1.2 (forked)
 
