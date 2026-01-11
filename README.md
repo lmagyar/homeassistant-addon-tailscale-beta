@@ -14,7 +14,7 @@ Zero config VPN for building secure networks.
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
->   - Make advertise_exit_node, advertise_connector, advertise_routes and taildrop options default disabled to align with stock Tailscale's platform-specific behavior
+>   - Make advertise_exit_node, advertise_connector, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
