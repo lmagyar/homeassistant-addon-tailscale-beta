@@ -14,7 +14,7 @@ declare -a routes=()
 declare route
 declare -a colliding_routes=()
 declare login_server
-declare tags
+declare advertise_tags
 declare keyexpiry
 declare attributes
 
@@ -92,8 +92,8 @@ else
 fi
 
 # Get configured tags
-tags=$(bashio::config "tags | join(\",\")")
-options+=(--advertise-tags="${tags}")
+advertise_tags=$(bashio::config "advertise_tags | join(\",\")")
+options+=(--advertise-tags="${advertise_tags}")
 
 # Advertise subnet routes
 readarray -t routes < <(subnet-routes advertised)

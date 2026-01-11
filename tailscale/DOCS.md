@@ -108,6 +108,9 @@ advertise_routes:
   - local_subnets
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
+advertise_tags:
+  - tag:example
+  - tag:homeassistant
 always_use_derp: false
 dscp: 52
 exit_node: 100.101.102.103
@@ -120,9 +123,6 @@ share_on_port: 443
 snat_subnet_routes: true
 ssh: false
 stateful_filtering: false
-tags:
-  - tag:example
-  - tag:homeassistant
 taildrive:
   addons: false
   addon_configs: false
@@ -207,6 +207,13 @@ More information: [Subnet routers][tailscale_info_subnets]
 
 The add-on by default will advertise routes to your subnets on all supported
 interfaces by adding `local_subnets` to the list.
+
+### Option: `advertise_tags`
+
+This option allows you to specify specific tags for this Tailscale instance.
+They need to start with `tag:`.
+
+More information: [Tags][tailscale_info_tags]
 
 ### Option: `always_use_derp`
 
@@ -468,13 +475,6 @@ existing outbound connections. Inbound packets that don't belong to an existing
 connection are dropped.
 
 This option is disabled by default.
-
-### Option: `tags`
-
-This option allows you to specify specific tags for this Tailscale instance.
-They need to start with `tag:`.
-
-More information: [Tags][tailscale_info_tags]
 
 ### Option: `taildrive`
 
