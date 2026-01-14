@@ -116,7 +116,7 @@ if bashio::config.true "userspace_networking"; then
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/magicdns-ingress-proxy
     if bashio::config.true "accept_dns"; then
         # either this or tailscaled/dependencies.d/magicdns-egress-proxy above has to be removed
-        rm /etc/s6-overlay/s6-rc.d/init-magicdns-proxies/dependencies.d/tailscaled
+        rm /etc/s6-overlay/s6-rc.d/init-magicdns-proxies/dependencies.d/post-tailscaled
     fi
 fi
 
