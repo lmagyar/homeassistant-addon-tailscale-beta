@@ -14,9 +14,12 @@ Zero config VPN for building secure networks.
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
+>   - Make advertise_exit_node, advertise_connector, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
+>   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Make always use derp option configurable
+>   - Create persistent notification also (not just log warning) when key expiration is detected
 > - Withhold changes from community add-on (will be released here later)
 >   - Drop support for armv7 architecture
 >   - Update Add-on base image to v19 (drop armv7 support)
@@ -81,7 +84,7 @@ For more details, please see the add-on's [Documentation][Documentation] pages.
 [installations-shield]: https://img.shields.io/badge/dynamic/json?label=reported%20installations&query=$[%2709716aab_tailscale%27].total&url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json
 [license-shield]: https://img.shields.io/github/license/lmagyar/homeassistant-addon-tailscale.svg
 [licence]: https://github.com/lmagyar/homeassistant-addon-tailscale/blob/main/LICENSE
-[maintenance-shield]: https://img.shields.io/maintenance/yes/2025.svg
+[maintenance-shield]: https://img.shields.io/maintenance/yes/2026.svg
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-beta-orange.svg
 [releases-shield]: https://img.shields.io/github/tag/lmagyar/homeassistant-addon-tailscale.svg?label=release
 [releases]: https://github.com/lmagyar/homeassistant-addon-tailscale/tags
