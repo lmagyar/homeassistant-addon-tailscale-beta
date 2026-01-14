@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.26.1.10 (forked)
 
 - Bugfix for previous MagicDNS incompatibility fix (prevent logging SERVFAIL lines when accept_dns is disabled)
 - Bugfix for Taildrive (prevent logging anything when no share is configured)
