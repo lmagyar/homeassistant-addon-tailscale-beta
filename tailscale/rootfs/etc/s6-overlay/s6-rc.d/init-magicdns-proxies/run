@@ -80,6 +80,14 @@ if bashio::config.true "accept_dns"; then
     black_white_list+=("${LETSENCRYPT_API}")
   fi
 else
+  # Wait for the network to be available and logged in
+  while ! bashio::fs.socket_exists "/var/run/tailscale/tailscaled.sock" || \
+    ! /opt/tailscale status --json --peers=false --self=false \
+      | jq --exit-status '.BackendState == "Running" or .BackendState == "NeedsLogin" or .BackendState == "Stopped"' > /dev/null;
+  do
+    sleep 2
+  done
+
   # Add the tailnet domain as white list
   if ! tailnet=$( \
       /opt/tailscale status --json --peers=false --self=false \
