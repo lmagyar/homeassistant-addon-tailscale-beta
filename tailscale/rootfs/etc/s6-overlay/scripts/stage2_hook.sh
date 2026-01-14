@@ -107,7 +107,7 @@ fi
 if bashio::config.true "userspace_networking" || \
     bashio::config.false "accept_dns";
 then
-    # Either this or init-magicdns-upstream-list/dependencies.d/post-tailscaled below has to be removed
+    # Either this or init-magicdns-proxies-upstream-list/dependencies.d/post-tailscaled below has to be removed
     rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/magicdns-egress-proxy
 fi
 # Disable MagicDNS ingress proxy service when userspace-networking is enabled
@@ -120,7 +120,7 @@ fi
 if bashio::config.false "userspace_networking"; then
     if bashio::config.true "accept_dns"; then
         # Either this or tailscaled/dependencies.d/magicdns-egress-proxy below has to be removed
-        rm /etc/s6-overlay/s6-rc.d/init-magicdns-upstream-list/dependencies.d/post-tailscaled
+        rm /etc/s6-overlay/s6-rc.d/init-magicdns-proxies-upstream-list/dependencies.d/post-tailscaled
     fi
 fi
 
