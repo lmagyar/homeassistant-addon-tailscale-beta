@@ -82,8 +82,9 @@ if bashio::config.true "accept_dns"; then
 else
   # Add the tailnet domain as white list
   if ! tailnet=$( \
-    /opt/tailscale status --json --peers=false --self=false \
-    | jq -re '.MagicDNSSuffix')
+      /opt/tailscale status --json --peers=false --self=false \
+      | jq -re '.MagicDNSSuffix') || \
+    ! bashio::var.has_value "${tailnet}"
   then
     bashio::exit.nok "Determining tailnet name has failed"
   fi
