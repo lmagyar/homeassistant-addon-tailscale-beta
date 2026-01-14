@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Bugfix for previous MagicDNS incompatibility fix (prevent logging SERVFAIL lines when accept_dns is disabled)
 - Release pending changes from community add-on
   - Create persistent notification also (not just log warning) when key expiration is detected
   - Make advertise_exit_node, advertise_connector, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior

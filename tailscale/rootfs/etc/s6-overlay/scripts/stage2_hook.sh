@@ -103,11 +103,14 @@ if bashio::var.has_value "${tags}"; then
     bashio::addon.option 'tags'
 fi
 
-# Disable MagicDNS proxy services when userspace-networking is enabled or accepting dns is disabled
+# Disable MagicDNS egress proxy service when userspace-networking is enabled or accepting dns is disabled
 if bashio::config.true "userspace_networking" || \
     bashio::config.false "accept_dns";
 then
     rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/magicdns-egress-proxy
+fi
+# Disable MagicDNS ingress proxy service when userspace-networking is enabled
+if bashio::config.true "userspace_networking"; then
     rm /etc/s6-overlay/s6-rc.d/forwarding/dependencies.d/magicdns-ingress-proxy
     rm /etc/s6-overlay/s6-rc.d/user/contents.d/magicdns-ingress-proxy
 fi
