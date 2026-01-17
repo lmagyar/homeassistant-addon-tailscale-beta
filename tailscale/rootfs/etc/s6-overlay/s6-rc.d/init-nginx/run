@@ -6,6 +6,21 @@ export LOG_FD
 # Configures NGINX for use with the Tailscale web
 # ==============================================================================
 
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX $LOG_FD
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX $__BASHIO_LOG_LEVEL
+
+bashio::var.json \
+    interface "$(bashio::addon.ip_address)" \
+    port "^$(bashio::addon.ingress_port)"
+
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+bashio::var.json \
+    interface "$(bashio::addon.ip_address)" \
+    port "^$(bashio::addon.ingress_port)" | cat
+
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
 # Generate Ingress configuration
 bashio::var.json \
     interface "$(bashio::addon.ip_address)" \
@@ -13,3 +28,6 @@ bashio::var.json \
     | tempio \
         -template /etc/nginx/templates/ingress.gtpl \
         -out /etc/nginx/servers/ingress.conf
+
+cat /etc/nginx/servers/ingress.conf
+echo XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX $?
