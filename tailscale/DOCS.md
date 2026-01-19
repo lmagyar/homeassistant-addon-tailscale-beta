@@ -14,8 +14,7 @@
 >   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
->   - Make accept_routes default disabled to align with stock Tailscale's platform-specific behavior
->   - Make advertise_exit_node, advertise_connector, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
+>   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
@@ -157,6 +156,12 @@ admin console are applied.
 For more information, see the "DNS" section of this documentation.
 
 This option is enabled by default.
+
+**Note:** If you disable this option, there will be DNS-related warnings in
+Tailscale's log messages, repeating hourly: "no upstream resolvers set,
+returning SERVFAIL", and Tailscale's health also will warn about "Tailscale
+can't reach the configured DNS servers". It's true, this is not a problem,
+Tailscale's DNS will not use any upstream server.
 
 ### Option: `accept_routes`
 
