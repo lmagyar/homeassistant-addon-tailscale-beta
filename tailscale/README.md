@@ -31,6 +31,40 @@ Zero config VPN for building secure networks.
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 
+> Migration from the community add-on to this fork:
+>
+> **Note:** This is **not** an in-place replacement of the community add-on, but
+> another (though very similar) standalone add-on.
+>
+> 1. Stop the original community add-on
+> 1. Uninstall the original add-on **or** disable **Start on boot**, **Watchdog**,
+>    **Autoupdate** and **Add to sidebar** of the original add-on
+> 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
+>    find your Home Assistant instance
+> 1. Click on the **&hellip;** icon at the right side and select the **Remove...**
+>    option (this is to be able to use the same device name again)
+> 1. Install the fork
+> 1. Copy the configuration YAML of the original add-on to this fork
+>    - **Note:** **DO NOT USE THE UI** to copy the configuration, Home Assistant's
+>      add-on config UI is totally broken
+>    - Navigate to the **Configuration** tab -> **&hellip;** -> **Edit in YAML**
+>    - Copy-paste the settings to the forked add-on, but do not overwrite it
+>      completely, because there are more options in the forked add-on, and even
+>      the common options are not mandatory in the original add-on (ie. missing
+>      from the yaml), so remove/overwrite only the options of the forked add-on
+>      that you are copying from the original add-on, and **DO NOT SAVE** it yet
+>    - Rename `tags:` to `advertise_tags:`
+>    - **SAVE** it now
+> 1. Enable **Start on boot** and **Watchdog** of the forked add-on
+> 1. Start the forked add-on
+> 1. Check the logs to see if everything went well
+> 1. Open the **Web UI** to complete authentication
+>
+>    **Note:** _Some browsers don't work with this step. It is recommended to
+>    complete this step on a desktop or laptop computer using the Chrome browser._
+>
+> 1. Check the logs again to see if everything went well.
+
 ![Warning][warning_stripe]
 
 [![GitHub Release][releases-shield]][releases]
