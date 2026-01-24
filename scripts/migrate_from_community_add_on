@@ -10,7 +10,7 @@ declare from_version="0.26.1"
 declare to="09716aab_tailscale" # forked
 declare to_repository="https://github.com/lmagyar/homeassistant-addon-tailscale"
 
-declare from_defaults=$(jq -rcM <<"EOOLDDEFAULT"
+declare from_defaults=$(jq -rcM <<"EOFROMDEFAULTS"
   {
     "accept_dns": true,
     "accept_routes": true,
@@ -27,7 +27,7 @@ declare from_defaults=$(jq -rcM <<"EOOLDDEFAULT"
     "taildrop": true,
     "userspace_networking": true
   }
-EOOLDDEFAULT
+EOFROMDEFAULTS
 )
 
 # rename tags to advertise_tags
@@ -417,7 +417,7 @@ echo "- You can safely uninstall the ${from} (${from_name}) add-on now"
 echo
 echo "IMPORTANT: Do not try to start the original ${from} (${from_name}) add-on"
 echo "when the new ${to} (${to_name}) add-on is running,"
-echo "because they have identical internal state!!!"
+echo "because they have identical internal states!!!"
 echo
 echo "IMPORTANT: Refresh Home Assistant's UI (web page) to reflect the changes done by this script!"
 echo
