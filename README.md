@@ -33,7 +33,7 @@ Zero config VPN for building secure networks.
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
 >
 > **Note:**
-> - This will install the forked version (if not alredy installed), backup and
+> - This will install the forked version (if not already installed), backup and
 >   stop the community version, copy and update the configuration, and (this is
 >   the big thing) will also copy the internal state of the add-on, then start
 >   the forked version.
@@ -45,7 +45,7 @@ Zero config VPN for building secure networks.
 >   add-ons container, those settings will be also migrated with the internal
 >   state.
 > - **But copying the add-on's internal state requires executing bash and python
->   scripts inside the Supervisors container! Executng python scripts requires
+>   scripts inside the Supervisor's container! Executing python scripts requires
 >   installing gdb and pyrasite inside the Supervisor's container (they will be
 >   gone after a Supervisor restart). So please create a complete system backup
 >   before executing this script!**
