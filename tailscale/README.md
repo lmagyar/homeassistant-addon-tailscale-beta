@@ -46,7 +46,7 @@ Zero config VPN for building secure networks.
 > - **But copying the add-on's internal state requires executing bash and python
 >   scripts inside the Supervisors container! Executng python scripts requires
 >   installing gdb and pyrasite inside the Supervisor's container (they will be
->   gone after a Supervisor restart). So please create a complete system backup
+>   uninstalled by the script also). So please create a complete system backup
 >   before executing this script!**
 
 ![Warning][warning_stripe]

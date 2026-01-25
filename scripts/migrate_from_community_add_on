@@ -264,14 +264,15 @@ source /tmp/cfg_copy_args
 ## Prepare pyrasite
 ################################################################################
 
-echo -e "Installing gdb in Supervisor's container...\n"
+echo -e "Installing gdb in Supervisor's container..."
 
-apk add --upgrade --no-cache --quiet --no-progress gdb
+apk add --no-cache --quiet --no-progress gdb
+echo
 
-echo -e "Installing Pyrasite in Supervisor's container...\n"
+echo -e "Installing Pyrasite in Supervisor's container..."
 
 if ! pip freeze | grep -Eq '^pyrasite-ng=='; then
-  pip install --root-user-action ignore --no-input --quiet pyrasite-ng
+  pip install --root-user-action ignore --no-input --quiet pyrasite-ng==2.0.3
 fi
 
 mkdir -p /tmp/pyrasite-fake-bin
@@ -285,11 +286,13 @@ fi
 EOPS
 chmod 755 /tmp/pyrasite-fake-bin/ps
 
+echo
+
 ################################################################################
 ## Copy configuration
 ################################################################################
 
-echo -e "Copying configuration from ${from} (${from_name}) to ${to} (${to_name})...\n"
+echo -e "Copying configuration from ${from} (${from_name}) to ${to} (${to_name})..."
 
 function merge_options() {
   local -n from=${1}
@@ -325,6 +328,8 @@ cp -f /tmp/new_addons.json /data/addons.json
 mkdir -p /data/addons/data/$to
 cp -a /data/addons/data/$from/. /data/addons/data/$to
 
+echo
+
 ################################################################################
 ## Reread configuration
 ################################################################################
@@ -343,6 +348,21 @@ print("Supervisor has reread the modified add-ons configuration data")
 EOPY
 
 PATH=/tmp/pyrasite-fake-bin:$PATH pyrasite $(/bin/ps | grep -E "python3\s-m\ssupervisor" | awk '{ print $1 }') --output localterm --ipc-timeout 60 /tmp/reread_addons.py
+
+################################################################################
+## Remove pyrasite
+################################################################################
+
+echo -e "Uninstalling Pyrasite in Supervisor's container..."
+
+rm -rf /tmp/pyrasite-fake-bin
+pip uninstall --root-user-action ignore --yes --quiet pyrasite-ng urwid wcwidth
+echo
+
+echo -e "Uninstalling gdb in Supervisor's container..."
+
+apk del --no-cache --quiet --no-progress gdb
+echo
 
 EODOCKER
 
