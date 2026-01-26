@@ -33,6 +33,10 @@ EOFROMDEFAULTS
 # rename tags to advertise_tags
 declare from_patch='.advertise_tags = .tags | del(.tags)'
 
+# addresses to be removed from net config
+declare dns_ipv4="100.100.100.100"
+declare dns_ipv6="fd7a:115c:a1e0::53"
+
 
 
 ################################################################################
@@ -374,6 +378,54 @@ docker cp `docker ps -q -f name="^hassio_supervisor$"`:/tmp/old_addons.json "${a
 echo
 echo -e "NOTICE: If everything goes well, you can safely delete the ${addons_backup_filename} file later"
 echo -e "To restore it, use: docker cp ${addons_backup_filename} \`docker ps -q -f name=\"^hassio_supervisor$\"\`:/data/addons.json\n"
+
+################################################################################
+# Check network config
+################################################################################
+
+if bashio::var.has_value "${dns_ipv4}"; then
+  # select interfaces where it is used (ipv4)
+  for interface in $(ha net info --raw-json \
+    | jq -rcM ".data.interfaces[] | select(.ipv4.nameservers | index(\"${dns_ipv4}\")) | .interface")
+  do
+    echo -e "NOTICE: Configuring add-on provided DNS addresses for network interfaces is bad practice and causes issues"
+    echo -e "NOTICE: Please check your configuration based on the ${to} (${to_name}) add-on's documentation"
+    if ha net info "${interface}" --raw-json \
+      | jq -ercM '.data.ipv4.method != "static"' > /dev/null
+    then
+      echo -e "WARNING: Interface ${interface} IPv4 configuration is not static, please remove manually the DNS server ${dns_ipv4} from ${interface} configuration"
+    else
+      echo -e "Removing DNS server ${dns_ipv4} from interface ${interface} configuration..."
+      # ha net update "${interface}" --ipv4-nameserver ... is broken, have to send the whole config
+      bashio::api.supervisor POST "/network/interface/${interface}/update" "$(ha net info "${interface}" --raw-json \
+        | jq -ercM ".data.ipv4 | {address, nameservers, gateway} | del(.nameservers[.nameservers | index(\"${dns_ipv4}\")]) | {ipv4: .}")" > /dev/null
+    fi
+    echo
+  done
+fi
+
+if bashio::var.has_value "${dns_ipv6}"; then
+  # select interfaces where it is used (ipv6)
+  for interface in $(ha net info --raw-json \
+    | jq -rcM ".data.interfaces[] | select(.ipv6.nameservers | index(\"${dns_ipv6}\")) | .interface")
+  do
+    echo -e "NOTICE: Configuring add-on provided DNS addresses for network interfaces is bad practice and causes issues"
+    echo -e "NOTICE: Please check your configuration based on the ${to} (${to_name}) add-on's documentation"
+    if ha net info "${interface}" --raw-json \
+      | jq -ercM '.data.ipv6.method != "static"' > /dev/null
+    then
+      echo -e "WARNING: Interface ${interface} IPv6 configuration is not static, please remove manually the DNS server ${dns_ipv6} from ${interface} configuration"
+    else
+      echo -e "Removing DNS server ${dns_ipv6} from interface ${interface} configuration..."
+      # ha net update "${interface}" --ipv6-nameserver ... is broken, have to send the whole config
+      bashio::api.supervisor POST "/network/interface/${interface}/update" "$(ha net info "${interface}" --raw-json \
+        | jq -ercM ".data.ipv6 | {address, nameservers, gateway} | del(.nameservers[.nameservers | index(\"${dns_ipv6}\")]) | {ipv6: .}")" > /dev/null
+    fi
+    echo
+  done
+fi
+
+bashio::cache.flush_all
 
 ################################################################################
 # Enable, start "to" add-on
