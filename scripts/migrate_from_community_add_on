@@ -40,6 +40,23 @@ declare dns_ipv6="fd7a:115c:a1e0::53"
 
 
 ################################################################################
+# Initialization
+################################################################################
+
+echo
+echo "****************************************************************************************************"
+echo
+echo "If the migration script fails, fix the problem that caused it to fail, and start the script again!"
+echo
+echo "The migration script can be run multiple times, you will end up in the same state!"
+echo
+echo "****************************************************************************************************"
+echo
+
+bashio::cache.flush_all
+
+################################################################################
+# Function definitions
 ################################################################################
 
 # This is curently missing from bashio
@@ -100,22 +117,6 @@ function wait_for_backup() {
     fi
   done
 }
-
-################################################################################
-# Initialization
-################################################################################
-
-bashio::cache.flush_all
-
-echo
-echo "****************************************************************************************************"
-echo
-echo "If the migration script fails, fix the problem that caused it to fail, and start the script again!"
-echo
-echo "The migration script can be run multiple times, you will end up in the same state!"
-echo
-echo "****************************************************************************************************"
-echo
 
 ################################################################################
 # Check "from" add-on and it's version
