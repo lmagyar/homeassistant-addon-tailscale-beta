@@ -108,6 +108,14 @@ function wait_for_backup() {
 bashio::cache.flush_all
 
 echo
+echo "****************************************************************************************************"
+echo
+echo "If the migration script fails, fix the problem that caused it to fail, and start the script again!"
+echo
+echo "The migration script can be run multiple times, you will end up in the same state!"
+echo
+echo "****************************************************************************************************"
+echo
 
 ################################################################################
 # Check "from" add-on and it's version
