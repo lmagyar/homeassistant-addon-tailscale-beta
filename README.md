@@ -31,39 +31,27 @@ Zero config VPN for building secure networks.
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 
-> Migration from the community add-on to this fork:
+> One-click migration from the community add-on to this fork:
+> - Install the **Advanced SSH & Web Terminal** add-on
+> - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale-beta/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
 >
-> **Note:** This is **not** an in-place replacement of the community add-on, but
-> another (though very similar) standalone add-on.
->
-> 1. Stop the original community add-on
-> 1. Uninstall the original add-on **or** disable **Start on boot**, **Watchdog**,
->    **Autoupdate** and **Add to sidebar** of the original add-on
-> 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
->    find your Home Assistant instance
-> 1. Click on the **&hellip;** icon at the right side and select the **Remove...**
->    option (this is to be able to use the same device name again)
-> 1. Install the fork (see down below the Installation section)
-> 1. Copy the configuration YAML of the original add-on to this fork
->    - **Note:** **DO NOT USE THE UI** to copy the configuration, Home Assistant's
->      add-on config UI is totally broken
->    - Navigate to the **Configuration** tab -> **&hellip;** -> **Edit in YAML**
->    - Copy-paste the settings to the forked add-on, but do not overwrite it
->      completely, because there are more options in the forked add-on, and even
->      the common options are not mandatory in the original add-on (ie. missing
->      from the yaml), so remove/overwrite only the options of the forked add-on
->      that you are copying from the original add-on, and **DO NOT SAVE** it yet
->    - Rename `tags:` to `advertise_tags:`
->    - **SAVE** it now
-> 1. Enable **Start on boot** and **Watchdog** of the forked add-on
-> 1. Start the forked add-on
-> 1. Check the logs to see if everything went well
-> 1. Open the **Web UI** to complete authentication
->
->    **Note:** _Some browsers don't work with this step. It is recommended to
->    complete this step on a desktop or laptop computer using the Chrome browser._
->
-> 1. Check the logs again to see if everything went well.
+> **Note:**
+> - This will install the forked version (if not already installed), backup and
+>   stop the community version, copy and update the configuration, and (this is
+>   the big thing) will also copy the internal state of the add-on, then start
+>   the forked version.
+> - With copying the add-on internal state, the new forked add-on will start up
+>   with the exact same state, ie. with the same tailnet authentication also. So
+>   **do not** remove the current device from Tailscale's admin page, the forked
+>   add-on will jump into it's place.
+> - And even if you executed previously some tailscale configuration inside the
+>   add-ons container, those settings will be also migrated with the internal
+>   state.
+> - **But copying the add-on's internal state requires executing bash and python
+>   scripts inside the Supervisor's container! Executing python scripts requires
+>   installing gdb and pyrasite inside the Supervisor's container (they will be
+>   uninstalled by the script also). So please create a complete system backup
+>   before executing this script!**
 
 ![Warning][warning_stripe]
 
