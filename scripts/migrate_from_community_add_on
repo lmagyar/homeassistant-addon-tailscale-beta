@@ -101,8 +101,6 @@ function wait_for_backup() {
 # Initialization
 ################################################################################
 
-declare backup_job
-
 bashio::cache.flush_all
 
 echo
