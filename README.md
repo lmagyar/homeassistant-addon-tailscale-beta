@@ -29,7 +29,7 @@ Zero config VPN for building secure networks.
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 
 > One-click migration from the community add-on to this fork:
-> - Install the **Advanced SSH & Web Terminal** add-on
+> - Install the **Advanced SSH & Web Terminal** add-on and disable it's protection mode
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
 >
 > **Note:**
