@@ -129,7 +129,7 @@ fi
 
 if bashio::var.true "$(bashio::addon.protected 'self')"; then
   echo -e "ERROR: Protection mode is enabled!\n"
-  echo -e "To be able to use this script, you need to disable protection mode on this add-on."
+  echo -e "To be able to use this script, you need to disable protection mode on the Advanced SSH & Web Terminal add-on."
   echo -e "Without it, the script is unable to access Docker.\n"
   echo -e "Steps:"
   echo -e " - Go to the Supervisor Panel."
