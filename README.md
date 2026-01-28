@@ -117,4 +117,3 @@ For more details, please see the add-on's [Documentation][Documentation] pages.
 [updated]: https://github.com/lmagyar/homeassistant-addon-tailscale/commits/main
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_addon]: https://github.com/hassio-addons/addon-tailscale
-[tailscale_machines]: https://login.tailscale.com/admin/machines
