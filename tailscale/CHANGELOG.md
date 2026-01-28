@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.26.1.11 (forked)
+
+- Release unreleased changes from community add-on
+  - Update tailscale/tailscale to v1.94.1
+
 ## 0.26.1.10 (forked)
 
 - Bugfix for previous MagicDNS incompatibility fix (prevent logging SERVFAIL lines when accept_dns is disabled)
