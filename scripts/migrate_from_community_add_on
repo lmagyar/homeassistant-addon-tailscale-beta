@@ -119,6 +119,27 @@ function wait_for_backup() {
 }
 
 ################################################################################
+# Check running environment
+################################################################################
+
+if ! bashio::var.equals "$(bashio::addons "self" "false" ".slug")" "a0d7b954_ssh"; then
+  echo -e "ERROR: You are not running this script within the Advanced SSH & Web Terminal add-on!\n"
+  exit 1
+fi
+
+if bashio::var.true "$(bashio::addon.protected "self")"; then
+  echo -e "ERROR: Protection mode is enabled!\n"
+  echo -e "To be able to use this script, you need to disable protection mode on the Advanced SSH & Web Terminal add-on."
+  echo -e "Without it, the script is unable to access Docker.\n"
+  echo -e "Steps:"
+  echo -e " - Go to the Supervisor Panel."
+  echo -e " - Click on the Advanced SSH & Web Terminal add-on."
+  echo -e " - Set the 'Protection mode' switch to off."
+  echo -e " - Restart the add-on.\n"
+  exit 1
+fi
+
+################################################################################
 # Check "from" add-on and it's version
 ################################################################################
 

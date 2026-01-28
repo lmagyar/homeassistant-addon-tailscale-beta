@@ -12,7 +12,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community add-on
->   - Update tailscale/tailscale to v1.92.5
+>   - Update tailscale/tailscale to v1.94.1
 >   - Make exit-node configurable
 > - Release pending changes from community add-on
 >   - Make all config options mandatory, fill in the default values for previously optional config options
@@ -32,7 +32,7 @@ Zero config VPN for building secure networks.
 >   - Configure log format for the add-on to be compatible with Tailscale's format
 
 > One-click migration from the community add-on to this fork:
-> - Install the **Advanced SSH & Web Terminal** add-on
+> - Install the **Advanced SSH & Web Terminal** add-on and disable it's protection mode
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale-beta/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
 >
 > **Note:**
