@@ -5,9 +5,6 @@
 > This is a **fork** of the [community app][community_app]!
 >
 > Changes:
-> - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.94.1
->   - Make exit-node configurable
 > - Release pending changes from community app
 >   - Make all config options mandatory, fill in the default values for previously optional config options
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior

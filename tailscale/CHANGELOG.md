@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Merge released changes from community app
+  - Refactoring and renaming add-ons to apps
+
 ## 0.26.1.11 (forked)
 
 - Release unreleased changes from community app
