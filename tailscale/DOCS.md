@@ -46,8 +46,7 @@ however, it is nice to know where you need to go later on.
 
 ## Installation
 
-1. Navigate in your Home Assistant frontend to **Settings** -> **Apps** ->
-   **App Store**.
+1. In Home Assistant, go to **Settings** -> **Apps** -> **Install app**.
 1. In the **...** menu at the top right corner click **Repositories**, add
    `https://github.com/lmagyar/homeassistant-addon-tailscale` as repository.
 1. Find the "Tailscale with features" app and click it. If it doesn't show
