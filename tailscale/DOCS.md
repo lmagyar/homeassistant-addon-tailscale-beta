@@ -9,19 +9,21 @@
 > This is a **fork** of the [community app][community_app]!
 >
 > Changes:
-> - Release pending changes from community app
+> - Release unreleased changes from community app
+>   - Fix MagicDNS incompatibility with Home Assistant
 >   - Make all config options mandatory, fill in the default values for previously optional config options
+>   - Make always use derp option configurable
+> - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
->   - Fix MagicDNS incompatibility with Home Assistant
->   - Make always use derp option configurable
->   - Create persistent notification also (not just log warning) when key expiration is detected
+>   - Make service name option configurable for Share Home Assistant option
 > - Withhold changes from community app (will be released here later)
 >   - Drop support for armv7 architecture
 >   - Update App base image to v19 (drop armv7 support)
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
+>   - Create persistent notification also (not just log warning) when key expiration is detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the app to be compatible with Tailscale's format
@@ -106,6 +108,7 @@ log_level: info
 login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
+share_service_name: "svc:homeassistant"
 snat_subnet_routes: true
 ssh: false
 stateful_filtering: false
@@ -447,6 +450,18 @@ Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
 Port 443 is used by default.
 
+### Option: `share_service_name`
+
+This option lets you specify the service name the Tailscale Serve and Funnel
+features will use to present your Home Assistant instance on the tailnet. They
+need to start with `svc:`.
+
+More information: [Services][tailscale_info_services]
+
+This option is unused by default. To make it visible on the configuration
+editor, click "Show unused optional configuration options" at the bottom of the
+page.
+
 ### Option: `snat_subnet_routes`
 
 This option allows subnet devices to see the traffic originating from the subnet
@@ -695,22 +710,23 @@ You could also [open an issue here][issue] on GitHub.
 [community_app]: https://github.com/hassio-addons/app-tailscale
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
-[tailscale_info_dns]: https://tailscale.com/kb/1054/dns
-[tailscale_info_exit_nodes]: https://tailscale.com/kb/1103/exit-nodes
-[tailscale_info_app_connectors]: https://tailscale.com/kb/1281/app-connectors
-[tailscale_info_funnel]: https://tailscale.com/kb/1223/funnel
-[tailscale_info_funnel_policy_requirement]: https://tailscale.com/kb/1223/funnel#requirements-and-limitations
-[tailscale_info_https]: https://tailscale.com/kb/1153/enabling-https
-[tailscale_info_key_expiry]: https://tailscale.com/kb/1028/key-expiry
-[tailscale_info_magicdns]: https://tailscale.com/kb/1081/magicdns
-[tailscale_info_pi_hole]: https://tailscale.com/kb/1114/pi-hole
-[tailscale_info_quad100]: https://tailscale.com/kb/1381/what-is-quad100
-[tailscale_info_serve]: https://tailscale.com/kb/1312/serve
-[tailscale_info_site_to_site]: https://tailscale.com/kb/1214/site-to-site
-[tailscale_info_ssh]: https://tailscale.com/kb/1193/tailscale-ssh/
-[tailscale_info_subnets]: https://tailscale.com/kb/1019/subnets
-[tailscale_info_tags]: https://tailscale.com/kb/1068/tags
-[tailscale_info_taildrive]: https://tailscale.com/kb/1369/taildrive
-[tailscale_info_taildrop]: https://tailscale.com/kb/1106/taildrop
-[tailscale_info_userspace_networking]: https://tailscale.com/kb/1112/userspace-networking
+[tailscale_info_dns]: https://tailscale.com/docs/reference/dns-in-tailscale
+[tailscale_info_exit_nodes]: https://tailscale.com/docs/features/exit-nodes
+[tailscale_info_app_connectors]: https://tailscale.com/docs/features/app-connectors
+[tailscale_info_funnel]: https://tailscale.com/docs/features/tailscale-funnel
+[tailscale_info_funnel_policy_requirement]: https://tailscale.com/docs/features/tailscale-funnel#requirements-and-limitations
+[tailscale_info_https]: https://tailscale.com/docs/how-to/set-up-https-certificates
+[tailscale_info_key_expiry]: https://tailscale.com/docs/features/access-control/key-expiry
+[tailscale_info_magicdns]: https://tailscale.com/docs/features/magicdns
+[tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
+[tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
+[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
+[tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
+[tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
+[tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
+[tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers
+[tailscale_info_tags]: https://tailscale.com/docs/features/tags
+[tailscale_info_taildrive]: https://tailscale.com/docs/features/taildrive
+[tailscale_info_taildrop]: https://tailscale.com/docs/features/taildrop
+[tailscale_info_userspace_networking]: https://tailscale.com/docs/concepts/userspace-networking
 [tailscale_machines]: https://login.tailscale.com/admin/machines

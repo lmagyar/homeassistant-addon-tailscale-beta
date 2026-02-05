@@ -4,6 +4,8 @@
 
 - Merge released changes from community app
   - Refactoring and renaming add-ons to apps
+- Release pending changes from community app
+  - Make service name option configurable for Share Home Assistant option
 
 ## 0.26.1.11 (forked)
 
