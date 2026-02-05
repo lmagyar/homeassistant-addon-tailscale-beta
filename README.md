@@ -14,6 +14,7 @@ Zero config VPN for building secure networks.
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
 >   - Fix MagicDNS incompatibility with Home Assistant
+>   - Make service name option configurable for Share Home Assistant option
 >   - Make always use derp option configurable
 >   - Create persistent notification also (not just log warning) when key expiration is detected
 > - Withhold changes from community app (will be released here later)
