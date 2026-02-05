@@ -7,20 +7,21 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community app][community_app]!
 >
 > Changes:
-> - Release pending changes from community app
+> - Release unreleased changes from community app
+>   - Fix MagicDNS incompatibility with Home Assistant
 >   - Make all config options mandatory, fill in the default values for previously optional config options
+>   - Make always use derp option configurable
+> - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 >   - Add support for Taildrive
->   - Fix MagicDNS incompatibility with Home Assistant
 >   - Make service name option configurable for Share Home Assistant option
->   - Make always use derp option configurable
->   - Create persistent notification also (not just log warning) when key expiration is detected
 > - Withhold changes from community app (will be released here later)
 >   - Drop support for armv7 architecture
 >   - Update App base image to v19 (drop armv7 support)
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
+>   - Create persistent notification also (not just log warning) when key expiration is detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the app to be compatible with Tailscale's format
