@@ -233,6 +233,20 @@ This option allows you to set DSCP value on all tailscaled originated network
 traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
+If you want to minimize the traffic on your mobile internet by restrict the traffic to this DSCP value, you should also enable accessing the addresses below without this DSCP value (ie. enable their usage for Home Assistant and other apps)
+- 162.159.200.1 (time.cloudflare.com)
+- 162.159.200.123 (time.cloudflare.com)
+- 1.1.1.1 (cloudflare dns)
+- 1.0.0.1 (cloudflare dns)
+- 8.8.8.8 (google dns)
+- 8.8.4.4 (google dns)
+- 172.65.32.248 (acme-v02.api.letsencrypt.org)
+- 151.101.1.195 (mobile-apps.home-assistant.io)
+- 151.101.65.195 (mobile-apps.home-assistant.io)
+- 104.17.175.230 (api.pwnedpasswords.com)
+- 104.17.96.141 (api.pwnedpasswords.com)
+- x.x.x.x (your mobile internet stick's admin page)
+
 When not set, this option is disabled by default, i.e. DSCP will be set to the
 default 0. To make this option visible on the configuration editor, click "Show
 unused optional configuration options" at the bottom of the page.
