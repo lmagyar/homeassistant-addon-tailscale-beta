@@ -708,9 +708,9 @@ You could also [open an issue here][issue] on GitHub.
 [community_app]: https://github.com/hassio-addons/app-tailscale
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
+[tailscale_info_app_connectors]: https://tailscale.com/docs/features/app-connectors
 [tailscale_info_dns]: https://tailscale.com/docs/reference/dns-in-tailscale
 [tailscale_info_exit_nodes]: https://tailscale.com/docs/features/exit-nodes
-[tailscale_info_app_connectors]: https://tailscale.com/docs/features/app-connectors
 [tailscale_info_funnel]: https://tailscale.com/docs/features/tailscale-funnel
 [tailscale_info_funnel_policy_requirement]: https://tailscale.com/docs/features/tailscale-funnel#requirements-and-limitations
 [tailscale_info_https]: https://tailscale.com/docs/how-to/set-up-https-certificates
@@ -718,8 +718,8 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_magicdns]: https://tailscale.com/docs/features/magicdns
 [tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
 [tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
-[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
+[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
 [tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
 [tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers
