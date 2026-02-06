@@ -233,7 +233,10 @@ This option allows you to set DSCP value on all tailscaled originated network
 traffic. This allows you to handle Tailscale's network traffic on your router
 separately from other network traffic.
 
-If you want to minimize the traffic on your mobile internet by restrict the traffic to this DSCP value, you should also enable accessing the addresses below without this DSCP value (ie. enable their usage for Home Assistant and other apps)
+If you want to minimize the traffic on your mobile internet by restricting the
+traffic to this DSCP value, you should also enable accessing the addresses below
+without this DSCP value (ie. enable their usage for Home Assistant and other
+apps):
 - 162.159.200.1 (time.cloudflare.com)
 - 162.159.200.123 (time.cloudflare.com)
 - 1.1.1.1 (cloudflare dns)
