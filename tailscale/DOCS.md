@@ -12,15 +12,15 @@
 > - Release unreleased changes from community app
 >   - Fix MagicDNS incompatibility with Home Assistant
 >   - Make all config options mandatory, fill in the default values for previously optional config options
+>   - Add support for Taildrive
 >   - Make always use derp option configurable
+>   - Make service name option configurable for Share Home Assistant option
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
->   - Add support for Taildrive
->   - Make service name option configurable for Share Home Assistant option
 > - Withhold changes from community app (will be released here later)
 >   - Drop support for armv7 architecture
->   - Update App base image to v19 (drop armv7 support)
+>   - Update App base image to v20 (drop armv7 support)
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Create persistent notification also (not just log warning) when key expiration is detected
@@ -200,7 +200,7 @@ subnets on all supported interfaces.
 
 More information: [Subnet routers][tailscale_info_subnets]
 
-**Note:** After you add subnets to this option, you also has to enable them on
+**Note:** After you add subnets to this option, you also have to enable them on
 Tailscale's admin console.
 
 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
@@ -262,7 +262,7 @@ section of this documentation.
 **Note:** The `exit-node-allow-lan-access` option is always enabled when an exit
 node is specified. This is required by the Home Assistant environment.
 
-**Note:** After you enable this option, you also has to enable it on Tailscale's
+**Note:** After you enable this option, you also have to enable it on Tailscale's
 admin console.
 
 1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
@@ -712,9 +712,9 @@ You could also [open an issue here][issue] on GitHub.
 [community_app]: https://github.com/hassio-addons/app-tailscale
 [tailscale_acls]: https://login.tailscale.com/admin/acls
 [tailscale_dns]: https://login.tailscale.com/admin/dns
+[tailscale_info_app_connectors]: https://tailscale.com/docs/features/app-connectors
 [tailscale_info_dns]: https://tailscale.com/docs/reference/dns-in-tailscale
 [tailscale_info_exit_nodes]: https://tailscale.com/docs/features/exit-nodes
-[tailscale_info_app_connectors]: https://tailscale.com/docs/features/app-connectors
 [tailscale_info_funnel]: https://tailscale.com/docs/features/tailscale-funnel
 [tailscale_info_funnel_policy_requirement]: https://tailscale.com/docs/features/tailscale-funnel#requirements-and-limitations
 [tailscale_info_https]: https://tailscale.com/docs/how-to/set-up-https-certificates
@@ -722,8 +722,8 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_magicdns]: https://tailscale.com/docs/features/magicdns
 [tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
 [tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
-[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
+[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
 [tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
 [tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers
