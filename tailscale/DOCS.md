@@ -434,7 +434,7 @@ try to clear all site-related cookies, clear all browser cache, and restart the
 browser.
 
 **Note:** If you want to share other services than Home Assistant, see the
-"Sharing other services with serve or funnel" section of this documentation.
+"Sharing other apps with serve or funnel" section of this documentation.
 
 ### Option: `share_on_port`
 
@@ -612,12 +612,12 @@ The app's health is set unhealthy:
 
 - After a (re)start can't get online for longer than 1 hour.
 
-## Sharing other services with serve or funnel
+## Sharing other apps with serve or funnel
 
 The `share_homeassistant` option allows you to enable Tailscale Serve or Funnel
 features to present your Home Assistant instance.
 
-If you want to share other services than Home Assistant, it can be done, but
+If you want to share other apps than Home Assistant, it can be done, but
 there is no app configuration option for this. Maybe Tailscale will add this
 to the web UI in the future.
 
@@ -646,45 +646,58 @@ Steps:
    `docker ps -q -f name=tailscale` /bin/bash`` Now you are in this app's
    cli.
 
-1. Execute something like `/opt/tailscale funnel --bg --https=8443
-   --set-path=/someservice localhost:1234`
+1. Execute something like `/opt/tailscale serve --bg --service=svc:someservice
+   --https=8443 --set-path=/someservice localhost:1234`
 
    - `serve` or `funnel`, your choice
 
    - `--bg` means Tailscale will start up the service in the backgroud, when the
      app is started, and Tailscale remembers this setting
 
+   - `--service=svc:someservice` this is optional, and can be used only in case
+     of serve, not funnel
+
+     This is useful if you want to share your other app with a unique name and
+     IP within your tailnet (not the device's tailnet name and IP), though have
+     special requirements, like you must use a tag-based identity for this
+     device and have to configure the service on Tailscale's admin page.
+
+     More information: [Services][tailscale_info_services]
+
    - `--https:8443` must be different from the app's serve/funnel port, or
      you will get an "foreground already exists under this port" error from
      Tailscale
 
-   - `--set-path=/someservice` if you plan to share multiple services/ports, you
-     can use different paths for each service
+   - `--set-path=/someservice` if you plan to share multiple apps/ports without
+     using Tailscale's service feature (see above), you can use different paths
+     for each app, but most apps don't like being served from a different route,
+     so usually you can use only `/`
 
-   - `localhost:1234` port 1234 is where your other app's service is
-     accessible on the localhost
+   - `localhost:1234` port 1234 is where your other app is accessible on the
+     localhost
 
    - You can disable/delete this config with `/opt/tailscale funnel --bg
-     --https=8443 --set-path=/someservice off`
+     --service=svc:someservice --https=8443 --set-path=/someservice off`
 
-1. You can add as many different paths as you want.
+1. You can add as many different apps as you want.
 
 Result:
 
-- You can access HA at https://devicename.tailxxxx.ts.net (with the help of the
-  `share_homeassistant` option)
+- You can access Home Assistant at https://devicename.tailxxxx.ts.net (with the
+  help of the `share_homeassistant` option)
 
-- You can access your other service at
-  https://devicename.tailxxxx.ts.net:8443/someservice
+- You can access your other app at eg.
+  https://devicename.tailxxxx.ts.net:8443/someservice or
+  https://someservice.tailxxxx.ts.net:8443
 
-**Note:** If your service is not responding at
+**Note:** If your other app is not responding at
 https://devicename.tailxxxx.ts.net:8443/someservice url:
 
 - Turn on Inspect view in your browser and check what's going on (errors,
   network communication, etc.).
 
-- Try `--set-path=/` in the funnel config and try accessing the service at
-  https://devicename.tailxxxx.ts.net:8443/.
+- Try `--set-path=/` in the serve/funnel config and try accessing the other app
+  at https://devicename.tailxxxx.ts.net:8443/.
 
 ## Support
 
