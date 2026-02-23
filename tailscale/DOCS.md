@@ -111,6 +111,8 @@ share_on_port: 443
 share_service_name: "svc:homeassistant"
 snat_subnet_routes: true
 ssh: false
+ssh_packages: []
+ssh_init_commands: []
 stateful_filtering: false
 taildrive:
   addons: false
@@ -508,6 +510,47 @@ This option is disabled by default.
 
 **Note**: Using Tailscale SSH you will access only this app's command line,
 **_not_** eg. the Advanced SSH app's command line!
+
+### Option: `ssh_packages`
+
+This option allows you to install Alpine packages on add-on startup to
+preconfigure your Tailscale SSH shell environment. **Only applies when `ssh` is
+enabled.**
+
+This option is disabled by default (empty list).
+
+Requires network access for package installation. Failures (e.g. Alpine
+repositories unreachable) are non-blocking: the add-on logs a warning and
+continues so that Tailscale can start.
+
+**Example:**
+
+```yaml
+ssh: true
+ssh_packages:
+  - nodejs
+  - npm
+```
+
+### Option: `ssh_init_commands`
+
+This option allows you to run custom commands on add-on startup to preconfigure
+your Tailscale SSH shell (e.g. set npm prefix, create symlinks). **Only applies
+when `ssh` is enabled.**
+
+This option is disabled by default (empty list).
+
+Each command is executed with `eval` in the shell. Failures are non-blocking:
+the add-on logs a warning and continues so that Tailscale can start.
+
+**Example:**
+
+```yaml
+ssh: true
+ssh_init_commands:
+  - npm config set prefix /data/npm
+  - mkdir -p /data/npm/bin
+```
 
 ### Option: `stateful_filtering`
 
