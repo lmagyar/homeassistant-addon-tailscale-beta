@@ -110,7 +110,7 @@ share_homeassistant: disabled
 share_on_port: 443
 share_service_name: "svc:homeassistant"
 snat_subnet_routes: true
-ssh:
+tailscale_ssh:
   enabled: false
   packages: []
   init_commands: []
@@ -500,11 +500,11 @@ MTU" for you).
 Keep it enabled if preserving the real source IP address is not critical for
 your use case.
 
-### Option: `ssh`
+### Option: `tailscale_ssh`
 
 This option configures Tailscale SSH and its shell environment.
 
-#### `ssh.enabled`
+#### `tailscale_ssh.enabled`
 
 Enables SSH capabilities that you can manage from your Tailscale account.
 
@@ -515,19 +515,19 @@ This option is disabled by default.
 **Note**: Using Tailscale SSH you will access only this app's command line,
 **_not_** eg. the Advanced SSH app's command line!
 
-#### `ssh.packages`
+#### `tailscale_ssh.packages`
 
 Alpine packages to install on add-on startup to preconfigure your Tailscale SSH
-shell. **Only applies when `ssh.enabled` is true.** Default is empty list.
+shell. **Only applies when `tailscale_ssh.enabled` is true.** Default is empty list.
 
 Requires network access. Failures (e.g. Alpine repositories unreachable) are
 non-blocking: the add-on logs a warning and continues so that Tailscale can
 start.
 
-#### `ssh.init_commands`
+#### `tailscale_ssh.init_commands`
 
 Custom commands to run on startup to preconfigure your Tailscale SSH shell
-(e.g. set npm prefix, create symlinks). **Only applies when `ssh.enabled` is
+(e.g. set npm prefix, create symlinks). **Only applies when `tailscale_ssh.enabled` is
 true.** Default is empty list.
 
 Each command is executed with `eval` in the shell. Failures are non-blocking.
@@ -535,7 +535,7 @@ Each command is executed with `eval` in the shell. Failures are non-blocking.
 **Example:**
 
 ```yaml
-ssh:
+tailscale_ssh:
   enabled: true
   packages:
     - nodejs
