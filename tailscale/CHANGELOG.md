@@ -1,5 +1,11 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix NetworkManager dispatcher script crashes due to s6-overlay changes
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.96.4
+
 ## 0.27.1.2 (forked)
 
 - Bugfix for MagicDNS: do not log SERVFAIL caused by Supervisor's hourly tests
