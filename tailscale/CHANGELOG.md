@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.96.4
+
 ## 0.27.1.2 (forked)
 
 - Bugfix for MagicDNS: do not log SERVFAIL caused by Supervisor's hourly tests
