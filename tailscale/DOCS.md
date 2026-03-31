@@ -756,7 +756,7 @@ You have several options to get them answered:
 
 You could also [open an issue here][issue] on GitHub.
 
-[discord]: https://discord.gg/c5DvZ4e
+[discord]: https://www.home-assistant.io/join-chat
 [forum]: https://community.home-assistant.io/
 [headscale]: https://github.com/juanfont/headscale
 [http_integration]: https://www.home-assistant.io/integrations/http/
