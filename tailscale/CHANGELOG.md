@@ -2,6 +2,7 @@
 
 ## vNext (forked)
 
+- Fix NetworkManager dispatcher script crashes due to s6-overlay changes
 - Release unreleased changes from community app
   - Update tailscale/tailscale to v1.96.4
 
