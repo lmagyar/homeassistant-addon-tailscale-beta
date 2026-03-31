@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.27.1.3 (forked)
 
 - Fix NetworkManager dispatcher script crashes due to s6-overlay changes
 - Release unreleased changes from community app
