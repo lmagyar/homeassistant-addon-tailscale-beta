@@ -7,16 +7,16 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.94.2"
+ARG TAILSCALE_VERSION="v1.96.4"
 RUN \
     apk add --no-cache \
-        bind-tools=9.20.19-r0 \
+        bind-tools=9.20.21-r0 \
         dnsmasq=2.91-r0 \
         ethtool=6.15-r0 \
         ipcalc=1.0.3-r1 \
         iproute2=6.17.0-r0 \
         iptables=1.8.11-r1 \
-        nginx=1.28.2-r1 \
+        nginx=1.28.3-r0 \
         coreutils=9.8-r1 \
         networkmanager=1.54.3-r0 \
         inotify-tools=4.23.9.0-r0 \
