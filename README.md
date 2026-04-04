@@ -9,12 +9,6 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.96.4
->   - Fix MagicDNS incompatibility with Home Assistant
->   - Make all config options mandatory, fill in the default values for previously optional config options
->   - Add support for Taildrive
->   - Make always use derp option configurable
->   - Make service name option configurable for Share Home Assistant option
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
