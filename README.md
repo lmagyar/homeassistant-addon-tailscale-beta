@@ -9,6 +9,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community app
+>   - Remove service name option
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***

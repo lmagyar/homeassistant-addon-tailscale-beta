@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community app
+  - Remove service name option
+
 ## 0.27.1.3 (forked)
 
 - Fix NetworkManager dispatcher script crashes due to s6-overlay changes
