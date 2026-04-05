@@ -12,12 +12,7 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.96.4
->   - Fix MagicDNS incompatibility with Home Assistant
->   - Make all config options mandatory, fill in the default values for previously optional config options
->   - Add support for Taildrive
->   - Make always use derp option configurable
->   - Make service name option configurable for Share Home Assistant option
+>   - Remove service name option
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
@@ -83,8 +78,7 @@ manages firewall rules for you, and works from anywhere you are.
 
 ## Installation
 
-1. Navigate in your Home Assistant frontend to **Settings** -> **Apps** ->
-   **App Store**.
+1. In Home Assistant, go to **Settings** -> **Apps** -> **Install app**.
 1. In the **...** menu at the top right corner click **Repositories**, add
    `https://github.com/lmagyar/homeassistant-addon-tailscale-beta` as
    repository.

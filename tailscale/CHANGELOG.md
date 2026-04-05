@@ -2,6 +2,11 @@
 
 ## vNext (forked)
 
+- Release unreleased changes from community app
+  - Remove service name option
+
+## 0.27.1.3 (forked)
+
 - Fix NetworkManager dispatcher script crashes due to s6-overlay changes
 - Release unreleased changes from community app
   - Update tailscale/tailscale to v1.96.4
