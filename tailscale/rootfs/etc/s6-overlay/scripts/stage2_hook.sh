@@ -13,6 +13,7 @@ declare forward_to_host
 declare advertise_routes
 declare tags
 declare ssh
+declare share_service_name
 
 # This is to execute potentially failing supervisor api functions within conditions,
 # where set -e is not propagated inside the function and bashio relies on set -e for api error handling
@@ -123,6 +124,13 @@ if bashio::config.false 'tailscale_ssh.enabled' || \
     ! bashio::config.has_value 'tailscale_ssh.init_commands')
 then
     rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-packages
+fi
+
+# Remove deprecated share_service_name option
+share_service_name=$(bashio::jq "${options}" '.share_service_name | select(.!=null)')
+if bashio::var.has_value "${share_service_name}"; then
+    bashio::log.info 'Removing deprecated share_service_name option'
+    bashio::addon.option 'share_service_name'
 fi
 
 # MagicDNS related service dependencies:
