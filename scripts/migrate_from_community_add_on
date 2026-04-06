@@ -8,7 +8,7 @@ readonly ssh_min_version="21.0.4"
 
 readonly from="a0d7b954_tailscale" # community
 readonly from_min_version="0.26.1"
-readonly from_max_version="0.27.1"
+readonly from_max_version="0.28.0"
 
 readonly to="09716aab_tailscale" # forked
 readonly to_repository="https://github.com/lmagyar/homeassistant-addon-tailscale"
