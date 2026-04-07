@@ -2,7 +2,7 @@
 
 ## vNext (forked)
 
-- Release unreleased changes from community app
+- Merge changes from community app
   - Remove service name option
 
 ## 0.27.1.3 (forked)
