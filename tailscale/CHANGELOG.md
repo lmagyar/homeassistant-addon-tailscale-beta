@@ -2,6 +2,25 @@
 
 ## vNext (forked)
 
+**Note:** From now on if you are running your own DNS (like AdGuard) **_on
+this_** Home Assistant device also, and this device is configured as global
+nameserver on the [DNS page](https://login.tailscale.com/admin/dns) of the admin
+console, then you don't need to configure this device differently compared to
+other tailnet devices:
+
+1. You should not disable the `accept_dns` option in this case.
+
+1. You don't need to configure your own DNS for Home Assistant
+
+1. You should configure 100.100.100.100 for Home Assistant
+
+1. You should not configure 100.100.100.100 for your tailnet domain as
+   upstream DNS server in your own DNS (e.g. in case of AdGuard
+   `[/tail1234.ts.net/]100.100.100.100`).
+
+Changes:
+
+- Fix forwarding for local tailnet connections
 - Merge changes from community app
   - Remove service name option
 
