@@ -10,7 +10,8 @@
 >
 > Changes:
 > - Release unreleased changes from community app
->   - Remove service name option
+>   - Fix forwarding for local tailnet connections
+>   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
@@ -616,17 +617,6 @@ More information: [What is 100.100.100.100][tailscale_info_quad100],
 that you always have to use the fully qualified domain name instead of only the
 device name, i.e. `ping some-tailnet-device.tail1234.ts.net` works, but `ping
 some-tailnet-device` does not work.
-
-**Note:** If you are running your own DNS (like AdGuard) **_on this_** Home
-Assistant device also, and this device is configured as global nameserver on the
-[DNS page][tailscale_dns] of the admin console, then:
-
-1. Disable the `accept_dns` option to prevent the Tailscale DNS from redirecting
-   queries from your device back to itself, which would cause a loop.
-
-1. Configure your own DNS for Home Assistant (instead of 100.100.100.100), and
-   in your own DNS configure Tailscale DNS for your tailnet domain as upstream
-   DNS server (e.g. in case of AdGuard `[/tail1234.ts.net/]100.100.100.100`).
 
 ## Healthcheck
 
