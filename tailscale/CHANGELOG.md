@@ -22,6 +22,7 @@ Changes:
 
 - Fix forwarding for local tailnet connections
 - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
+- Fix MagicDNS: Move MagicDNS egress proxy to non-default port
 - Merge changes from community app
   - Remove service name option
 
