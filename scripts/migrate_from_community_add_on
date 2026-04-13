@@ -1110,7 +1110,7 @@ def wait(coro):
   task.add_done_callback(lambda _: event.set())
   event.wait()
   return task.result()
-wait(coresys._addons.data.read_data())
+wait(coresys.addons.data.read_data())
 EOPY
 
 PATH=/tmp/pyrasite-fake-bin:$PATH pyrasite $(/bin/ps | grep -E "python3\s-m\ssupervisor" | awk '{ print $1 }') \
