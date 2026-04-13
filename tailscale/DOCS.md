@@ -78,6 +78,10 @@ their interface.
 
 ## App configuration
 
+**Note:** _Remember to restart the app when the configuration is changed._
+
+**Note:** _This is just an example, not even the default, don't copy and paste it! Create your own!_
+
 ```yaml
 accept_dns: true
 accept_routes: false
@@ -385,6 +389,10 @@ your tailnet domain.
 This can prevent browsers from warning that HTTP URLs to your Home Assistant
 instance look unencrypted (browsers are not aware that the connections between
 Tailscale nodes are secured with end-to-end encryption).
+
+**Note:** Tailscale Serve and Funnel will automatically update the certificate
+before expiration, unlike the `tailscale cert` command. Follow the steps in this
+documentation below to set up Serve or Funnel properly.
 
 With the Tailscale Serve feature, you can access your Home Assistant instance
 with the provided certificate within your tailnet from devices already connected
