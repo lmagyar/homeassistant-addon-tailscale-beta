@@ -12,7 +12,7 @@
 > - Release unreleased changes from community app
 >   - Fix forwarding for local tailnet connections
 >   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
->   - Fix MagicDNS: Move MagicDNS egress proxy to non-default port
+>   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
@@ -80,7 +80,7 @@ their interface.
 
 <https://login.tailscale.com/>
 
-## Add-on configuration
+## App configuration
 
 ```yaml
 accept_dns: true
