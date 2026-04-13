@@ -76,7 +76,7 @@ their interface.
 
 <https://login.tailscale.com/>
 
-## Add-on configuration
+## App configuration
 
 ```yaml
 accept_dns: true
