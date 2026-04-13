@@ -26,7 +26,7 @@ Changes:
 - Merge released changes from community app
   - Remove service name option
 - Merge unreleased changes from community app
-  - Update App base image to v20.0.3
+  - Update App base image to v20.0.4
 
 ## 0.27.1.3 (forked)
 
