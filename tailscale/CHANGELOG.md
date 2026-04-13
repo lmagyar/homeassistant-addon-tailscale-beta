@@ -22,7 +22,7 @@ Changes:
 
 - Fix forwarding for local tailnet connections
 - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
-- Fix MagicDNS: Move MagicDNS egress proxy to non-default port
+- Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
 - Merge changes from community app
   - Remove service name option
 
@@ -38,7 +38,7 @@ Changes:
 - For supervised installations add networking rules to apparmor.txt
 - Merge released changes from community app
   - Drop support for armv7 architecture
-  - Update Add-on base image to v20 (drop armv7 support)
+  - Update App base image to v20 (drop armv7 support)
 
 ## 0.27.1.1 (forked)
 
