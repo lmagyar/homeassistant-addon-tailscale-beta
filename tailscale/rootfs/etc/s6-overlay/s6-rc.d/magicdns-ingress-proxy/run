@@ -9,8 +9,6 @@
 
 # Sets up IPv4 and IPv6 ingress DNS proxy for MagicDNS, that inercepts queries from hassio DNS and SU.
 
-source /usr/lib/trace.sh
-
 readonly MAGIC_DNS_IPV4="100.100.100.100"
 
 readonly DNSMASQ_INGRESS_DEFAULT_PORT=51100
@@ -105,7 +103,7 @@ else
   bashio::exit.nok "Invalid MAGICDNS_MODE: '${MAGICDNS_MODE}'"
 fi
 
-if bashio_custom::trace; then
+if bashio::trace; then
   options+=(--log-queries)
   options+=(--log-debug)
 fi
