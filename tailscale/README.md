@@ -20,7 +20,7 @@ Zero config VPN for building secure networks.
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
->   - Create persistent notification also (not just log warning) when key expiration is detected
+>   - Create persistent notification also (not just log warning) when key expiration or invalid networking DNS settings are detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the app to be compatible with Tailscale's format
