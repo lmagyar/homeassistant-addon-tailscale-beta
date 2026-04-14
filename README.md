@@ -38,11 +38,7 @@ Zero config VPN for building secure networks.
 > - And even if you executed previously some tailscale configuration inside the
 >   apps container, those settings will be also migrated with the internal
 >   state.
-> - **But copying the app's internal state requires executing bash and python
->   scripts inside the Supervisor's container! Executing python scripts requires
->   installing gdb and pyrasite inside the Supervisor's container (they will be
->   uninstalled by the script also). So please create a complete system backup
->   before executing this script!**
+> - **Please create a complete system backup before executing this script!**
 
 | <img width="75%" title="Migration log" src="https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/migration_log.png"> |
 | :---: |
