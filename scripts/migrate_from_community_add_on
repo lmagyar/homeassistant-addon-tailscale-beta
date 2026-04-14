@@ -324,9 +324,7 @@ function bashio::api.supervisor() {
         return "${__BASHIO_EXIT_NOK}"
     fi
 
-    if ! bashio::var.true "${raw}" || \
-        bashio::jq.exists "${response}" ".result" 2> /dev/null
-    then
+    if ! bashio::var.true "${raw}"; then
         result=$(bashio::jq "${response}" ".result")
         if bashio::var.equals "${result}" "error"; then
             bashio::log.error "Got unexpected response from the API:" \
@@ -358,6 +356,17 @@ function bashio::api.supervisor() {
 
     echo "${result}"
     return "${__BASHIO_EXIT_OK}"
+}
+
+# This is curently missing from bashio
+
+# ------------------------------------------------------------------------------
+# Restarts the Supervisor.
+# ------------------------------------------------------------------------------
+function bashio::supervisor.restart() {
+    bashio::log.trace "${FUNCNAME[0]}"
+    bashio::api.supervisor POST /supervisor/restart
+    bashio::cache.flush_all
 }
 
 # This is curently missing from bashio
@@ -691,6 +700,8 @@ function bashio::try.failed {
         return "${__BASHIO_EXIT_NOK}"
     fi
 }
+
+# This is curently missing from bashio
 
 # ------------------------------------------------------------------------------
 # Converts a bash array to a JSON array.
