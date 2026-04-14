@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.28.1.1 (forked)
 
 **Note:** From now on if you are running your own DNS (like AdGuard) **_on
 this_** Home Assistant device also, and this device is configured as global
