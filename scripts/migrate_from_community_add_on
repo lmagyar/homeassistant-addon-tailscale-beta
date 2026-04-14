@@ -929,226 +929,122 @@ bashio::log.notice "If everything goes well, you can safely delete the ${addons_
 bashio::log.notice "In case of emergency, to restore it, use: docker cp ${addons_backup_filename} \`docker ps -q -f name=\"^hassio_supervisor$\"\`:/data/addons.json"
 
 ################################################################################
-# Copy config inside supervisor's container
+# Pause Supervisor
 ################################################################################
 
-if ! { docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash -c 'cat > /tmp/cfg_copy_args' <<EODOCKERARGS
-
-set -o errexit  # Exit script when a command exits with non-zero status
-set -o errtrace # Exit on error inside any functions or sub-shells
-set -o nounset  # Exit script on use of an undefined variable
-set -o pipefail # Return exit status of the last command in the pipe that failed
-shopt -s inherit_errexit # Command substitution inherits the value of errexit
-
-################################################################################
-## Export parameters
-################################################################################
-
-readonly from='${from}'
-readonly from_name='${from_name}'
-readonly to='${to}'
-readonly to_name='${to_name}'
-readonly from_defaults='${from_defaults}'
-readonly from_patch='${from_patch}'
-
-EODOCKERARGS
-}; then
-  bashio::exit.nok "Executing script in Supervisor's container has failed"
-fi
-
-if ! { docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash <<"EODOCKER"
-
-set -o errexit  # Exit script when a command exits with non-zero status
-set -o errtrace # Exit on error inside any functions or sub-shells
-set -o nounset  # Exit script on use of an undefined variable
-set -o pipefail # Return exit status of the last command in the pipe that failed
-shopt -s inherit_errexit # Command substitution inherits the value of errexit
+bashio::log.info "Pausing Supervisor..."
+while true
+do
+  docker pause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
+  # We can't execute bash in a paused container, we need a snapshot then start a new container
+  docker commit `docker ps -q -f name="^hassio_supervisor$"` supervisor_snapshot > /dev/null
+  # Supervisor uses atomicwrites module where atomic_write function saves temporary file with name starting with "tmp"
+  if ! result=$(docker run -i --entrypoint /bin/bash --volumes-from `docker ps -q -f name="^hassio_supervisor$"` --rm supervisor_snapshot <<< \
+    "if ! ls -p /data | grep -v / | grep -q '^tmp'; then echo OK; fi")
+  then
+    result=ERR
+  fi
+  docker rmi supervisor_snapshot > /dev/null
+  if bashio::var.equals "${result}" "ERR"; then
+    bashio::exit.nok "Executing script in Supervisor's container snapshot has failed"
+  elif bashio::var.equals "${result}" "OK"; then
+    break
+  fi
+  bashio::log.info "Waiting for Supervisor to finish saving configuration data..."
+  docker unpause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
+  sleep 2
+done
 
 ################################################################################
-## Import parameters
+# Copy app configuration
 ################################################################################
 
-source /tmp/cfg_copy_args
-
-################################################################################
-## Initialization
-################################################################################
-
-# Defaults
-readonly LOG_FD=2 #STDERR
-readonly __BASHIO_LOG_FORMAT="{LEVEL}: {MESSAGE}"
-readonly __BASHIO_LOG_LEVEL=5 # INFO
-#readonly __BASHIO_LOG_TIMESTAMP="%T"
-
-# Exit codes
-readonly __BASHIO_EXIT_OK=0
-readonly __BASHIO_EXIT_NOK=1
-
-# Log levels
-readonly __BASHIO_LOG_LEVEL_INFO=5
-readonly -A __BASHIO_LOG_LEVELS=(
-    [${__BASHIO_LOG_LEVEL_INFO}]="INFO"
-)
-
-# Colors
-readonly __BASHIO_COLORS_ESCAPE="\033[";
-readonly __BASHIO_COLORS_RESET="${__BASHIO_COLORS_ESCAPE}0m"
-readonly __BASHIO_COLORS_GREEN="${__BASHIO_COLORS_ESCAPE}32m"
-
-################################################################################
-## Function definitions
-################################################################################
-
-# These are copy/paste from bashio
-
-# ------------------------------------------------------------------------------
-# Log a message using a log level.
-#
-# Arguments:
-#   $1 Log level
-#   $2 Message to display
-# ------------------------------------------------------------------------------
-function bashio::log.log() {
-    local level=${1}
-    local message=${2}
-    local timestamp
-    local output
-
-    if [[ "${level}" -gt "${__BASHIO_LOG_LEVEL}" ]]; then
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    #timestamp=$(date +"${__BASHIO_LOG_TIMESTAMP}")
-
-    output="${__BASHIO_LOG_FORMAT}"
-    #output="${output//\{TIMESTAMP\}/"${timestamp}"}"
-    output="${output//\{MESSAGE\}/"${message}"}"
-    output="${output//\{LEVEL\}/"${__BASHIO_LOG_LEVELS[$level]}"}"
-
-    printf '%b\n' "${output}" >&"$LOG_FD"
-
-    return "${__BASHIO_EXIT_OK}"
-}
-
-# ------------------------------------------------------------------------------
-# Log a message @ info level.
-#
-# Arguments:
-#   $* Message to display
-# ------------------------------------------------------------------------------
-function bashio::log.info() {
-    local message=$*
-    bashio::log.log \
-        "${__BASHIO_LOG_LEVEL_INFO}" \
-        "${__BASHIO_COLORS_GREEN}${message}${__BASHIO_COLORS_RESET}"
-}
-
-################################################################################
-## Prepare pyrasite
-################################################################################
-
-bashio::log.info "Installing gdb in Supervisor's container..."
-
-apk add --no-cache --quiet --no-progress gdb
-
-bashio::log.info "Installing Pyrasite in Supervisor's container..."
-
-if ! pip freeze | grep -Eq '^pyrasite-ng=='; then
-  pip install --root-user-action ignore --no-input --quiet pyrasite-ng==2.0.3
-fi
-
-mkdir -p /tmp/pyrasite-fake-bin
-cat > /tmp/pyrasite-fake-bin/ps <<"EOPS"
-#!/usr/bin/env bash
-if [[ "$#" == "5" && "${1:-}" == "--no-heading" && "${2:-}" == "-o" && "${3:-}" == "cmd=" && "${4:-}" == "-p" ]]; then
-  /bin/ps -o pid=,comm= | grep -E "^\s*$5\s+" | awk '{ print $2 }'
-else
-  /bin/ps "$@"
-fi
-EOPS
-chmod 755 /tmp/pyrasite-fake-bin/ps
-
-################################################################################
-## Copy configuration
-################################################################################
-
-bashio::log.info "Copying configuration from ${from} (${from_name}) to ${to} (${to_name})..."
+bashio::log.info "Copying app configuration from ${from} (${from_name}) to ${to} (${to_name})..."
 
 function merge_options() {
-  local -n merge_from=${1}
-  local -n merge_to=${2}
-  jq -srcM 'map(to_entries) | flatten | group_by(.key) | map({key: .[0].key, value: .[0].value}) | from_entries' <<< "${merge_from}${merge_to}"
+  local -n merge_left=${1}
+  local -n merge_right=${2}
+  jq -srcM 'map(to_entries) | flatten | group_by(.key) | map({key: .[0].key, value: .[0].value}) | from_entries' <<< "${merge_left}${merge_right}"
 }
 
-from_options=$(jq -rcM ".user.\"${from}\".options" /data/addons.json)
-to_options=$(jq -rcM ".user.\"${to}\".options // \"\"" /data/addons.json)
-declare merged_options="${from_options}"
+from_user_options=$(jq -rcM ".user.\"${from}\".options" "${addons_backup_filename}")
+from_system_options=$(jq -rcM ".system.\"${from}\".options" "${addons_backup_filename}")
+to_user_options=$(jq -rcM ".user.\"${to}\".options // \"\"" "${addons_backup_filename}")
+
+# start with "from" user options
+merged_options="${from_user_options}"
+
+# merge "from" system default options
+if bashio::var.has_value "${from_system_options}"; then
+  merged_options=$(merge_options merged_options from_system_options)
+fi
 
 # merge default options
-if [[ -n "${from_defaults}" ]]; then
+if bashio::var.has_value "${from_defaults}"; then
   merged_options=$(merge_options merged_options from_defaults)
 fi
 
 # execute patch
-if [[ -n "${from_patch}" ]]; then
+if bashio::var.has_value "${from_patch}"; then
   merged_options=$(jq -rcM "${from_patch}" <<< "${merged_options}")
 fi
 
-# merge from and to options
-if [[ -n "${to_options}" ]]; then
-  merged_options=$(merge_options merged_options to_options)
+# merge "to" user options
+if bashio::var.has_value "${to_user_options}"; then
+  merged_options=$(merge_options merged_options to_user_options)
 fi
 
 # replace config with merged values
-cp -f /data/addons.json /tmp/old_addons.json
-jq --argjson merged_options "${merged_options}" ".user.\"${to}\".options = \$merged_options" /data/addons.json > /tmp/new_addons.json
-cp -f /tmp/new_addons.json /data/addons.json
-
-# copy data
-mkdir -p /data/addons/data/$to
-cp -a /data/addons/data/$from/. /data/addons/data/$to
+addons_new_filename="${addons_backup_filename/\.json/_migrated.json}"
+jq --argjson merged_options "${merged_options}" ".user.\"${to}\".options = \$merged_options" "${addons_backup_filename}" > "${addons_new_filename}"
+docker cp -q "${addons_new_filename}" `docker ps -q -f name="^hassio_supervisor$"`:/data/addons.json
+rm -f "${addons_new_filename}"
 
 ################################################################################
-## Reread configuration
+# Unpause Supervisor
 ################################################################################
 
-bashio::log.info "Rereading modified apps configuration by Supervisor..."
-
-cat > /tmp/reread_addons.py <<"EOPY"
-def wait(coro):
-  event = threading.Event()
-  task = coresys.create_task(coro)
-  task.add_done_callback(lambda _: event.set())
-  event.wait()
-  return task.result()
-wait(coresys.addons.data.read_data())
-EOPY
-
-PATH=/tmp/pyrasite-fake-bin:$PATH pyrasite $(/bin/ps | grep -E "python3\s-m\ssupervisor" | awk '{ print $1 }') \
-  --output localterm \
-  --ipc-timeout 60 \
-  /tmp/reread_addons.py \
-| sed \
-  -e "/^Pyrasite Shell 2.0$/d" \
-  -e "/^Connected to 'python3'$/d" \
-  -e "/^$/d"
+bashio::log.info "Unpausing Supervisor..."
+docker unpause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
 
 ################################################################################
-## Remove pyrasite
+# Copy app data
 ################################################################################
 
-bashio::log.info "Uninstalling Pyrasite in Supervisor's container..."
+bashio::log.info "Copying app internal data from ${from} (${from_name}) to ${to} (${to_name})..."
 
-rm -rf /tmp/pyrasite-fake-bin
-pip uninstall --root-user-action ignore --yes --quiet pyrasite-ng urwid wcwidth
-
-bashio::log.info "Uninstalling gdb in Supervisor's container..."
-
-apk del --no-cache --quiet --no-progress gdb
-
-EODOCKER
-}; then
+if ! docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash -c " \
+  rm -rf /data/addons/data/$to && \
+  mkdir -p /data/addons/data/$to && \
+  cp -a /data/addons/data/$from/. /data/addons/data/$to "
+then
   bashio::exit.nok "Executing script in Supervisor's container has failed"
+fi
+
+################################################################################
+# Restart Supervisor
+################################################################################
+
+bashio::log.info "Restarting Supervisor..."
+
+bashio::supervisor.restart | sed -e "/^$/d"
+
+WAIT_DELAY=5   # 5s
+WAIT_COUNT=60  # 60*5s = 300s = 5m
+wait_counter=0
+
+# Wait until we get "ERROR: Got unexpected response from the API: System is not ready with state: setup"
+# Test config Supervisor API availability, and wait a little on inaccessibility
+while ! eval "bashio::api.supervisor GET /addons/self/options/config false &> /dev/null ${LOG_FD}> /dev/null"
+do
+  if (( wait_counter++ == WAIT_COUNT )); then
+    bashio::exit.nok "Supervisor is unreachable"
+  fi
+  bashio::log.info "Waiting for the supervisor to be ready..."
+  sleep $WAIT_DELAY
+done
+if (( wait_counter != 0 )); then
+  bashio::log.info "Supervisor is ready"
 fi
 
 ################################################################################
