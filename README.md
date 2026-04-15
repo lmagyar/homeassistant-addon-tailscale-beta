@@ -9,24 +9,23 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.96.4
->   - Fix MagicDNS incompatibility with Home Assistant
->   - Make all config options mandatory, fill in the default values for previously optional config options
->   - Add support for Taildrive
->   - Make always use derp option configurable
->   - Make service name option configurable for Share Home Assistant option
+>   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
+>   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
+>   - Support Supervised installations
+>   - Fix forwarding for local tailnet connections
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
->   - Create persistent notification also (not just log warning) when key expiration is detected
+>   - Create persistent notification also (not just log warning) when key expiration or invalid networking DNS settings are detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the app to be compatible with Tailscale's format
 
 > One-click migration from the community app to this fork:
 > - Install the **Advanced SSH & Web Terminal** app and disable it's protection mode
+> - **Please create a complete system backup before executing this script!**
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
 >
 > **Note:**
@@ -39,13 +38,8 @@ Zero config VPN for building secure networks.
 >   **do not** remove the current device from Tailscale's admin page, the forked
 >   app will jump into it's place.
 > - And even if you executed previously some tailscale configuration inside the
->   apps container, those settings will be also migrated with the internal
+>   app's container, those settings will be also migrated with the internal
 >   state.
-> - **But copying the app's internal state requires executing bash and python
->   scripts inside the Supervisor's container! Executing python scripts requires
->   installing gdb and pyrasite inside the Supervisor's container (they will be
->   uninstalled by the script also). So please create a complete system backup
->   before executing this script!**
 
 | <img width="75%" title="Migration log" src="https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/migration_log.png"> |
 | :---: |

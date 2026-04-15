@@ -6,18 +6,16 @@
 >
 > Changes:
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.96.4
->   - Fix MagicDNS incompatibility with Home Assistant
->   - Make all config options mandatory, fill in the default values for previously optional config options
->   - Add support for Taildrive
->   - Make always use derp option configurable
->   - Make service name option configurable for Share Home Assistant option
+>   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
+>   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
+>   - Support Supervised installations
+>   - Fix forwarding for local tailnet connections
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
->   - Create persistent notification also (not just log warning) when key expiration is detected
+>   - Create persistent notification also (not just log warning) when key expiration or invalid networking DNS settings are detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the app to be compatible with Tailscale's format
@@ -79,7 +77,12 @@ their interface.
 
 <https://login.tailscale.com/>
 
-## Add-on configuration
+## App configuration
+
+**Note:** _Remember to restart the app when the configuration is changed._
+
+**Note:** _This is just an example, not even the default, don't copy and paste
+it! Create your own!_
 
 ```yaml
 accept_dns: true
@@ -102,7 +105,6 @@ log_level: info
 login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
-share_service_name: "svc:homeassistant"
 snat_subnet_routes: true
 stateful_filtering: false
 taildrive:
@@ -390,6 +392,10 @@ This can prevent browsers from warning that HTTP URLs to your Home Assistant
 instance look unencrypted (browsers are not aware that the connections between
 Tailscale nodes are secured with end-to-end encryption).
 
+**Note:** Tailscale Serve and Funnel will automatically update the certificate
+before expiration, unlike the `tailscale cert` command. Follow the steps in this
+documentation below to set up Serve or Funnel properly.
+
 With the Tailscale Serve feature, you can access your Home Assistant instance
 with the provided certificate within your tailnet from devices already connected
 to your tailnet.
@@ -461,20 +467,6 @@ internet.
 Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
 Port 443 is used by default.
-
-### Option: `share_service_name`
-
-This option lets you specify the service name the Tailscale Serve feature will
-use to present your Home Assistant instance on the tailnet. It needs to start
-with `svc:`.
-
-**Note:** The Tailscale Funnel feature will ignore this option.
-
-More information: [Services][tailscale_info_services]
-
-This option is unused by default. To make it visible on the configuration
-editor, click "Show unused optional configuration options" at the bottom of the
-page.
 
 ### Option: `snat_subnet_routes`
 
@@ -633,17 +625,6 @@ that you always have to use the fully qualified domain name instead of only the
 device name, i.e. `ping some-tailnet-device.tail1234.ts.net` works, but `ping
 some-tailnet-device` does not work.
 
-**Note:** If you are running your own DNS (like AdGuard) **_on this_** Home
-Assistant device also, and this device is configured as global nameserver on the
-[DNS page][tailscale_dns] of the admin console, then:
-
-1. Disable the `accept_dns` option to prevent the Tailscale DNS from redirecting
-   queries from your device back to itself, which would cause a loop.
-
-1. Configure your own DNS for Home Assistant (instead of 100.100.100.100), and
-   in your own DNS configure Tailscale DNS for your tailnet domain as upstream
-   DNS server (e.g. in case of AdGuard `[/tail1234.ts.net/]100.100.100.100`).
-
 ## Healthcheck
 
 Tailscale is quite resilient and can recover from nearly any network change. In
@@ -778,7 +759,6 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
 [tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
 [tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
-[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
 [tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
 [tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers

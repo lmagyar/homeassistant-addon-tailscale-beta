@@ -6,6 +6,8 @@ export LOG_FD
 # S6 Overlay stage2 hook to customize services
 # ==============================================================================
 
+source /usr/lib/api.core.sh
+
 declare options
 declare proxy funnel proxy_and_funnel_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
@@ -13,6 +15,15 @@ declare forward_to_host
 declare advertise_routes
 declare tags
 declare ssh
+declare share_service_name
+
+readonly MAGIC_DNS_IPV4="100.100.100.100"
+readonly MAGIC_DNS_IPV6="fd7a:115c:a1e0::53"
+declare dns
+declare invalid_dns_config
+declare message
+declare -a messages=()
+declare attributes
 
 # This is to execute potentially failing supervisor api functions within conditions,
 # where set -e is not propagated inside the function and bashio relies on set -e for api error handling
@@ -123,6 +134,52 @@ if bashio::config.false 'tailscale_ssh.enabled' || \
     ! bashio::config.has_value 'tailscale_ssh.init_commands')
 then
     rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-packages
+fi
+
+# Remove deprecated share_service_name option
+share_service_name=$(bashio::jq "${options}" '.share_service_name | select(.!=null)')
+if bashio::var.has_value "${share_service_name}"; then
+    bashio::log.info 'Removing deprecated share_service_name option'
+    bashio::addon.option 'share_service_name'
+fi
+
+# Check DNS configuration
+# This is identical with the check in init-magicdns-ingress-proxy/run
+# This check is to modify the configuration to prevent the check in init-magicdns-ingress-proxy/run from stopping the app startup
+invalid_dns_config="false"
+for dns in $(bashio::dns.locals); do
+    if bashio::var.equals "${dns}" "dns://${MAGIC_DNS_IPV4}" || \
+        bashio::var.equals "${dns}" "dns://${MAGIC_DNS_IPV6}"
+    then
+        message="Do not configure MagicDNS's IP address (${dns:6}) as DNS server under Settings -> System -> Network"
+        messages+=("**${message}!**")
+        bashio::log.warning "${message}"
+        invalid_dns_config="true"
+    fi
+done
+if bashio::var.true "${invalid_dns_config}"; then
+    bashio::log.warning \
+        "Due to invalid networking DNS configuration, userspace_networking option will be enabled to disable MagicDNS"
+    bashio::log.warning \
+        "Please check your configuration based on the app's documentation under the \"DNS\" section"
+    bashio::log.warning \
+        "After the issue is fixed you can disable userspace_networking option again and restart the app"
+
+    # Create persistent notification also
+    attributes=$(bashio::var.json \
+        title "Tailscale App" \
+        message "$(printf "%s\n\n" \
+            "${messages[@]}" \
+            "Due to invalid networking DNS configuration, \`userspace_networking\` option will be enabled to disable MagicDNS." \
+            "**Refresh Home Assistant's UI (web page) to reflect the configuration change!**" \
+            "Please check your configuration based on the app's documentation under the \"DNS\" section." \
+            "After the issue is fixed you can disable \`userspace_networking\` option again and restart the app.")")
+    if ! api.core POST services/persistent_notification/create "${attributes}" -w > /dev/null; then
+        bashio::log.warning \
+            "Failed to create persistent notification"
+    fi
+
+    bashio::addon.option 'userspace_networking' 'true'
 fi
 
 # MagicDNS related service dependencies:

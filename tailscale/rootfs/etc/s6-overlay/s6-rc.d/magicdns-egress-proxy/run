@@ -19,13 +19,14 @@ export LOG_FD
 source /usr/lib/trace.sh
 
 readonly DNSMASQ_EGRESS_ADDRESS_IPV4="127.100.100.100"
-readonly DNSMASQ_EGRESS_PORT=53
+readonly DNSMASQ_EGRESS_DEFAULT_PORT=53127
 readonly DNSMASQ_BLACK_WHITE_LIST_LOCATION="/etc/dnsmasq-black-white-list"
 
 declare hassio_dns_ipv4
 declare -a white_list
 declare domain
 declare -a options
+declare dnsmasq_egress_port
 
 bashio::log.info "Starting MagicDNS egress proxy..."
 
@@ -36,6 +37,17 @@ function dig_hassio_dns() {
     | head -n 1
 }
 
+# Search for unallocated port in case of collision
+dnsmasq_egress_port="${DNSMASQ_EGRESS_DEFAULT_PORT}"
+while netstat -lntu \
+  | awk '{print $4}' \
+  | grep -q ":${dnsmasq_egress_port}$"
+do
+  if ((++dnsmasq_egress_port == DNSMASQ_EGRESS_DEFAULT_PORT + 1000)); then
+    bashio::exit.nok "Can't find free port for MagicDNS egress proxy"
+  fi
+done
+
 options+=(--no-hosts)
 options+=(--no-resolv)
 options+=(--conf-file=/dev/null)
@@ -44,8 +56,11 @@ options+=(--log-facility='-')
 options+=(--cache-size=0)
 
 options+=(--listen-address="${DNSMASQ_EGRESS_ADDRESS_IPV4}")
-options+=(--bind-dynamic)
-options+=(--port="${DNSMASQ_EGRESS_PORT}")
+# on the lo interface this bind-interfaces option has the effect that dnsmasq connects only to the specified address
+# and on the lo interface bind-interfaces option doesn't result in a logged warning
+# this is intentionally different from the ingress proxy, where on a non-lo interface bind-dynamic option has the same effect
+options+=(--bind-interfaces)
+options+=(--port="${dnsmasq_egress_port}")
 
 # Hassio DNS's IP addresses
 if ! hassio_dns_ipv4=$(dig_hassio_dns A) || \
@@ -68,10 +83,11 @@ if bashio_custom::trace; then
   options+=(--log-debug)
 fi
 
+magicdns-egress-proxy-forwarding setup forwarding "${dnsmasq_egress_port}"
+
 # We need to delay the starting of the dependent services until the conf file is written
 echo "nameserver ${DNSMASQ_EGRESS_ADDRESS_IPV4}" > /etc/resolv.dnsmasq.conf
 echo "" >&3
 
 # This DNS forwards the white_list to HA's DNS, otherwise replies NXDOMAIN for everything
-# It must run on port 53 to be able to specify it in a resolv.conf
 exec dnsmasq "${options[@]}"

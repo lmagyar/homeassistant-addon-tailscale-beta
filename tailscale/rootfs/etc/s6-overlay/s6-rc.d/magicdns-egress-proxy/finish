@@ -10,6 +10,8 @@ readonly exit_code_service="${1}"
 readonly exit_code_signal="${2}"
 readonly service="magicdns-egress-proxy"
 
+magicdns-egress-proxy-forwarding remove forwarding
+
 bashio::log.info \
   "Service ${service} exited with code ${exit_code_service}" \
   "(by signal ${exit_code_signal})"
