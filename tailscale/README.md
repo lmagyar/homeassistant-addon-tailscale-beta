@@ -12,9 +12,10 @@ Zero config VPN for building secure networks.
 >
 > Changes:
 > - Release unreleased changes from community app
->   - Fix forwarding for local tailnet connections
 >   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
+>   - Support Supervised installations
+>   - Fix forwarding for local tailnet connections
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
@@ -27,6 +28,7 @@ Zero config VPN for building secure networks.
 
 > One-click migration from the community app to this fork:
 > - Install the **Advanced SSH & Web Terminal** app and disable it's protection mode
+> - **Please create a complete system backup before executing this script!**
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale-beta/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
 >
 > **Note:**
@@ -39,9 +41,8 @@ Zero config VPN for building secure networks.
 >   **do not** remove the current device from Tailscale's admin page, the forked
 >   app will jump into it's place.
 > - And even if you executed previously some tailscale configuration inside the
->   apps container, those settings will be also migrated with the internal
+>   app's container, those settings will be also migrated with the internal
 >   state.
-> - **Please create a complete system backup before executing this script!**
 
 | <img width="75%" title="Migration log" src="https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/migration_log.png"> |
 | :---: |
