@@ -11,6 +11,7 @@ ARG TAILSCALE_VERSION="v1.96.4"
 ARG HA_CLI_VERSION="5.0.0"
 RUN \
     apk add --no-cache \
+        bash-completion=2.17.0-r1 \
         bind-tools=9.20.22-r0 \
         dnsmasq=2.91-r0 \
         ethtool=6.15-r0 \
@@ -45,7 +46,9 @@ RUN \
     && mkdir -p /usr/share/bash-completion/completions \
     && ha completion bash > /usr/share/bash-completion/completions/ha \
     \
-    && sed -i -e '1s#/bin/sh#/usr/bin/with-contenv-merge-bash#' /etc/passwd
+    && sed -i -e '1s#/bin/sh#/usr/bin/with-contenv-merge-bash#' /etc/passwd \
+    && rm -f -r \
+        /etc/motd
 
 # Copy root filesystem
 COPY rootfs /
