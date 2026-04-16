@@ -5,6 +5,8 @@
 - Release unreleased changes from community app
   - Force reauthentication when Tailscale explicitly complains about login server change
   - Properly close s6 notification file descriptors for dnsmasq proxy and share homeassistant services
+- Release unmerged changes from community app
+  - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
 
 ## 0.28.1.1 (forked)
 

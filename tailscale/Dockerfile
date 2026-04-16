@@ -43,9 +43,7 @@ RUN \
         "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${BUILD_ARCH}" \
     && chmod a+x /usr/bin/ha \
     \
-    && mkdir -p /usr/share/bash-completion/completions \
     && ha completion bash > /usr/share/bash-completion/completions/ha \
-    \
     && sed -i -e '1s#/bin/sh#/usr/bin/with-contenv-merge-bash#' /etc/passwd \
     && rm -f -r \
         /etc/motd
