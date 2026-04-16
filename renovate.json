@@ -38,6 +38,16 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "tailscale/tailscale"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["//Dockerfile$/"],
+      "matchStrings": [
+        "ARG HA_CLI_VERSION=[\"']?(?<currentValue>.+?)[\"']?\\s+"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "home-assistant/cli",
+      "versioningTemplate": "loose"
     }
   ],
   "packageRules": [
@@ -59,6 +69,11 @@
       "matchDatasources": ["github-releases"],
       "matchDepNames": ["tailscale/tailscale"],
       "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    },
+    {
+      "matchDatasources": ["github-releases"],
+      "matchDepNames": ["home-assistant/cli"],
       "automerge": true
     }
   ]
