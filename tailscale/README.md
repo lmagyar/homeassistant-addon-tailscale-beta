@@ -13,6 +13,7 @@ Zero config VPN for building secure networks.
 >   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 >   - Force reauthentication when Tailscale explicitly complains about login server change
+>   - Properly close s6 notification file descriptors for dnsmasq proxy and share homeassistant services
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
