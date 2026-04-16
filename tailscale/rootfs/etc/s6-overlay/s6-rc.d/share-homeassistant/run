@@ -75,8 +75,8 @@ options+=(--set-path=/)
 options+=(http://127.0.0.1:"$(bashio::core.port)")
 
 # This service can wait for HA for minutes, let notify S6 when we are really starting
-echo "" >&6
-exec 6>&-
+echo "" >&3
+exec 3>&-
 
 # Set up serve or funnel
 exec /opt/tailscale "${options[@]}"
