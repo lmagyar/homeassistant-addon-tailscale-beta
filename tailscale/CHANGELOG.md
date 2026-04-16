@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 - Use unique s6 notification file descriptors for dnsmasq proxy services, and properly close them also
-- Close s6 notification file descriptor properly (share homeassistant service)
+- Use unique s6 notification file descriptor for share homeassistant service, and properly close it also
 - Release unreleased changes from community app
   - Force reauthentication when Tailscale explicitly complains about login server change
 
