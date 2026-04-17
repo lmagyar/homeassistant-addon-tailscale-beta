@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.28.1.2 (forked)
 
 - Release unreleased changes from community app
   - Force reauthentication when Tailscale explicitly complains about login server change
