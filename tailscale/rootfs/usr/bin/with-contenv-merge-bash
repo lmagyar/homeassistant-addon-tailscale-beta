@@ -1,0 +1,3 @@
+#!/bin/sh
+SHELL=/bin/bash
+exec /command/with-contenv-merge exec -a -bash /bin/bash

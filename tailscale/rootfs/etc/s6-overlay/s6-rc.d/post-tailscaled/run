@@ -17,6 +17,7 @@ declare login_server
 declare advertise_tags
 declare keyexpiry
 declare attributes
+declare error_message
 
 # Default options
 options+=(--hostname "$(bashio::info.hostname)")
@@ -101,17 +102,34 @@ IFS=","
 options+=(--advertise-routes="${routes[*]}")
 unset IFS
 
-# Wait for the network to be available and logged in
+# Wait for the network to be available
+# Loop here while BackendState is:
+# - Starting
+# Move on to tailscale up, when BackendState is:
+# - NoState (first time connecting to control)
+# - Stopped (result of a manual tailscale down command)
+# - NeedsLogin
+# - NeedsMachineAuth
+# - Running
 while ! bashio::fs.socket_exists "/var/run/tailscale/tailscaled.sock" || \
   ! /opt/tailscale status --json --peers=false --self=false \
-    | jq --exit-status '.BackendState == "Running" or .BackendState == "NeedsLogin" or .BackendState == "Stopped"' > /dev/null;
+    | jq --exit-status '.BackendState | IN("NoState", "Stopped", "NeedsLogin", "NeedsMachineAuth", "Running")' > /dev/null;
 do
   sleep 2
 done
 
 # Start Tailscale
-if ! /opt/tailscale up "${options[@]}"; then
-  bashio::exit.nok "Unable to start up Tailscale"
+# Capture stderr in a variable but write it to the log also
+if ! { error_message=$(/opt/tailscale up "${options[@]}" 2> >(tee /dev/fd/2) 1>&3); } 3>&1; then
+  if [[ $error_message != *"can't change --login-server without --force-reauth"* ]]; then
+    bashio::exit.nok "Unable to start up Tailscale"
+  fi
+  # Execute this only, if tailscale up explicitly complained about this
+  bashio::log.warning "The login server option has changed, forcing reauthentication"
+  options+=(--force-reauth)
+  if ! /opt/tailscale up "${options[@]}"; then
+    bashio::exit.nok "Unable to start up Tailscale"
+  fi
 fi
 
 # Wait for the network to be available and logged in

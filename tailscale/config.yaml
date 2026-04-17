@@ -1,6 +1,6 @@
 ---
 name: Tailscale with features
-version: 0.28.1.1
+version: 0.28.1.2
 slug: tailscale
 description: Zero config VPN for building secure networks
 url: https://github.com/lmagyar/homeassistant-addon-tailscale
@@ -14,6 +14,7 @@ arch:
   - amd64
 init: false
 hassio_api: true
+hassio_role: manager
 homeassistant_api: true
 host_network: true
 host_dbus: true

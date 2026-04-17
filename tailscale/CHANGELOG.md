@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.28.1.2 (forked)
+
+- Release unreleased changes from community app
+  - Force reauthentication when Tailscale explicitly complains about login server change
+  - Properly close s6 notification file descriptors for dnsmasq proxy and share homeassistant services
+- Release unmerged changes from community app
+  - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
+
 ## 0.28.1.1 (forked)
 
 **Note:** From now on if you are running your own DNS (like AdGuard) **_on
@@ -26,7 +34,7 @@ Changes:
 - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
 - Merge released changes from community app
   - Remove service name option
-- Merge unreleased changes from community app
+- Release unreleased changes from community app
   - Update App base image to v20.0.4
 
 ## 0.27.1.3 (forked)
