@@ -7,12 +7,15 @@
 readonly ssh_min_version="21.0.4"
 
 readonly from="a0d7b954_tailscale" # community
-readonly from_min_version="0.26.1"
+readonly from_min_version="0.26.0"
 readonly from_max_version="0.99.99"
 
 readonly to="09716aab_tailscale" # forked
 readonly to_repository="https://github.com/lmagyar/homeassistant-addon-tailscale"
 
+# Default values for optional options
+# Options with default values defined in the "from" app can be missing, those defaults are automatically merged in
+# Tailscale: These default values are implemented in code before v0.28.0
 readonly from_defaults="$(jq -rcM <<"EOFROMDEFAULTS"
   {
     "accept_dns": true,
@@ -33,10 +36,12 @@ readonly from_defaults="$(jq -rcM <<"EOFROMDEFAULTS"
 EOFROMDEFAULTS
 )"
 
-# rename tags to advertise_tags if advertise_tags doesn't exists already
+# After this patch, the options can't contain invalid fields
+# Options with default values defined in the "to" app can be missing, those defaults are automatically merged in
+# Tailscale: Rename tags to advertise_tags if advertise_tags doesn't exists already
 readonly from_patch='if has("advertise_tags") | not then .advertise_tags = .tags end | del(.tags)'
 
-# addresses to be removed from net config
+# Addresses to be removed from system network config
 readonly dns_ipv4="100.100.100.100"
 readonly dns_ipv6="fd7a:115c:a1e0::53"
 
@@ -245,6 +250,110 @@ function bashio::addon.ingress_panel() {
             "${slug}" \
             "addons.${slug}.ingress_panel" \
             '.ingress_panel // false'
+    fi
+}
+
+# This is currently broken in bashio
+
+# ------------------------------------------------------------------------------
+# Returns or sets options for this add-on.
+#
+# Arguments:
+#   $1 Add-on slug (optional, default: self)
+#   $2 The app configuration (optional)
+# ------------------------------------------------------------------------------
+function bashio::addon.options() {
+    local slug=${1:-'self'}
+    local options=${2:-'{}'}
+
+    bashio::log.trace "${FUNCNAME[0]}" "$@"
+
+    if bashio::var.equals "$#" 2; then
+        options=$(bashio::var.json options "^${options}")
+        bashio::api.supervisor POST "/addons/${slug}/options" "${options}"
+        bashio::cache.flush_all
+    else
+        bashio::addons "${slug}" "addons.${slug}.options" '.options'
+    fi
+}
+
+# This is currently broken in bashio
+
+# ------------------------------------------------------------------------------
+# Returns or sets a list of ports which are exposed on the host network for this add-on.
+#
+# Arguments:
+#   $1 Add-on slug (optional, default: self)
+#   $2 A map of network configuration (optional)
+# ------------------------------------------------------------------------------
+function bashio::addon.network() {
+    local slug=${1:-'self'}
+    local network=${2:-'null'}
+
+    bashio::log.trace "${FUNCNAME[0]}" "$@"
+
+    if bashio::var.equals "$#" 2; then
+        network=$(bashio::var.json network "^${network}")
+        bashio::api.supervisor POST "/addons/${slug}/options" "${network}"
+        bashio::cache.flush_all
+    else
+        bashio::addons "${slug}" \
+            "addons.${slug}.network" \
+            '.network // empty | if . == {} then empty else . end'
+    fi
+}
+
+# This is currently broken in bashio
+
+# ------------------------------------------------------------------------------
+# Returns or sets the available audio input device for an add-on.
+#
+# Arguments:
+#   $1 Add-on slug (optional, default: self)
+#   $2 Audio input device to set (optional)
+# ------------------------------------------------------------------------------
+function bashio::addon.audio_input() {
+    local slug=${1:-'self'}
+    local audio_input=${2:-'^null'}
+
+    bashio::log.trace "${FUNCNAME[0]}" "$@"
+
+    if bashio::var.equals "$#" 2; then
+        audio_input=$(bashio::var.json audio_input "${audio_input}")
+        bashio::api.supervisor POST "/addons/${slug}/options" "${audio_input}"
+        bashio::cache.flush_all
+    else
+        bashio::addons \
+            "${slug}" \
+            "addons.${slug}.audio_input" \
+            '.audio_input // empty'
+    fi
+}
+
+# This is currently broken in bashio
+
+# ------------------------------------------------------------------------------
+# Returns or sets the available audio output device for an add-on.
+#
+# Arguments:
+#   $1 Add-on slug (optional, default: self)
+#   $2 Audio output device to set (optional)
+# ------------------------------------------------------------------------------
+function bashio::addon.audio_output() {
+    local slug=${1:-'self'}
+    local audio_output=${2:-'^null'}
+
+    bashio::log.trace "${FUNCNAME[0]}" "$@"
+
+    if bashio::var.equals "$#" 2; then
+        audio_output=$(bashio::var.json audio_output "${audio_output}")
+        bashio::api.supervisor POST "/addons/${slug}/options" "${audio_output}"
+        bashio::cache.flush_all
+    else
+        bashio::addons \
+            "${slug}" \
+            "addons.${slug}.audio_output" \
+            '.audio_output // empty'
     fi
 }
 
@@ -906,6 +1015,11 @@ if bashio::var.true "${from_ingress_panel}"; then
   bashio::addon.ingress_panel "${from}" "false" | sed -e "/^$/d"
 fi
 
+from_options=$(bashio::addon.options "${from}")
+from_network=$(bashio::addon.network "${from}")
+from_audio_input=$(bashio::addon.audio_input "${from}")
+from_audio_output=$(bashio::addon.audio_output "${from}")
+
 bashio::log.info "Backing up app ${from} (${from_name})..."
 if ! response="$(bashio::backup.new_partial "$(bashio::var.json \
   name "App ${from_name}" \
@@ -919,43 +1033,6 @@ then
 fi
 
 ################################################################################
-# Backup original addons.json
-################################################################################
-
-addons_backup_filename="/share/addons_$(date "+%Y%m%d_%H%M%S").json"
-bashio::log.info "Copying original addons.json from Supervisor to ${addons_backup_filename}..."
-docker cp -q `docker ps -q -f name="^hassio_supervisor$"`:/data/addons.json "${addons_backup_filename}"
-bashio::log.notice "If everything goes well, you can safely delete the ${addons_backup_filename} file later"
-bashio::log.notice "In case of emergency, to restore it, use: docker cp ${addons_backup_filename} \`docker ps -q -f name=\"^hassio_supervisor$\"\`:/data/addons.json"
-
-################################################################################
-# Pause Supervisor
-################################################################################
-
-bashio::log.info "Pausing Supervisor..."
-while true
-do
-  docker pause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
-  # We can't execute bash in a paused container, we need a snapshot then start a new container
-  docker commit `docker ps -q -f name="^hassio_supervisor$"` supervisor_snapshot > /dev/null
-  # Supervisor uses atomicwrites module where atomic_write function saves temporary file with name starting with "tmp"
-  if ! result=$(docker run -i --entrypoint /bin/bash --volumes-from `docker ps -q -f name="^hassio_supervisor$"` --rm supervisor_snapshot <<< \
-    "if ! ls -p /data | grep -v / | grep -q '^tmp'; then echo OK; fi")
-  then
-    result=ERR
-  fi
-  docker rmi supervisor_snapshot > /dev/null
-  if bashio::var.equals "${result}" "ERR"; then
-    bashio::exit.nok "Executing script in Supervisor's container snapshot has failed"
-  elif bashio::var.equals "${result}" "OK"; then
-    break
-  fi
-  bashio::log.info "Waiting for Supervisor to finish saving configuration data..."
-  docker unpause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
-  sleep 2
-done
-
-################################################################################
 # Copy app configuration
 ################################################################################
 
@@ -967,17 +1044,8 @@ function merge_options() {
   jq -srcM 'map(to_entries) | flatten | group_by(.key) | map({key: .[0].key, value: .[0].value}) | from_entries' <<< "${merge_left}${merge_right}"
 }
 
-from_user_options=$(jq -rcM ".user.\"${from}\".options" "${addons_backup_filename}")
-from_system_options=$(jq -rcM ".system.\"${from}\".options" "${addons_backup_filename}")
-to_user_options=$(jq -rcM ".user.\"${to}\".options // \"\"" "${addons_backup_filename}")
-
-# start with "from" user options
-merged_options="${from_user_options}"
-
-# merge "from" system default options
-if bashio::var.has_value "${from_system_options}"; then
-  merged_options=$(merge_options merged_options from_system_options)
-fi
+# start with "from" options (defaults are merged in by Supervisor)
+merged_options="${from_options}"
 
 # merge default options
 if bashio::var.has_value "${from_defaults}"; then
@@ -989,23 +1057,18 @@ if bashio::var.has_value "${from_patch}"; then
   merged_options=$(jq -rcM "${from_patch}" <<< "${merged_options}")
 fi
 
-# merge "to" user options
-if bashio::var.has_value "${to_user_options}"; then
-  merged_options=$(merge_options merged_options to_user_options)
-fi
+# merge "to" user options (defaults are merged in by Supervisor)
+to_options=$(bashio::addon.options "${to}")
+merged_options=$(merge_options merged_options to_options)
 
-# replace config with merged values
-addons_new_filename="${addons_backup_filename/\.json/_migrated.json}"
-jq --argjson merged_options "${merged_options}" ".user.\"${to}\".options = \$merged_options" "${addons_backup_filename}" > "${addons_new_filename}"
-docker cp -q "${addons_new_filename}" `docker ps -q -f name="^hassio_supervisor$"`:/data/addons.json
-rm -f "${addons_new_filename}"
+bashio::addon.options "${to}" "${merged_options}" | sed -e "/^$/d"
 
-################################################################################
-# Unpause Supervisor
-################################################################################
+bashio::log.info "Copying app network settings from ${from} (${from_name}) to ${to} (${to_name})..."
+bashio::addon.network "${to}" "${from_network}" | sed -e "/^$/d"
 
-bashio::log.info "Unpausing Supervisor..."
-docker unpause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
+bashio::log.info "Copying app audio settings from ${from} (${from_name}) to ${to} (${to_name})..."
+bashio::addon.audio_input "${to}" "${from_audio_input}" | sed -e "/^$/d"
+bashio::addon.audio_output "${to}" "${from_audio_output}" | sed -e "/^$/d"
 
 ################################################################################
 # Copy app data
@@ -1014,6 +1077,7 @@ docker unpause `docker ps -q -f name="^hassio_supervisor$"` > /dev/null
 bashio::log.info "Copying app internal data from ${from} (${from_name}) to ${to} (${to_name})..."
 
 if ! docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash -c " \
+  ( [[ -d '/data/addons/data/$from' ]] || { echo 'The /data/addons/data/$from directory does not exist!'; false; } ) && \
   rm -rf /data/addons/data/$to && \
   mkdir -p /data/addons/data/$to && \
   cp -a /data/addons/data/$from/. /data/addons/data/$to "
@@ -1022,33 +1086,7 @@ then
 fi
 
 ################################################################################
-# Restart Supervisor
-################################################################################
-
-bashio::log.info "Restarting Supervisor..."
-
-bashio::supervisor.restart | sed -e "/^$/d"
-
-WAIT_DELAY=5   # 5s
-WAIT_COUNT=60  # 60*5s = 300s = 5m
-wait_counter=0
-
-# Wait until we get "ERROR: Got unexpected response from the API: System is not ready with state: setup"
-# Test config Supervisor API availability, and wait a little on inaccessibility
-while ! eval "bashio::api.supervisor GET /addons/self/options/config false &> /dev/null ${LOG_FD}> /dev/null"
-do
-  if (( wait_counter++ == WAIT_COUNT )); then
-    bashio::exit.nok "Supervisor is unreachable"
-  fi
-  bashio::log.info "Waiting for the supervisor to be ready..."
-  sleep $WAIT_DELAY
-done
-if (( wait_counter != 0 )); then
-  bashio::log.info "Supervisor is ready"
-fi
-
-################################################################################
-# Check network config
+# Check system network config
 ################################################################################
 
 if bashio::var.has_value "${dns_ipv4}"; then
@@ -1062,7 +1100,7 @@ if bashio::var.has_value "${dns_ipv4}"; then
     if ! bashio::var.equals "${ipv4_method}" "static"; then
       bashio::exit.nok "Interface ${interface} IPv4 configuration is not static, please remove manually the DNS server ${dns_ipv4} from ${interface} configuration"
     else
-      bashio::log.info "Removing DNS server ${dns_ipv4} from interface ${interface} configuration..."
+      bashio::log.warning "Removing DNS server ${dns_ipv4} from interface ${interface} configuration..."
       # we have to send the whole config
       bashio::network.ipv4 "${interface}" "$(bashio::network.ipv4 "${interface}" \
         | jq -ercM "{address, nameservers, gateway} | del(.nameservers[.nameservers | index(\"${dns_ipv4}\")])")" \
@@ -1082,7 +1120,7 @@ if bashio::var.has_value "${dns_ipv6}"; then
     if ! bashio::var.equals "${ipv6_method}" "static"; then
       bashio::exit.nok "Interface ${interface} IPv6 configuration is not static, please remove manually the DNS server ${dns_ipv6} from ${interface} configuration"
     else
-      bashio::log.info "Removing DNS server ${dns_ipv6} from interface ${interface} configuration..."
+      bashio::log.warning "Removing DNS server ${dns_ipv6} from interface ${interface} configuration..."
       # we have to send the whole config
       bashio::network.ipv6 "${interface}" "$(bashio::network.ipv6 "${interface}" \
         | jq -ercM "{address, nameservers, gateway} | del(.nameservers[.nameservers | index(\"${dns_ipv6}\")])")" \
@@ -1153,12 +1191,11 @@ bashio::log.notice "************************************************************
 bashio::log.notice
 bashio::log.notice "Migration was successful!"
 bashio::log.notice
-bashio::log.notice "- You can safely delete the ${addons_backup_filename} file now"
-bashio::log.notice "- You can safely uninstall the ${from} (${from_name}) app now"
+bashio::log.notice "You can safely uninstall the ${from} (${from_name}) app now"
 bashio::log.notice
 bashio::log.notice "IMPORTANT: Do not try to start the original ${from} (${from_name}) app"
-bashio::log.notice "when the new ${to} (${to_name}) app is running,"
-bashio::log.notice "because they have identical internal states!!!"
+bashio::log.notice "when the new ${to} (${to_name}) app is running, because"
+bashio::log.notice "they have identical internal states!!!"
 bashio::log.notice
 bashio::log.notice "IMPORTANT: Refresh Home Assistant's UI (web page) to reflect the changes done by this script!"
 bashio::log.notice
