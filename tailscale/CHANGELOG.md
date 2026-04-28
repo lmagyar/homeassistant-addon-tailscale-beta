@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community app
+  - Update App base image to v20.1.0
+
 ## 0.28.1.2 (forked)
 
 - Release unreleased changes from community app
