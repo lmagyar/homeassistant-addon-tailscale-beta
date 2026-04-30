@@ -4,6 +4,7 @@
 
 - Fix: during startup move on from NoState only after 30s
 - Release unreleased changes from community app
+  - Fix MagicDNS: Refactor to support appconnectors also
   - Update App base image to v20.1.0
 
 ## 0.28.1.2 (forked)
