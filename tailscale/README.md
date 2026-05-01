@@ -9,11 +9,10 @@ Zero config VPN for building secure networks.
 > Changes:
 > - Release unreleased changes from community app
 >   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
->   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
+>   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports, refactor to support appconnectors also
 >   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 >   - Force reauthentication when Tailscale explicitly complains about login server change
->   - Properly close s6 notification file descriptors for dnsmasq proxy and share homeassistant services
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
@@ -57,9 +56,6 @@ Zero config VPN for building secure networks.
 
 ![Supports aarch64 Architecture][aarch64-shield]
 ![Supports amd64 Architecture][amd64-shield]
-![Supports armhf Architecture][armhf-shield]
-![Supports armv7 Architecture][armv7-shield]
-![Supports i386 Architecture][i386-shield]
 
 [![Github Actions][github-actions-shield]][github-actions]
 ![Project Maintenance][maintenance-shield]
@@ -76,13 +72,10 @@ manages firewall rules for you, and works from anywhere you are.
 
 [aarch64-shield]: https://img.shields.io/badge/aarch64-yes-green.svg
 [amd64-shield]: https://img.shields.io/badge/amd64-yes-green.svg
-[armhf-shield]: https://img.shields.io/badge/armhf-no-red.svg
-[armv7-shield]: https://img.shields.io/badge/armv7-no-red.svg
 [commits-shield]: https://img.shields.io/github/commit-activity/y/lmagyar/homeassistant-addon-tailscale.svg
 [commits]: https://github.com/lmagyar/homeassistant-addon-tailscale/commits/main
 [github-actions-shield]: https://github.com/lmagyar/homeassistant-addon-tailscale/workflows/Publish/badge.svg
 [github-actions]: https://github.com/lmagyar/homeassistant-addon-tailscale/actions
-[i386-shield]: https://img.shields.io/badge/i386-no-red.svg
 [installations-shield]: https://img.shields.io/badge/dynamic/json?label=reported%20installations&query=$[%2709716aab_tailscale%27].total&url=https%3A%2F%2Fanalytics.home-assistant.io%2Faddons.json
 [license-shield]: https://img.shields.io/github/license/lmagyar/homeassistant-addon-tailscale.svg
 [licence]: https://github.com/lmagyar/homeassistant-addon-tailscale/blob/main/LICENSE
