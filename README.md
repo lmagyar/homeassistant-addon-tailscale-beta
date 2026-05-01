@@ -10,8 +10,7 @@ Zero config VPN for building secure networks.
 > Changes:
 > - Release unreleased changes from community app
 >   - Fix MagicDNS: In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
->   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports
->   - Fix MagicDNS: Refactor to support appconnectors also
+>   - Fix MagicDNS: Move MagicDNS egress and ingress proxies to non-default ports, refactor to support appconnectors also
 >   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 >   - Force reauthentication when Tailscale explicitly complains about login server change
