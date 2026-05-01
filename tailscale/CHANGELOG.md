@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.28.1.3 (forked)
 
 - Fix: during startup move on from NoState only after 30s
 - Fix MagicDNS: Refactor to support appconnectors also
