@@ -1,9 +1,13 @@
 # Changelog
 
+## vNext (forked)
+
+- Fix: Don't poll for global DNS config changes, use tailscale's ipn bus events
+
 ## 0.28.1.3 (forked)
 
-- Fix: during startup move on from NoState only after 30s
-- Fix MagicDNS: Refactor to support appconnectors also
+- Fix: During startup move on from NoState only after 30s
+- Fix: Refactor MagicDNS support to properly handle appconnectors
 - Release unreleased changes from community app
   - Update App base image to v20.1.0
 
