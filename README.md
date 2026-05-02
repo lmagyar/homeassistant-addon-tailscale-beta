@@ -28,7 +28,7 @@ Zero config VPN for building secure networks.
 > One-click migration from the community app to this fork:
 > - Install the **Advanced SSH & Web Terminal** app and disable it's protection mode
 > - **Please create a complete system backup before executing this script!**
-> - From the cli execute: `curl -s -o /tmp/migrate_from_community_add_on https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale/refs/heads/main/scripts/migrate_from_community_add_on && bashio /tmp/migrate_from_community_add_on`
+> - From the cli execute: `curl -s -o /tmp/migrate_from_community_app https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale/refs/heads/main/scripts/migrate_from_community_app && bashio /tmp/migrate_from_community_app`
 >
 > **Note:**
 > - This will install the forked version (if not already installed), backup and
