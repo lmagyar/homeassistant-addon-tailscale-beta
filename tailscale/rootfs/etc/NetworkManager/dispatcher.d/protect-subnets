@@ -10,7 +10,7 @@ if [[ "${LOG_FD:-}" =~ ^[0-9]+$ ]]; then
 fi
 
 function halt-app() {
-  bashio::log.error "Failed to protect subnet routes. Halting app to prevent network loss."
+  bashio::log.fatal "Failed to protect subnet routes. Halting app to prevent network loss."
   echo -n 1 > /run/s6-linux-init-container-results/exitcode
   exec /run/s6/basedir/bin/halt
 }
