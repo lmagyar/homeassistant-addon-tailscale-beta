@@ -3,6 +3,8 @@
 ## vNext (forked)
 
 - Fix: Don't poll for global DNS config changes, use tailscale's ipn bus events
+- Release unreleased changes from community app
+  - Refactor slow activities from nm-dispatcher script into separate listener service
 
 ## 0.28.1.3 (forked)
 
