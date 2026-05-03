@@ -14,9 +14,11 @@ Zero config VPN for building secure networks.
 > - Release unreleased changes from community app
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
+>   - Refactor slow activities from nm-dispatcher script into separate listener service
 >   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 >   - Force reauthentication when Tailscale explicitly complains about login server change
+>   - Add log_upload config option to configure log upload separately from local app log level
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***

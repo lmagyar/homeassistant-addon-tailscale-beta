@@ -3,6 +3,9 @@
 ## vNext (forked)
 
 - Fix: Don't poll for global DNS config changes, use tailscale's ipn bus events
+- Release unreleased changes from community app
+  - Refactor slow activities from nm-dispatcher script into separate listener service
+  - Add log_upload config option to configure log upload separately from local app log level
 
 ## 0.28.1.3 (forked)
 
