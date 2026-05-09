@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Fork specific changes
+  - Update home-assistant/cli to v5.1.0
+
 ## 0.28.1.4 (forked)
 
 - Fix: Don't poll for global DNS config changes, use tailscale's ipn bus events
