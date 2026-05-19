@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.98.2
   - Update App base image to v20.1.1
 - Fork specific changes
   - Update home-assistant/cli to v5.1.0
