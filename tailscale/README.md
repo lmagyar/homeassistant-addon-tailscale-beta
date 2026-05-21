@@ -16,6 +16,7 @@ Zero config VPN for building secure networks.
 >   - Add log_upload config option to configure log upload separately from local app log level
 >   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
+>   - Make force noise 443 option configurable
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
