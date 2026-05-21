@@ -1000,6 +1000,7 @@ else
     fi
     bashio::exit.nok "Backup job has failed"
   fi
+  bashio::addons.reload | sed -e "/^$/d"
   update_available=$(bashio::addon.update_available "${to}")
   if bashio::var.true "${update_available}"; then
     bashio::log.info "Updating app ${to} (${to_name}) to the latest version..."
