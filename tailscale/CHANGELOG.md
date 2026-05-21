@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community app
+  - Make force noise 443 option configurable
+
 ## 0.28.1.5 (forked)
 
 - Release unreleased changes from community app
