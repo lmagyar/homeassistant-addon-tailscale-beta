@@ -45,6 +45,12 @@ configuration:
       When enabled forces all peer communication over DERP by disabling the use of
       UDP.
       This option is disabled by default.
+  force_noise_443:
+    name: Always use port 443 HTTPS connections to the controlplane
+    description: >-
+      When enabled forces the controlclient noise dialer to always use port 443 HTTPS
+      connections to the controlplane and not try the port 80 HTTP fast path.
+      This option is disabled by default.
   dscp:
     name: DSCP
     description: >-
