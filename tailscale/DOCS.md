@@ -18,6 +18,7 @@
 >   - Add log_upload config option to configure log upload separately from local app log level
 >   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
+>   - Make force noise 443 option configurable
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
@@ -106,6 +107,7 @@ advertise_tags:
   - tag:example
   - tag:homeassistant
 always_use_derp: false
+force_noise_443: false
 dscp: 52
 exit_node: 100.101.102.103
 lets_encrypt_certfile: fullchain.pem
@@ -237,6 +239,21 @@ you experience that connections to your Home Assistant device regularly freeze
 unresponsive), and you have to reload the web page or force stop the Home
 Assistant app to make them work again. The root cause can be that your ISP
 erroneously drops UDP packets on certain conditions.
+
+### Option: `force_noise_443`
+
+When enabled forces the controlclient noise dialer to always use port 443 HTTPS
+connections to the controlplane and not try the port 80 HTTP fast path.
+
+This option is disabled by default.
+
+Basically you will never want to enable this option. Try to enable it only, when
+you experience temporary connection dropouts after network reconfiguration (eg.
+ISP networking change or router failover switch to a backup connection). This
+manifests in the log with repeating `control: map response long-poll timed out!`
+lines. The app's healthcheck will restart the app and that fixes the issue, but
+that means a temporary dropout until the healthcheck detects the issue. This
+option can prevent this issue to happen.
 
 ### Option: `dscp`
 
