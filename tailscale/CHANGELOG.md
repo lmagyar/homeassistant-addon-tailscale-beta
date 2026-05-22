@@ -3,6 +3,7 @@
 ## vNext (forked)
 
 - Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.98.3
   - Make force noise 443 option configurable
 
 ## 0.28.1.5 (forked)
