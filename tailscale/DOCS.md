@@ -558,7 +558,8 @@ Tailscale can start.
 **Note**: Package installation runs before Tailscale is started, ie. it bypasses
 exit node if configured.
 
-**Note**: Adding many packages will result in a longer startup time for the app.
+**Note**: Adding many packages will result in a longer startup time for the app,
+because packages are downloaded and installed every time the app starts up.
 
 #### Option: `tailscale_ssh.init_commands`
 
