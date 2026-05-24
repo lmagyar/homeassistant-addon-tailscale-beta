@@ -9,8 +9,8 @@ Zero config VPN for building secure networks.
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community app][community_app]!
->
-> Changes:
+
+> ## Changes
 > - Release unreleased changes from community app
 >   - Update tailscale/tailscale to v1.98.3
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
@@ -32,7 +32,7 @@ Zero config VPN for building secure networks.
 >   - Make DSCP configurable on tailscaled's network traffic
 >   - Configure log format for the app to be compatible with Tailscale's format
 
-> One-click migration from the community app to this fork:
+> ## One-click migration from the community app to this fork
 > - Install the **Advanced SSH & Web Terminal** app and disable it's protection mode
 > - **Please create a complete system backup before executing this script!**
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_app https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale-beta/refs/heads/main/scripts/migrate_from_community_app && bashio /tmp/migrate_from_community_app`

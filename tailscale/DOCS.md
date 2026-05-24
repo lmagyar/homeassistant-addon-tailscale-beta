@@ -7,8 +7,8 @@
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community app][community_app]!
->
-> Changes:
+
+> ## Changes
 > - Release unreleased changes from community app
 >   - Update tailscale/tailscale to v1.98.3
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
@@ -579,7 +579,8 @@ Tailscale can start.
 **Note**: Package installation runs before Tailscale is started, ie. it bypasses
 exit node if configured.
 
-**Note**: Adding many packages will result in a longer startup time for the app.
+**Note**: Adding many packages will result in a longer startup time for the app,
+because packages are downloaded and installed every time the app starts up.
 
 #### Option: `tailscale_ssh.init_commands`
 
