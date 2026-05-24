@@ -3,8 +3,8 @@
 ![Warning][warning_stripe]
 
 > This is a **fork** of the [community app][community_app]!
->
-> Changes:
+
+> ## Changes
 > - Release unreleased changes from community app
 >   - Update tailscale/tailscale to v1.98.3
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
