@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 - Release unreleased changes from community app
-  - Update tailscale/tailscale to v1.98.5
+  - Update tailscale/tailscale to v1.98.4
 
 ## 0.28.1.6 (forked)
 
