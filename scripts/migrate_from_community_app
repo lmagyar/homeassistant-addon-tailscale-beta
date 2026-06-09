@@ -109,7 +109,7 @@ if bashio::try.failed; then
   bashio::exit.nok
 fi
 
-addon_slug="$(bashio::addon.slug)"
+addon_slug="$(bashio::app.slug)"
 if ! bashio::var.equals "${addon_slug}" "a0d7b954_ssh"; then
   bashio::log.fatal
   bashio::log.fatal "You are not running this script within the Advanced SSH & Web Terminal app!"
@@ -119,7 +119,7 @@ if ! bashio::var.equals "${addon_slug}" "a0d7b954_ssh"; then
 fi
 
 # v21.0.4 contains the oldest bashio this script can run with
-addon_version="$(bashio::addon.version)"
+addon_version="$(bashio::app.version)"
 if ! printf '%s\n' "${ssh_min_version}" "${addon_version}" | sort -c -V 2> /dev/null; then
   bashio::log.fatal
   bashio::log.fatal "You are running this script in an old version of the Advanced SSH & Web Terminal app!"
@@ -128,7 +128,7 @@ if ! printf '%s\n' "${ssh_min_version}" "${addon_version}" | sort -c -V 2> /dev/
   bashio::exit.nok
 fi
 
-addon_protected="$(bashio::addon.protected "self")"
+addon_protected="$(bashio::app.protected "self")"
 if bashio::var.true "${addon_protected}"; then
   bashio::log.fatal
   bashio::log.fatal "Protection mode is enabled!"
@@ -158,14 +158,14 @@ then
   bashio::exit.nok "Repository of app ${from} is not installed"
 fi
 
-from_name=$(bashio::addon.name "${from}")
+from_name=$(bashio::app.name "${from}")
 
-from_installed="$(bashio::addon.installed "${from}")"
+from_installed="$(bashio::app.installed "${from}")"
 if bashio::var.false "${from_installed}"; then
   bashio::exit.nok "App ${from} (${from_name}) is not installed"
 fi
 
-from_current_version=$(bashio::addon.version "${from}")
+from_current_version=$(bashio::app.version "${from}")
 if ! printf '%s\n' "${from_min_version}" "${from_current_version}" "${from_max_version}" | sort -c -V 2> /dev/null; then
   bashio::exit.nok "App ${from} (${from_name}) version ${from_current_version} has to be between ${from_min_version} and ${from_max_version}"
 fi
@@ -187,19 +187,19 @@ fi
 # Install or backup "to" app
 ################################################################################
 
-to_name=$(bashio::addon.name "${to}")
+to_name=$(bashio::app.name "${to}")
 
-to_installed="$(bashio::addon.installed "${to}")"
+to_installed="$(bashio::app.installed "${to}")"
 if bashio::var.false "${to_installed}"; then
   bashio::log.info "Installing app ${to} (${to_name})..."
-  bashio::addon.install "${to}" | sed -e "/^$/d"
+  bashio::app.install "${to}" | sed -e "/^$/d"
 else
-  to_state="$(bashio::addon.state "${to}")"
+  to_state="$(bashio::app.state "${to}")"
   if bashio::var.equals "${to_state}" "started" \
     || bashio::var.equals "${to_state}" "startup"
   then
     bashio::log.info "Stopping app ${to} (${to_name})..."
-    bashio::addon.stop "${to}" | sed -e "/^$/d"
+    bashio::app.stop "${to}" | sed -e "/^$/d"
   fi
   bashio::log.info "Backing up app ${to} (${to_name})..."
   if ! response="$(bashio::backup.new_partial "$(bashio::var.json \
@@ -216,11 +216,11 @@ else
     fi
     bashio::exit.nok "Backup job has failed"
   fi
-  bashio::addons.reload | sed -e "/^$/d"
-  update_available=$(bashio::addon.update_available "${to}")
+  bashio::apps.reload | sed -e "/^$/d"
+  update_available=$(bashio::app.update_available "${to}")
   if bashio::var.true "${update_available}"; then
     bashio::log.info "Updating app ${to} (${to_name}) to the latest version..."
-    bashio::addon.update "${to}" | sed -e "/^$/d"
+    bashio::app.update "${to}" | sed -e "/^$/d"
   fi
 fi
 
@@ -228,42 +228,42 @@ fi
 # Stop, disable, backup "from" app
 ################################################################################
 
-from_state=$(bashio::addon.state "${from}")
+from_state=$(bashio::app.state "${from}")
 if bashio::var.equals "${from_state}" "started" \
   || bashio::var.equals "${from_state}" "startup"
 then
   bashio::log.info "Stopping app ${from} (${from_name})..."
-  bashio::addon.stop "${from}" | sed -e "/^$/d"
+  bashio::app.stop "${from}" | sed -e "/^$/d"
 fi
 
-from_boot=$(bashio::addon.boot "${from}")
+from_boot=$(bashio::app.boot "${from}")
 if ! bashio::var.equals "${from_boot}" "manual"; then
   bashio::log.info "Disabling start on boot for app ${from} (${from_name})..."
-  bashio::addon.boot "${from}" "manual" | sed -e "/^$/d"
+  bashio::app.boot "${from}" "manual" | sed -e "/^$/d"
 fi
 
-from_watchdog=$(bashio::addon.watchdog "${from}")
+from_watchdog=$(bashio::app.watchdog "${from}")
 if bashio::var.true "${from_watchdog}"; then
   bashio::log.info "Disabling watchdog for app ${from} (${from_name})..."
-  bashio::addon.watchdog "${from}" "false" | sed -e "/^$/d"
+  bashio::app.watchdog "${from}" "false" | sed -e "/^$/d"
 fi
 
-from_auto_update=$(bashio::addon.auto_update "${from}")
+from_auto_update=$(bashio::app.auto_update "${from}")
 if bashio::var.true "${from_auto_update}"; then
   bashio::log.info "Disabling auto update for app ${from} (${from_name})..."
-  bashio::addon.auto_update "${from}" "false" | sed -e "/^$/d"
+  bashio::app.auto_update "${from}" "false" | sed -e "/^$/d"
 fi
 
-from_ingress_panel=$(bashio::addon.ingress_panel "${from}")
+from_ingress_panel=$(bashio::app.ingress_panel "${from}")
 if bashio::var.true "${from_ingress_panel}"; then
   bashio::log.info "Removing from the sidebar the app ${from} (${from_name})..."
-  bashio::addon.ingress_panel "${from}" "false" | sed -e "/^$/d"
+  bashio::app.ingress_panel "${from}" "false" | sed -e "/^$/d"
 fi
 
-from_options=$(bashio::addon.options "${from}")
-from_network=$(bashio::addon.network "${from}")
-from_audio_input=$(bashio::addon.audio_input "${from}")
-from_audio_output=$(bashio::addon.audio_output "${from}")
+from_options=$(bashio::app.options "${from}")
+from_network=$(bashio::app.network "${from}")
+from_audio_input=$(bashio::app.audio_input "${from}")
+from_audio_output=$(bashio::app.audio_output "${from}")
 
 bashio::log.info "Backing up app ${from} (${from_name})..."
 if ! response="$(bashio::backup.new_partial "$(bashio::var.json \
@@ -303,17 +303,17 @@ if bashio::var.has_value "${from_patch}"; then
 fi
 
 # merge "to" user options (defaults are merged in by Supervisor)
-to_options=$(bashio::addon.options "${to}")
+to_options=$(bashio::app.options "${to}")
 merged_options=$(merge_options merged_options to_options)
 
-bashio::addon.options "${to}" "${merged_options}" | sed -e "/^$/d"
+bashio::app.options "${to}" "${merged_options}" | sed -e "/^$/d"
 
 bashio::log.info "Copying app network settings from ${from} (${from_name}) to ${to} (${to_name})..."
-bashio::addon.network "${to}" "${from_network}" | sed -e "/^$/d"
+bashio::app.network "${to}" "${from_network}" | sed -e "/^$/d"
 
 bashio::log.info "Copying app audio settings from ${from} (${from_name}) to ${to} (${to_name})..."
-bashio::addon.audio_input "${to}" "${from_audio_input}" | sed -e "/^$/d"
-bashio::addon.audio_output "${to}" "${from_audio_output}" | sed -e "/^$/d"
+bashio::app.audio_input "${to}" "${from_audio_input}" | sed -e "/^$/d"
+bashio::app.audio_output "${to}" "${from_audio_output}" | sed -e "/^$/d"
 
 ################################################################################
 # Copy app data
@@ -378,53 +378,53 @@ fi
 # Enable, start "to" app
 ################################################################################
 
-to_boot=$(bashio::addon.boot "${to}")
+to_boot=$(bashio::app.boot "${to}")
 if ! bashio::var.equals "${from_boot}" "${to_boot}"; then
   if bashio::var.equals "${from_boot}" "manual"; then
     bashio::log.info "Disabling start on boot for app ${to} (${to_name})..."
   else
     bashio::log.info "Enabling start on boot for app ${to} (${to_name})..."
   fi
-  bashio::addon.boot "${to}" "${from_boot}" | sed -e "/^$/d"
+  bashio::app.boot "${to}" "${from_boot}" | sed -e "/^$/d"
 fi
 
-to_watchdog=$(bashio::addon.watchdog "${to}")
+to_watchdog=$(bashio::app.watchdog "${to}")
 if ! bashio::var.equals "${from_watchdog}" "${to_watchdog}"; then
   if bashio::var.false "${from_watchdog}"; then
     bashio::log.info "Disabling watchdog for app ${to} (${to_name})..."
   else
     bashio::log.info "Enabling watchdog for app ${to} (${to_name})..."
   fi
-  bashio::addon.watchdog "${to}" "${from_watchdog}" | sed -e "/^$/d"
+  bashio::app.watchdog "${to}" "${from_watchdog}" | sed -e "/^$/d"
 fi
 
-to_auto_update=$(bashio::addon.auto_update "${to}")
+to_auto_update=$(bashio::app.auto_update "${to}")
 if ! bashio::var.equals "${from_auto_update}" "${to_auto_update}"; then
   if bashio::var.false "${from_auto_update}"; then
     bashio::log.info "Disabling auto update for app ${to} (${to_name})..."
   else
     bashio::log.info "Enabling auto update for app ${to} (${to_name})..."
   fi
-  bashio::addon.auto_update "${to}" "${from_auto_update}" | sed -e "/^$/d"
+  bashio::app.auto_update "${to}" "${from_auto_update}" | sed -e "/^$/d"
 fi
 
-to_ingress_panel=$(bashio::addon.ingress_panel "${to}")
+to_ingress_panel=$(bashio::app.ingress_panel "${to}")
 if ! bashio::var.equals "${from_ingress_panel}" "${to_ingress_panel}"; then
   if bashio::var.false "${from_ingress_panel}"; then
     bashio::log.info "Removing from the sidebar the app ${to} (${to_name})..."
   else
     bashio::log.info "Adding to the sidebar the app ${to} (${to_name})..."
   fi
-  bashio::addon.ingress_panel "${to}" "${from_ingress_panel}" | sed -e "/^$/d"
+  bashio::app.ingress_panel "${to}" "${from_ingress_panel}" | sed -e "/^$/d"
 fi
 
 if bashio::var.equals "${from_state}" "started"; then
   bashio::log.info "Starting app ${to} (${to_name})..."
-  bashio::addon.start "${to}" | sed -e "/^$/d"
+  bashio::app.start "${to}" | sed -e "/^$/d"
   # There is a bug in Supervisor, in case the app fails to start up and gets into "error" state, Supervisor returns OK
   # So we have to check the state directly
   bashio::cache.flush_all
-  to_state="$(bashio::addon.state "${to}")"
+  to_state="$(bashio::app.state "${to}")"
   if ! bashio::var.equals "${to_state}" "started" \
     && ! bashio::var.equals "${to_state}" "startup"
   then
