@@ -18,7 +18,6 @@ Zero config VPN for building secure networks.
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
 >   - Force reauthentication when Tailscale explicitly complains about login server change
 >   - Add log_upload config option to configure log upload separately from local app log level
->   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 >   - Make force noise 443 option configurable
 > - Release pending changes from community app
@@ -27,6 +26,7 @@ Zero config VPN for building secure networks.
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
+>   - Support Supervised installations
 >   - Create persistent notification also (not just log warning) when key expiration or invalid networking DNS settings are detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
