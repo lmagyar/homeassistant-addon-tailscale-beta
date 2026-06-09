@@ -1,6 +1,5 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
-export LOG_FD
 # ==============================================================================
 # Home Assistant Community App: Tailscale
 # Periodically runs the dnsmasq proxies black/white list initialization
@@ -20,23 +19,6 @@ declare previous_ipn_dns_config=
 declare magicdns_proxies_configuration
 declare healthy=true
 
-function try {
-    set +e
-    (set -e; "$@")
-    declare -gx TRY_ERROR=$?
-    set -e
-}
-
-function file_non_empty() {
-    local file=${1}
-
-    if [[ -s "${file}" ]]; then
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    return "${__BASHIO_EXIT_NOK}"
-}
-
 function restart_proxies() {
   bashio::log.info "MagicDNS proxy configuration has changed"
 
@@ -52,7 +34,7 @@ function restart_proxies() {
   rm -r -f "${DNSMASQ_INGRESS_PORT_LOCATION}"
   s6-svc -ruwR /run/service/magicdns-ingress-proxy
   rm -r -f "${MAGICDNS_INGRESS_PROXY_SUPPRESS_FORWARDING_CONFIGURATION_LOCATION}"
-  if ! file_non_empty "${DNSMASQ_INGRESS_PORT_LOCATION}"; then
+  if ! bashio::fs.file_non_empty "${DNSMASQ_INGRESS_PORT_LOCATION}"; then
     bashio::log.fatal "MagicDNS ingress proxy port is unknown"
     return 1
   fi
@@ -91,8 +73,8 @@ do
       fi
       # Restart dnsmasq proxies if required
       if ! bashio::var.equals "${magicdns_proxies_configuration}" 'unchanged'; then
-        try restart_proxies
-        if ((TRY_ERROR)); then
+        bashio::try restart_proxies
+        if bashio::try.failed; then
           bashio::exit.nok "Failed to reconfigure and restart MagicDNS proxies. Halting app to prevent network loss."
         fi
       fi
