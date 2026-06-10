@@ -4,7 +4,7 @@
 # Parameters
 ################################################################################
 
-readonly ssh_min_version="21.0.4"
+readonly ssh_min_version="24.0.0"
 
 readonly from="a0d7b954_tailscale" # community
 readonly from_min_version="0.26.0"
