@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:20.2.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.0
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -13,13 +13,13 @@ RUN \
     apk add --no-cache \
         bash-completion=2.17.0-r1 \
         bind-tools=9.20.23-r0 \
-        dnsmasq=2.91-r1 \
-        ethtool=6.15-r0 \
+        dnsmasq=2.92_p2-r0 \
+        ethtool=7.0-r0 \
         ipcalc=1.0.3-r1 \
-        iproute2=6.17.0-r0 \
-        iptables=1.8.11-r1 \
-        nginx=1.28.3-r3 \
-        coreutils=9.8-r1 \
+        iproute2=7.0.0-r0 \
+        iptables=1.8.13-r0 \
+        nginx=1.30.2-r1 \
+        coreutils=9.11-r0 \
         networkmanager=1.54.3-r0 \
         inotify-tools=4.23.9.0-r0 \
     \
