@@ -2,7 +2,7 @@
 
 ## vNext (forked)
 
-- Update App base image to v20.2.0
+- Update App base image to v21.0.0 (Update Alpine base image to v3.24.0)
 
 ## 0.28.1.7 (forked)
 
