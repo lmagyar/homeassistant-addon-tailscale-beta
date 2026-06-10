@@ -4,7 +4,7 @@
 # Parameters
 ################################################################################
 
-readonly ssh_min_version="21.0.4"
+readonly ssh_min_version="24.0.0"
 
 readonly from="a0d7b954_tailscale" # community
 readonly from_min_version="0.26.0"
@@ -68,790 +68,6 @@ bashio::log.notice "************************************************************
 bashio::cache.flush_all
 
 ################################################################################
-# Bashio fixes
-################################################################################
-
-# These are curently missing from bashio
-
-shopt -s inherit_errexit # Command substitution inherits the value of errexit
-export LOG_FD
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Install the specified add-on.
-#
-# Arguments:
-#   $1 Add-on slug
-# ------------------------------------------------------------------------------
-function bashio::addon.install() {
-    local slug=${1}
-    bashio::log.trace "${FUNCNAME[0]}"
-    bashio::api.supervisor POST "/store/addons/${slug}/install"
-    bashio::cache.flush_all
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Uninstall the specified add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-# ------------------------------------------------------------------------------
-function bashio::addon.uninstall() {
-    local slug=${1:-'self'}
-    bashio::log.trace "${FUNCNAME[0]}"
-    bashio::api.supervisor POST "/addons/${slug}/uninstall"
-    bashio::cache.flush_all
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Update the specified add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-# ------------------------------------------------------------------------------
-function bashio::addon.update() {
-    local slug=${1:-'self'}
-    # This call is redirected to the store, and store doesn't support 'self'
-    if bashio::var.equals "${slug}" 'self'; then
-        slug=$(bashio::addon.slug)
-    fi
-    bashio::log.trace "${FUNCNAME[0]}"
-    bashio::api.supervisor POST "/store/addons/${slug}/update"
-    bashio::cache.flush_all
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Returns a JSON object with information about addons.
-#
-# Arguments:
-#   $1 Add-on slug (optional)
-#     (default/empty/'false' for all add-ons)
-#   $2 Cache key to store filtered results in (optional)
-#     (default/empty/'false' to cache only unfiltered results)
-#   $3 jq filter to apply on the result (optional)
-#     (default/empty is '.addons[].slug' with no slug or '.slug' with slug)
-#     ('false' for no filtering)
-# ------------------------------------------------------------------------------
-function bashio::addons() {
-    local slug=${1:-false}
-    local cache_key=${2:-false}
-    local filter=${3:-}
-    if bashio::var.is_empty "${filter}"; then
-        if bashio::var.false "${slug}"; then
-            filter='.addons[].slug'
-            if bashio::var.false "${cache_key}"; then
-                cache_key="addons.list"
-            fi
-        else
-            filter='.slug'
-        fi
-    fi
-    local info
-    local response
-    local installed
-    local info_source
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if ! bashio::var.false "${cache_key}" && \
-        bashio::cache.exists "${cache_key}"
-    then
-        bashio::cache.get "${cache_key}"
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    if bashio::cache.exists "store.addons.info"; then
-        info=$(bashio::cache.get "store.addons.info")
-    else
-        info=$(bashio::api.supervisor GET "/store/addons" false)
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to get addons info from Supervisor API"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-        bashio::cache.set "store.addons.info" "${info}"
-    fi
-
-    if ! bashio::var.false "${slug}"; then
-        if bashio::cache.exists "addons.${slug}.info"; then
-            info=$(bashio::cache.get "addons.${slug}.info")
-        else
-            if bashio::var.equals "${slug}" "self"; then
-                installed=true
-            else
-                installed=$(bashio::jq "${info}" ".addons[] | select(.slug == \"${slug}\") | .installed")
-            fi
-            if bashio::var.true "${installed}"; then
-                info_source="/addons/${slug}/info"
-            else
-                # in case of unknown slug we will intentionally fail on store API access
-                info_source="/store/addons/${slug}"
-            fi
-
-            info=$(bashio::api.supervisor GET "${info_source}" false)
-            if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-                bashio::log.error "Failed to get addon info from Supervisor API"
-                return "${__BASHIO_EXIT_NOK}"
-            fi
-            bashio::cache.set "addons.${slug}.info" "${info}"
-        fi
-    fi
-
-    response="${info}"
-    if ! bashio::var.false "${filter}"; then
-        response=$(bashio::jq "${info}" "${filter}")
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to execute the jq filter"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-        if ! bashio::var.false "${cache_key}"; then
-            bashio::cache.set "${cache_key}" "${response}"
-        fi
-    fi
-
-    printf '%s' "${response}"
-
-    return "${__BASHIO_EXIT_OK}"
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns whether or not this add-on is installed.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-# ------------------------------------------------------------------------------
-function bashio::addon.installed() {
-    local slug=${1:-'self'}
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-    # when info is coming from store API, .installed is always false, when data is coming from addons API, .installed is null
-    bashio::addons "${slug}" "addons.${slug}.installed" "if (.installed != null) then .installed else true end"
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns the slug of the current (self) add-on.
-# ------------------------------------------------------------------------------
-function bashio::addon.slug() {
-    bashio::log.trace "${FUNCNAME[0]}"
-    bashio::addons 'self' 'addons.self.slug' '.slug'
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets whether or not ingress_panel is enabled for this add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-#   $2 Set current ingress_panel state (Optional)
-# ------------------------------------------------------------------------------
-function bashio::addon.ingress_panel() {
-    local slug=${1:-'self'}
-    local ingress_panel=${2:-}
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if bashio::var.has_value "${ingress_panel}"; then
-        ingress_panel=$(bashio::var.json ingress_panel "^${ingress_panel}")
-        bashio::api.supervisor POST "/addons/${slug}/options" "${ingress_panel}"
-        bashio::cache.flush_all
-    else
-        bashio::addons \
-            "${slug}" \
-            "addons.${slug}.ingress_panel" \
-            '.ingress_panel // false'
-    fi
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets options for this add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-#   $2 The app configuration (optional)
-# ------------------------------------------------------------------------------
-function bashio::addon.options() {
-    local slug=${1:-'self'}
-    local options=${2:-'{}'}
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if bashio::var.equals "$#" 2; then
-        options=$(bashio::var.json options "^${options}")
-        bashio::api.supervisor POST "/addons/${slug}/options" "${options}"
-        bashio::cache.flush_all
-    else
-        bashio::addons "${slug}" "addons.${slug}.options" '.options'
-    fi
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets a list of ports which are exposed on the host network for this add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-#   $2 A map of network configuration (optional)
-# ------------------------------------------------------------------------------
-function bashio::addon.network() {
-    local slug=${1:-'self'}
-    local network=${2:-'null'}
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if bashio::var.equals "$#" 2; then
-        network=$(bashio::var.json network "^${network}")
-        bashio::api.supervisor POST "/addons/${slug}/options" "${network}"
-        bashio::cache.flush_all
-    else
-        bashio::addons "${slug}" \
-            "addons.${slug}.network" \
-            '.network // empty | if . == {} then empty else . end'
-    fi
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets the available audio input device for an add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-#   $2 Audio input device to set (optional)
-# ------------------------------------------------------------------------------
-function bashio::addon.audio_input() {
-    local slug=${1:-'self'}
-    local audio_input=${2:-'^null'}
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if bashio::var.equals "$#" 2; then
-        audio_input=$(bashio::var.json audio_input "${audio_input}")
-        bashio::api.supervisor POST "/addons/${slug}/options" "${audio_input}"
-        bashio::cache.flush_all
-    else
-        bashio::addons \
-            "${slug}" \
-            "addons.${slug}.audio_input" \
-            '.audio_input // empty'
-    fi
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets the available audio output device for an add-on.
-#
-# Arguments:
-#   $1 Add-on slug (optional, default: self)
-#   $2 Audio output device to set (optional)
-# ------------------------------------------------------------------------------
-function bashio::addon.audio_output() {
-    local slug=${1:-'self'}
-    local audio_output=${2:-'^null'}
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if bashio::var.equals "$#" 2; then
-        audio_output=$(bashio::var.json audio_output "${audio_output}")
-        bashio::api.supervisor POST "/addons/${slug}/options" "${audio_output}"
-        bashio::cache.flush_all
-    else
-        bashio::addons \
-            "${slug}" \
-            "addons.${slug}.audio_output" \
-            '.audio_output // empty'
-    fi
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Makes a call to the Supervisor API.
-#
-# Arguments:
-#   $1 HTTP Method (GET/POST)
-#   $2 API Resource requested
-#   $3 Whether or not this resource returns raw data instead of json (optional)
-#   $3 In case of a POST method, this parameter is the JSON to POST (optional)
-#   $4 jq filter command (optional)
-# ------------------------------------------------------------------------------
-function bashio::api.supervisor() {
-    local method=${1}
-    local resource=${2}
-    local raw=${3:-}
-    local filter=${4:-}
-    local auth_header='Authorization: Bearer'
-    local response
-    local status
-    local data='{}'
-    local result
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if [[ -n "${__BASHIO_SUPERVISOR_TOKEN:-}" ]]; then
-        auth_header="Authorization: Bearer ${__BASHIO_SUPERVISOR_TOKEN}"
-    fi
-
-    if [[ "${method}" = "POST" ]] && bashio::var.has_value "${raw}"; then
-        data="${raw}"
-        raw=
-    fi
-
-    if ! response=$(curl --silent --show-error \
-        --write-out '\n%{http_code}' --request "${method}" \
-        -H "${auth_header}" \
-        -H "Content-Type: application/json" \
-        -d "${data}" \
-        "${__BASHIO_SUPERVISOR_API}${resource}"
-    ); then
-        bashio::log.debug "${response}"
-        bashio::log.error "Something went wrong contacting the API"
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    status=${response##*$'\n'}
-    response=${response%"$status"}
-
-    bashio::log.debug "Requested API resource: ${__BASHIO_SUPERVISOR_API}${resource}"
-    bashio::log.debug "Request method: ${method}"
-    bashio::log.debug "Request data: ${data}"
-    bashio::log.debug "API HTTP Response code: ${status}"
-    bashio::log.debug "API Response: ${response}"
-
-    if [[ "${status}" -eq 401 ]]; then
-        bashio::log.error "Unable to authenticate with the API, permission denied"
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    if [[ "${status}" -eq 403 ]]; then
-        bashio::log.error "Unable to access the API, forbidden"
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    if [[ "${status}" -eq 404 ]]; then
-        bashio::log.error "Requested resource ${resource} was not found"
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    if [[ "${status}" -eq 405 ]]; then
-        bashio::log.error "Requested resource ${resource} was called using an" \
-            "unallowed method."
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    if ! bashio::var.true "${raw}"; then
-        result=$(bashio::jq "${response}" ".result")
-        if bashio::var.equals "${result}" "error"; then
-            bashio::log.error "Got unexpected response from the API:" \
-                "$(bashio::jq "${response}" '.message // empty')"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-    fi
-
-    if [[ "${status}" -ne 200 ]]; then
-        bashio::log.error "Unknown HTTP error occurred"
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    if bashio::var.true "${raw}"; then
-        echo "${response}"
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    result=$(bashio::jq "${response}" 'if .data == {} then empty else .data end')
-
-    if bashio::var.has_value "${filter}"; then
-        bashio::log.debug "Filtering response using: ${filter}"
-        result=$(bashio::jq "${result}" "${filter}")
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to execute the jq filter"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-    fi
-
-    echo "${result}"
-    return "${__BASHIO_EXIT_OK}"
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Restarts the Supervisor.
-# ------------------------------------------------------------------------------
-function bashio::supervisor.restart() {
-    bashio::log.trace "${FUNCNAME[0]}"
-    bashio::api.supervisor POST /supervisor/restart
-    bashio::cache.flush_all
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Creates a new partial backup.
-#
-# Arguments:
-#   $1 Backup json options, created by eg. bashio::var.json()
-# ------------------------------------------------------------------------------
-function bashio::backup.new_partial() {
-    local options=${1}
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-    bashio::api.supervisor POST "/backups/new/partial" "${options}"
-    if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-        bashio::log.error "Failed to create new backup with Supervisor API"
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-    bashio::cache.flush_all
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns a JSON object with information about jobs.
-#
-# Arguments:
-#   $1 Job uuid (optional)
-#     (default/empty/'false' for all jobs)
-#   $2 Cache key to store filtered results in (optional)
-#     (default/empty/'false' for no caching)
-#   $3 jq filter to apply on the result (optional)
-#     (default/empty is '.jobs[].uuid' with no uuid or 'false' with uuid)
-#     ('false' for no filtering)
-# ------------------------------------------------------------------------------
-function bashio::jobs() {
-    local uuid=${1:-false}
-    local cache_key=${2:-false}
-    local filter=${3:-}
-    if bashio::var.is_empty "${filter}"; then
-        if bashio::var.false "${uuid}"; then
-            filter='.jobs[].uuid'
-        else
-            filter='false'
-        fi
-    fi
-    local info
-    local response
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if ! bashio::var.false "${cache_key}" && \
-        bashio::cache.exists "${cache_key}"
-    then
-        bashio::cache.get "${cache_key}"
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    if bashio::var.false "${uuid}"; then
-        # do not cache jobs.info, it is constantly changing
-        info=$(bashio::api.supervisor GET "/jobs/info" false)
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to get jobs from Supervisor API"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-    else
-        # do not cache jobs.<uuid>.info, it is constantly changing
-        info=$(bashio::api.supervisor GET "/jobs/${uuid}" false)
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to get job info from Supervisor API"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-    fi
-
-    response="${info}"
-    if ! bashio::var.false "${filter}"; then
-        response=$(bashio::jq "${info}" "${filter}")
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to execute the jq filter"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-        if ! bashio::var.false "${cache_key}"; then
-            bashio::cache.set "${cache_key}" "${response}"
-        fi
-    fi
-
-    printf '%s' "${response}"
-
-    return "${__BASHIO_EXIT_OK}"
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns the done of a job.
-#
-# Arguments:
-#   $1 Job uuid
-# ------------------------------------------------------------------------------
-function bashio::job.done() {
-    local uuid=${1}
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-    bashio::jobs "${uuid}" false '.done'
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns the errors of a job.
-#
-# Arguments:
-#   $1 Job uuid
-# ------------------------------------------------------------------------------
-function bashio::job.errors() {
-    local uuid=${1}
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-    bashio::jobs "${uuid}" false 'if (.errors | length) > 0 then .errors else empty end'
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Checks if variable exists (optionally after filtering).
-#
-# Arguments:
-#   $1 JSON string or path to a JSON file
-#   $2 jq filter (optional)
-# ------------------------------------------------------------------------------
-function bashio::jq.exists() {
-    local data=${1}
-    local filter=${2:-}
-    local value
-
-    bashio::log.trace "${FUNCNAME[0]}:" "$@"
-
-    if ! value=$(bashio::jq "${data}" "${filter}") || \
-        bashio::var.equals "${value}" "null"
-    then
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-
-    return "${__BASHIO_EXIT_OK}"
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets the ipv4 json settings of the network interfaces.
-#
-# Arguments:
-#   $1 Interface name for this operation (optional)
-#   $2 Ipv4 interface settings (Optional)
-# ------------------------------------------------------------------------------
-function bashio::network.ipv4() {
-    local interface=${1:-'default'}
-    local ipv4=${2:-}
-
-    bashio::log.trace "${FUNCNAME[0]}"
-
-    if bashio::var.has_value "${ipv4}"; then
-        ipv4=$(bashio::var.json ipv4 "^${ipv4}")
-        bashio::api.supervisor POST "/network/interface/${interface}/update" "${ipv4}"
-        bashio::cache.flush_all
-    else
-        bashio::network.interface "network.interface.${interface}.info.ipv4" "${interface}" '.ipv4'
-    fi
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Returns or sets the ipv6 json settings of the network interfaces.
-#
-# Arguments:
-#   $1 Interface name for this operation (optional)
-#   $2 Ipv6 interface settings (Optional)
-# ------------------------------------------------------------------------------
-function bashio::network.ipv6() {
-    local interface=${1:-'default'}
-    local ipv6=${2:-}
-
-    bashio::log.trace "${FUNCNAME[0]}"
-
-    if bashio::var.has_value "${ipv6}"; then
-        ipv6=$(bashio::var.json ipv6 "^${ipv6}")
-        bashio::api.supervisor POST "/network/interface/${interface}/update" "${ipv6}"
-        bashio::cache.flush_all
-    else
-        bashio::network.interface "network.interface.${interface}.info.ipv6" "${interface}" '.ipv6'
-    fi
-}
-
-# This is currently broken in bashio
-
-# ------------------------------------------------------------------------------
-# Returns a JSON object with information about repositories.
-#
-# Arguments:
-#   $1 Repository slug (optional)
-#     (default/empty/'false' for all repositories)
-#   $2 Cache key to store filtered results in (optional)
-#     (default/empty/'false' to cache only unfiltered results)
-#   $3 jq filter to apply on the result (optional)
-#     (default/empty is '.[].slug' with no slug or '.slug' with slug)
-#     ('false' for no filtering)
-# ------------------------------------------------------------------------------
-function bashio::repositories() {
-    local slug=${1:-false}
-    local cache_key=${2:-false}
-    local filter=${3:-}
-    if bashio::var.is_empty "${filter}"; then
-        if bashio::var.false "${slug}"; then
-            filter='.[].slug'
-            if bashio::var.false "${cache_key}"; then
-                cache_key="repositories.list"
-            fi
-        else
-            filter='.slug'
-        fi
-    fi
-    local info
-    local response
-
-    bashio::log.trace "${FUNCNAME[0]}" "$@"
-
-    if ! bashio::var.false "${cache_key}" && \
-        bashio::cache.exists "${cache_key}"
-    then
-        bashio::cache.get "${cache_key}"
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    if bashio::var.false "${slug}"; then
-        if bashio::cache.exists "repositories.info"; then
-            info=$(bashio::cache.get 'repositories.info')
-        else
-            info=$(bashio::api.supervisor GET "/store/repositories" false)
-            if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-                bashio::log.error "Failed to get repositories from Supervisor API"
-                return "${__BASHIO_EXIT_NOK}"
-            fi
-            bashio::cache.set "repositories.info" "${info}"
-        fi
-    else
-        if bashio::cache.exists "repositories.${slug}.info"; then
-            info=$(bashio::cache.get "repositories.${slug}.info")
-        else
-            info=$(bashio::api.supervisor GET "/store/repositories/${slug}" false)
-            if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-                bashio::log.error "Failed to get repository info from Supervisor API"
-                return "${__BASHIO_EXIT_NOK}"
-            fi
-            bashio::cache.set "repositories.${slug}.info" "${info}"
-        fi
-    fi
-
-    response="${info}"
-    if ! bashio::var.false "${filter}"; then
-        response=$(bashio::jq "${info}" "${filter}")
-        if [ "$?" -ne "${__BASHIO_EXIT_OK}" ]; then
-            bashio::log.error "Failed to execute the jq filter"
-            return "${__BASHIO_EXIT_NOK}"
-        fi
-        if ! bashio::var.false "${cache_key}"; then
-            bashio::cache.set "${cache_key}" "${response}"
-        fi
-    fi
-
-    printf '%s' "${response}"
-
-    return "${__BASHIO_EXIT_OK}"
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Add an addon repository to the store.
-#
-# Arguments:
-#   $1 URL of the addon repository to add to the store.
-# ------------------------------------------------------------------------------
-function bashio::repository.add() {
-    local repository=${1}
-
-    bashio::log.trace "${FUNCNAME[0]}:" "$@"
-
-    repository=$(bashio::var.json repository "${repository}")
-    bashio::api.supervisor POST "/store/repositories" "${repository}"
-    bashio::cache.flush_all
-}
-
-# This is curently missing from bashio
-
-declare __BASHIO_TRY_EXIT_STATUS=0
-
-# ------------------------------------------------------------------------------
-# Executes a command/function in a subshell with enabled and effective errexit
-# option and saves it's exit status.
-#
-# Arguments: $* Command/function and it's arguments
-#
-#
-# Use this function to get the exit status of a subshell for a condition (eg.
-# 'if') without disabling errexit option in it. All Bashio functions that
-# execute changes through the API are depend on enabled errexit option.
-#
-# Simple example:
-#   ~ # function test { false; echo "Don't print it"; }
-#   ~ # if ! test; then echo "Print it"; fi
-#   Don't print it
-#   ~ # bashio::try test
-#   ~ # if bashio::try.failed; then echo "Print it"; fi
-#   Print it
-# ------------------------------------------------------------------------------
-function bashio::try {
-    set +e
-    (set -e; "$@")
-    __BASHIO_TRY_EXIT_STATUS=$?
-    set -e
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Checks whether that last command executed by bashio::try has failed.
-# ------------------------------------------------------------------------------
-function bashio::try.failed {
-    if ((__BASHIO_TRY_EXIT_STATUS)); then
-        return "${__BASHIO_EXIT_OK}"
-    else
-        return "${__BASHIO_EXIT_NOK}"
-    fi
-}
-
-# This is curently missing from bashio
-
-# ------------------------------------------------------------------------------
-# Converts a bash array to a JSON array.
-#
-# Arguments:
-#   $@ Bash array
-# ------------------------------------------------------------------------------
-function bashio::var.json_array() {
-    local array=("$@")
-    local json_array
-
-    # https://stackoverflow.com/a/67489301/2755656
-    if json_array=$(jq -cn '$ARGS.positional' --args -- "${array[@]}"); then
-        echo "${json_array}"
-        return "${__BASHIO_EXIT_OK}"
-    fi
-
-    bashio::log.error "Failed to convert array"
-    return "${__BASHIO_EXIT_NOK}"
-}
-
-################################################################################
 # Function definitions
 ################################################################################
 
@@ -893,7 +109,7 @@ if bashio::try.failed; then
   bashio::exit.nok
 fi
 
-addon_slug="$(bashio::addon.slug)"
+addon_slug="$(bashio::app.slug)"
 if ! bashio::var.equals "${addon_slug}" "a0d7b954_ssh"; then
   bashio::log.fatal
   bashio::log.fatal "You are not running this script within the Advanced SSH & Web Terminal app!"
@@ -903,7 +119,7 @@ if ! bashio::var.equals "${addon_slug}" "a0d7b954_ssh"; then
 fi
 
 # v21.0.4 contains the oldest bashio this script can run with
-addon_version="$(bashio::addon.version)"
+addon_version="$(bashio::app.version)"
 if ! printf '%s\n' "${ssh_min_version}" "${addon_version}" | sort -c -V 2> /dev/null; then
   bashio::log.fatal
   bashio::log.fatal "You are running this script in an old version of the Advanced SSH & Web Terminal app!"
@@ -912,7 +128,7 @@ if ! printf '%s\n' "${ssh_min_version}" "${addon_version}" | sort -c -V 2> /dev/
   bashio::exit.nok
 fi
 
-addon_protected="$(bashio::addon.protected "self")"
+addon_protected="$(bashio::app.protected "self")"
 if bashio::var.true "${addon_protected}"; then
   bashio::log.fatal
   bashio::log.fatal "Protection mode is enabled!"
@@ -942,14 +158,14 @@ then
   bashio::exit.nok "Repository of app ${from} is not installed"
 fi
 
-from_name=$(bashio::addon.name "${from}")
+from_name=$(bashio::app.name "${from}")
 
-from_installed="$(bashio::addon.installed "${from}")"
+from_installed="$(bashio::app.installed "${from}")"
 if bashio::var.false "${from_installed}"; then
   bashio::exit.nok "App ${from} (${from_name}) is not installed"
 fi
 
-from_current_version=$(bashio::addon.version "${from}")
+from_current_version=$(bashio::app.version "${from}")
 if ! printf '%s\n' "${from_min_version}" "${from_current_version}" "${from_max_version}" | sort -c -V 2> /dev/null; then
   bashio::exit.nok "App ${from} (${from_name}) version ${from_current_version} has to be between ${from_min_version} and ${from_max_version}"
 fi
@@ -971,19 +187,19 @@ fi
 # Install or backup "to" app
 ################################################################################
 
-to_name=$(bashio::addon.name "${to}")
+to_name=$(bashio::app.name "${to}")
 
-to_installed="$(bashio::addon.installed "${to}")"
+to_installed="$(bashio::app.installed "${to}")"
 if bashio::var.false "${to_installed}"; then
   bashio::log.info "Installing app ${to} (${to_name})..."
-  bashio::addon.install "${to}" | sed -e "/^$/d"
+  bashio::app.install "${to}" | sed -e "/^$/d"
 else
-  to_state="$(bashio::addon.state "${to}")"
+  to_state="$(bashio::app.state "${to}")"
   if bashio::var.equals "${to_state}" "started" \
     || bashio::var.equals "${to_state}" "startup"
   then
     bashio::log.info "Stopping app ${to} (${to_name})..."
-    bashio::addon.stop "${to}" | sed -e "/^$/d"
+    bashio::app.stop "${to}" | sed -e "/^$/d"
   fi
   bashio::log.info "Backing up app ${to} (${to_name})..."
   if ! response="$(bashio::backup.new_partial "$(bashio::var.json \
@@ -1000,11 +216,11 @@ else
     fi
     bashio::exit.nok "Backup job has failed"
   fi
-  bashio::addons.reload | sed -e "/^$/d"
-  update_available=$(bashio::addon.update_available "${to}")
+  bashio::apps.reload | sed -e "/^$/d"
+  update_available=$(bashio::app.update_available "${to}")
   if bashio::var.true "${update_available}"; then
     bashio::log.info "Updating app ${to} (${to_name}) to the latest version..."
-    bashio::addon.update "${to}" | sed -e "/^$/d"
+    bashio::app.update "${to}" | sed -e "/^$/d"
   fi
 fi
 
@@ -1012,42 +228,42 @@ fi
 # Stop, disable, backup "from" app
 ################################################################################
 
-from_state=$(bashio::addon.state "${from}")
+from_state=$(bashio::app.state "${from}")
 if bashio::var.equals "${from_state}" "started" \
   || bashio::var.equals "${from_state}" "startup"
 then
   bashio::log.info "Stopping app ${from} (${from_name})..."
-  bashio::addon.stop "${from}" | sed -e "/^$/d"
+  bashio::app.stop "${from}" | sed -e "/^$/d"
 fi
 
-from_boot=$(bashio::addon.boot "${from}")
+from_boot=$(bashio::app.boot "${from}")
 if ! bashio::var.equals "${from_boot}" "manual"; then
   bashio::log.info "Disabling start on boot for app ${from} (${from_name})..."
-  bashio::addon.boot "${from}" "manual" | sed -e "/^$/d"
+  bashio::app.boot "${from}" "manual" | sed -e "/^$/d"
 fi
 
-from_watchdog=$(bashio::addon.watchdog "${from}")
+from_watchdog=$(bashio::app.watchdog "${from}")
 if bashio::var.true "${from_watchdog}"; then
   bashio::log.info "Disabling watchdog for app ${from} (${from_name})..."
-  bashio::addon.watchdog "${from}" "false" | sed -e "/^$/d"
+  bashio::app.watchdog "${from}" "false" | sed -e "/^$/d"
 fi
 
-from_auto_update=$(bashio::addon.auto_update "${from}")
+from_auto_update=$(bashio::app.auto_update "${from}")
 if bashio::var.true "${from_auto_update}"; then
   bashio::log.info "Disabling auto update for app ${from} (${from_name})..."
-  bashio::addon.auto_update "${from}" "false" | sed -e "/^$/d"
+  bashio::app.auto_update "${from}" "false" | sed -e "/^$/d"
 fi
 
-from_ingress_panel=$(bashio::addon.ingress_panel "${from}")
+from_ingress_panel=$(bashio::app.ingress_panel "${from}")
 if bashio::var.true "${from_ingress_panel}"; then
   bashio::log.info "Removing from the sidebar the app ${from} (${from_name})..."
-  bashio::addon.ingress_panel "${from}" "false" | sed -e "/^$/d"
+  bashio::app.ingress_panel "${from}" "false" | sed -e "/^$/d"
 fi
 
-from_options=$(bashio::addon.options "${from}")
-from_network=$(bashio::addon.network "${from}")
-from_audio_input=$(bashio::addon.audio_input "${from}")
-from_audio_output=$(bashio::addon.audio_output "${from}")
+from_options=$(bashio::app.options "${from}")
+from_network=$(bashio::app.network "${from}")
+from_audio_input=$(bashio::app.audio_input "${from}")
+from_audio_output=$(bashio::app.audio_output "${from}")
 
 bashio::log.info "Backing up app ${from} (${from_name})..."
 if ! response="$(bashio::backup.new_partial "$(bashio::var.json \
@@ -1087,17 +303,17 @@ if bashio::var.has_value "${from_patch}"; then
 fi
 
 # merge "to" user options (defaults are merged in by Supervisor)
-to_options=$(bashio::addon.options "${to}")
+to_options=$(bashio::app.options "${to}")
 merged_options=$(merge_options merged_options to_options)
 
-bashio::addon.options "${to}" "${merged_options}" | sed -e "/^$/d"
+bashio::app.options "${to}" "${merged_options}" | sed -e "/^$/d"
 
 bashio::log.info "Copying app network settings from ${from} (${from_name}) to ${to} (${to_name})..."
-bashio::addon.network "${to}" "${from_network}" | sed -e "/^$/d"
+bashio::app.network "${to}" "${from_network}" | sed -e "/^$/d"
 
 bashio::log.info "Copying app audio settings from ${from} (${from_name}) to ${to} (${to_name})..."
-bashio::addon.audio_input "${to}" "${from_audio_input}" | sed -e "/^$/d"
-bashio::addon.audio_output "${to}" "${from_audio_output}" | sed -e "/^$/d"
+bashio::app.audio_input "${to}" "${from_audio_input}" | sed -e "/^$/d"
+bashio::app.audio_output "${to}" "${from_audio_output}" | sed -e "/^$/d"
 
 ################################################################################
 # Copy app data
@@ -1162,53 +378,53 @@ fi
 # Enable, start "to" app
 ################################################################################
 
-to_boot=$(bashio::addon.boot "${to}")
+to_boot=$(bashio::app.boot "${to}")
 if ! bashio::var.equals "${from_boot}" "${to_boot}"; then
   if bashio::var.equals "${from_boot}" "manual"; then
     bashio::log.info "Disabling start on boot for app ${to} (${to_name})..."
   else
     bashio::log.info "Enabling start on boot for app ${to} (${to_name})..."
   fi
-  bashio::addon.boot "${to}" "${from_boot}" | sed -e "/^$/d"
+  bashio::app.boot "${to}" "${from_boot}" | sed -e "/^$/d"
 fi
 
-to_watchdog=$(bashio::addon.watchdog "${to}")
+to_watchdog=$(bashio::app.watchdog "${to}")
 if ! bashio::var.equals "${from_watchdog}" "${to_watchdog}"; then
   if bashio::var.false "${from_watchdog}"; then
     bashio::log.info "Disabling watchdog for app ${to} (${to_name})..."
   else
     bashio::log.info "Enabling watchdog for app ${to} (${to_name})..."
   fi
-  bashio::addon.watchdog "${to}" "${from_watchdog}" | sed -e "/^$/d"
+  bashio::app.watchdog "${to}" "${from_watchdog}" | sed -e "/^$/d"
 fi
 
-to_auto_update=$(bashio::addon.auto_update "${to}")
+to_auto_update=$(bashio::app.auto_update "${to}")
 if ! bashio::var.equals "${from_auto_update}" "${to_auto_update}"; then
   if bashio::var.false "${from_auto_update}"; then
     bashio::log.info "Disabling auto update for app ${to} (${to_name})..."
   else
     bashio::log.info "Enabling auto update for app ${to} (${to_name})..."
   fi
-  bashio::addon.auto_update "${to}" "${from_auto_update}" | sed -e "/^$/d"
+  bashio::app.auto_update "${to}" "${from_auto_update}" | sed -e "/^$/d"
 fi
 
-to_ingress_panel=$(bashio::addon.ingress_panel "${to}")
+to_ingress_panel=$(bashio::app.ingress_panel "${to}")
 if ! bashio::var.equals "${from_ingress_panel}" "${to_ingress_panel}"; then
   if bashio::var.false "${from_ingress_panel}"; then
     bashio::log.info "Removing from the sidebar the app ${to} (${to_name})..."
   else
     bashio::log.info "Adding to the sidebar the app ${to} (${to_name})..."
   fi
-  bashio::addon.ingress_panel "${to}" "${from_ingress_panel}" | sed -e "/^$/d"
+  bashio::app.ingress_panel "${to}" "${from_ingress_panel}" | sed -e "/^$/d"
 fi
 
 if bashio::var.equals "${from_state}" "started"; then
   bashio::log.info "Starting app ${to} (${to_name})..."
-  bashio::addon.start "${to}" | sed -e "/^$/d"
+  bashio::app.start "${to}" | sed -e "/^$/d"
   # There is a bug in Supervisor, in case the app fails to start up and gets into "error" state, Supervisor returns OK
   # So we have to check the state directly
   bashio::cache.flush_all
-  to_state="$(bashio::addon.state "${to}")"
+  to_state="$(bashio::app.state "${to}")"
   if ! bashio::var.equals "${to_state}" "started" \
     && ! bashio::var.equals "${to_state}" "startup"
   then
