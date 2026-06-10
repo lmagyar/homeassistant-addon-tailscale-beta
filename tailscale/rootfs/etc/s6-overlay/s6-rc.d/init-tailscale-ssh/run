@@ -5,7 +5,7 @@
 # Install SSH packages and run init commands (only runs when ssh is true)
 # ==============================================================================
 
-# Packages: try install, warn and continue startup on failure
+# Install tailscale_ssh.packages: try install, warn and continue on failure
 if bashio::config.has_value 'tailscale_ssh.packages'; then
   if ! apk update; then
     bashio::log.warning \
@@ -21,7 +21,7 @@ if bashio::config.has_value 'tailscale_ssh.packages'; then
   fi
 fi
 
-# Execute tailscale_ssh.init_commands: try each, warn and continue startup on failure
+# Execute tailscale_ssh.init_commands: try each, warn and continue on failure
 if bashio::config.has_value 'tailscale_ssh.init_commands'; then
   # Use bashio::config to properly iterate over the array, preserving multi-line commands
   if ! length=$(bashio::config 'tailscale_ssh.init_commands | length'); then
