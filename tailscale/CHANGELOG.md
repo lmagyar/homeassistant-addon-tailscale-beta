@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.28.1.8 (forked)
 
 - Release unreleased changes from community app
   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
