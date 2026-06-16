@@ -144,8 +144,8 @@ if bashio::var.true "${addon_protected}"; then
   bashio::exit.nok
 fi
 
-if ! docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash -c "[[ -d '/data/addons/data' ]]"; then
-  bashio::exit.nok "Supervisor's internals have changed, can't find the '/data/addons/data' folder, raise an issue in the script's GitHub repository!"
+if ! docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash -c "[[ -d '/data/apps/data' ]]"; then
+  bashio::exit.nok "Supervisor's internals have changed, can't find the '/data/apps/data' folder, raise an issue in the script's GitHub repository!"
 fi
 
 ################################################################################
@@ -322,10 +322,10 @@ bashio::app.audio_output "${to}" "${from_audio_output}" | sed -e "/^$/d"
 bashio::log.info "Copying app internal data from ${from} (${from_name}) to ${to} (${to_name})..."
 
 if ! docker exec -i `docker ps -q -f name="^hassio_supervisor$"` /bin/bash -c " \
-  ( [[ -d '/data/addons/data/$from' ]] || { echo 'The /data/addons/data/$from directory does not exist!'; false; } ) && \
-  rm -rf /data/addons/data/$to && \
-  mkdir -p /data/addons/data/$to && \
-  cp -a /data/addons/data/$from/. /data/addons/data/$to "
+  ( [[ -d '/data/apps/data/$from' ]] || { echo 'The /data/apps/data/$from directory does not exist!'; false; } ) && \
+  rm -rf /data/apps/data/$to && \
+  mkdir -p /data/apps/data/$to && \
+  cp -a /data/apps/data/$from/. /data/apps/data/$to "
 then
   bashio::exit.nok "Executing script in Supervisor's container has failed"
 fi

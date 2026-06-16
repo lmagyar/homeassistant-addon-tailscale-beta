@@ -14,6 +14,7 @@
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
+>   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
 >   - Force reauthentication when Tailscale explicitly complains about login server change
 >   - Add log_upload config option to configure log upload separately from local app log level
 >   - Fix forwarding for local tailnet connections
@@ -449,8 +450,13 @@ More information: [Enabling HTTPS][tailscale_info_https],
 
 1. Configure Home Assistant to be accessible through an HTTP connection (this is
    the default). See [HTTP integration documentation][http_integration] for more
-   information. If you still want to use another HTTPS connection to access Home
-   Assistant, please use a reverse proxy app.
+   information.
+
+   **Note:** If you want to use another HTTPS connection to access Home
+   Assistant, though Tailscale can access Home Assistant even if Home Assistant
+   is using SSL and is accessible through an HTTPS connection, please use a
+   reverse proxy app for that HTTPS connection instead of configuring Home
+   Assistant to use SSL.
 
 1. Home Assistant, by default, blocks requests from reverse proxies, like the
    Tailscale Serve. To enable it, add the following lines to your
