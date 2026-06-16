@@ -1,6 +1,5 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
-export LOG_FD
 # ==============================================================================
 # Home Assistant Community App: Tailscale
 # S6 Overlay stage2 hook to customize services
@@ -25,17 +24,8 @@ declare message
 declare -a messages=()
 declare attributes
 
-# This is to execute potentially failing supervisor api functions within conditions,
-# where set -e is not propagated inside the function and bashio relies on set -e for api error handling
-function try {
-    set +e
-    (set -e; "$@")
-    declare -gx TRY_ERROR=$?
-    set -e
-}
-
 # Load app options, even deprecated one to upgrade
-options=$(bashio::addon.options)
+options=$(bashio::app.options)
 
 # Upgrade configuration from 'proxy', 'funnel' and 'proxy_and_funnel_port' to 'share_homeassistant' and 'share_on_port'
 # This step can be removed in a later version
@@ -45,17 +35,17 @@ proxy_and_funnel_port=$(bashio::jq "${options}" '.proxy_and_funnel_port | select
 # Upgrade to share_homeassistant
 if bashio::var.true "${proxy}"; then
     if bashio::var.true "${funnel}"; then
-        bashio::addon.option 'share_homeassistant' 'funnel'
+        bashio::app.option 'share_homeassistant' 'funnel'
         bashio::log.info "Successfully migrated proxy and funnel options to share_homeassistant: funnel"
     else
-        bashio::addon.option 'share_homeassistant' 'serve'
+        bashio::app.option 'share_homeassistant' 'serve'
         bashio::log.info "Successfully migrated proxy and funnel options to share_homeassistant: serve"
     fi
 fi
 # Upgrade to share_on_port
 if bashio::var.has_value "${proxy_and_funnel_port}"; then
-    try bashio::addon.option 'share_on_port' "^${proxy_and_funnel_port}"
-    if ((TRY_ERROR)); then
+    bashio::try bashio::app.option 'share_on_port' "^${proxy_and_funnel_port}"
+    if bashio::try.failed; then
         bashio::log.warning "The proxy_and_funnel_port option value '${proxy_and_funnel_port}' is invalid, proxy_and_funnel_port option is dropped, using default port."
     else
         bashio::log.info "Successfully migrated proxy_and_funnel_port option to share_on_port: ${proxy_and_funnel_port}"
@@ -64,15 +54,15 @@ fi
 # Remove previous options
 if bashio::var.has_value "${proxy}"; then
     bashio::log.info 'Removing deprecated proxy option'
-    bashio::addon.option 'proxy'
+    bashio::app.option 'proxy'
 fi
 if bashio::var.has_value "${funnel}"; then
     bashio::log.info 'Removing deprecated funnel option'
-    bashio::addon.option 'funnel'
+    bashio::app.option 'funnel'
 fi
 if bashio::var.has_value "${proxy_and_funnel_port}"; then
     bashio::log.info 'Removing deprecated proxy_and_funnel_port option'
-    bashio::addon.option 'proxy_and_funnel_port'
+    bashio::app.option 'proxy_and_funnel_port'
 fi
 
 # Remove unused options
@@ -81,15 +71,15 @@ healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_time
 forward_to_host=$(bashio::jq "${options}" '.forward_to_host | select(.!=null)')
 if bashio::var.has_value "${healthcheck_offline_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_offline_timeout option'
-    bashio::addon.option 'healthcheck_offline_timeout'
+    bashio::app.option 'healthcheck_offline_timeout'
 fi
 if bashio::var.has_value "${healthcheck_restart_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_restart_timeout option'
-    bashio::addon.option 'healthcheck_restart_timeout'
+    bashio::app.option 'healthcheck_restart_timeout'
 fi
 if bashio::var.has_value "${forward_to_host}"; then
     bashio::log.info 'Removing deprecated forward_to_host option'
-    bashio::addon.option 'forward_to_host'
+    bashio::app.option 'forward_to_host'
 fi
 
 # Update changed options
@@ -99,48 +89,48 @@ if bashio::var.has_value "${advertise_routes}" && \
 then
     bashio::log.info 'Updating advertise_routes option to match new schema'
     advertise_routes=$(bashio::jq "${advertise_routes}" '(.[] | select(.|match("^local[^_]subnets$"))) |= "local_subnets"')
-    bashio::addon.option 'advertise_routes' "^${advertise_routes}"
+    bashio::app.option 'advertise_routes' "^${advertise_routes}"
 fi
 
 # Rename changed options
 tags=$(bashio::jq "${options}" '.tags | select(.!=null)')
 if bashio::var.has_value "${tags}"; then
-    try bashio::addon.option 'advertise_tags' "^${tags}"
-    if ((TRY_ERROR)); then
+    bashio::try bashio::app.option 'advertise_tags' "^${tags}"
+    if bashio::try.failed; then
         bashio::log.warning "The tags option value is invalid, tags option is dropped, using default no advertise_tags."
         bashio::log.warning "The invalid tags option value is: '${tags}'"
     else
         bashio::log.info "Successfully renamed tags option to advertise_tags"
     fi
-    bashio::addon.option 'tags'
+    bashio::app.option 'tags'
 fi
 
 # Migrate ssh to tailscale_ssh.enabled
 ssh=$(bashio::jq "${options}" '.ssh | select(.!=null)')
 if bashio::var.has_value "${ssh}"; then
-    try bashio::addon.option 'tailscale_ssh.enabled' "^${ssh}"
-    if ((TRY_ERROR)); then
+    bashio::try bashio::app.option 'tailscale_ssh.enabled' "^${ssh}"
+    if bashio::try.failed; then
         bashio::log.warning "The ssh option migration failed, ssh option '${ssh}' is dropped, using default disabled."
     else
         bashio::log.info "Successfully migrated ssh option to tailscale_ssh.enabled"
     fi
-    bashio::addon.option 'ssh'
+    bashio::app.option 'ssh'
 fi
 
-# Disable init-packages service when tailscale_ssh.enabled is false
+# Disable init-tailscale-ssh service when tailscale_ssh.enabled is false
 # or no packages and no init_commands are defined
 if bashio::config.false 'tailscale_ssh.enabled' || \
     (! bashio::config.has_value 'tailscale_ssh.packages' && \
     ! bashio::config.has_value 'tailscale_ssh.init_commands')
 then
-    rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-packages
+    rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-tailscale-ssh
 fi
 
 # Remove deprecated share_service_name option
 share_service_name=$(bashio::jq "${options}" '.share_service_name | select(.!=null)')
 if bashio::var.has_value "${share_service_name}"; then
     bashio::log.info 'Removing deprecated share_service_name option'
-    bashio::addon.option 'share_service_name'
+    bashio::app.option 'share_service_name'
 fi
 
 # Check DNS configuration
@@ -179,7 +169,7 @@ if bashio::var.true "${invalid_dns_config}"; then
             "Failed to create persistent notification"
     fi
 
-    bashio::addon.option 'userspace_networking' 'true'
+    bashio::app.option 'userspace_networking' 'true'
 fi
 
 # MagicDNS related service dependencies:

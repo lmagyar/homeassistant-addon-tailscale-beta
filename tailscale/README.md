@@ -12,9 +12,9 @@ Zero config VPN for building secure networks.
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
+>   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
 >   - Force reauthentication when Tailscale explicitly complains about login server change
 >   - Add log_upload config option to configure log upload separately from local app log level
->   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
@@ -22,6 +22,7 @@ Zero config VPN for building secure networks.
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
+>   - Support Supervised installations
 >   - Create persistent notification also (not just log warning) when key expiration or invalid networking DNS settings are detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic

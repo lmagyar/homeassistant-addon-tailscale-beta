@@ -10,9 +10,9 @@
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
+>   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
 >   - Force reauthentication when Tailscale explicitly complains about login server change
 >   - Add log_upload config option to configure log upload separately from local app log level
->   - Support Supervised installations
 >   - Fix forwarding for local tailnet connections
 > - Release pending changes from community app
 >   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
@@ -20,6 +20,7 @@
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
+>   - Support Supervised installations
 >   - Create persistent notification also (not just log warning) when key expiration or invalid networking DNS settings are detected
 >   - Optionally copy Tailscale Serve's certificate files to /ssl folder
 >   - Make DSCP configurable on tailscaled's network traffic
@@ -428,8 +429,13 @@ More information: [Enabling HTTPS][tailscale_info_https],
 
 1. Configure Home Assistant to be accessible through an HTTP connection (this is
    the default). See [HTTP integration documentation][http_integration] for more
-   information. If you still want to use another HTTPS connection to access Home
-   Assistant, please use a reverse proxy app.
+   information.
+
+   **Note:** If you want to use another HTTPS connection to access Home
+   Assistant, though Tailscale can access Home Assistant even if Home Assistant
+   is using SSL and is accessible through an HTTPS connection, please use a
+   reverse proxy app for that HTTPS connection instead of configuring Home
+   Assistant to use SSL.
 
 1. Home Assistant, by default, blocks requests from reverse proxies, like the
    Tailscale Serve. To enable it, add the following lines to your

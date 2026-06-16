@@ -1,0 +1,41 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+# ==============================================================================
+# Home Assistant Community App: Tailscale
+# Install SSH packages and run init commands (only runs when ssh is true)
+# ==============================================================================
+
+# Install tailscale_ssh.packages: try install, warn and continue on failure
+if bashio::config.has_value 'tailscale_ssh.packages'; then
+  if ! apk update; then
+    bashio::log.warning \
+      'Failed updating the Alpine package indexes, is the network up?'
+    bashio::log.warning \
+      'Skipping installation of custom packages so access stays available.'
+  else
+    for package in $(bashio::config 'tailscale_ssh.packages'); do
+      if ! apk add --no-cache "$package"; then
+        bashio::log.warning "Failed installing package ${package}"
+      fi
+    done
+  fi
+fi
+
+# Execute tailscale_ssh.init_commands: try each, warn and continue on failure
+if bashio::config.has_value 'tailscale_ssh.init_commands'; then
+  # Use bashio::config to properly iterate over the array, preserving multi-line commands
+  if ! length=$(bashio::config 'tailscale_ssh.init_commands | length'); then
+    bashio::log.warning \
+      'Failed to get tailscale_ssh.init_commands array length'
+    bashio::log.warning \
+      'Skipping execution of init commands so access stays available.'
+  else
+    for ((i = 0; i < length; i++)); do
+      if ! cmd=$(bashio::config "tailscale_ssh.init_commands[${i}]"); then
+        bashio::log.warning "Failed to get init command at index ${i}"
+      elif ! eval "${cmd}"; then
+        bashio::log.warning "Failed executing init command: ${cmd}"
+      fi
+    done
+  fi
+fi

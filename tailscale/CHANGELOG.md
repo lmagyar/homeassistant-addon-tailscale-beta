@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.28.1.8 (forked)
+
+- Release unreleased changes from community app
+  - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
+  - Update App base image to v21.0.0 (Update Alpine base image to v3.24.0)
+- Fork specific changes
+  - SSH: When custom package installation or init command execution fails, keep installing and executing other packages and commands
+  - Update home-assistant/cli to v5.1.0
+
 ## 0.28.1.7 (forked)
 
 - Release unreleased changes from community app
