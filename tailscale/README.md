@@ -12,6 +12,7 @@ Zero config VPN for building secure networks.
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
+>   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
 >   - Force reauthentication when Tailscale explicitly complains about login server change
 >   - Add log_upload config option to configure log upload separately from local app log level
 >   - Fix forwarding for local tailnet connections
