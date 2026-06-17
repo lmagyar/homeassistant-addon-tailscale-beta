@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.28.1.9 (forked)
+
+- Release unreleased changes from community app
+  - Graceful shutdown on SIGTERM caused by manual app stop
+
 ## 0.28.1.8 (forked)
 
 - Release unreleased changes from community app
