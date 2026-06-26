@@ -197,6 +197,16 @@ This option is disabled by default.
 specify an exit node to use. See also the "Option: `exit_node`" section of this
 documentation.
 
+**Note:** After you enable this option, you also have to enable it on Tailscale's
+admin console.
+
+1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
+   find your Home Assistant instance.
+
+1. Click on the **&hellip;** icon at the right side and select the "Edit route
+   settings..." option. The "Exit node" and "Subnet routes" functions can be
+   enabled here.
+
 ### Option: `advertise_routes`
 
 This option allows you to advertise routes to subnets (accessible on the network
@@ -303,16 +313,6 @@ section of this documentation.
 
 **Note:** The `exit-node-allow-lan-access` option is always enabled when an exit
 node is specified. This is required by the Home Assistant environment.
-
-**Note:** After you enable this option, you also have to enable it on Tailscale's
-admin console.
-
-1. Navigate to the [Machines page][tailscale_machines] of the admin console, and
-   find your Home Assistant instance.
-
-1. Click on the **&hellip;** icon at the right side and select the "Edit route
-   settings..." option. The "Exit node" and "Subnet routes" functions can be
-   enabled here.
 
 ### _Note on the `lets_encrypt` options below_
 
@@ -480,7 +480,7 @@ More information: [Enabling HTTPS][tailscale_info_https],
 1. Optionally, if you want to use Tailscale Funnel, navigate to the [Access
    controls page][tailscale_acls] of the admin console:
    - Add the required `funnel` node attribute to the tailnet policy file. See
-     [Tailnet policy file requirement][tailscale_info_funnel_policy_requirement]
+     [Funnel node attribute][tailscale_info_funnel_node_attribute]
      for more information.
 
 1. Restart the app.
@@ -794,7 +794,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_dns]: https://tailscale.com/docs/reference/dns-in-tailscale
 [tailscale_info_exit_nodes]: https://tailscale.com/docs/features/exit-nodes
 [tailscale_info_funnel]: https://tailscale.com/docs/features/tailscale-funnel
-[tailscale_info_funnel_policy_requirement]: https://tailscale.com/docs/features/tailscale-funnel#requirements-and-limitations
+[tailscale_info_funnel_node_attribute]: https://tailscale.com/docs/features/tailscale-funnel#funnel-node-attribute
 [tailscale_info_https]: https://tailscale.com/docs/how-to/set-up-https-certificates
 [tailscale_info_key_expiry]: https://tailscale.com/docs/features/access-control/key-expiry
 [tailscale_info_magicdns]: https://tailscale.com/docs/features/magicdns
