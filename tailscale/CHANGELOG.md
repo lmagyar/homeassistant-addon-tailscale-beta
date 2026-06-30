@@ -2,7 +2,9 @@
 
 ## vNext (forked)
 
-- Remove force noise 443 option added in v0.28.1.6
+- Remove force noise 443 option added in v0.28.1.6 beta
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.98.8
 
 ## 0.28.1.9 (forked)
 
@@ -25,7 +27,7 @@
 
 ## 0.28.1.6 (forked)
 
-- Make force noise 443 option configurable
+- Make force noise 443 option configurable (beta only)
 - Release unreleased changes from community app
   - Update tailscale/tailscale to v1.98.3
 
