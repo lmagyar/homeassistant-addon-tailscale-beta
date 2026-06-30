@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.98.8
+
 ## 0.28.1.9 (forked)
 
 - Release unreleased changes from community app
