@@ -11,6 +11,7 @@ declare options
 declare proxy funnel proxy_and_funnel_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 declare forward_to_host
+declare force_noise_443
 declare advertise_routes
 declare tags
 declare ssh
@@ -69,6 +70,7 @@ fi
 healthcheck_offline_timeout=$(bashio::jq "${options}" '.healthcheck_offline_timeout | select(.!=null)')
 healthcheck_restart_timeout=$(bashio::jq "${options}" '.healthcheck_restart_timeout | select(.!=null)')
 forward_to_host=$(bashio::jq "${options}" '.forward_to_host | select(.!=null)')
+force_noise_443=$(bashio::jq "${options}" '.force_noise_443 | select(.!=null)')
 if bashio::var.has_value "${healthcheck_offline_timeout}"; then
     bashio::log.info 'Removing deprecated healthcheck_offline_timeout option'
     bashio::app.option 'healthcheck_offline_timeout'
@@ -80,6 +82,10 @@ fi
 if bashio::var.has_value "${forward_to_host}"; then
     bashio::log.info 'Removing deprecated forward_to_host option'
     bashio::app.option 'forward_to_host'
+fi
+if bashio::var.has_value "${force_noise_443}"; then
+    bashio::log.info 'Removing deprecated force_noise_443 option'
+    bashio::app.option 'force_noise_443'
 fi
 
 # Update changed options
