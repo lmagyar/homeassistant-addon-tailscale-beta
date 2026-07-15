@@ -12,7 +12,7 @@ Zero config VPN for building secure networks.
 
 > ## Changes
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.98.8
+>   - Update tailscale/tailscale to v1.98.9
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
@@ -38,7 +38,7 @@ Zero config VPN for building secure networks.
 > - From the cli execute: `curl -s -o /tmp/migrate_from_community_app https://raw.githubusercontent.com/lmagyar/homeassistant-addon-tailscale-beta/refs/heads/main/scripts/migrate_from_community_app && bashio /tmp/migrate_from_community_app`
 >
 > **Note:**
-> - This will install the forked version (if not alredy installed), backup and
+> - This will install the forked version (if not already installed), backup and
 >   stop the community version, copy and update the configuration, and (this is
 >   the big thing) will also copy the internal state of the app, then start
 >   the forked version.

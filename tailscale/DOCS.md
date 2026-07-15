@@ -10,7 +10,7 @@
 
 > ## Changes
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.98.8
+>   - Update tailscale/tailscale to v1.98.9
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
 >   - Refactor MagicDNS support to properly handle appconnectors
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
@@ -360,8 +360,10 @@ the bottom of the page.
 
 ### Option: `log_level`
 
-Optionally enable tailscaled debug messages in the app's log. Turn it on only
-in case you are troubleshooting, because Tailscale's daemon is quite chatty.
+Optionally enable all tailscaled debug messages in the app's log. Turn it on only
+in case you are troubleshooting, because Tailscale's daemon is quite chatty. If
+`log_level` is set to `info` or less severe level, tailscaled logs will be
+suppressed after 200 lines.
 
 The `log_level` option controls the level of log output by the app and can
 be changed to be more or less verbose, which might be useful when you are

@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.98.9
+
 ## 0.28.1.10 (forked)
 
 - Remove force noise 443 option added in v0.28.1.6 beta
