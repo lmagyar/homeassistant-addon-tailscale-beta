@@ -114,6 +114,7 @@ log_upload: false
 login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
+services: []
 snat_subnet_routes: true
 stateful_filtering: false
 taildrive:
@@ -485,6 +486,47 @@ Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
 Port 443 is used by default.
 
+### Option: `services`
+
+This option allows you to advertise other local services running on this device
+as [Tailscale Services][tailscale_info_services]. Each service needs a name, a
+local target address, a protocol, and a port to expose it on. The `svc:` prefix
+is added automatically by the app; do not include it in the configuration.
+
+You can use this to expose apps running on your Home Assistant instance, such as
+an audiobookshelf add-on, to your tailnet using a stable MagicDNS name.
+
+```yaml
+services:
+  - name: audiobookshelf
+    target: http://127.0.0.1:13378
+    protocol: http
+    port: 80
+    path: /
+```
+
+Supported protocols:
+
+- `http`: Expose the service as an HTTP server on the configured port.
+- `https`: Expose the service as an HTTPS server on the configured port.
+  You must enable MagicDNS and HTTPS certificates for your tailnet in the
+  Tailscale admin console first. Once enabled, Tailscale automatically
+  provisions a TLS certificate for the service.
+- `tcp`: Forward raw TCP packets to the configured target.
+- `tls-terminated-tcp`: Forward TLS-terminated TCP packets to the configured
+  target.
+
+The `target` must be a local address reachable from this app. Use `http://` or
+`https://` targets for HTTP/HTTPS protocols, and `tcp://` targets for TCP and
+tls-terminated-tcp protocols, for example `http://127.0.0.1:13378`. The `path`
+option is optional and defaults to `/`.
+
+Before a service can accept traffic, you must define the Service in the Tailscale
+admin console and approve this device as a Service host. More information:
+[Services][tailscale_info_services].
+
+This option is disabled by default.
+
 ### Option: `snat_subnet_routes`
 
 This option allows subnet devices to see the traffic originating from the subnet
@@ -689,6 +731,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
 [tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
 [tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
+[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
 [tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
 [tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers

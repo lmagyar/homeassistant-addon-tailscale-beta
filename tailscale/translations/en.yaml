@@ -106,6 +106,14 @@ configuration:
       internet.
       Only ports 443, 8443, and 10000 are allowed by Tailscale.
       Port 443 is used by default.
+  services:
+    name: Service hosts
+    description: >-
+      This option allows you to advertise other local services running on this
+      device as Tailscale Services. Each service needs a name, a local target
+      address, a protocol, and a port to expose it on. The `svc:` prefix is added
+      automatically; do not include it in the configuration.
+      These options are disabled by default.
   snat_subnet_routes:
     name: Source NAT subnet routes
     description: >-

@@ -1,0 +1,117 @@
+#!/command/with-contenv bashio
+# shellcheck shell=bash
+export LOG_FD
+# ==============================================================================
+# Home Assistant Community App: Tailscale
+# Advertises configured Tailscale Services from this host
+# ==============================================================================
+
+declare current_config
+
+declare service
+declare name
+declare service_name
+
+declare protocol
+
+declare port
+
+declare target
+
+declare path
+
+declare -a options=()
+declare -a configured_services=()
+declare -a configured_names=()
+declare -a current_names=()
+
+# Nothing to do when no services are configured
+if ! bashio::config 'services' | jq -e '. | length > 0' > /dev/null 2>&1; then
+    exit 0
+fi
+
+# Read configured services
+# Note: bashio::config emits one JSON object per line for array options
+readarray -t configured_services < <(bashio::config 'services')
+
+# Build a list of configured service names (without the svc: prefix)
+for service in "${configured_services[@]}"; do
+    name=$(jq -re '.name' <<< "${service}")
+    name="${name#svc:}"
+    configured_names+=("${name}")
+done
+
+bashio::log.info "Configured service hosts: ${configured_names[*]}"
+
+# Wait for tailscaled to be available
+while ! bashio::fs.socket_exists "/var/run/tailscale/tailscaled.sock"; do
+    sleep 1
+done
+
+while ! /opt/tailscale status --json --peers=false --self=false \
+    | jq --exit-status '.BackendState == "Running"' > /dev/null; do
+    sleep 2
+done
+
+# Read currently advertised services from the tailscale serve config
+if ! current_config=$(/opt/tailscale serve get-config --all 2>/dev/null); then
+    current_config='{}'
+fi
+
+# Build a list of currently configured service names
+readarray -t current_names < <(jq -re '.services | keys[]' <<< "${current_config}" 2>/dev/null || true)
+
+# Remove services that are no longer configured in this app
+for service_name in "${current_names[@]}"; do
+    if [[ "${service_name}" != svc:* ]]; then
+        continue
+    fi
+    # Compare without the svc: prefix
+    if ! printf '%s\n' "${configured_names[@]}" | grep -qx "${service_name#svc:}"; then
+        bashio::log.info "Removing stale service host configuration for ${service_name}"
+        /opt/tailscale serve drain "${service_name}" >/dev/null 2>&1 || true
+        /opt/tailscale serve clear "${service_name}" >/dev/null 2>&1 || true
+    fi
+done
+
+# Configure and advertise each service
+for service in "${configured_services[@]}"; do
+    name=$(jq -re '.name' <<< "${service}")
+    name="${name#svc:}"
+    service_name="svc:${name}"
+    protocol=$(jq -re '.protocol' <<< "${service}")
+    port=$(jq -re '.port' <<< "${service}")
+    target=$(jq -re '.target' <<< "${service}")
+    path=$(jq -re '.path // empty' <<< "${service}")
+
+    options=()
+    case "${protocol}" in
+        http)
+            options+=("--http=${port}")
+            ;;
+        https)
+            options+=("--https=${port}")
+            ;;
+        tcp)
+            options+=("--tcp=${port}")
+            ;;
+        tls-terminated-tcp)
+            options+=("--tls-terminated-tcp=${port}")
+            ;;
+    esac
+
+    if [[ -n "${path}" ]]; then
+        options+=("--set-path=${path}")
+    fi
+
+    # Clean any existing configuration for this service before reconfiguring
+    /opt/tailscale serve drain "${service_name}" >/dev/null 2>&1 || true
+    /opt/tailscale serve clear "${service_name}" >/dev/null 2>&1 || true
+
+    bashio::log.info "Advertising service host for ${service_name}"
+    if ! /opt/tailscale serve --service="${service_name}" --yes "${options[@]}" "${target}"; then
+        bashio::exit.nok "Failed to advertise service host for ${service_name}"
+    fi
+done
+
+exit 0
