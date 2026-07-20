@@ -111,8 +111,8 @@ configuration:
     description: >-
       This option allows you to advertise other local services running on this
       device as Tailscale Services. Each service needs a name, a local target
-      address, a protocol, and a port to expose it on. The `svc:` prefix is added
-      automatically; do not include it in the configuration.
+      address, a protocol, and a port to expose it on. The service name must
+      include the `svc:` prefix.
       These options are disabled by default.
   snat_subnet_routes:
     name: Source NAT subnet routes

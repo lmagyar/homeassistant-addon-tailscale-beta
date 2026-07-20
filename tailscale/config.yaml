@@ -92,10 +92,10 @@ schema:
   share_homeassistant: list(disabled|serve|funnel)
   share_on_port: match(^(?:443|8443|10000)$)
   services:
-    - name: "match(^[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$)"
+    - name: "match(^svc:[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$)"
       target: "match(^(?:https?|tcp)://127\\.0\\.0\\.1:([1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$)"
       protocol: "list(http|https|tcp|tls-terminated-tcp)"
-      port: "match(^([1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$)"
+      port: port
       path: "match(^/.*$)?"
   snat_subnet_routes: bool
   stateful_filtering: bool

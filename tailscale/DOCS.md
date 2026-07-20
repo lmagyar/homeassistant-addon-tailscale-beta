@@ -432,6 +432,11 @@ _VPN_ &#8658; **Tailscale Serve** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 More information: [Enabling HTTPS][tailscale_info_https],
 [Tailscale Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel].
 
+**Note:** If you only want to expose Home Assistant on your tailnet using
+Tailscale Serve, you can also configure it through the `services` option.
+However, the `services` option does not support Tailscale Funnel. If you need to
+access Home Assistant from the internet, use this option instead.
+
 1. Disable **SSL/TLS** so Home Assistant is accessible through an HTTP
    connection (this is the default). You can access this setting at **Settings**
    -> **System** -> **Network** -> **HTTP server** -> **SSL/TLS**
@@ -490,15 +495,19 @@ Port 443 is used by default.
 
 This option allows you to advertise other local services running on this device
 as [Tailscale Services][tailscale_info_services]. Each service needs a name, a
-local target address, a protocol, and a port to expose it on. The `svc:` prefix
-is added automatically by the app; do not include it in the configuration.
+local target address, a protocol, and a port to expose it on. The service name
+must include the `svc:` prefix (for example, `svc:audiobookshelf`), similar to
+how the `tags` option requires the `tag:` prefix.
 
-You can use this to expose apps running on your Home Assistant instance, such as
-an audiobookshelf add-on, to your tailnet using a stable MagicDNS name.
+**Note:** For Tailscale Services to work, this device must use tags. See the
+`tags` option for more information.
+
+You can use this to expose an app running on your Home Assistant instance, such
+as an audiobookshelf app, to your tailnet using a stable MagicDNS name.
 
 ```yaml
 services:
-  - name: audiobookshelf
+  - name: svc:audiobookshelf
     target: http://127.0.0.1:13378
     protocol: http
     port: 80
@@ -522,8 +531,14 @@ tls-terminated-tcp protocols, for example `http://127.0.0.1:13378`. The `path`
 option is optional and defaults to `/`.
 
 Before a service can accept traffic, you must define the Service in the Tailscale
-admin console and approve this device as a Service host. More information:
-[Services][tailscale_info_services].
+admin console and approve this device as a Service host.
+
+More information: [Services][tailscale_info_services].
+
+**Note:** This option manages the Tailscale Serve configuration for all configured
+services. If you previously configured any `svc:*` serve entries manually, they
+will be removed when this app starts. Make sure to migrate all services you want
+to keep into this option.
 
 This option is disabled by default.
 
