@@ -43,7 +43,7 @@ It is free to use for personal & hobby projects, up to 100 clients/devices on a
 single user account. Sign up using your Google, Microsoft or GitHub account at
 the following URL:
 
-<https://login.tailscale.com/start>
+<https://console.tailscale.com/start>
 
 You can also create an account during the app installation processes,
 however, it is nice to know where you need to go later on.
@@ -81,7 +81,7 @@ device. See [Key expiry][tailscale_info_key_expiry] for more information.
 Logging in to Tailscale, you can configure your Tailscale network right from
 their interface.
 
-<https://login.tailscale.com/>
+https://console.tailscale.com/
 
 ## App configuration
 
@@ -769,8 +769,8 @@ You could also [open an issue here][issue] on GitHub.
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
 [community_app]: https://github.com/hassio-addons/app-tailscale
 [alpine-packages]: https://pkgs.alpinelinux.org/packages
-[tailscale_acls]: https://login.tailscale.com/admin/acls
-[tailscale_dns]: https://login.tailscale.com/admin/dns
+[tailscale_acls]: https://console.tailscale.com/admin/acls
+[tailscale_dns]: https://console.tailscale.com/admin/dns
 [tailscale_info_app_connectors]: https://tailscale.com/docs/features/app-connectors
 [tailscale_info_dns]: https://tailscale.com/docs/reference/dns-in-tailscale
 [tailscale_info_exit_nodes]: https://tailscale.com/docs/features/exit-nodes
@@ -789,4 +789,4 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_taildrive]: https://tailscale.com/docs/features/taildrive
 [tailscale_info_taildrop]: https://tailscale.com/docs/features/taildrop
 [tailscale_info_userspace_networking]: https://tailscale.com/docs/concepts/userspace-networking
-[tailscale_machines]: https://login.tailscale.com/admin/machines
+[tailscale_machines]: https://console.tailscale.com/admin/machines
