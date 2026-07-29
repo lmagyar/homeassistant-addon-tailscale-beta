@@ -709,7 +709,7 @@ Steps:
      This is useful if you want to share your other app with a unique name and
      IP within your tailnet (not the device's tailnet name and IP), though have
      special requirements, like you must use a tag-based identity for this
-     device and have to configure the service on Tailscale's admin page.
+     device and have to configure the service on Tailscale's admin console.
 
      More information: [Services][tailscale_info_services]
 
