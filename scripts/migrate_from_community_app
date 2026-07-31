@@ -109,8 +109,8 @@ if bashio::try.failed; then
   bashio::exit.nok
 fi
 
-addon_slug="$(bashio::app.slug)"
-if ! bashio::var.equals "${addon_slug}" "a0d7b954_ssh"; then
+app_slug="$(bashio::app.slug)"
+if ! bashio::var.equals "${app_slug}" "a0d7b954_ssh"; then
   bashio::log.fatal
   bashio::log.fatal "You are not running this script within the Advanced SSH & Web Terminal app!"
   bashio::log.fatal
@@ -119,8 +119,8 @@ if ! bashio::var.equals "${addon_slug}" "a0d7b954_ssh"; then
 fi
 
 # v21.0.4 contains the oldest bashio this script can run with
-addon_version="$(bashio::app.version)"
-if ! printf '%s\n' "${ssh_min_version}" "${addon_version}" | sort -c -V 2> /dev/null; then
+app_version="$(bashio::app.version)"
+if ! printf '%s\n' "${ssh_min_version}" "${app_version}" | sort -c -V 2> /dev/null; then
   bashio::log.fatal
   bashio::log.fatal "You are running this script in an old version of the Advanced SSH & Web Terminal app!"
   bashio::log.fatal
@@ -128,8 +128,8 @@ if ! printf '%s\n' "${ssh_min_version}" "${addon_version}" | sort -c -V 2> /dev/
   bashio::exit.nok
 fi
 
-addon_protected="$(bashio::app.protected "self")"
-if bashio::var.true "${addon_protected}"; then
+app_protected="$(bashio::app.protected "self")"
+if bashio::var.true "${app_protected}"; then
   bashio::log.fatal
   bashio::log.fatal "Protection mode is enabled!"
   bashio::log.fatal
