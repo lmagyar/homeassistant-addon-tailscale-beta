@@ -15,11 +15,11 @@ Zero config VPN for building secure networks.
 >   - Refactor slow activities from nm-dispatcher script into separate listener service
 >   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
 >   - Force reauthentication when Tailscale explicitly complains about login server change
->   - Add log_upload config option to configure log upload separately from local app log level
+>   - Add `log_upload` config option to configure log upload separately from local app log level
 >   - Fix forwarding for local tailnet connections
-> - Release pending changes from community app
->   - Make accept_routes, advertise_connector, advertise_exit_node, advertise_routes, taildrop and userspace_networking options default disabled to align with stock Tailscale's platform-specific behavior
->   - Rename tags option to advertise_tags to align with stock Tailscale's naming convention - ***config is automatically updated***
+>   - Make `accept_routes`, `advertise_connector`, `advertise_exit_node`, `advertise_routes`, `taildrop` and `userspace_networking` options default disabled to align with stock Tailscale's platform-specific behavior
+>   - Rename the `addons` and `addon_configs` Taildrive shares to `local_apps` and `app_configs` to match Home Assistant's app terminology - ***config is automatically updated***
+>   - Rename `tags` option to `advertise_tags` to align with stock Tailscale's naming convention - ***config is automatically updated***
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
