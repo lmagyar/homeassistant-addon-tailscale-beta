@@ -2,6 +2,11 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Release pending changes from community app
+  - Rename the `addons` and `addon_configs` Taildrive shares to `local_apps` and `app_configs` to match Home Assistant's app terminology - ***config is automatically updated***
+
+Nonbreaking changes:
 - Release unreleased changes from community app
   - Update App base image to v21.0.1
 
