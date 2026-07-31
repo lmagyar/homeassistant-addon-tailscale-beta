@@ -12,6 +12,7 @@ declare proxy funnel proxy_and_funnel_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 declare forward_to_host
 declare advertise_routes
+declare taildrive_addons taildrive_config
 declare tags
 declare ssh
 declare share_service_name
@@ -90,6 +91,15 @@ then
     bashio::log.info 'Updating advertise_routes option to match new schema'
     advertise_routes=$(bashio::jq "${advertise_routes}" '(.[] | select(.|match("^local[^_]subnets$"))) |= "local_subnets"')
     bashio::app.option 'advertise_routes' "^${advertise_routes}"
+fi
+taildrive_addons=$(bashio::jq "${options}" '.taildrive.addons | select(.!=null)')
+if bashio::var.has_value "${taildrive_addons}"; then
+    bashio::log.info 'Updating taildrive option to match new schema'
+    taildrive_config=$(bashio::jq "${options}" '
+        .taildrive
+        | if has("addons") then .local_apps = .addons end | del(.addons)
+        | if has("addon_configs") then .app_configs = .addon_configs end | del(.addon_configs)')
+    bashio::app.option 'taildrive' "^${taildrive_config}"
 fi
 
 # Rename changed options
