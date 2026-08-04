@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.28.1.13 (forked)
+
+***BREAKING CHANGES:***
+- Release pending changes from community app
+  - Rename the `addons` and `addon_configs` Taildrive shares to `local_apps` and `app_configs` to match Home Assistant's app terminology - ***config is automatically updated***
+
+Nonbreaking changes:
+- Fix: Trigger on the Notify.SelfChange signal from he IPN message bus for MagicDNS reconfiguration (NetMap is not distributed in messages after v1.102).
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.102.1
+  - Update App base image to v21.0.1
+
 ## 0.28.1.12 (forked)
 
 - Release unreleased changes from community app
