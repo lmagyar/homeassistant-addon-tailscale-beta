@@ -8,6 +8,7 @@
 
 Nonbreaking changes:
 - Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.102.1
   - Update App base image to v21.0.1
 
 ## 0.28.1.12 (forked)
