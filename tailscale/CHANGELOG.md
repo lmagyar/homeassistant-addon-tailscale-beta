@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.28.1.14 (forked)
+
+- Release unreleased changes from community app
+  - Update tailscale/tailscale to v1.102.2
+
 ## 0.28.1.13 (forked)
 
 ***BREAKING CHANGES:***
