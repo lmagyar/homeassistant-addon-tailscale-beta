@@ -434,8 +434,8 @@ More information: [Enabling HTTPS][tailscale_info_https],
 [Tailscale Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel].
 
 1. Configure Home Assistant to be accessible through an HTTP connection (this is
-   the default). See [HTTP integration documentation][http_integration] for more
-   information.
+   the default). You can access these settings at **Settings** -> **System** ->
+   **Network** -> **HTTP server** -> **SSL/TLS**
 
    **Note:** If you want to use another HTTPS connection to access Home
    Assistant, though Tailscale can access Home Assistant even if Home Assistant
@@ -444,16 +444,12 @@ More information: [Enabling HTTPS][tailscale_info_https],
    Assistant to use SSL.
 
 1. Home Assistant, by default, blocks requests from reverse proxies, like the
-   Tailscale Serve. To enable it, add the following lines to your
-   `configuration.yaml`, without changing anything (don't forget to restart Home
-   Assistant after the changes are saved):
+   Tailscale Serve. To enable it, go to **Settings** -> **System** ->
+   **Network** -> **HTTP server** -> **Reverse proxy** and edit the options
+   below (don't forget to restart Home Assistant after the changes are saved):
+   - Enable `Trust X-Forwarded-For` option.
 
-   ```yaml
-   http:
-     use_x_forwarded_for: true
-     trusted_proxies:
-       - 127.0.0.1
-   ```
+   - Add "127.0.0.1" to the `Trusted proxies` option.
 
 1. Navigate to the [DNS page][tailscale_dns] of the admin console:
    - Choose a tailnet name.
@@ -767,7 +763,6 @@ You could also [open an issue here][issue] on GitHub.
 [discord]: https://www.home-assistant.io/join-chat
 [forum]: https://community.home-assistant.io/
 [headscale]: https://github.com/juanfont/headscale
-[http_integration]: https://www.home-assistant.io/integrations/http/
 [issue]: https://github.com/lmagyar/homeassistant-addon-tailscale/issues
 [reddit]: https://reddit.com/r/homeassistant
 [warning_stripe]: https://github.com/lmagyar/homeassistant-addon-tailscale/raw/main/images/warning_stripe_wide.png
