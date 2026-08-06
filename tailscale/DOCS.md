@@ -433,9 +433,9 @@ _VPN_ &#8658; **Tailscale Serve** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 More information: [Enabling HTTPS][tailscale_info_https],
 [Tailscale Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel].
 
-1. Configure Home Assistant to be accessible through an HTTP connection (this is
-   the default). You can access these settings at **Settings** -> **System** ->
-   **Network** -> **HTTP server** -> **SSL/TLS**
+1. Disable **SSL/TLS** so Home Assistant is accessible through an HTTP
+   connection (this is the default). You can access this setting at **Settings**
+   -> **System** -> **Network** -> **HTTP server** -> **SSL/TLS**
 
    **Note:** If you want to use another HTTPS connection to access Home
    Assistant, though Tailscale can access Home Assistant even if Home Assistant
