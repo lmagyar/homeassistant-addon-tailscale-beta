@@ -39,7 +39,10 @@ EOFROMDEFAULTS
 # After this patch, the options can't contain invalid fields
 # Options with default values defined in the "to" app can be missing, those defaults are automatically merged in
 # Tailscale: Rename tags to advertise_tags if advertise_tags doesn't exists already
-readonly from_patch='if has("advertise_tags") | not then .advertise_tags = .tags end | del(.tags)'
+readonly from_patch='
+  if has("advertise_tags") | not then .advertise_tags = .tags | del(.tags) end |
+  if .taildrive | has("local_apps") | not then .taildrive.local_apps = .taildrive.addons | del(.taildrive.addons) end |
+  if .taildrive | has("app_configs") | not then .taildrive.app_configs = .taildrive.addon_configs | del(.taildrive.addon_configs) end'
 
 # Addresses to be removed from system network config
 readonly dns_ipv4="100.100.100.100"
