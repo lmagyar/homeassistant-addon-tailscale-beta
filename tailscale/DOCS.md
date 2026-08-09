@@ -9,6 +9,7 @@
 > This is a **fork** of the [community app][community_app]!
 
 > ## Changes
+> - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
 > - Release unreleased changes from community app
 >   - Update tailscale/tailscale to v1.102.2
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up

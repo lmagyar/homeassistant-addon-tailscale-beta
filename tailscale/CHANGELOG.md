@@ -2,6 +2,8 @@
 
 ## 0.28.1.14 (forked)
 
+- Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
+
 - Release unreleased changes from community app
   - Update tailscale/tailscale to v1.102.2
 
