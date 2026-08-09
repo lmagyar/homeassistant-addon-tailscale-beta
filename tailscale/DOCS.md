@@ -5,6 +5,7 @@
 > This is a **fork** of the [community app][community_app]!
 
 > ## Changes
+> - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)

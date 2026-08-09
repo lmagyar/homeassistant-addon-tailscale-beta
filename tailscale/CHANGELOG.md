@@ -2,10 +2,15 @@
 
 ## vNext (forked)
 
+This version uses a custom built TS client, with PR https://github.com/tailscale/tailscale/pull/20618 merged in. This PR fixes a returning issue with funnel, where funnel breaks when network topology changes (ISP public IP change, router failover, etc.), and only app restart or sometimes only complete device reboot can fix it.
+
+If anybody finds funnel is getting more stable due to this custom built TS client, please pile on the PR (https://github.com/tailscale/tailscale/pull/20618) and add a comment, that it should be merged ASAP.
+
 - Merge released changes from community app
   - Update tailscale/tailscale to v1.102.3
   - Update App base image to v21.0.2
 - Fork specific changes
+  - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
   - Update home-assistant/cli to v5.3.1
 
 ## 0.28.1.15 (forked)
