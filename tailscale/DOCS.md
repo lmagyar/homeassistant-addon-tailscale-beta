@@ -475,9 +475,6 @@ default HTTPS port 443 (or the port configured in option `share_on_port`).
 try to clear all site-related cookies, clear all browser cache, and restart the
 browser.
 
-**Note:** If you want to share other services than Home Assistant, see the
-"Sharing other apps with serve or funnel" section of this documentation.
-
 ### Option: `share_on_port`
 
 This option lets you specify which port the Tailscale Serve and Funnel features
@@ -658,93 +655,6 @@ The app's health is set unhealthy:
 - Once it was online and gets offline for longer than 5 minutes.
 
 - After a (re)start can't get online for longer than 1 hour.
-
-## Sharing other apps with serve or funnel
-
-The `share_homeassistant` option allows you to enable Tailscale Serve or Funnel
-features to present your Home Assistant instance.
-
-If you want to share other apps than Home Assistant, it can be done, but
-there is no app configuration option for this. Maybe Tailscale will add this
-to the web UI in the future.
-
-Requirements:
-
-- You **_can't_** use the same port, that the app is using to share Home
-  Assistant (the port that is configured under `share_on_port` option), the
-  reason is that a foreground service is running on this port by the app, so
-  you can't reuse this port, you have to use a different port (you can select
-  from 443, 8443, and 10000 in case of funnel, or any port in case of serve).
-
-- You must use the cli to set this up, but the config is permanent, you have to
-  do this only once, it will work after a restart, or even backup/restore.
-
-- Please check, that your other apps you want to share are using the host
-  network or expose ports on the host, because you can't use anything else to
-  share with Tailscale, only localhost is allowed.
-
-- Please check, that your other apps are accessible through plain http,
-  **_not_** https.
-
-Steps:
-
-1. In the cli (eg. Advanced SSH app
-   https://github.com/hassio-addons/app-ssh) execute: ``docker exec -it
-   `docker ps -q -f name=tailscale` /bin/bash`` Now you are in this app's
-   cli.
-
-1. Execute something like `/opt/tailscale serve --bg --service=svc:someservice
-   --https=8443 --set-path=/someservice localhost:1234`
-
-   - `serve` or `funnel`, your choice
-
-   - `--bg` means Tailscale will start up the service in the backgroud, when the
-     app is started, and Tailscale remembers this setting
-
-   - `--service=svc:someservice` this is optional, and can be used only in case
-     of serve, not funnel
-
-     This is useful if you want to share your other app with a unique name and
-     IP within your tailnet (not the device's tailnet name and IP), though have
-     special requirements, like you must use a tag-based identity for this
-     device and have to configure the service on Tailscale's admin console.
-
-     More information: [Services][tailscale_info_services]
-
-   - `--https:8443` must be different from the app's serve/funnel port, or
-     you will get an "foreground already exists under this port" error from
-     Tailscale
-
-   - `--set-path=/someservice` if you plan to share multiple apps/ports without
-     using Tailscale's service feature (see above), you can use different paths
-     for each app, but most apps don't like being served from a different route,
-     so usually you can use only `/`
-
-   - `localhost:1234` port 1234 is where your other app is accessible on the
-     localhost
-
-   - You can disable/delete this config with `/opt/tailscale funnel --bg
-     --service=svc:someservice --https=8443 --set-path=/someservice off`
-
-1. You can add as many different apps as you want.
-
-Result:
-
-- You can access Home Assistant at https://devicename.tailxxxx.ts.net (with the
-  help of the `share_homeassistant` option)
-
-- You can access your other app at eg.
-  https://devicename.tailxxxx.ts.net:8443/someservice or
-  https://someservice.tailxxxx.ts.net:8443
-
-**Note:** If your other app is not responding at
-https://devicename.tailxxxx.ts.net:8443/someservice url:
-
-- Turn on Inspect view in your browser and check what's going on (errors,
-  network communication, etc.).
-
-- Try `--set-path=/` in the serve/funnel config and try accessing the other app
-  at https://devicename.tailxxxx.ts.net:8443/.
 
 ## Support
 
