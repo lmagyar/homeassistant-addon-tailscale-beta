@@ -14,6 +14,7 @@
 >   - Force reauthentication when Tailscale explicitly complains about login server change
 >   - Add `log_upload` config option to configure log upload separately from local app log level
 >   - Fix forwarding for local tailnet connections
+>   - Graceful shutdown on SIGTERM caused by manual app stop
 >   - Make `accept_routes`, `advertise_connector`, `advertise_exit_node`, `advertise_routes`, `taildrop` and `userspace_networking` options default disabled to align with stock Tailscale's platform-specific behavior
 >   - Rename the `addons` and `addon_configs` Taildrive shares to `local_apps` and `app_configs` to match Home Assistant's app terminology - ***config is automatically updated***
 >   - Rename `tags` option to `advertise_tags` to align with stock Tailscale's naming convention - ***config is automatically updated***
