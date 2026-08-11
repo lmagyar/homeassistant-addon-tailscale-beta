@@ -1,5 +1,12 @@
 # Changelog
 
+## vNext (forked)
+
+- Release pending changes from community app
+  - Properly handle failure during service startup
+- Fork specific changes
+  - Update home-assistant/cli to v5.3.0
+
 ## 0.28.1.14 (forked)
 
 - Release unreleased changes from community app
