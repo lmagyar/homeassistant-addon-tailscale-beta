@@ -5,6 +5,8 @@
 # Runs after the machine has been logged in into the Tailscale network
 # ==============================================================================
 
+shopt -s extglob
+
 source /usr/lib/api.core.sh
 
 declare interface
