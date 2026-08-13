@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.28.1.15 (forked)
+
+***BREAKING CHANGES:***
+- Release pending changes from community app
+  - Add support for advertising Tailscale Services ([@apfohl](https://github.com/apfohl))
+
+    **Note:** On first start this imports most of the manually configured Tailscale Services into the app config.
+    - Imported protocols: http, https, tcp, tls-terminated-tcp.
+    - Not imported: static text and file server, proxy protocol.
+
+Nonbreaking changes:
+- Release pending changes from community app
+  - Properly handle failure during service startup
+- Fork specific changes
+  - Update home-assistant/cli to v5.3.0
+
 ## 0.28.1.14 (forked)
 
 - Release unreleased changes from community app
