@@ -114,6 +114,12 @@ log_upload: false
 login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
+services:
+  - name: svc:audiobookshelf
+    target: http://127.0.0.1:13378
+    protocol: http
+    port: 80
+    path: /
 snat_subnet_routes: true
 stateful_filtering: false
 taildrive:
@@ -431,6 +437,12 @@ _VPN_ &#8658; **Tailscale Serve** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 More information: [Enabling HTTPS][tailscale_info_https],
 [Tailscale Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel].
 
+**Note:** If you only want to expose Home Assistant on your tailnet, but with
+Tailscale Services, you can also configure it through the `services` option.
+However, the `services` option does not support Tailscale Funnel, only Tailscale
+Serve. If you need to access Home Assistant from the internet, use this option
+instead.
+
 1. Disable **SSL/TLS** so Home Assistant is accessible through an HTTP
    connection (this is the default). You can access this setting at **Settings**
    -> **System** -> **Network** -> **HTTP server** -> **SSL/TLS**
@@ -484,6 +496,57 @@ internet.
 Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
 Port 443 is used by default.
+
+### Option: `services`
+
+This option allows you to advertise other local services running on this device
+as Tailscale Services. Each service needs a name, a local target address,
+furthermore a protocol, and a port to expose it on.
+
+This option is disabled by default.
+
+**Note:** For Tailscale Services to work, this device must use tags. See the
+`advertise_tags` option for more information.
+
+You can use this option to expose an app running on your Home Assistant
+instance, such as an audiobookshelf app, to your tailnet using a stable MagicDNS
+name.
+
+- The service `name` must include the `svc:` prefix.
+
+- The `target` must be a local address reachable from this app. Use `http://` or
+  `https://` targets for HTTP/HTTPS protocols, and `tcp://` targets for TCP and
+  tls-terminated-tcp protocols, for example `http://127.0.0.1:13378`.
+
+- Supported protocols:
+
+  - `http`: Expose the service as an HTTP server on the configured port.
+
+  - `https`: Expose the service as an HTTPS server on the configured port.
+
+    **Note:** You must enable MagicDNS and HTTPS certificates for your tailnet
+    on the [DNS page][tailscale_dns] of the admin console first. Once enabled,
+    Tailscale automatically provisions a TLS certificate for the service.
+
+  - `tcp`: Forward raw TCP packets to the configured target.
+
+  - `tls-terminated-tcp`: Forward TLS-terminated TCP packets to the configured
+    target.
+
+- The `path` is optional, defaults to `/`, and can be used only for the
+  HTTP/HTTPS protocols.
+
+Before a service can accept traffic:
+
+1. You must define the Service on the [Services page][tailscale_services] of the
+   admin console.
+
+1. Restart the app.
+
+1. Approve this device as a Service host on the [Services
+   page][tailscale_services] of the admin console.
+
+More information: [Tailscale Services][tailscale_info_services].
 
 ### Option: `snat_subnet_routes`
 
@@ -689,6 +752,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
 [tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
 [tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
+[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
 [tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
 [tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers
@@ -697,3 +761,4 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_taildrop]: https://tailscale.com/docs/features/taildrop
 [tailscale_info_userspace_networking]: https://tailscale.com/docs/concepts/userspace-networking
 [tailscale_machines]: https://console.tailscale.com/admin/machines
+[tailscale_services]: https://console.tailscale.com/admin/services
