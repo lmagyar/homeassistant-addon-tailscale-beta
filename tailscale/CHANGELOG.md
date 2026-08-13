@@ -2,6 +2,15 @@
 
 ## vNext (forked)
 
+***BREAKING CHANGES:***
+- Release pending changes from community app
+  - Add support for advertising Tailscale Services ([@apfohl](https://github.com/apfohl))
+
+    **Note:** On first start this imports most of the manually configured Tailscale Services into the app config.
+    - Imported protocols: http, https, tcp, tls-terminated-tcp.
+    - Not imported: static text and file server, proxy protocol.
+
+Nonbreaking changes:
 - Release pending changes from community app
   - Properly handle failure during service startup
 - Fork specific changes
