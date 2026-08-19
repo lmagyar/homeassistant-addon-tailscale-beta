@@ -4,6 +4,8 @@
 
 - Release unreleased changes from community app
   - Update App base image to v21.0.2
+- Fork specific changes
+  - Update home-assistant/cli to v5.3.1
 
 ## 0.28.1.15 (forked)
 
