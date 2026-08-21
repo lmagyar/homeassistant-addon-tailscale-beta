@@ -7,6 +7,7 @@
 
 declare options
 declare proxy funnel proxy_and_funnel_port
+declare tags
 declare share_service_name
 
 readonly MAGIC_DNS_IPV4="100.100.100.100"
@@ -53,6 +54,19 @@ fi
 if bashio::var.has_value "${proxy_and_funnel_port}"; then
     bashio::log.info 'Removing deprecated proxy_and_funnel_port option'
     bashio::app.option 'proxy_and_funnel_port'
+fi
+
+# Rename changed options
+tags=$(bashio::jq "${options}" '.tags | select(.!=null)')
+if bashio::var.has_value "${tags}"; then
+    bashio::try bashio::app.option 'advertise_tags' "^${tags}"
+    if bashio::try.failed; then
+        bashio::log.warning "The tags option value is invalid, tags option is dropped, using default no advertise_tags."
+        bashio::log.warning "The invalid tags option value is: '${tags}'"
+    else
+        bashio::log.info "Successfully renamed tags option to advertise_tags"
+    fi
+    bashio::app.option 'tags'
 fi
 
 # Remove deprecated share_service_name option
