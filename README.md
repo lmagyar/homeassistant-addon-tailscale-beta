@@ -8,21 +8,7 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community app][community_app]!
 
 > ## Changes
-> - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.102.2
->   - Add support for advertising Tailscale Services ([@apfohl](https://github.com/apfohl))
->   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
->   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
->   - Refactor MagicDNS support to properly handle appconnectors
->   - Refactor slow activities from nm-dispatcher script into separate listener service
->   - Force reauthentication when Tailscale explicitly complains about login server change
->   - Add `log_upload` config option to configure log upload separately from local app log level
->   - Fix forwarding for local tailnet connections
->   - Graceful shutdown on SIGTERM caused by manual app stop
->   - Properly handle failure during service startup
->   - Make `accept_routes`, `advertise_connector`, `advertise_exit_node`, `advertise_routes`, `taildrop` and `userspace_networking` options default disabled to align with stock Tailscale's platform-specific behavior
->   - Rename the `addons` and `addon_configs` Taildrive shares to `local_apps` and `app_configs` to match Home Assistant's app terminology - ***config is automatically updated***
->   - Rename `tags` option to `advertise_tags` to align with stock Tailscale's naming convention - ***config is automatically updated***
+> - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
