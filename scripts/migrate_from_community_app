@@ -4,7 +4,7 @@
 # Parameters
 ################################################################################
 
-readonly ssh_min_version="24.0.0"
+readonly ssh_min_version="24.1.0"
 
 readonly from="a0d7b954_tailscale" # community
 readonly from_min_version="0.26.0"
@@ -50,27 +50,6 @@ readonly dns_ipv6="fd7a:115c:a1e0::53"
 
 
 
-
-################################################################################
-# Bashio fixes
-# These are curently broken in bashio
-################################################################################
-
-if ! [[ "${LOG_FD:-}" =~ ^[0-9]+$ ]] || ! (
-    exec 2>/dev/null
-    : >&"${LOG_FD:-}"
-); then
-    exec {LOG_FD}>&1
-fi
-
-function bashio::log.reinitialize_output() {
-    if [[ "${LOG_FD:-}" =~ ^[0-9]+$ ]] && (
-        exec 2>/dev/null
-        : >&"${LOG_FD}"
-    ); then
-        eval "exec ${LOG_FD}>&1"
-    fi
-}
 
 ################################################################################
 # Initialization

@@ -185,7 +185,7 @@ if bashio::var.true "${invalid_dns_config}"; then
             "Failed to create persistent notification"
     fi
 
-    bashio::app.option 'userspace_networking' 'true'
+    bashio::app.option 'userspace_networking' '^true'
 fi
 
 # MagicDNS related service dependencies:
