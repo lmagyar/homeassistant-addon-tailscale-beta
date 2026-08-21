@@ -9,7 +9,7 @@ Zero config VPN for building secure networks.
 
 > ## Changes
 > - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.102.2
+>   - Update tailscale/tailscale to v1.102.3
 >   - Add support for advertising Tailscale Services ([@apfohl](https://github.com/apfohl))
 >   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
 >   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
