@@ -15,6 +15,8 @@ If anybody finds funnel is getting more stable due to this custom built TS clien
 
 ## 0.28.1.15 (forked)
 
+- Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618 **(only in beta repo)**
+
 ***BREAKING CHANGES:***
 - Release pending changes from community app
   - Add support for advertising Tailscale Services ([@apfohl](https://github.com/apfohl))
