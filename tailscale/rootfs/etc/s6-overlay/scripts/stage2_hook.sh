@@ -127,15 +127,6 @@ if bashio::var.has_value "${ssh}"; then
     bashio::app.option 'ssh'
 fi
 
-# Disable init-tailscale-ssh service when tailscale_ssh.enabled is false
-# or no packages and no init_commands are defined
-if bashio::config.false 'tailscale_ssh.enabled' || \
-    (! bashio::config.has_value 'tailscale_ssh.packages' && \
-    ! bashio::config.has_value 'tailscale_ssh.init_commands')
-then
-    rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-tailscale-ssh
-fi
-
 # Remove deprecated share_service_name option
 share_service_name=$(bashio::jq "${options}" '.share_service_name | select(.!=null)')
 if bashio::var.has_value "${share_service_name}"; then
@@ -248,4 +239,13 @@ if bashio::config.equals 'share_homeassistant' 'disabled' || \
     ! bashio::config.has_value 'lets_encrypt_keyfile';
 then
     rm /etc/s6-overlay/user-bundles.d/user/contents.d/certificate
+fi
+
+# Disable init-tailscale-ssh service when tailscale_ssh.enabled is false
+# or no packages and no init_commands are defined
+if bashio::config.false 'tailscale_ssh.enabled' || \
+    (! bashio::config.has_value 'tailscale_ssh.packages' && \
+    ! bashio::config.has_value 'tailscale_ssh.init_commands')
+then
+    rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-tailscale-ssh
 fi
