@@ -17,6 +17,7 @@ declare taildrive_addons taildrive_config
 declare tags
 declare ssh
 declare share_service_name
+declare log_level log_suppression
 
 readonly MAGIC_DNS_IPV4="100.100.100.100"
 readonly MAGIC_DNS_IPV6="fd7a:115c:a1e0::53"
@@ -148,6 +149,22 @@ then
     # Save it again
     advertise_routes=$(bashio::var.json_array "${routes[@]}")
     bashio::app.option 'advertise_routes' "^${advertise_routes}"
+fi
+
+# Migrate log_level to log_suppression
+log_level=$(bashio::jq "${options}" '.log_level | select(.!=null)')
+if bashio::var.has_value "${log_level}"; then
+    if bashio::var.equals "${log_level}" 'debug' || \
+        bashio::var.equals "${log_level}" 'trace'
+    then
+        log_suppression="false"
+    else
+        log_suppression="true"
+    fi
+    bashio::app.option 'log_suppression' "^${log_suppression}"
+    bashio::log.info "Successfully migrated log_level option \"${log_level}\" to log_suppression \"${log_suppression}\""
+    bashio::log.info 'Removing deprecated log_level option'
+    bashio::app.option 'log_level'
 fi
 
 # Check DNS configuration
