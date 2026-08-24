@@ -84,14 +84,6 @@ if bashio::var.has_value "${forward_to_host}"; then
 fi
 
 # Update changed options
-advertise_routes=$(bashio::jq "${options}" '.advertise_routes | select(.!=null)')
-if bashio::var.has_value "${advertise_routes}" && \
-    bashio::jq.has_value "${advertise_routes}" '.[] | select(.|match("^local[^_]subnets$"))'
-then
-    bashio::log.info 'Updating advertise_routes option to match new schema'
-    advertise_routes=$(bashio::jq "${advertise_routes}" '(.[] | select(.|match("^local[^_]subnets$"))) |= "local_subnets"')
-    bashio::app.option 'advertise_routes' "^${advertise_routes}"
-fi
 taildrive_addons=$(bashio::jq "${options}" '.taildrive.addons | select(.!=null)')
 if bashio::var.has_value "${taildrive_addons}"; then
     bashio::log.info 'Updating taildrive option to match new schema'
