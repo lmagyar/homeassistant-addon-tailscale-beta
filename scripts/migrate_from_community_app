@@ -42,7 +42,8 @@ EOFROMDEFAULTS
 readonly from_patch='
   if has("advertise_tags") | not then .advertise_tags = .tags | del(.tags) end |
   if .taildrive | has("local_apps") | not then .taildrive.local_apps = .taildrive.addons | del(.taildrive.addons) end |
-  if .taildrive | has("app_configs") | not then .taildrive.app_configs = .taildrive.addon_configs | del(.taildrive.addon_configs) end'
+  if .taildrive | has("app_configs") | not then .taildrive.app_configs = .taildrive.addon_configs | del(.taildrive.addon_configs) end |
+  if has("log_suppression") | not then .log_suppression = (.log_level != "debug" and .log_level != "trace") | del(.log_level) end'
 
 # Addresses to be removed from system network config
 readonly dns_ipv4="100.100.100.100"

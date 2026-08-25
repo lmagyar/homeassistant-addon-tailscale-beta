@@ -3,6 +3,12 @@
 > [!WARNING]
 > If you are using this beta repo for testing the patched Tailscale client, please install my normal fork from https://github.com/lmagyar/homeassistant-addon-tailscale, that also contains the patched Tailscale client. The normal fork is stable, this beta is not!
 
+## vNext (forked)
+
+- Release pending changes from community app
+  - Migrate advertise_routes option, replace "subnet_routes" with the actual values
+  - Migrate log_level to log_suppression
+
 ## 0.29.0.1 (forked)
 
 This version uses a custom built TS client, with PR https://github.com/tailscale/tailscale/pull/20618 merged in. This PR fixes a returning issue with funnel, where funnel breaks when network topology changes (ISP public IP change, router failover, etc.), and only app restart or sometimes only complete device reboot can fix it.
