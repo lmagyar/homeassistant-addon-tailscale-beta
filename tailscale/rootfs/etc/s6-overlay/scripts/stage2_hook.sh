@@ -12,10 +12,12 @@ declare proxy funnel proxy_and_funnel_port
 declare healthcheck_offline_timeout healthcheck_restart_timeout
 declare forward_to_host
 declare advertise_routes
+declare -a routes=()
 declare taildrive_addons taildrive_config
 declare tags
 declare ssh
 declare share_service_name
+declare log_level log_suppression
 
 readonly MAGIC_DNS_IPV4="100.100.100.100"
 readonly MAGIC_DNS_IPV6="fd7a:115c:a1e0::53"
@@ -84,14 +86,6 @@ if bashio::var.has_value "${forward_to_host}"; then
 fi
 
 # Update changed options
-advertise_routes=$(bashio::jq "${options}" '.advertise_routes | select(.!=null)')
-if bashio::var.has_value "${advertise_routes}" && \
-    bashio::jq.has_value "${advertise_routes}" '.[] | select(.|match("^local[^_]subnets$"))'
-then
-    bashio::log.info 'Updating advertise_routes option to match new schema'
-    advertise_routes=$(bashio::jq "${advertise_routes}" '(.[] | select(.|match("^local[^_]subnets$"))) |= "local_subnets"')
-    bashio::app.option 'advertise_routes' "^${advertise_routes}"
-fi
 taildrive_addons=$(bashio::jq "${options}" '.taildrive.addons | select(.!=null)')
 if bashio::var.has_value "${taildrive_addons}"; then
     bashio::log.info 'Updating taildrive option to match new schema'
@@ -127,20 +121,50 @@ if bashio::var.has_value "${ssh}"; then
     bashio::app.option 'ssh'
 fi
 
-# Disable init-tailscale-ssh service when tailscale_ssh.enabled is false
-# or no packages and no init_commands are defined
-if bashio::config.false 'tailscale_ssh.enabled' || \
-    (! bashio::config.has_value 'tailscale_ssh.packages' && \
-    ! bashio::config.has_value 'tailscale_ssh.init_commands')
-then
-    rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-tailscale-ssh
-fi
-
 # Remove deprecated share_service_name option
 share_service_name=$(bashio::jq "${options}" '.share_service_name | select(.!=null)')
 if bashio::var.has_value "${share_service_name}"; then
     bashio::log.info 'Removing deprecated share_service_name option'
     bashio::app.option 'share_service_name'
+fi
+
+# Migrate advertise_routes option, replace "subnet_routes" with the actual values
+advertise_routes=$(bashio::jq "${options}" '.advertise_routes | select(.!=null)')
+if bashio::var.has_value "${advertise_routes}" && \
+    bashio::jq.has_value "${advertise_routes}" '.[] | select(.|test("^local_subnets$"))'
+then
+    bashio::log.info "Migrating advertise_routes option, replacing \"subnet_routes\" with the actual values"
+    # Read local subnets
+    readarray -t routes < <(subnet-routes local)
+    if (( 0 == ${#routes[@]} )); then
+        bashio::log.warning "There are no local subnets to add in place of \"subnet_routes\"!"
+    fi
+    # Add user defined other subnets
+    readarray -t -O "${#routes[@]}" routes < <(bashio::jq "${advertise_routes}" '.[] | select(.|test("^local_subnets$")|not)')
+    # Save it
+    advertise_routes=$(bashio::var.json_array "${routes[@]}")
+    bashio::app.option 'advertise_routes' "^${advertise_routes}"
+    # Reread to sanitize values, remove duplicates
+    readarray -t routes < <(subnet-routes advertised)
+    # Save it again
+    advertise_routes=$(bashio::var.json_array "${routes[@]}")
+    bashio::app.option 'advertise_routes' "^${advertise_routes}"
+fi
+
+# Migrate log_level to log_suppression
+log_level=$(bashio::jq "${options}" '.log_level | select(.!=null)')
+if bashio::var.has_value "${log_level}"; then
+    if bashio::var.equals "${log_level}" 'debug' || \
+        bashio::var.equals "${log_level}" 'trace'
+    then
+        log_suppression="false"
+    else
+        log_suppression="true"
+    fi
+    bashio::app.option 'log_suppression' "^${log_suppression}"
+    bashio::log.info "Successfully migrated log_level option \"${log_level}\" to log_suppression \"${log_suppression}\""
+    bashio::log.info 'Removing deprecated log_level option'
+    bashio::app.option 'log_level'
 fi
 
 # Check DNS configuration
@@ -248,4 +272,13 @@ if bashio::config.equals 'share_homeassistant' 'disabled' || \
     ! bashio::config.has_value 'lets_encrypt_keyfile';
 then
     rm /etc/s6-overlay/user-bundles.d/user/contents.d/certificate
+fi
+
+# Disable init-tailscale-ssh service when tailscale_ssh.enabled is false
+# or no packages and no init_commands are defined
+if bashio::config.false 'tailscale_ssh.enabled' || \
+    (! bashio::config.has_value 'tailscale_ssh.packages' && \
+    ! bashio::config.has_value 'tailscale_ssh.init_commands')
+then
+    rm /etc/s6-overlay/s6-rc.d/tailscaled/dependencies.d/init-tailscale-ssh
 fi

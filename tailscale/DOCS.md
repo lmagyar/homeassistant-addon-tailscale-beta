@@ -6,6 +6,9 @@
 
 > ## Changes
 > - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
+> - Release pending changes from community app
+>   - Migrate advertise_routes option, replace "subnet_routes" with the actual values
+>   - Migrate log_level to log_suppression
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
@@ -84,24 +87,23 @@ accept_dns: true
 accept_routes: false
 advertise_connector: false
 advertise_exit_node: false
-advertise_routes:
-  - local_subnets
+advertise_routes:                       # the default is [] (an empty list), here are some example:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-advertise_tags:
+advertise_tags:                         # the default is [] (an empty list), here are some example:
   - tag:example
   - tag:homeassistant
 always_use_derp: false
-dscp: 52
-exit_node: 100.101.102.103
-lets_encrypt_certfile: fullchain.pem
-lets_encrypt_keyfile: privkey.pem
-log_level: info
+dscp: 52                                # this is optional, ie. by default this is missing
+exit_node: 100.101.102.103              # this is optional, ie. by default this is missing
+lets_encrypt_certfile: fullchain.pem    # this is optional, ie. by default this is missing
+lets_encrypt_keyfile: privkey.pem       # this is optional, ie. by default this is missing
+log_suppression: true
 log_upload: false
 login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
-services:
+services:                               # the default is [] (an empty list), here are some example:
   - name: svc:audiobookshelf
     target: http://127.0.0.1:13378
     protocol: http
@@ -120,10 +122,10 @@ taildrive:
 taildrop: false
 tailscale_ssh:
   enabled: false
-  packages:
+  packages:                             # the default is [] (an empty list), here are some example:
     - nodejs
     - npm
-  init_commands:
+  init_commands:                        # the default is [] (an empty list), here are some example:
     - npm config set prefix /data/npm
     - mkdir -p /data/npm/bin
 userspace_networking: false
@@ -203,9 +205,6 @@ your device is connected to) to other clients on your tailnet.
 
 By adding to the list the IP addresses and masks of the subnet routes, you can
 use it to make your devices on these subnets accessible within your tailnet.
-
-By adding `local_subnets` to the list, the app will advertise routes to your
-subnets on all supported interfaces.
 
 More information: [Subnet routers][tailscale_info_subnets]
 
@@ -349,29 +348,15 @@ When not set, this option is disabled by default. To make this option visible on
 the configuration editor, click "Show unused optional configuration options" at
 the bottom of the page.
 
-### Option: `log_level`
+### Option: `log_suppression`
 
-Optionally enable all tailscaled debug messages in the app's log. Turn it on only
-in case you are troubleshooting, because Tailscale's daemon is quite chatty. If
-`log_level` is set to `info` or less severe level, tailscaled logs will be
-suppressed after 200 lines.
+This option allows you to suppress Tailscale's log messages in the app's log
+after 200 lines.
 
-The `log_level` option controls the level of log output by the app and can
-be changed to be more or less verbose, which might be useful when you are
-dealing with an unknown issue. Possible values are:
+Turn it off only in case you are troubleshooting, because Tailscale is quite
+chatty.
 
-- `trace`: Show every detail, like all called internal functions.
-- `debug`: Shows detailed debug information.
-- `info`: Normal (usually) interesting events.
-- `notice`: Normal but significant events.
-- `warning`: Exceptional occurrences that are not errors.
-- `error`: Runtime errors that do not require immediate action.
-- `fatal`: Something went terribly wrong. App becomes unusable.
-
-Please note that each level automatically includes log messages from a
-more severe level, e.g., `debug` also shows `info` messages. By default,
-the `log_level` is set to `info`, which is the recommended setting unless
-you are troubleshooting.
+This option is enabled by default.
 
 ### Option: `log_upload`
 
