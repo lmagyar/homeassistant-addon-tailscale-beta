@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.29.0.2 (forked)
 
 - Release pending changes from community app
   - Migrate advertise_routes option, replace "subnet_routes" with the actual values
