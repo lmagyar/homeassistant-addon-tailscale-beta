@@ -33,7 +33,7 @@ RUN \
     && if [ "${BUILD_ARCH}" = "amd64" ]; then ARCH="amd64"; fi \
     \
     && curl -L -s \
-        "https://github.com/lmagyar/tailscale/releases/download/${TAILSCALE_VERSION}.20618+21059/tailscale_${TAILSCALE_VERSION#v}.20618+21059_${ARCH}.tgz" \
+        "https://github.com/lmagyar/tailscale/releases/download/${TAILSCALE_VERSION}.20618.21059/tailscale_${TAILSCALE_VERSION#v}.20618.21059_${ARCH}.tgz" \
         | tar zxvf - -C /opt/ --strip-components 1 \
     \
     && curl -L -s -o /usr/bin/ha \
