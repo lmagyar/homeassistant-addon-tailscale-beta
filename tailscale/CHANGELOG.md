@@ -3,6 +3,50 @@
 > [!WARNING]
 > If you are using this beta repo for testing the patched Tailscale client, please install my normal fork from https://github.com/lmagyar/homeassistant-addon-tailscale, that also contains the patched Tailscale client. The normal fork is stable, this beta is not!
 
+## vNext (forked)
+
+- Merge unreleased changes from community app
+  - Update App base image to v21.0.3
+- Fork specific changes
+  - Update home-assistant/cli to v5.4.0
+
+## 0.29.0.2 (forked)
+
+- Release pending changes from community app
+  - Migrate advertise_routes option, replace "subnet_routes" with the actual values
+  - Migrate log_level to log_suppression
+
+## 0.29.0.1 (forked)
+
+This version uses a custom built TS client, with PR https://github.com/tailscale/tailscale/pull/20618 merged in. This PR fixes a returning issue with funnel, where funnel breaks when network topology changes (ISP public IP change, router failover, etc.), and only app restart or sometimes only complete device reboot can fix it.
+
+If anybody finds funnel is getting more stable due to this custom built TS client, please pile on the PR (https://github.com/tailscale/tailscale/pull/20618) and add a comment, that it should be merged ASAP.
+
+- Merge released changes from community app
+  - Update tailscale/tailscale to v1.102.3
+  - Update App base image to v21.0.2
+- Fork specific changes
+  - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
+  - Update home-assistant/cli to v5.3.1
+
+## 0.28.1.15 (forked)
+
+- Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618 **(only in beta repo)**
+
+***BREAKING CHANGES:***
+- Release pending changes from community app
+  - Add support for advertising Tailscale Services ([@apfohl](https://github.com/apfohl))
+
+    **Note:** On first start this imports most of the manually configured Tailscale Services into the app config.
+    - Imported protocols: http, https, tcp, tls-terminated-tcp.
+    - Not imported: static text and file server, proxy protocol.
+
+Nonbreaking changes:
+- Release pending changes from community app
+  - Properly handle failure during service startup
+- Fork specific changes
+  - Update home-assistant/cli to v5.3.0
+
 ## 0.28.1.14 (forked)
 
 - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618 **(only in beta repo)**

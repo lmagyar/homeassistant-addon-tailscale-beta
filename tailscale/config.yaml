@@ -1,6 +1,6 @@
 ---
 name: "[BETA] Tailscale with features"
-version: 0.28.1.14-rc01
+version: 0.29.0.2-rc02
 slug: tailscale-beta
 description: "[BETA] Zero config VPN for building secure networks"
 url: https://github.com/lmagyar/homeassistant-addon-tailscale-beta
@@ -50,11 +50,12 @@ options:
   advertise_routes: []
   advertise_tags: []
   always_use_derp: false
-  log_level: info
+  log_suppression: true
   log_upload: false
   login_server: "https://controlplane.tailscale.com"
   share_homeassistant: disabled
   share_on_port: 443
+  services: []
   snat_subnet_routes: true
   stateful_filtering: false
   taildrive:
@@ -85,11 +86,17 @@ schema:
   exit_node: "match(^(?:(?:(?:25[0-5]|(?:2[0-4]|1\\d|[1-9]?)\\d)\\.){3}(?:25[0-5]|(?:2[0-4]|1\\d|[1-9]?)\\d)|[a-fA-F\\d.:]+:[a-fA-F\\d.:]+|[a-fA-F\\d]{8}(?:-[a-fA-F\\d]{4}){3}-[a-fA-F\\d]{12}|auto:any)$)?"
   lets_encrypt_certfile: str?
   lets_encrypt_keyfile: str?
-  log_level: list(trace|debug|info|notice|warning|error|fatal)
+  log_suppression: bool
   log_upload: bool
   login_server: url
   share_homeassistant: list(disabled|serve|funnel)
   share_on_port: match(^(?:443|8443|10000)$)
+  services:
+    - name: "match(^svc:[a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?$)"
+      target: "match(^(?:https?|tcp)://127\\.0\\.0\\.1:([1-9]\\d{0,3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$)"
+      protocol: "list(http|https|tcp|tls-terminated-tcp)"
+      port: port
+      path: "match(^/.*$)?"
   snat_subnet_routes: bool
   stateful_filtering: bool
   taildrive:

@@ -10,18 +10,9 @@
 
 > ## Changes
 > - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
-> - Release unreleased changes from community app
->   - Update tailscale/tailscale to v1.102.2
->   - In case of invalid networking DNS settings disable MagicDNS to enable the app to start up
->   - Refactor MagicDNS support to properly handle appconnectors
->   - Refactor slow activities from nm-dispatcher script into separate listener service
->   - Allow serving / funneling even if HA is set up with HTTPS/SSL ([@dynamyc010](https://github.com/dynamyc010))
->   - Force reauthentication when Tailscale explicitly complains about login server change
->   - Add `log_upload` config option to configure log upload separately from local app log level
->   - Fix forwarding for local tailnet connections
->   - Make `accept_routes`, `advertise_connector`, `advertise_exit_node`, `advertise_routes`, `taildrop` and `userspace_networking` options default disabled to align with stock Tailscale's platform-specific behavior
->   - Rename the `addons` and `addon_configs` Taildrive shares to `local_apps` and `app_configs` to match Home Assistant's app terminology - ***config is automatically updated***
->   - Rename `tags` option to `advertise_tags` to align with stock Tailscale's naming convention - ***config is automatically updated***
+> - Release pending changes from community app
+>   - Migrate advertise_routes option, replace "subnet_routes" with the actual values
+>   - Migrate log_level to log_suppression
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
@@ -100,23 +91,28 @@ accept_dns: true
 accept_routes: false
 advertise_connector: false
 advertise_exit_node: false
-advertise_routes:
-  - local_subnets
+advertise_routes:                       # the default is [] (an empty list), here are some example:
   - 192.168.1.0/24
   - fd12:3456:abcd::/64
-advertise_tags:
+advertise_tags:                         # the default is [] (an empty list), here are some example:
   - tag:example
   - tag:homeassistant
 always_use_derp: false
-dscp: 52
-exit_node: 100.101.102.103
-lets_encrypt_certfile: fullchain.pem
-lets_encrypt_keyfile: privkey.pem
-log_level: info
+dscp: 52                                # this is optional, ie. by default this is missing
+exit_node: 100.101.102.103              # this is optional, ie. by default this is missing
+lets_encrypt_certfile: fullchain.pem    # this is optional, ie. by default this is missing
+lets_encrypt_keyfile: privkey.pem       # this is optional, ie. by default this is missing
+log_suppression: true
 log_upload: false
 login_server: "https://controlplane.tailscale.com"
 share_homeassistant: disabled
 share_on_port: 443
+services:                               # the default is [] (an empty list), here are some example:
+  - name: svc:audiobookshelf
+    target: http://127.0.0.1:13378
+    protocol: http
+    port: 80
+    path: /
 snat_subnet_routes: true
 stateful_filtering: false
 taildrive:
@@ -130,10 +126,10 @@ taildrive:
 taildrop: false
 tailscale_ssh:
   enabled: false
-  packages:
+  packages:                             # the default is [] (an empty list), here are some example:
     - nodejs
     - npm
-  init_commands:
+  init_commands:                        # the default is [] (an empty list), here are some example:
     - npm config set prefix /data/npm
     - mkdir -p /data/npm/bin
 userspace_networking: false
@@ -213,9 +209,6 @@ your device is connected to) to other clients on your tailnet.
 
 By adding to the list the IP addresses and masks of the subnet routes, you can
 use it to make your devices on these subnets accessible within your tailnet.
-
-By adding `local_subnets` to the list, the app will advertise routes to your
-subnets on all supported interfaces.
 
 More information: [Subnet routers][tailscale_info_subnets]
 
@@ -359,29 +352,15 @@ When not set, this option is disabled by default. To make this option visible on
 the configuration editor, click "Show unused optional configuration options" at
 the bottom of the page.
 
-### Option: `log_level`
+### Option: `log_suppression`
 
-Optionally enable all tailscaled debug messages in the app's log. Turn it on only
-in case you are troubleshooting, because Tailscale's daemon is quite chatty. If
-`log_level` is set to `info` or less severe level, tailscaled logs will be
-suppressed after 200 lines.
+This option allows you to suppress Tailscale's log messages in the app's log
+after 200 lines.
 
-The `log_level` option controls the level of log output by the app and can
-be changed to be more or less verbose, which might be useful when you are
-dealing with an unknown issue. Possible values are:
+Turn it off only in case you are troubleshooting, because Tailscale is quite
+chatty.
 
-- `trace`: Show every detail, like all called internal functions.
-- `debug`: Shows detailed debug information.
-- `info`: Normal (usually) interesting events.
-- `notice`: Normal but significant events.
-- `warning`: Exceptional occurrences that are not errors.
-- `error`: Runtime errors that do not require immediate action.
-- `fatal`: Something went terribly wrong. App becomes unusable.
-
-Please note that each level automatically includes log messages from a
-more severe level, e.g., `debug` also shows `info` messages. By default,
-the `log_level` is set to `info`, which is the recommended setting unless
-you are troubleshooting.
+This option is enabled by default.
 
 ### Option: `log_upload`
 
@@ -434,6 +413,12 @@ _VPN_ &#8658; **Tailscale Serve** (HTTPS proxy) &#8594; **HA** (HTTP web-server)
 More information: [Enabling HTTPS][tailscale_info_https],
 [Tailscale Serve][tailscale_info_serve], [Tailscale Funnel][tailscale_info_funnel].
 
+**Note:** If you only want to expose Home Assistant on your tailnet, but with
+Tailscale Services, you can also configure it through the `services` option.
+However, the `services` option does not support Tailscale Funnel, only Tailscale
+Serve. If you need to access Home Assistant from the internet, use this option
+instead.
+
 1. Disable **SSL/TLS** so Home Assistant is accessible through an HTTP
    connection (this is the default). You can access this setting at **Settings**
    -> **System** -> **Network** -> **HTTP server** -> **SSL/TLS**
@@ -478,9 +463,6 @@ default HTTPS port 443 (or the port configured in option `share_on_port`).
 try to clear all site-related cookies, clear all browser cache, and restart the
 browser.
 
-**Note:** If you want to share other services than Home Assistant, see the
-"Sharing other apps with serve or funnel" section of this documentation.
-
 ### Option: `share_on_port`
 
 This option lets you specify which port the Tailscale Serve and Funnel features
@@ -490,6 +472,60 @@ internet.
 Only ports 443, 8443, and 10000 are allowed by Tailscale.
 
 Port 443 is used by default.
+
+### Option: `services`
+
+This option allows you to advertise other local services running on this device
+as Tailscale Services. Each service needs a name, a local target address,
+furthermore a protocol, and a port to expose it on.
+
+This option is disabled by default.
+
+**Note:** For Tailscale Services to work, this device must use tags. See the
+`advertise_tags` option for more information.
+
+You can use this option to expose an app running on your Home Assistant
+instance, such as an audiobookshelf app, to your tailnet using a stable MagicDNS
+name.
+
+- The service `name` must include the `svc:` prefix.
+
+- The `target` must be a local address reachable from this app. Use `http://` or
+  `https://` targets for HTTP/HTTPS protocols, and `tcp://` targets for TCP and
+  tls-terminated-tcp protocols, for example `http://127.0.0.1:13378`.
+
+- Supported protocols by which the target will be presented:
+
+  **Note:** For `https` and `tls-terminated-tcp` protocols you must enable
+  MagicDNS and HTTPS certificates for your tailnet on the [DNS
+  page][tailscale_dns] of the admin console first. Once enabled, Tailscale
+  automatically provisions a TLS certificate for the service.
+
+  - `http`: Expose the service as an HTTP server on the configured port.
+
+  - `https`: Expose the service as an HTTPS server on the configured port.
+
+  - `tcp`: Forward raw TCP packets to the configured target.
+
+  - `tls-terminated-tcp`: Forward TLS-terminated TCP packets to the configured
+    target.
+
+- The `port` is where the target will be exposed.
+
+- The `path` is where the target will be exposed. Optional, defaults to `/`, and
+  can be used only for the HTTP/HTTPS protocols.
+
+Before a service can accept traffic:
+
+1. You must define the Service on the [Services page][tailscale_services] of the
+   admin console.
+
+1. Restart the app.
+
+1. Approve this device as a Service host on the [Services
+   page][tailscale_services] of the admin console.
+
+More information: [Tailscale Services][tailscale_info_services].
 
 ### Option: `snat_subnet_routes`
 
@@ -662,93 +698,6 @@ The app's health is set unhealthy:
 
 - After a (re)start can't get online for longer than 1 hour.
 
-## Sharing other apps with serve or funnel
-
-The `share_homeassistant` option allows you to enable Tailscale Serve or Funnel
-features to present your Home Assistant instance.
-
-If you want to share other apps than Home Assistant, it can be done, but
-there is no app configuration option for this. Maybe Tailscale will add this
-to the web UI in the future.
-
-Requirements:
-
-- You **_can't_** use the same port, that the app is using to share Home
-  Assistant (the port that is configured under `share_on_port` option), the
-  reason is that a foreground service is running on this port by the app, so
-  you can't reuse this port, you have to use a different port (you can select
-  from 443, 8443, and 10000 in case of funnel, or any port in case of serve).
-
-- You must use the cli to set this up, but the config is permanent, you have to
-  do this only once, it will work after a restart, or even backup/restore.
-
-- Please check, that your other apps you want to share are using the host
-  network or expose ports on the host, because you can't use anything else to
-  share with Tailscale, only localhost is allowed.
-
-- Please check, that your other apps are accessible through plain http,
-  **_not_** https.
-
-Steps:
-
-1. In the cli (eg. Advanced SSH app
-   https://github.com/hassio-addons/app-ssh) execute: ``docker exec -it
-   `docker ps -q -f name=tailscale` /bin/bash`` Now you are in this app's
-   cli.
-
-1. Execute something like `/opt/tailscale serve --bg --service=svc:someservice
-   --https=8443 --set-path=/someservice localhost:1234`
-
-   - `serve` or `funnel`, your choice
-
-   - `--bg` means Tailscale will start up the service in the backgroud, when the
-     app is started, and Tailscale remembers this setting
-
-   - `--service=svc:someservice` this is optional, and can be used only in case
-     of serve, not funnel
-
-     This is useful if you want to share your other app with a unique name and
-     IP within your tailnet (not the device's tailnet name and IP), though have
-     special requirements, like you must use a tag-based identity for this
-     device and have to configure the service on Tailscale's admin console.
-
-     More information: [Services][tailscale_info_services]
-
-   - `--https:8443` must be different from the app's serve/funnel port, or
-     you will get an "foreground already exists under this port" error from
-     Tailscale
-
-   - `--set-path=/someservice` if you plan to share multiple apps/ports without
-     using Tailscale's service feature (see above), you can use different paths
-     for each app, but most apps don't like being served from a different route,
-     so usually you can use only `/`
-
-   - `localhost:1234` port 1234 is where your other app is accessible on the
-     localhost
-
-   - You can disable/delete this config with `/opt/tailscale funnel --bg
-     --service=svc:someservice --https=8443 --set-path=/someservice off`
-
-1. You can add as many different apps as you want.
-
-Result:
-
-- You can access Home Assistant at https://devicename.tailxxxx.ts.net (with the
-  help of the `share_homeassistant` option)
-
-- You can access your other app at eg.
-  https://devicename.tailxxxx.ts.net:8443/someservice or
-  https://someservice.tailxxxx.ts.net:8443
-
-**Note:** If your other app is not responding at
-https://devicename.tailxxxx.ts.net:8443/someservice url:
-
-- Turn on Inspect view in your browser and check what's going on (errors,
-  network communication, etc.).
-
-- Try `--set-path=/` in the serve/funnel config and try accessing the other app
-  at https://devicename.tailxxxx.ts.net:8443/.
-
 ## Support
 
 Got questions?
@@ -782,6 +731,7 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_pi_hole]: https://tailscale.com/docs/solutions/block-ads-all-devices-anywhere-using-raspberry-pi
 [tailscale_info_quad100]: https://tailscale.com/docs/reference/quad100
 [tailscale_info_serve]: https://tailscale.com/docs/features/tailscale-serve
+[tailscale_info_services]: https://tailscale.com/docs/features/tailscale-services
 [tailscale_info_site_to_site]: https://tailscale.com/docs/features/site-to-site
 [tailscale_info_ssh]: https://tailscale.com/docs/features/tailscale-ssh
 [tailscale_info_subnets]: https://tailscale.com/docs/features/subnet-routers
@@ -790,3 +740,4 @@ You could also [open an issue here][issue] on GitHub.
 [tailscale_info_taildrop]: https://tailscale.com/docs/features/taildrop
 [tailscale_info_userspace_networking]: https://tailscale.com/docs/concepts/userspace-networking
 [tailscale_machines]: https://console.tailscale.com/admin/machines
+[tailscale_services]: https://console.tailscale.com/admin/services
