@@ -3,6 +3,13 @@
 > [!WARNING]
 > If you are using this beta repo for testing the patched Tailscale client, please install my normal fork from https://github.com/lmagyar/homeassistant-addon-tailscale, that also contains the patched Tailscale client. The normal fork is stable, this beta is not!
 
+## vNext (forked)
+
+- Merge unreleased changes from community app
+  - Update App base image to v21.0.3
+- Fork specific changes
+  - Update home-assistant/cli to v5.4.0
+
 ## 0.29.0.2 (forked)
 
 - Release pending changes from community app
