@@ -5,6 +5,8 @@
 
 ## vNext (forked)
 
+- Verbose tailscaled logging
+
 - Merge unreleased changes from community app
   - Update App base image to v21.0.3
 - Fork specific changes
