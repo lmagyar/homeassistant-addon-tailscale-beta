@@ -5,7 +5,7 @@
 
 ## vNext (forked)
 
-- Use custom built TS with another merged PR https://github.com/tailscale/tailscale/pull/21059 **(only in beta repo)**
+- Verbose tailscaled logging
 
 - Merge unreleased changes from community app
   - Update App base image to v21.0.3
