@@ -31,7 +31,7 @@ Zero config VPN for building secure networks.
 >   the big thing) will also copy the internal state of the app, then start
 >   the forked version.
 > - With copying the app internal state, the new forked app will start up
->   with the exact same state, ie. with the same tailnet authentication also. So
+>   with the exact same state, i.e. with the same tailnet authentication also. So
 >   **do not** remove the current device from Tailscale's admin page, the forked
 >   app will jump into it's place.
 > - And even if you executed previously some tailscale configuration inside the

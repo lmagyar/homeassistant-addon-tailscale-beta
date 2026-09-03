@@ -247,7 +247,7 @@ separately from other network traffic.
 
 If you want to minimize the traffic on your mobile internet by restricting the
 traffic to this DSCP value, you should also enable accessing the addresses below
-without this DSCP value (ie. enable their usage for Home Assistant and other
+without this DSCP value (i.e. enable their usage for Home Assistant and other
 apps):
 - 162.159.200.1 (time.cloudflare.com)
 - 162.159.200.123 (time.cloudflare.com)
@@ -596,7 +596,7 @@ Tailscale can start.
 
 **Note**: Only applies when `tailscale_ssh.enabled` is true.
 
-**Note**: Package installation runs before Tailscale is started, ie. it bypasses
+**Note**: Package installation runs before Tailscale is started, i.e. it bypasses
 exit node if configured.
 
 **Note**: Adding many packages will result in a longer startup time for the app,
