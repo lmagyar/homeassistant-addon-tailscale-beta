@@ -8,7 +8,6 @@ Zero config VPN for building secure networks.
 > This is a **fork** of the [community app][community_app]!
 
 > ## Changes
-> - Use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
 > - Release pending changes from community app
 >   - Migrate advertise_routes option, replace "subnet_routes" with the actual values
 >   - Migrate log_level to log_suppression
