@@ -3,7 +3,7 @@
 ## vNext (forked)
 
 - Merge unreleased changes from community app
-  - Update App base image to v21.0.3
+  - Update App base image to v21.0.4
 - Fork specific changes
   - Update home-assistant/cli to v5.4.0
 
