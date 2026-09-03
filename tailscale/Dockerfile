@@ -33,8 +33,11 @@ RUN \
     && if [ "${BUILD_ARCH}" = "amd64" ]; then ARCH="amd64"; fi \
     \
     && curl -L -s \
-        "https://github.com/lmagyar/tailscale/releases/download/${TAILSCALE_VERSION}.20618.21081/tailscale_${TAILSCALE_VERSION#v}.20618.21081_${ARCH}.tgz" \
+        "https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION#v}_${ARCH}.tgz" \
         | tar zxvf - -C /opt/ --strip-components 1 \
+    \
+    && rm -f -r \
+        /opt/systemd \
     \
     && curl -L -s -o /usr/bin/ha \
         "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${BUILD_ARCH}" \

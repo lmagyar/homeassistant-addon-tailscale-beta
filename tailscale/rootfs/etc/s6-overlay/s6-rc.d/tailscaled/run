@@ -78,10 +78,6 @@ if bashio::config.true "always_use_derp"; then
   bashio::log.notice "You have enabled always_use_derp, all traffic will be routed via DERP servers"
 fi
 
-
-options+=(--verbose=2)
-
-
 # Configure awk for log supression
 if bashio::config.true 'log_suppression'; then
   bashio::log.notice \

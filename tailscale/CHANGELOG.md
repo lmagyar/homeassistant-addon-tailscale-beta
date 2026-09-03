@@ -1,12 +1,8 @@
 # Changelog
 
-> [!WARNING]
-> If you are using this beta repo for testing the patched Tailscale client, please install my normal fork from https://github.com/lmagyar/homeassistant-addon-tailscale, that also contains the patched Tailscale client. The normal fork is stable, this beta is not!
-
 ## vNext (forked)
 
-- Use custom built TS with another merged PR https://github.com/tailscale/tailscale/pull/21081 **(only in beta repo)**
-- Verbose tailscaled logging
+Removing custom built TS client, because that provided only a temporary fix.
 
 - Merge unreleased changes from community app
   - Update App base image to v21.0.3
