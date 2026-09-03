@@ -8,7 +8,7 @@ Removing custom built TS client, because that provided only a temporary fix.
   - Update App base image to v21.0.4
 - Fork specific changes
   - Don't use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
-  - Update home-assistant/cli to v5.4.0
+  - Update home-assistant/cli to v5.5.0
 
 ## 0.29.0.2 (forked)
 
