@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.2
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.5
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,12 +7,12 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.102.3"
-ARG HA_CLI_VERSION="5.3.1"
+ARG TAILSCALE_VERSION="v1.102.4"
+ARG HA_CLI_VERSION="5.5.0"
 RUN \
     apk add --no-cache \
         bash-completion=2.17.0-r1 \
-        bind-tools=9.20.26-r0 \
+        bind-tools=9.20.27-r0 \
         dnsmasq=2.92_p2-r0 \
         ethtool=7.0-r0 \
         ipcalc=1.0.3-r1 \
@@ -33,8 +33,11 @@ RUN \
     && if [ "${BUILD_ARCH}" = "amd64" ]; then ARCH="amd64"; fi \
     \
     && curl -L -s \
-        "https://github.com/lmagyar/tailscale/releases/download/${TAILSCALE_VERSION}.20618/tailscale_${TAILSCALE_VERSION#v}.20618_${ARCH}.tgz" \
+        "https://pkgs.tailscale.com/stable/tailscale_${TAILSCALE_VERSION#v}_${ARCH}.tgz" \
         | tar zxvf - -C /opt/ --strip-components 1 \
+    \
+    && rm -f -r \
+        /opt/systemd \
     \
     && curl -L -s -o /usr/bin/ha \
         "https://github.com/home-assistant/cli/releases/download/${HA_CLI_VERSION}/ha_${BUILD_ARCH}" \

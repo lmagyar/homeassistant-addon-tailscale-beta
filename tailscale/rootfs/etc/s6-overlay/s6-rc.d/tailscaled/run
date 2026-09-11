@@ -79,10 +79,13 @@ fi
 # Configure awk for log supression
 if bashio::config.true 'log_suppression'; then
   bashio::log.notice \
-    "Tailscale's log messages will be suppressed after 200 lines, set app's configuration option \"log_suppression\" to \"false\" to see further logs"
+    "Tailscale's log messages will be suppressed after 200 lines, set the app's configuration option \"log_suppression\" to \"false\" to see further logs"
   awk_program='
     NR<=200 {print}
-    NR==201 {system("bash -c \". /usr/lib/bashio/bashio.sh; bashio::log.notice \\\"Further Tailscale log messages are suppressed, set apps configuration option \\\\\\\"log_suppression\\\\\\\" to \\\\\\\"false\\\\\\\" to see further logs\\\" \" ")}'
+    NR==201 {system("bash -c \"
+      source /usr/lib/bashio/bashio.sh;
+      bashio::log.notice \\\"Further Tailscale log messages are suppressed, set the app'"'"'s configuration option \\\\\\\"log_suppression\\\\\\\" to \\\\\\\"false\\\\\\\" to see further logs\\\" \" ")}'
+  awk_program="${awk_program//$'\n'/}"
 fi
 
 # Run Tailscale
@@ -93,7 +96,7 @@ if ! bashio::fs.file_exists "/etc/resolv.for-tailscaled.conf"; then
   if bashio::config.false 'log_suppression' ; then
     exec s6-setuidgid 0:${tailscaled_gid} /opt/tailscaled "${options[@]}"
   else
-    s6-setuidgid 0:${tailscaled_gid} /opt/tailscaled "${options[@]}" \
+    exec s6-setuidgid 0:${tailscaled_gid} /opt/tailscaled "${options[@]}" \
       2> >(stdbuf -i0 -oL -eL awk -F $'\n' -e "${awk_program}")
   fi
 else
@@ -103,7 +106,7 @@ else
   if bashio::config.false 'log_suppression' ; then
     exec unshare -m bash -c "mount --bind /etc/resolv.for-tailscaled.conf /etc/resolv.conf; exec s6-setuidgid 0:${tailscaled_gid} /opt/tailscaled $(printf "\"%s\" " "${options[@]}")"
   else
-    unshare -m bash -c "mount --bind /etc/resolv.for-tailscaled.conf /etc/resolv.conf; exec s6-setuidgid 0:${tailscaled_gid} /opt/tailscaled $(printf "\"%s\" " "${options[@]}")" \
+    exec unshare -m bash -c "mount --bind /etc/resolv.for-tailscaled.conf /etc/resolv.conf; exec s6-setuidgid 0:${tailscaled_gid} /opt/tailscaled $(printf "\"%s\" " "${options[@]}")" \
       2> >(stdbuf -i0 -oL -eL awk -F $'\n' -e "${awk_program}")
   fi
 fi

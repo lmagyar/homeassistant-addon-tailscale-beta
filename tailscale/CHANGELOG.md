@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.29.0.3 (forked)
+
+Removing custom built TS client, because that provided only a temporary fix.
+
+- Merge unreleased changes from community app
+  - Update tailscale/tailscale to v1.102.4
+  - Update App base image to v21.0.5
+- Fork specific changes
+  - Don't use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
+  - Update home-assistant/cli to v5.5.0
+
 ## 0.29.0.2 (forked)
 
 - Release pending changes from community app
@@ -484,7 +495,7 @@ Nonbreaking changes:
 
 ## 0.18.0.4 (forked)
 
-- Make stateful-filtering configurable (disable it, if you previously configured eg. site-to-site networking on some level: ie. enabled your non-tailscale devices in a routed subnet to initiate traffic toward your tailnet (other tailnet nodes, or other subnets))
+- Make stateful-filtering configurable (disable it, if you previously configured eg. site-to-site networking on some level: i.e. enabled your non-tailscale devices in a routed subnet to initiate traffic toward your tailnet (other tailnet nodes, or other subnets))
 
 ## 0.18.0.3 (forked)
 
@@ -565,7 +576,7 @@ Nonbreaking changes:
 ## 0.13.1.7 (forked)
 
 ***BREAKING CHANGES:***
-- Remove: Advanced Tailscale Proxy and Funnel configuration - ie. advanced_config option (after the app doesn't reset serve config, manual configuration will not interfere with it)
+- Remove: Advanced Tailscale Proxy and Funnel configuration - i.e. advanced_config option (after the app doesn't reset serve config, manual configuration will not interfere with it)
 
 Nonbreaking changes:
 - Merge funnel and proxy services into longrun serve service, drop internal serve config reset
