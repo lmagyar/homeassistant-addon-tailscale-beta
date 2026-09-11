@@ -5,7 +5,8 @@
 Removing custom built TS client, because that provided only a temporary fix.
 
 - Merge unreleased changes from community app
-  - Update App base image to v21.0.4
+  - Update tailscale/tailscale to v1.102.4
+  - Update App base image to v21.0.5
 - Fork specific changes
   - Don't use custom built TS with merged PR https://github.com/tailscale/tailscale/pull/20618
   - Update home-assistant/cli to v5.5.0
