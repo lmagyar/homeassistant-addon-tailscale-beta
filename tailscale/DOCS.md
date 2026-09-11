@@ -5,8 +5,10 @@
 > This is a **fork** of the [community app][community_app]!
 
 > ## Changes
-> - Release pending changes from community app
+> - Merge unreleased changes from community app
+>   - Update tailscale/tailscale to v1.102.4
 >   - Migrate advertise_routes option, replace "local_subnets" with the actual values
+> - Release pending changes from community app
 >   - Migrate log_level to log_suppression
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
