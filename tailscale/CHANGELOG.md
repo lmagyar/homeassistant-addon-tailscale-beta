@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.29.0.3 (forked)
 
 Removing custom built TS client, because that provided only a temporary fix.
 
