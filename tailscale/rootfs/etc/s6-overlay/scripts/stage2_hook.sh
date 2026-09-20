@@ -14,8 +14,8 @@ declare forward_to_host
 declare force_noise_443
 declare advertise_routes
 declare -a routes=()
-declare taildrive_addons taildrive_config
 declare tags
+declare taildrive_addons taildrive_config
 declare ssh
 declare share_service_name
 declare log_level log_suppression
@@ -91,17 +91,6 @@ if bashio::var.has_value "${force_noise_443}"; then
     bashio::app.option 'force_noise_443'
 fi
 
-# Update changed options
-taildrive_addons=$(bashio::jq "${options}" '.taildrive.addons | select(.!=null)')
-if bashio::var.has_value "${taildrive_addons}"; then
-    bashio::log.info 'Updating taildrive option to match new schema'
-    taildrive_config=$(bashio::jq "${options}" '
-        .taildrive
-        | if has("addons") then .local_apps = .addons end | del(.addons)
-        | if has("addon_configs") then .app_configs = .addon_configs end | del(.addon_configs)')
-    bashio::app.option 'taildrive' "^${taildrive_config}"
-fi
-
 # Rename changed options
 tags=$(bashio::jq "${options}" '.tags | select(.!=null)')
 if bashio::var.has_value "${tags}"; then
@@ -113,6 +102,17 @@ if bashio::var.has_value "${tags}"; then
         bashio::log.info "Successfully renamed tags option to advertise_tags"
     fi
     bashio::app.option 'tags'
+fi
+
+# Update changed options
+taildrive_addons=$(bashio::jq "${options}" '.taildrive.addons | select(.!=null)')
+if bashio::var.has_value "${taildrive_addons}"; then
+    bashio::log.info 'Updating taildrive option to match new schema'
+    taildrive_config=$(bashio::jq "${options}" '
+        .taildrive
+        | if has("addons") then .local_apps = .addons end | del(.addons)
+        | if has("addon_configs") then .app_configs = .addon_configs end | del(.addon_configs)')
+    bashio::app.option 'taildrive' "^${taildrive_config}"
 fi
 
 # Migrate ssh to tailscale_ssh.enabled
