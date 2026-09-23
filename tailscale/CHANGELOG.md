@@ -1,6 +1,6 @@
 # Changelog
 
-## vNext (forked)
+## 0.30.1.0 (forked)
 
 - Release pending changes from community app
   - Accept https+insecure as target for services option
