@@ -106,7 +106,7 @@ function wait_for_backup() {
 # Check running environment
 ################################################################################
 
-bashio::try bashio::supervisor.ping | sed -e "/^$/d"
+bashio::try bashio::supervisor.ping
 if bashio::try.failed; then
   bashio::log.fatal
   bashio::log.fatal "Supervisor is not accessible, check your configuration"

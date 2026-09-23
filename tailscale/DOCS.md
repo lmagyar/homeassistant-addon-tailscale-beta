@@ -9,11 +9,8 @@
 > This is a **fork** of the [community app][community_app]!
 
 > ## Changes
-> - Merge unreleased changes from community app
->   - Update tailscale/tailscale to v1.102.4
->   - Migrate advertise_routes option, replace "local_subnets" with the actual values
 > - Release pending changes from community app
->   - Migrate log_level to log_suppression
+>   - Accept https+insecure as target for services option
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
 >   - Make ha cli available in Tailscale SSH sessions (within bash shell with banner and completion)
@@ -492,9 +489,10 @@ name.
 
 - The service `name` must include the `svc:` prefix.
 
-- The `target` must be a local address reachable from this app. Use `http://` or
-  `https://` targets for HTTP/HTTPS protocols, and `tcp://` targets for TCP and
-  tls-terminated-tcp protocols, for example `http://127.0.0.1:13378`.
+- The `target` must be a local address reachable from this app. Use `http://`,
+  `https://` or `https+insecure://` targets for HTTP/HTTPS protocols, and
+  `tcp://` targets for TCP and tls-terminated-tcp protocols, for example
+  `http://127.0.0.1:13378`.
 
 - Supported protocols by which the target will be presented:
 

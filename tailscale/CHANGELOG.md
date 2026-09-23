@@ -1,5 +1,10 @@
 # Changelog
 
+## vNext (forked)
+
+- Release pending changes from community app
+  - Accept https+insecure as target for services option
+
 ## 0.29.0.3 (forked)
 
 Removing custom built TS client, because that provided only a temporary fix.
