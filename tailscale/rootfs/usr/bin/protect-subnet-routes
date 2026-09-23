@@ -5,7 +5,7 @@
 # add local subnets to ip rules with higher priority than Tailscale's routing
 # ==============================================================================
 
-readonly PROTECTION_RULE_PRIORITY=5001
+readonly PROTECTION_RULE_PRIORITY=5000
 readonly WAIT_DELAY=5   # 5s
 readonly WAIT_COUNT=60  # 60*5s = 300s = 5m
 
