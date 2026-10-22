@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.8
+ARG BUILD_FROM=ghcr.io/hassio-addons/base/amd64:21.0.9
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -7,8 +7,8 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Setup base
 ARG BUILD_ARCH=amd64
-ARG TAILSCALE_VERSION="v1.104.1"
-ARG HA_CLI_VERSION="5.5.0"
+ARG TAILSCALE_VERSION="v1.104.2"
+ARG HA_CLI_VERSION="5.6.0"
 RUN \
     apk add --no-cache \
         bash-completion=2.17.0-r1 \
