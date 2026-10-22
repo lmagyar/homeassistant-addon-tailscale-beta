@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.30.3.0 (forked)
+
+- Merge released changes from community app
+  - Update tailscale/tailscale to v1.104.2
+  - Update App base image to v21.0.9
+- Fork specific changes
+  - Update home-assistant/cli to v5.6.0
+
 ## 0.30.2.0 (forked)
 
 - Merge released changes from community app
