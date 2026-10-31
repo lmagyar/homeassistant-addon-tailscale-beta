@@ -38,8 +38,6 @@ fi
 # Use userspace networking when explicitly enabled
 if bashio::config.true "userspace_networking"; then
   options+=(--tun=userspace-networking)
-else
-  options+=(--tun=tailscale2)
 fi
 
 function setup_dscp() {
