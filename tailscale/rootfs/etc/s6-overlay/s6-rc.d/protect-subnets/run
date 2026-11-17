@@ -17,16 +17,14 @@ mkfifo "${LISTENER_QUEUE}"
 # Pin it to prevent closing it by other processes
 exec 4<>"${LISTENER_QUEUE}"
 
-protect-subnet-routes
-
-# Readiness trigger
-echo 'ping' > "${LISTENER_QUEUE}"
+# Startup/readiness trigger
+echo 'init' > "${LISTENER_QUEUE}"
 
 while IFS= read -r -u 4 action
 do
   case "${action}" in
     up|down)
-      bashio::log.info "Handling Network Manager action ${action}"
+      bashio::log.info "Handling Network Manager action ${action} in protect-subnets service"
       unprotect-subnet-routes
       bashio::try protect-subnet-routes
       if bashio::try.failed; then
@@ -38,15 +36,16 @@ do
       subnet_routes_to_unprotect="$(unprotect-subnet-routes test)"
       subnet_routes_to_protect="$(protect-subnet-routes test)"
       if ! bashio::var.equals "${subnet_routes_to_unprotect}" "${subnet_routes_to_protect}"; then
-        bashio::log.info "Handling Network Manager action ${action}"
+        bashio::log.info "Handling Network Manager action ${action} in protect-subnets service"
         unprotect-subnet-routes
-        bashio::try protect-subnet-routes tested
+        bashio::try protect-subnet-routes
         if bashio::try.failed; then
           bashio::exit.nok "Failed to protect subnet routes. Halting app to prevent network loss."
         fi
       fi
       ;;
-    ping)
+    init)
+      protect-subnet-routes
       # Readiness notification
       echo "" >&3
       exec 3>&-
