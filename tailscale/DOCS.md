@@ -642,8 +642,8 @@ During the dropout you can see repeating `map response long-poll timed out!` log
 entries and the device is shown as disconnected on the [Machines
 page][tailscale_machines] of the admin console. After the dropup you see
 `forcing port 443 dial due to recent noise dial` log entry, the app reconnects
-and remains connected. The root cause is unknown. In this case enabling this
-option can eliminate the temporary dropout.
+and usually remains connected, though not always. The root cause is unknown. In
+this case enabling this option can eliminate the temporary dropout.
 
 ### Option: `userspace_networking`
 
@@ -725,6 +725,12 @@ More information: [What is 100.100.100.100][tailscale_info_quad100],
    `ha dns reset` and `ha dns restart` commands both. This server list is
    additional and queried before the DNS servers specified in Network settings
    above. This configuration is persistent, you have to execute it only once._
+
+   **Note:** _In case of an IPv6-only tailnet, Home Assistant's internal DNS
+   server can't access the IPv6 address of MagicDNS, because it is IPv4-only. In
+   this case install an IPv4 accessible DNS proxy app that can forward DNS
+   queries to MagicDNS's IPv6 address, and configure it's IPv4 address for Home
+   Assistant's internal DNS server._
 
 **Note:** The only difference compared to the general Tailscale experience, is
 that you always have to use the fully qualified domain name instead of only the
