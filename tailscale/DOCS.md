@@ -15,6 +15,8 @@
 >   - Recalculate subnet protection on the reapply nm-dispatcher action also
 >   - Recalculate forward to host on nm-dispatcher actions
 >   - Clean up S6 service dependency graph
+>   - Rename always_use_derp option to tweaks.always_use_derp - ***config is automatically updated***
+>   - Make force noise 443 option configurable
 >   - Use a 5s startup healthcheck interval
 > - Release unmerged changes from community app
 >   - Make Tailscale SSH configurable
@@ -101,7 +103,6 @@ advertise_routes:                       # the default is [] (an empty list), her
 advertise_tags:                         # the default is [] (an empty list), here are some examples:
   - tag:example
   - tag:homeassistant
-always_use_derp: false
 dscp: 52                                # this is optional, i.e. it is missing by default
 exit_node: 100.101.102.103              # this is optional, i.e. it is missing by default
 lets_encrypt_certfile: fullchain.pem    # this is optional, i.e. it is missing by default
@@ -136,6 +137,9 @@ tailscale_ssh:
   init_commands:                        # the default is [] (an empty list), here are some examples:
     - npm config set prefix /data/npm
     - mkdir -p /data/npm/bin
+tweaks:
+  always_use_derp: false
+  force_noise_443: false
 userspace_networking: false
 ```
 
@@ -232,20 +236,6 @@ This option allows you to specify specific tags for this Tailscale instance.
 They need to start with `tag:`.
 
 More information: [Tags][tailscale_info_tags]
-
-### Option: `always_use_derp`
-
-When enabled forces all peer communication over DERP by disabling the use of
-UDP.
-
-This option is disabled by default.
-
-Basically you will never want to enable this option. Try to enable it only, when
-you experience that connections to your Home Assistant device regularly freeze
-(even when you can ping the device, the web page or the Home Assistant app is
-unresponsive), and you have to reload the web page or force stop the Home
-Assistant app to make them work again. The root cause can be that your ISP
-erroneously drops UDP packets on certain conditions.
 
 ### Option: `dscp`
 
@@ -620,6 +610,40 @@ Each command is executed with `eval` in the shell. Failures are non-blocking:
 the app logs a warning and continues so that Tailscale can start.
 
 **Note**: Only applies when `tailscale_ssh.enabled` is true.
+
+### Option group `tweaks`
+
+Tweakable settings to eliminate specific issues.
+
+### Option: `tweaks.always_use_derp`
+
+When enabled forces all peer communication over DERP by disabling the use of
+UDP.
+
+This option is disabled by default.
+
+Basically you will never want to enable this option. Try to enable it only, when
+you experience that connections to your Home Assistant device regularly freeze
+(even when you can ping the device, the web page or the Home Assistant app is
+unresponsive), and you have to reload the web page or force stop the Home
+Assistant app to make them work again. The root cause can be that your ISP
+erroneously drops UDP packets on certain conditions.
+
+### Option: `tweaks.force_noise_443`
+
+When enabled forces the controlclient noise dialer to always use port 443 HTTPS
+connections to the controlplane and do not try the port 80 HTTP fast path.
+
+This option is disabled by default.
+
+Try to enable it only, when you experience temporary connection dropouts,
+usually within few minutes after app start that exists for approx. 15 minutes.
+During the dropout you can see repeating `map response long-poll timed out!` log
+entries and the device is shown as disconnected on the [Machines
+page][tailscale_machines] of the admin console. After the dropup you see
+`forcing port 443 dial due to recent noise dial` log entry, the app reconnects
+and remains connected. The root cause is unknown. In this case enabling this
+option can eliminate the temporary dropout.
 
 ### Option: `userspace_networking`
 
